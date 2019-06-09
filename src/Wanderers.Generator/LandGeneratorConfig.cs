@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Wanderers.Generator
 {
-	public class Config
+	public class LandGeneratorConfig
 	{
-		private static Config _instance;
-
-		private readonly List<LocationConfig> _locations = new List<LocationConfig>();
-
 		public int WorldSize { get; set; }
 		public int HeightMapVariability { get; set; }
 		public float LandPart { get; set; }
@@ -20,40 +15,7 @@ namespace Wanderers.Generator
 		public bool RemoveSmallIslands { get; set; }
 		public bool RemoveSmallLakes { get; set; }
 
-		public string OutputFile { get; set; }
-
-		public static Config Instance
-		{
-			get
-			{
-				return _instance;
-			}
-
-			set
-			{
-				if (value == null)
-				{
-					throw new ArgumentNullException("value");
-				}
-
-				_instance = value;
-			}
-		}
-
-		public List<LocationConfig> Locations
-		{
-			get
-			{
-				return _locations;
-			}
-		}
-
-		static Config()
-		{
-			Instance = new Config();
-		}
-
-		private Config()
+		public LandGeneratorConfig()
 		{
 			WorldSize = 1024;
 			LandPart = 0.6f;
@@ -64,12 +26,6 @@ namespace Wanderers.Generator
 			RemoveSmallIslands = true;
 			RemoveSmallLakes = true;
 			//			SurroundedByWater = true;
-
-			OutputFile = @"D:\Projects\Wanderers\Wanderers\Assets\game\maps\world.json";
-
-			_locations.Add(new LocationConfig { Name = "Capital" });
-			_locations.Add(new LocationConfig { Name = "Ur" });
-			_locations.Add(new LocationConfig { Name = "Wanderers" });
 		}
 
 		public override string ToString()

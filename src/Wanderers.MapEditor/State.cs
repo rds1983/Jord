@@ -27,6 +27,10 @@ namespace Wanderers.MapEditor
 		{
 			get; set;
 		}
+		public int LastNewMapType
+		{
+			get; set;
+		}
 
 		public void Save()
 		{
@@ -60,14 +64,16 @@ namespace Wanderers.MapEditor
 			                     "TopSplitter = {1:0.##}\n" +
 			                     "RightSplitter= {2:0.##}\n" +
 			                     "EditedFile = {3}\n" +
-			                     "CustomColors = {4}\n",
-								 "LastFolder = {5}",
+			                     "CustomColors = {4}\n" +
+								 "LastFolder = {5}\n" +
+								 "LastNewMapType = {6}",
 				Size,
 				TopSplitterPosition,
 				RightSplitterPosition,
 				EditedFile,
 				CustomColors,
-				LastFolder);
+				LastFolder,
+				LastNewMapType);
 		}
 	}
 }

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 namespace Wanderers.Generator
 {
-	public class HeightMapGenerator
+	public class LandGenerator: BaseGenerator
 	{
 		private const int MinimumIslandSize = 1000;
 		private const int MinimumLakeSize = 300;
+
+		private LandGeneratorConfig _config;
 
 		private static readonly Point[] _deltas = new Point[]{
 			new Point(0, -1),
@@ -48,8 +50,12 @@ namespace Wanderers.Generator
 		{
 			get
 			{
-				return Config.Instance.WorldSize;
+				return _config.WorldSize;
 			}
+		}
+
+		public LandGenerator(GenerationContext context) : base(context)
+		{
 		}
 
 		private List<Point> Build(int x, int y, Func<Point, bool> addCondition)
@@ -95,7 +101,7 @@ namespace Wanderers.Generator
 
 		private float Displace(float average, float d)
 		{
-			if (Config.Instance.SurroundedByWater && _firstDisplace)
+			if (_config.SurroundedByWater && _firstDisplace)
 			{
 				_firstDisplace = false;
 				return 1.0f;
@@ -156,7 +162,7 @@ namespace Wanderers.Generator
 			SetDataIfNotSet(centerX, bottom, (heightBottomLeft + heightBottomRight + centerHeight) / 3);
 
 			// Sub-recursion
-			float div = 1.0f + (10.0f - Config.Instance.HeightMapVariability) / 10.0f;
+			float div = 1.0f + (10.0f - _config.HeightMapVariability) / 10.0f;
 
 			d /= div;
 
@@ -169,7 +175,7 @@ namespace Wanderers.Generator
 		public void GenerateHeightMap()
 		{
 			// Set initial values
-			if (!Config.Instance.SurroundedByWater)
+			if (!_config.SurroundedByWater)
 			{
 				SetDataIfNotSet(0, 0, (float)_random.NextDouble());
 				SetDataIfNotSet(Size - 1, 0, (float)_random.NextDouble());
@@ -249,7 +255,7 @@ namespace Wanderers.Generator
 
 		private void Smooth()
 		{
-			if (!Config.Instance.Smooth)
+			if (!_config.Smooth)
 			{
 				return;
 			}
@@ -324,16 +330,16 @@ namespace Wanderers.Generator
 
 		private void CalculateMinimums()
 		{
-			_landMinimum = CalculateMinimum(Config.Instance.LandPart);
-			_mountainMinimum = CalculateMinimum(Config.Instance.MountainPart);
+			_landMinimum = CalculateMinimum(_config.LandPart);
+			_mountainMinimum = CalculateMinimum(_config.MountainPart);
 
-			TJ.LogInfo("Land minimum: {0:0.##}", _landMinimum);
-			TJ.LogInfo("Mountain minimum: {0:0.##}", _mountainMinimum);
+			LogInfo("Land minimum: {0:0.##}", _landMinimum);
+			LogInfo("Mountain minimum: {0:0.##}", _mountainMinimum);
 		}
 
 		private void RemoveTiles(string name, WorldMapTileType tileType, WorldMapTileType newValue)
 		{
-			TJ.LogInfo("Removing {0}...", name);
+			LogInfo("Removing {0}...", name);
 
 			var tilesReplaced = 0;
 
@@ -361,12 +367,12 @@ namespace Wanderers.Generator
 				}
 			}
 
-			TJ.LogInfo("Tiles replaced: {0}", tilesReplaced);
+			LogInfo("Tiles replaced: {0}", tilesReplaced);
 		}
 
 		private void RemoveNoise(string name, WorldMapTileType tileType)
 		{
-			TJ.LogInfo("Removing {0}...", name);
+			LogInfo("Removing {0}...", name);
 			var iterations = 0;
 			var tilesReplaced = 0;
 			while (true)
@@ -407,18 +413,18 @@ namespace Wanderers.Generator
 				}
 			}
 
-			TJ.LogInfo("Removal iterations: {0}", iterations);
-			TJ.LogInfo("Tiles replaced: {0}", tilesReplaced);
+			LogInfo("Removal iterations: {0}", iterations);
+			LogInfo("Tiles replaced: {0}", tilesReplaced);
 		}
 
 		private void GenerateForests()
 		{
-			TJ.LogInfo("Generating forests...");
+			LogInfo("Generating forests...");
 
 			var c = 0;
 
 			var tilesCount = Size * Size;
-			while (((float)c / tilesCount) < Config.Instance.ForestPart)
+			while (((float)c / tilesCount) < _config.ForestPart)
 			{
 				var locations = new Queue<Point>();
 				for (var i = 0; i < 10; ++i)
@@ -441,7 +447,7 @@ namespace Wanderers.Generator
 				}
 
 				// Grow forest from this spot
-				while (locations.Count > 0 && ((float)c / tilesCount) < Config.Instance.ForestPart)
+				while (locations.Count > 0 && ((float)c / tilesCount) < _config.ForestPart)
 				{
 					var p = locations.Dequeue();
 
@@ -474,8 +480,15 @@ namespace Wanderers.Generator
 			}
 		}
 
-		public GenerationResult Generate()
+		public GenerationResult Generate(LandGeneratorConfig config)
 		{
+			if (config == null)
+			{
+				throw new ArgumentNullException("config");
+			}
+
+			_config = config;
+
 			_islandMask = new bool[Size, Size];
 
 			_data = new float[Size, Size];
@@ -485,10 +498,10 @@ namespace Wanderers.Generator
 
 			_firstDisplace = true;
 
-			TJ.LogInfo("Generating height map...");
+			LogInfo("Generating height map...");
 			GenerateHeightMap();
 
-			TJ.LogInfo("Postprocessing height map...");
+			LogInfo("Postprocessing height map...");
 			Smooth();
 			CalculateMinimums();
 
@@ -521,12 +534,12 @@ namespace Wanderers.Generator
 
 			_result = new GenerationResult(tiles);
 
-			if (Config.Instance.RemoveSmallIslands)
+			if (_config.RemoveSmallIslands)
 			{
 				RemoveTiles("small islands", WorldMapTileType.Land, WorldMapTileType.Water);
 			}
 
-			if (Config.Instance.RemoveSmallLakes)
+			if (_config.RemoveSmallLakes)
 			{
 				RemoveTiles("small lakes", WorldMapTileType.Water, WorldMapTileType.Land);
 				RemoveNoise("water noise", WorldMapTileType.Land);
@@ -567,7 +580,7 @@ namespace Wanderers.Generator
 
 			int tilesCount = Size * Size;
 
-			TJ.LogInfo("{0}% water, {1}% land, {2}% mountains, {3}% forests",
+			LogInfo("{0}% water, {1}% land, {2}% mountains, {3}% forests",
 					w * 100 / tilesCount,
 					l * 100 / tilesCount,
 					m * 100 / tilesCount,

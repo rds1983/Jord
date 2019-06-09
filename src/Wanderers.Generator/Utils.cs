@@ -1,7 +1,21 @@
-﻿namespace Wanderers.Generator
+﻿using System;
+using System.Reflection;
+
+namespace Wanderers.Generator
 {
 	internal static class Utils
 	{
+		public static string Version
+		{
+			get
+			{
+				var assembly = typeof(Utils).Assembly;
+				var name = new AssemblyName(assembly.FullName);
+
+				return name.Version.ToString();
+			}
+		}
+
 		public static void Fill<T>(this T[] array, T value)
 		{
 			for (var i = 0; i < array.Length; ++i)

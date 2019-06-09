@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Project>
+  <ExportOptions Namespace="Wanderers.MapEditor.UI" Class="NewMapDialog" OutputPath="D:/Projects/Wanderers/src/Wanderers.MapEditor/UI" />
+  <Dialog Title="New Map">
+    <Grid>
+      <RowsProportions>
+        <Proportion/>
+        <Proportion/>
+      </RowsProportions>
+      <RadioButton Text="Single Tile Map" Id="_radioSingleTileMap" />
+      <RadioButton Text="Generated Global Map" Id="_radioGeneratedGlobalMap" GridRow="1" />
+    </Grid>
+  </Dialog>
+</Project>

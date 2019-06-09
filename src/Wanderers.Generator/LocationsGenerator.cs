@@ -6,24 +6,19 @@ using Wanderers.Utils;
 
 namespace Wanderers.Generator
 {
-	public class LocationsGenerator
+	public class LocationsGenerator: BaseGenerator
 	{
 		private const int CityWidth = 65;
 		private const int CityHeight = 65;
 		private const int LocationPadding = 10;
 
-		private readonly GenerationResult _result;
+		private GenerationResult _result;
+		private LocationsGeneratorConfig _config;
 		private readonly Random _random = new Random();
 		private readonly HashSet<int> _roadTiles = new HashSet<int>();
 
-		public LocationsGenerator(GenerationResult result)
+		public LocationsGenerator(GenerationContext context): base(context)
 		{
-			if (result == null)
-			{
-				throw new ArgumentNullException("result");
-			}
-
-			_result = result;
 		}
 
 		private void AddToRoadTiles(Point p)
@@ -43,7 +38,7 @@ namespace Wanderers.Generator
 			var source = _result.Locations[sourceIndex];
 			var dest = _result.Locations[destIndex];
 
-			TJ.LogInfo("Building road beetween '{0}' and '{1}'...",
+			LogInfo("Building road beetween '{0}' and '{1}'...",
 				source.Config.Name,
 				dest.Config.Name);
 
@@ -78,7 +73,7 @@ namespace Wanderers.Generator
 				destPos,
 				new Point(_result.Width, _result.Height),
 				p => _result.IsRoadPlaceable(p),
-				p => p == destPos);
+				p => true);
 
 			var steps = pathFinder.Process();
 
@@ -94,9 +89,23 @@ namespace Wanderers.Generator
 			}
 		}
 
-		public void Generate()
+		public void Generate(LocationsGeneratorConfig config, GenerationResult result)
 		{
-			if (Config.Instance.Locations.Count == 0)
+			if (config == null)
+			{
+				throw new ArgumentNullException(nameof(config));
+			}
+
+			_config = config;
+
+			if (result == null)
+			{
+				throw new ArgumentNullException(nameof(result));
+			}
+
+			_result = result;
+
+			if (_config.Locations.Count == 0)
 			{
 				return;
 			}
@@ -105,11 +114,11 @@ namespace Wanderers.Generator
 			var areas = new List<Rectangle>();
 
 			// Draw cities
-			for (var i = 0; i < Config.Instance.Locations.Count; ++i)
+			for (var i = 0; i < _config.Locations.Count; ++i)
 			{
-				var locationConfig = Config.Instance.Locations[i];
+				var locationConfig = _config.Locations[i];
 
-				TJ.LogInfo("Generating location {0}...", locationConfig.Name);
+				LogInfo("Generating location {0}...", locationConfig.Name);
 
 				// Generate city size
 				int width = CityWidth;

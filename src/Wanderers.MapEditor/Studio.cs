@@ -8,6 +8,8 @@ using Wanderers.Compiling;
 using Myra.Graphics2D.UI.File;
 using Wanderers.Utils;
 using System.IO;
+using System.Threading.Tasks;
+using Wanderers.Generator;
 
 namespace Wanderers.MapEditor
 {
@@ -75,6 +77,10 @@ namespace Wanderers.MapEditor
 			set
 			{
 				_ui._mapEditor.Map = value;
+
+				UpdateToolbox();
+
+				_ui._mapNavigation.Invalidate();
 			}
 		}
 
@@ -171,6 +177,7 @@ namespace Wanderers.MapEditor
 
 			_ui = new StudioWidget();
 
+			_ui._newMenuItem.Selected += _newMenuItem_Selected;
 			_ui._openMenuItem.Selected += OpenProjectItemOnClicked;
 			_ui._resizeMenuItem.Selected += OnResizeItemClicked;
 			_ui._saveMenuItem.Selected += SaveItemOnClicked;
@@ -231,6 +238,151 @@ namespace Wanderers.MapEditor
 			_desktop.Widgets.Add(_statisticsGrid);
 
 			UpdateMenuFile();
+		}
+
+		private void _newMenuItem_Selected(object sender, EventArgs e)
+		{
+			var dlg = new NewMapDialog();
+
+			switch (_state.LastNewMapType)
+			{
+				case 0:
+					dlg._radioSingleTileMap.IsPressed = true;
+					break;
+				case 1:
+					dlg._radioGeneratedGlobalMap.IsPressed = true;
+					break;
+			}
+
+			dlg.Closed += (s, a) =>
+			{
+				if (!dlg.Result)
+				{
+					return;
+				}
+
+				if (dlg._radioSingleTileMap.IsPressed)
+				{
+					_state.LastNewMapType = 0;
+				}
+				else
+				{
+					// Generate new global map
+					GenerateGlobalMap();
+					_state.LastNewMapType = 1;
+				}
+			};
+
+			dlg.ShowModal(_desktop);
+		}
+
+		private static void SetMessageBoxText(Dialog dlg, string newText)
+		{
+			var textBlock = (TextBlock)dlg.Content;
+
+			textBlock.Text = newText;
+		}
+
+		private void GenerateGlobalMap()
+		{
+			var dlg = Dialog.CreateMessageBox("Generation...", string.Empty);
+
+			dlg.ButtonOk.Enabled = false;
+			dlg.Width = 400;
+
+			Map map = null;
+
+			Task.Run(() =>
+			{
+				try
+				{
+					var context = new GenerationContext
+					{
+						InfoHandler = (s) => SetMessageBoxText(dlg, s)
+					};
+
+					// Generate land
+					var landGenerator = new LandGenerator(context);
+					var landGeneratorConfig = new LandGeneratorConfig();
+					var generationResult = landGenerator.Generate(landGeneratorConfig);
+
+					// Generate locations
+					var locationGenerator = new LocationsGenerator(context);
+					var locationsGeneratorConfig = new LocationsGeneratorConfig();
+					locationGenerator.Generate(locationsGeneratorConfig, generationResult);
+
+					map = new Map
+					{
+						Size = new Point(landGeneratorConfig.WorldSize, landGeneratorConfig.WorldSize)
+					};
+
+					for (var i = 0; i < generationResult.Height; ++i)
+					{
+						for (var j = 0; j < generationResult.Width; ++j)
+						{
+							var tileType = generationResult.GetWorldMapTileType(j, i);
+							TileInfo tileInfo = null;
+							switch (tileType)
+							{
+								case WorldMapTileType.Water:
+									tileInfo = TJ.Module.TileInfos["water"];
+									break;
+								case WorldMapTileType.Mountain:
+									tileInfo = TJ.Module.TileInfos["mountain"];
+									break;
+								case WorldMapTileType.Forest:
+									tileInfo = TJ.Module.TileInfos["tree"];
+									break;
+								case WorldMapTileType.Road:
+									tileInfo = TJ.Module.TileInfos["ground"];
+									break;
+								case WorldMapTileType.Wall:
+									tileInfo = TJ.Module.TileInfos["wall"];
+									break;
+								default:
+									tileInfo = TJ.Module.TileInfos["ground"];
+									break;
+							}
+
+							var tile = new Tile();
+							tile.Info = tileInfo;
+							map.SetTileAt(new Point(j, i), tile);
+						}
+					}
+
+					SetMessageBoxText(dlg, "Done.");
+				}
+				catch (Exception ex)
+				{
+					SetMessageBoxText(dlg, "Error: " + ex.Message);
+				}
+				finally
+				{
+					dlg.ButtonOk.Enabled = true;
+				}
+			});
+
+			dlg.Closed += (s, a) =>
+			{
+				if (!dlg.Result || map == null)
+				{
+					if (!dlg.ButtonOk.Enabled)
+					{
+						// Generation is still running
+						// Abort it
+
+					}
+
+					return;
+				}
+
+				Map = map;
+
+				FilePath = string.Empty;
+				IsDirty = false;
+			};
+
+			dlg.ShowModal(_desktop);
 		}
 
 		private void _saveAsMenuItem_Selected(object sender, EventArgs e)
@@ -484,12 +636,7 @@ namespace Wanderers.MapEditor
 					}
 				}
 
-				var map = Compiler.LoadMapFromJson(_compiler, TJ.Module, json);
-				_ui._mapEditor.Map = map;
-
-				UpdateToolbox();
-
-				_ui._mapNavigation.Invalidate();
+				Map = Compiler.LoadMapFromJson(_compiler, TJ.Module, json);
 
 				FilePath = filePath;
 				IsDirty = false;

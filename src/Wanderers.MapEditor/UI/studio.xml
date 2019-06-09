@@ -1,5 +1,5 @@
 <Project>
-  <ExportOptions Namespace="Wanderers.MapEditor.UI" Class="StudioWidget" OutputPath="D:/Projects/TroublesOfJord/src/Wanderers.MapEditor/UI" />
+  <ExportOptions Namespace="Wanderers.MapEditor.UI" Class="StudioWidget" OutputPath="D:/Projects/Wanderers/src/Wanderers.MapEditor/UI" />
   <Grid Id="Root">
     <ColumnsProportions />
     <RowsProportions>
@@ -8,6 +8,7 @@
     </RowsProportions>
     <HorizontalMenu VerticalAlignment="Stretch" Id="_mainMenu">
       <MenuItem Id="" Text="&amp;File">
+        <MenuItem Id="_newMenuItem" Text="&amp;New..." />
         <MenuItem Id="_openMenuItem" Text="&amp;Open..." />
         <MenuItem Id="_saveMenuItem" Text="&amp;Save" />
         <MenuItem Id="_saveAsMenuItem" Text="Save &amp;As" />
