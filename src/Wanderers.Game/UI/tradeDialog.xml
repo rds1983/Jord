@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Project>
+  <ExportOptions Namespace="ToJ.UI" Class="TradeDialog" OutputPath="D:\Projects\TroublesOfJord\src\ToJ.Game\UI" />
+  <Dialog Title="Trade">
+    <Grid ShowGridLines="True" Width="800" Height="400" PaddingTop="16" PaddingBottom="16">
+      <RowsProportions>
+        <Proportion Type="Fill" />
+        <Proportion />
+      </RowsProportions>
+      <Grid ColumnSpacing="8">
+        <ColumnsProportions>
+          <Proportion Type="Part" />
+          <Proportion Type="Pixels" Value="100" />
+          <Proportion Type="Part" />
+        </ColumnsProportions>
+        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="8">
+          <RowsProportions>
+            <Proportion />
+            <Proportion />
+          </RowsProportions>
+          <Panel>
+            <TextBlock Text="player" Id="_textNameLeft" />
+            <TextBlock Text="Gold: 1000" Id="_textGoldLeft" HorizontalAlignment="Right" />
+          </Panel>
+          <ScrollPane GridRow="1">
+            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridLeft">
+              <ColumnsProportions>
+                <Proportion Type="Pixels" Value="16" />
+                <Proportion Type="Fill" />
+                <Proportion />
+              </ColumnsProportions>
+              <RowsProportions>
+                <Proportion />
+                <Proportion />
+              </RowsProportions>
+              <TextBlock Text="iron rations(5)" GridColumn="1" />
+              <TextBlock Text="5" HorizontalAlignment="Right" GridColumn="2" />
+              <TextBlock Text="canteen" GridColumn="1" GridRow="1" />
+              <TextBlock Text="7" GridColumn="2" GridRow="1" />
+            </Grid>
+          </ScrollPane>
+        </Grid>
+        <Grid VerticalAlignment="Center" Id="_gridGoldTransfer" GridColumn="1" >
+          <RowsProportions>
+            <Proportion />
+            <Proportion />
+          </RowsProportions>
+          <TextBlock Text="500" Id="_textGoldTransfer" HorizontalAlignment="Center" />
+          <Panel Id="_panelArrow" Height="20" GridRow="1" ></Panel>
+        </Grid>
+        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="4" GridColumn="2">
+          <RowsProportions>
+            <Proportion />
+            <Proportion />
+          </RowsProportions>
+          <Panel>
+            <TextBlock Text="merchant" Id="_textNameRight" />
+            <TextBlock Text="Gold: 50000" Id="_textGoldRight" HorizontalAlignment="Right" />
+          </Panel>
+          <ScrollPane GridRow="1">
+            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridRight">
+              <ColumnsProportions>
+                <Proportion Type="Pixels" Value="16" />
+                <Proportion Type="Fill" />
+                <Proportion />
+              </ColumnsProportions>
+              <RowsProportions>
+                <Proportion />
+                <Proportion />
+                <Proportion />
+                <Proportion />
+                <Proportion />
+                <Proportion />
+                <Proportion />
+                <Proportion />
+              </RowsProportions>
+              <TextBlock Text="iron rations(100)" GridColumn="1" />
+              <TextBlock Text="10" HorizontalAlignment="Right" GridColumn="2" />
+              <TextBlock Text="canteen" GridColumn="1" GridRow="1" />
+              <TextBlock Text="15" GridColumn="2" GridRow="1" />
+              <TextBlock Text="barrel" GridColumn="1" GridRow="2" />
+              <TextBlock Text="25" GridColumn="2" GridRow="2" />
+              <TextBlock Text="short sword" GridColumn="1" GridRow="3" />
+              <TextBlock Text="50" GridColumn="2" GridRow="3" />
+              <TextBlock Text="leather armor" GridColumn="1" GridRow="4" />
+              <TextBlock Text="40" GridColumn="2" GridRow="4" />
+              <TextBlock Text="leather leggings" GridColumn="1" GridRow="5" />
+              <TextBlock Text="30" GridColumn="2" GridRow="5" />
+              <TextBlock Text="small shield" GridColumn="1" GridRow="6" />
+              <TextBlock Text="25" GridColumn="2" GridRow="6" />
+            </Grid>
+          </ScrollPane>
+        </Grid>
+      </Grid>
+      <TextBlock Text="short sword - weapon, damage: 3-8" Id="_textDescription" GridRow="1" />
+    </Grid>
+  </Dialog>
+</Project>

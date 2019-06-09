@@ -1,0 +1,55 @@
+<Project>
+  <ExportOptions Namespace="Wanderers.MapEditor.UI" Class="StudioWidget" OutputPath="D:/Projects/TroublesOfJord/src/Wanderers.MapEditor/UI" />
+  <Grid Id="Root">
+    <ColumnsProportions />
+    <RowsProportions>
+      <Proportion />
+      <Proportion Type="Fill" />
+    </RowsProportions>
+    <HorizontalMenu VerticalAlignment="Stretch" Id="_mainMenu">
+      <MenuItem Id="" Text="&amp;File">
+        <MenuItem Id="_openMenuItem" Text="&amp;Open..." />
+        <MenuItem Id="_saveMenuItem" Text="&amp;Save" />
+        <MenuItem Id="_saveAsMenuItem" Text="Save &amp;As" />
+        <MenuSeparator />
+        <MenuItem Id="_resizeMenuItem" Text="&amp;Resize Map" />
+        <MenuItem Id="_reloadModuleMenuItem" Text="Reload &amp;Module" />
+        <MenuSeparator />
+        <MenuItem Id="_debugOptionsMenuItem" Text="&amp;UI Debug Options" />
+        <MenuSeparator />
+        <MenuItem Id="_quitMenuItem" Text="&amp;Quit" />
+      </MenuItem>
+      <MenuItem Id="" Text="&amp;Help">
+        <MenuItem Id="_aboutMenuItem" Text="&amp;About" />
+      </MenuItem>
+    </HorizontalMenu>
+    <HorizontalSplitPane Id="_topSplitPane" GridRow="1">
+      <Grid Id="_leftContainer">
+        <ColumnsProportions />
+        <RowsProportions>
+          <Proportion Type="Fill" />
+          <Proportion />
+        </RowsProportions>
+        <TextBlock Text="" Id="_textPosition" GridRow="1" />
+      </Grid>
+      <VerticalSplitPane GridColumn="2" GridRow="1">
+        <Panel Id="_mapViewerContainer" />
+        <Grid GridRow="2">
+          <ColumnsProportions />
+          <RowsProportions>
+            <Proportion />
+            <Proportion />
+          </RowsProportions>
+          <ComboBox Id="_comboItemTypes">
+            <ListItem Id="_tilesItem" Text="Tiles" />
+            <ListItem Id="_creaturesItem" Text="Creatures" />
+          </ComboBox>
+          <ListBox SelectionMode="Single" Id="_listBoxItems" GridRow="1">
+            <ListItem Id="" Text="testTile1" />
+            <ListItem Id="" Text="testTile2" />
+          </ListBox>
+        </Grid>
+      </VerticalSplitPane>
+    </HorizontalSplitPane>
+  </Grid>
+</Project>

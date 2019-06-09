@@ -1,0 +1,54 @@
+﻿{
+  "tileInfos": {
+    "grass": {
+      "color": "darkGreen",
+      "passable": "true",
+      "symbol": "."
+    },
+    "highGrass": {
+      "color": "green",
+      "passable": "true",
+      "symbol": "."
+    },
+    "ground": {
+      "color": "brown",
+      "passable": "true",
+      "symbol": "."
+    },
+    "floor": {
+      "color": "gray",
+      "passable": "true",
+      "symbol": "."
+    },
+    "tree": {
+      "color": "green",
+      "passable": "false",
+      "symbol": "T"
+    },
+    "mountain": {
+      "color": "white",
+      "passable": "false",
+      "symbol": "^"
+    },
+    "water": {
+      "color": "blue",
+      "passable": "false",
+      "symbol": "."
+    },
+    "road": {
+      "color": "brown",
+      "passable": "true",
+      "symbol": "."
+    },
+    "wall": {
+      "color": "gray",
+      "passable": "false",
+      "symbol": "#"
+    },
+    "plato": {
+      "color": "white",
+      "passable": "true",
+      "symbol": "."
+    }
+  }
+}

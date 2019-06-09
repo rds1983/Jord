@@ -1,0 +1,22 @@
+<Project>
+  <ExportOptions Namespace="Wanderers.MapEditor.UI" Class="ResizeMapDialog" OutputPath="D:/Projects/TroublesOfJord/src/Wanderers.MapEditor/UI" />
+  <Dialog Title="Resize Map" Left="373" Top="377" Width="150">
+    <Grid ColumnSpacing="8" RowSpacing="8" HorizontalAlignment="Right" Id="Root" GridRow="1">
+      <ColumnsProportions>
+        <Proportion />
+        <Proportion Type="Fill" />
+      </ColumnsProportions>
+      <RowsProportions>
+        <Proportion />
+        <Proportion />
+        <Proportion />
+      </RowsProportions>
+      <TextBlock Text="Width:" Wrap="True" />
+      <SpinButton Maximum="1024" Minimum="1" Value="48" Integer="True" HorizontalAlignment="Stretch" Id="_spinWidth" GridColumn="1" />
+      <TextBlock Text="Height:" Wrap="True" GridRow="1" />
+      <SpinButton Maximum="1024" Minimum="1" Value="48" Integer="True" HorizontalAlignment="Stretch" Id="_spinHeight" GridColumn="1" GridRow="1" />
+      <TextBlock Text="Filler:" Wrap="True" GridRow="2" />
+      <ComboBox Id="_comboFiller" GridColumn="1" GridRow="2" />
+    </Grid>
+  </Dialog>
+</Project>

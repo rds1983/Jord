@@ -1,0 +1,26 @@
+<Project>
+  <ExportOptions Namespace="Wanderers.UI" Class="CharacterImage" OutputPath="/home/rds/Projects/Wanderers/Wanderers/UI" />
+  <Grid ShowGridLines="True" RowSpacing="4" HorizontalAlignment="Left" VerticalAlignment="Top" Id="Root" Width="200" Height="300">
+    <ColumnsProportions />
+    <RowsProportions>
+      <Proportion />
+      <Proportion Type="Fill" Value="6" />
+      <Proportion />
+    </RowsProportions>
+    <TextBlock Text="Henry" Wrap="True" Id="_textName" />
+    <Grid RowSpacing="4" GridRow="2">
+      <ColumnsProportions>
+        <Proportion />
+        <Proportion Type="Fill" />
+      </ColumnsProportions>
+      <RowsProportions>
+        <Proportion />
+        <Proportion />
+      </RowsProportions>
+      <TextBlock Text="HP:" Wrap="True" />
+      <TextBlock Text="IP:" Wrap="True" Id="" GridRow="1" />
+      <TextBlock Text="100/100" Wrap="True" Id="_textHP" HorizontalAlignment="Center" GridColumn="1" />
+      <TextBlock Text="100/100" Wrap="True" Id="_textIP" HorizontalAlignment="Center" GridColumn="1" GridRow="1" />
+    </Grid>
+  </Grid>
+</Project>
