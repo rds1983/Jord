@@ -489,6 +489,8 @@ namespace Wanderers.MapEditor
 
 				UpdateToolbox();
 
+				_ui._mapNavigation.Invalidate();
+
 				FilePath = filePath;
 				IsDirty = false;
 			}

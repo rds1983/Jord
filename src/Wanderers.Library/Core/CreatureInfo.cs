@@ -29,5 +29,10 @@ namespace Wanderers.Core
 		{
 			get; set;
 		}
+
+		public CreatureInfo()
+		{
+			Inventory = new Inventory();
+		}
 	}
 }
