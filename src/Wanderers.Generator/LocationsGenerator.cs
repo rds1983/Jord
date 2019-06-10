@@ -73,7 +73,7 @@ namespace Wanderers.Generator
 				destPos,
 				new Point(_result.Width, _result.Height),
 				p => _result.IsRoadPlaceable(p),
-				p => true);
+				p => p == destPos);
 
 			var steps = pathFinder.Process();
 

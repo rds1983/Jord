@@ -84,6 +84,18 @@ namespace Wanderers
 			SwitchTo<MainMenu>();
 		}
 
+		public void GameLog(string message)
+		{
+			var asGameView = _desktop.Widgets[0] as GameView;
+			if (asGameView == null)
+			{
+				return;
+			}
+
+			asGameView.LogView.Log(message);
+		}
+
+
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);

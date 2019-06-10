@@ -334,13 +334,13 @@ namespace Wanderers.MapEditor
 									tileInfo = TJ.Module.TileInfos["tree"];
 									break;
 								case WorldMapTileType.Road:
-									tileInfo = TJ.Module.TileInfos["ground"];
+									tileInfo = TJ.Module.TileInfos["road"];
 									break;
 								case WorldMapTileType.Wall:
 									tileInfo = TJ.Module.TileInfos["wall"];
 									break;
 								default:
-									tileInfo = TJ.Module.TileInfos["ground"];
+									tileInfo = TJ.Module.TileInfos["grass"];
 									break;
 							}
 

@@ -61,18 +61,7 @@ namespace Wanderers.Core
 
 		public void OnTimer()
 		{
-			for (var y = 0; y < Player.Map.Size.Y; ++y)
-			{
-				for (var x = 0; x < Player.Map.Size.X; ++x)
-				{
-					var tile = Player.Map.GetTileAt(x, y);
-
-					if (tile.Creature != null)
-					{
-						tile.Creature.OnTimer();
-					}
-				}
-			}
+			Player.OnTimer();
 		}
 	}
 }

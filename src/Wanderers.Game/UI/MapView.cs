@@ -68,6 +68,8 @@ namespace Wanderers.UI
 			}
 
 			TJ.GameSession.Player.InitiateMovement(gameCoords.ToPoint(), distance, finished);
+
+			WanderersGame.Instance.GameLog(string.Format("Moving player to location ({0}, {1})", (int)gameCoords.X, (int)gameCoords.Y));
 		}
 	}
 }

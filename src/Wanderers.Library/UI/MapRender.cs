@@ -10,6 +10,7 @@ namespace Wanderers.UI
 	public class MapRender : Widget
 	{
 		private const int SignPeriodInMs = 1000;
+		public static readonly Point TileSize = new Point(32, 32);
 
 		private Map _map;
 		private DateTime? _lastStamp;
@@ -27,19 +28,6 @@ namespace Wanderers.UI
 		public Vector2 TopLeft
 		{
 			get; set;
-		}
-
-		public Point TileSize
-		{
-			get
-			{
-				if (Map == null)
-				{
-					return Point.Zero;
-				}
-
-				return new Point(32, 32);
-			}
 		}
 
 		public Point GridSize
