@@ -59,7 +59,6 @@ namespace Wanderers.UI
 			Font = DefaultAssets.Font;
 			SmallFont = DefaultAssets.FontSmall;
 
-			CanFocus = false;
 			ClipToBounds = true;
 			// Background = SpriteBatch.White;
 

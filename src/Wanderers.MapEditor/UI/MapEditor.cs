@@ -1,12 +1,11 @@
 ﻿using Wanderers.Core;
 using Microsoft.Xna.Framework;
 using Myra;
-using Myra.Attributes;
 using Myra.Graphics2D.UI;
-using Newtonsoft.Json;
 using System;
 using Wanderers.UI;
-using Wanderers.Utils;
+using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace Wanderers.MapEditor.UI
 {
@@ -14,8 +13,8 @@ namespace Wanderers.MapEditor.UI
 	{
 		private Point? _markPosition;
 
-		[JsonIgnore]
-		[HiddenInEditor]
+		[XmlIgnore]
+		[Browsable(false)]
 		public Point? MarkPosition
 		{
 			get
@@ -72,7 +71,7 @@ namespace Wanderers.MapEditor.UI
 				return;
 			}
 
-			var gameCoords = ScreenToGame(MousePosition);
+			var gameCoords = ScreenToGame(Desktop.MousePosition);
 
 			if (gameCoords.X >= Map.Size.X || gameCoords.Y >= Map.Size.Y)
 			{
@@ -83,7 +82,7 @@ namespace Wanderers.MapEditor.UI
 				MarkPosition = new Point((int)gameCoords.X, (int)gameCoords.Y);
 			}
 
-			if (Desktop.LastMouseInfo.IsLeftButtonDown)
+			if (Desktop.IsTouchDown)
 			{
 				ProcessMouseDown();
 			}
@@ -96,14 +95,10 @@ namespace Wanderers.MapEditor.UI
 			MarkPosition = null;
 		}
 
-		public override void OnMouseDown(MouseButtons mb)
+		public override void OnTouchDown()
 		{
-			base.OnMouseDown(mb);
-
-			if (mb == MouseButtons.Left)
-			{
-				ProcessMouseDown();
-			}
+			base.OnTouchDown();
+			ProcessMouseDown();
 		}
 
 		private void ProcessMouseDown()

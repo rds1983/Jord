@@ -42,7 +42,7 @@ namespace Wanderers.UI
 			{
 				var row = _gridEquipment.RowsProportions.Count;
 
-				var textSlot = new TextBlock
+				var textSlot = new Label
 				{
 					Text = "<" + item.Slot.ToString().ToLower() + ">",
 					GridRow = row
@@ -51,7 +51,7 @@ namespace Wanderers.UI
 
 				if (item.Item != null)
 				{
-					var textItem = new TextBlock
+					var textItem = new Label
 					{
 						Text = item.Item.Info.Name,
 						GridColumn = 1,
@@ -61,7 +61,7 @@ namespace Wanderers.UI
 					_gridEquipment.Widgets.Add(textItem);
 				}
 
-				_gridEquipment.RowsProportions.Add(new Grid.Proportion());
+				_gridEquipment.RowsProportions.Add(new Proportion());
 			}
 
 			_gridInventory.Widgets.Clear();
@@ -71,14 +71,14 @@ namespace Wanderers.UI
 			{
 				var row = _gridInventory.RowsProportions.Count;
 
-				var textSlot = new TextBlock
+				var textSlot = new Label
 				{
 					Text = item.ToString(),
 					GridRow = row
 				};
 				_gridInventory.Widgets.Add(textSlot);
 
-				_gridInventory.RowsProportions.Add(new Grid.Proportion());
+				_gridInventory.RowsProportions.Add(new Proportion());
 			}
 		}
 

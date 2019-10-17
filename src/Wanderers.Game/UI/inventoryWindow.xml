@@ -1,122 +1,80 @@
-<?xml version="1.0" encoding="utf-16"?>
 <Project>
-  <ExportOptions Namespace="ToJ.UI" Class="InventoryWindow" OutputPath="D:\Projects\TroublesOfJord\src\ToJ.Game\UI" />
-  <Window Title="Items">
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="InventoryWindow" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
+  <Window Title="Items" Left="24">
     <Grid ShowGridLines="True" Width="1000" Height="520" PaddingTop="16" PaddingBottom="16">
-      <RowsProportions>
+      <Grid.RowsProportions>
         <Proportion Type="Fill" />
-        <Proportion />
-      </RowsProportions>
-      <Grid ShowGridLines="True" ColumnSpacing="8" >
-        <ColumnsProportions>
-          <Proportion Type="Part" />
-          <Proportion Type="Part" />
-        </ColumnsProportions>
-        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="8" >
-          <RowsProportions>
-            <Proportion />
-            <Proportion />
-          </RowsProportions>
-          <TextBlock Text="Equipment" Id="_textNameLeft" />
+        <Proportion Type="Auto" />
+      </Grid.RowsProportions>
+      <Grid ShowGridLines="True" ColumnSpacing="8">
+        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="8">
+          <Grid.DefaultRowProportion Type="Auto" />
+          <Label Text="Equipment" Id="_textNameLeft" />
           <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridEquipment" GridRow="1">
-            <ColumnsProportions>
-              <Proportion />
-              <Proportion />
-            </ColumnsProportions>
-            <RowsProportions>
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-              <Proportion />
-            </RowsProportions>
-            <TextBlock Text="&lt;light&gt;" />
-            <TextBlock Text="eye of the deep" GridColumn="1" />
-            <TextBlock Text="&lt;left finger&gt;" GridRow="1" />
-            <TextBlock Text="a carved wooden ring" GridColumn="1" GridRow="1" />
-            <TextBlock Text="&lt;right finger&gt;" GridRow="2" />
-            <TextBlock Text="a carved wooden ring" GridColumn="1" GridRow="2" />
-            <TextBlock Text="&lt;neck 1&gt;" GridRow="3" />
-            <TextBlock Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="3" />
-            <TextBlock Text="&lt;neck 2&gt;" GridRow="4" />
-            <TextBlock Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="4" />
-            <TextBlock Text="&lt;body&gt;" GridRow="5" />
-            <TextBlock Text="a gilded corset of crimson and gold" GridColumn="1" GridRow="5" />
-            <TextBlock Text="&lt;head&gt;" GridRow="6" />
-            <TextBlock Text="The Crown of Thorns" GridColumn="1" GridRow="6" />
-            <TextBlock Text="&lt;legs&gt;" GridRow="7" />
-            <TextBlock Text="Ogre Hide Leggings" GridColumn="1" GridRow="7" />
-            <TextBlock Text="&lt;feet&gt;" GridRow="8" />
-            <TextBlock Text="a pair of dolphin skin boots" GridColumn="1" GridRow="8" />
-            <TextBlock Text="&lt;hands&gt;" GridRow="9" />
-            <TextBlock Text="gloves of the yellow rose" GridColumn="1" GridRow="9" />
-            <TextBlock Text="&lt;arms&gt;" GridRow="10" />
-            <TextBlock Text="a set of tidal sleeves" GridColumn="1" GridRow="10" />
-            <TextBlock Text="&lt;shield&gt;" GridRow="11" />
-            <TextBlock Text="an intricately decorated shield" GridColumn="1" GridRow="11" />
-            <TextBlock Text="&lt;about body&gt;" GridRow="12" />
-            <TextBlock Text="a dragonwing tunic" GridColumn="1" GridRow="12" />
-            <TextBlock Text="&lt;waist&gt;" GridRow="13" />
-            <TextBlock Text="a golden belt" GridColumn="1" GridRow="13" />
-            <TextBlock Text="&lt;left wrist&gt;" GridRow="14" />
-            <TextBlock Text="tanzanite bracelet" GridColumn="1" GridRow="14" />
-            <TextBlock Text="&lt;right wrist&gt;" GridRow="15" />
-            <TextBlock Text="tanzanite bracelet" GridColumn="1" GridRow="15" />
-            <TextBlock Text="&lt;wielded&gt;" GridRow="16" />
-            <TextBlock Text="a secari dagger" GridColumn="1" GridRow="16" />
-            <TextBlock Text="&lt;held&gt;" GridRow="17" />
-            <TextBlock Text="a moss-covered pebble" GridColumn="1" GridRow="17" />
+            <Grid.DefaultColumnProportion Type="Auto" />
+            <Grid.DefaultRowProportion Type="Auto" />
+            <Label Text="&lt;light&gt;" />
+            <Label Text="eye of the deep" GridColumn="1" />
+            <Label Text="&lt;left finger&gt;" GridRow="1" />
+            <Label Text="a carved wooden ring" GridColumn="1" GridRow="1" />
+            <Label Text="&lt;right finger&gt;" GridRow="2" />
+            <Label Text="a carved wooden ring" GridColumn="1" GridRow="2" />
+            <Label Text="&lt;neck 1&gt;" GridRow="3" />
+            <Label Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="3" />
+            <Label Text="&lt;neck 2&gt;" GridRow="4" />
+            <Label Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="4" />
+            <Label Text="&lt;body&gt;" GridRow="5" />
+            <Label Text="a gilded corset of crimson and gold" GridColumn="1" GridRow="5" />
+            <Label Text="&lt;head&gt;" GridRow="6" />
+            <Label Text="The Crown of Thorns" GridColumn="1" GridRow="6" />
+            <Label Text="&lt;legs&gt;" GridRow="7" />
+            <Label Text="Ogre Hide Leggings" GridColumn="1" GridRow="7" />
+            <Label Text="&lt;feet&gt;" GridRow="8" />
+            <Label Text="a pair of dolphin skin boots" GridColumn="1" GridRow="8" />
+            <Label Text="&lt;hands&gt;" GridRow="9" />
+            <Label Text="gloves of the yellow rose" GridColumn="1" GridRow="9" />
+            <Label Text="&lt;arms&gt;" GridRow="10" />
+            <Label Text="a set of tidal sleeves" GridColumn="1" GridRow="10" />
+            <Label Text="&lt;shield&gt;" GridRow="11" />
+            <Label Text="an intricately decorated shield" GridColumn="1" GridRow="11" />
+            <Label Text="&lt;about body&gt;" GridRow="12" />
+            <Label Text="a dragonwing tunic" GridColumn="1" GridRow="12" />
+            <Label Text="&lt;waist&gt;" GridRow="13" />
+            <Label Text="a golden belt" GridColumn="1" GridRow="13" />
+            <Label Text="&lt;left wrist&gt;" GridRow="14" />
+            <Label Text="tanzanite bracelet" GridColumn="1" GridRow="14" />
+            <Label Text="&lt;right wrist&gt;" GridRow="15" />
+            <Label Text="tanzanite bracelet" GridColumn="1" GridRow="15" />
+            <Label Text="&lt;wielded&gt;" GridRow="16" />
+            <Label Text="a secari dagger" GridColumn="1" GridRow="16" />
+            <Label Text="&lt;held&gt;" GridRow="17" />
+            <Label Text="a moss-covered pebble" GridColumn="1" GridRow="17" />
           </Grid>
         </Grid>
-        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="8" GridColumn="1" >
-          <RowsProportions>
-            <Proportion />
-            <Proportion />
-          </RowsProportions>
+        <Grid ShowGridLines="True" ColumnSpacing="8" RowSpacing="8" GridColumn="1">
+          <Grid.DefaultRowProportion Type="Auto" />
           <Panel>
-            <TextBlock Text="Inventory" Id="_textNameRight" />
-            <TextBlock Text="Gold: 50000" Id="_textGoldRight" HorizontalAlignment="Right" />
+            <Label Text="Inventory" Id="_textNameRight" />
+            <Label Text="Gold: 50000" Id="_textGoldRight" HorizontalAlignment="Right" />
           </Panel>
-          <ScrollPane GridRow="1">
+          <ScrollViewer GridRow="1">
             <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridInventory">
-              <ColumnsProportions>
+              <Grid.DefaultRowProportion Type="Auto" />
+              <Grid.ColumnsProportions>
                 <Proportion Type="Fill" />
-              </ColumnsProportions>
-              <RowsProportions>
-                <Proportion />
-                <Proportion />
-                <Proportion />
-                <Proportion />
-                <Proportion />
-                <Proportion />
-                <Proportion />
-                <Proportion />
-              </RowsProportions>
-              <TextBlock Text="iron rations(100)" />
-              <TextBlock Text="canteen" GridRow="1" />
-              <TextBlock Text="barrel" GridRow="2" />
-              <TextBlock Text="short sword" GridRow="3" />
-              <TextBlock Text="leather armor" GridRow="4" />
-              <TextBlock Text="leather leggings" GridRow="5" />
-              <TextBlock Text="small shield" GridRow="6" />
+              </Grid.ColumnsProportions>
+              <Label Text="iron rations(100)" />
+              <Label Text="canteen" GridRow="1" />
+              <Label Text="barrel" GridRow="2" />
+              <Label Text="short sword" GridRow="3" />
+              <Label Text="leather armor" GridRow="4" />
+              <Label Text="leather leggings" GridRow="5" />
+              <Label Text="small shield" GridRow="6" />
             </Grid>
-          </ScrollPane>
+          </ScrollViewer>
         </Grid>
       </Grid>
-      <TextBlock Text="short sword - weapon, damage: 3-8" Id="_textDescription" GridRow="1" />
+      <Label Text="short sword - weapon, damage: 3-8" Id="_textDescription" GridRow="1" />
     </Grid>
   </Window>
 </Project>

@@ -1,16 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<TargetFramework>netstandard2.0</TargetFramework>
+	<TargetFramework>net45</TargetFramework>
     <AssemblyName>Wanderers.Generator</AssemblyName>
     <RootNamespace>Wanderers.Generator</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-	</ItemGroup>
+    <PackageReference Include="MonoGame.Framework.Portable" PrivateAssets="All" Version="3.6.0.1625" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\deps\Myra\src\Myra\Myra.csproj" />
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />
   </ItemGroup>
 </Project>

@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Wanderers.Core;
 using Microsoft.Xna.Framework;
-using Myra.Attributes;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
-using Newtonsoft.Json;
-using Wanderers.Utils;
 using Microsoft.Xna.Framework.Input;
 using Myra;
 using System;
+using System.Xml.Serialization;
+using System.ComponentModel;
+using Wanderers.Utils;
 
 namespace Wanderers.MapEditor.UI
 {
@@ -21,12 +21,12 @@ namespace Wanderers.MapEditor.UI
 		private TextureRegion _image;
 		private bool _dirty = true;
 
-		[JsonIgnore]
-		[HiddenInEditor]
+		[XmlIgnore]
+		[Browsable(false)]
 		public MapEditor MapEditor { get; set; }
 
-		[JsonIgnore]
-		[HiddenInEditor]
+		[XmlIgnore]
+		[Browsable(false)]
 		public Map Map
 		{
 			get
@@ -40,10 +40,10 @@ namespace Wanderers.MapEditor.UI
 			}
 		}
 
+		protected override bool AcceptsKeyboardFocus => true;
+
 		public MapNavigation()
 		{
-			CanFocus = true;
-
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Stretch;
 		}
@@ -91,7 +91,7 @@ namespace Wanderers.MapEditor.UI
 				return;
 			}
 
-			if (_colorBuffer == null || 
+			if (_colorBuffer == null ||
 				_colorBuffer.Width != Map.Size.X ||
 				_colorBuffer.Height != Map.Size.Y)
 			{
@@ -194,19 +194,16 @@ namespace Wanderers.MapEditor.UI
 			}
 		}
 
-		public override void OnMouseDown(MouseButtons mb)
+		public override void OnTouchDown()
 		{
-			base.OnMouseDown(mb);
+			base.OnTouchDown();
 
 			if (Map == null)
 			{
 				return;
 			}
 
-			if (mb == MouseButtons.Left)
-			{
-				ProcessMouseDown();
-			}
+			ProcessMouseDown();
 		}
 
 		private void ProcessMouseDown()

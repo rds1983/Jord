@@ -22,9 +22,9 @@ namespace Wanderers.MapEditor
 		private Desktop _desktop;
 		private StudioWidget _ui;
 		private Grid _statisticsGrid;
-		private TextBlock _gcMemoryLabel;
-		private TextBlock _fpsLabel;
-		private TextBlock _widgetsCountLabel;
+		private Label _gcMemoryLabel;
+		private Label _fpsLabel;
+		private Label _widgetsCountLabel;
 //		private readonly FramesPerSecondCounter _fpsCounter = new FramesPerSecondCounter();
 		private string _filePath;
 		private bool _isDirty;
@@ -204,18 +204,18 @@ namespace Wanderers.MapEditor
 				Visible = false
 			};
 
-			_statisticsGrid.RowsProportions.Add(new Grid.Proportion());
-			_statisticsGrid.RowsProportions.Add(new Grid.Proportion());
-			_statisticsGrid.RowsProportions.Add(new Grid.Proportion());
+			_statisticsGrid.RowsProportions.Add(new Proportion());
+			_statisticsGrid.RowsProportions.Add(new Proportion());
+			_statisticsGrid.RowsProportions.Add(new Proportion());
 
-			_gcMemoryLabel = new TextBlock
+			_gcMemoryLabel = new Label
 			{
 				Text = "GC Memory: ",
 				Font = DefaultAssets.FontSmall
 			};
 			_statisticsGrid.Widgets.Add(_gcMemoryLabel);
 
-			_fpsLabel = new TextBlock
+			_fpsLabel = new Label
 			{
 				Text = "FPS: ",
 				Font = DefaultAssets.FontSmall,
@@ -223,7 +223,7 @@ namespace Wanderers.MapEditor
 			};
 			_statisticsGrid.Widgets.Add(_fpsLabel);
 
-			_widgetsCountLabel = new TextBlock
+			_widgetsCountLabel = new Label
 			{
 				Text = "Total Widgets: ",
 				Font = DefaultAssets.FontSmall,
@@ -278,9 +278,9 @@ namespace Wanderers.MapEditor
 
 		private static void SetMessageBoxText(Dialog dlg, string newText)
 		{
-			var textBlock = (TextBlock)dlg.Content;
+			var Label = (Label)dlg.Content;
 
-			textBlock.Text = newText;
+			Label.Text = newText;
 		}
 
 		private void GenerateGlobalMap()
@@ -517,9 +517,6 @@ namespace Wanderers.MapEditor
 
 			GraphicsDevice.Clear(Color.Black);
 
-			_desktop.Bounds = new Rectangle(0, 0,
-				GraphicsDevice.PresentationParameters.BackBufferWidth,
-				GraphicsDevice.PresentationParameters.BackBufferHeight);
 			_desktop.Render();
 
 //			_fpsCounter.Draw(gameTime);

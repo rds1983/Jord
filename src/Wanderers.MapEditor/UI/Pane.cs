@@ -2,7 +2,7 @@
 
 namespace Wanderers.MapEditor.UI
 {
-	public class Pane: ScrollPane
+	public class Pane: ScrollViewer
 	{
 	}
 }

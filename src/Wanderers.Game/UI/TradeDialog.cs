@@ -165,7 +165,7 @@ namespace Wanderers.UI
 		{
 			var row = grid.RowsProportions.Count;
 
-			grid.RowsProportions.Add(new Grid.Proportion());
+			grid.RowsProportions.Add(new Proportion());
 
 			if (isAddition)
 			{
@@ -187,7 +187,7 @@ namespace Wanderers.UI
 				text = itemPile.ToString();
 			}
 
-			var textBlock = new TextBlock
+			var textBlock = new Label
 			{
 				Text = text,
 				GridColumn = 1,
@@ -204,7 +204,7 @@ namespace Wanderers.UI
 
 			var price = GetItemPrice(itemPile.Item, 1, isSell ? SellK : 1.0f);
 
-			textBlock = new TextBlock
+			textBlock = new Label
 			{
 				Text = price.ToString(),
 				GridColumn = 2,

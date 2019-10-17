@@ -41,7 +41,7 @@ namespace Wanderers.UI
 		{
 			base.OnTouchDown();
 
-			var gameCoords = ScreenToGame(MousePosition);
+			var gameCoords = ScreenToGame(Desktop.MousePosition);
 
 			if (gameCoords.X < 0 || gameCoords.Y < 0 || gameCoords.X >= Map.Size.X || gameCoords.Y >= Map.Size.Y)
 			{

@@ -1,6 +1,5 @@
 ﻿using Myra.Graphics2D.UI;
 using Wanderers.Core;
-using Wanderers.MapEditor.UI;
 using IItemWithId = Wanderers.Core.IItemWithId;
 
 namespace Wanderers.MapEditor.UI
@@ -31,12 +30,12 @@ namespace Wanderers.MapEditor.UI
 
 		public Tree Tree
 		{
-			get { return (Tree) Widget; }
+			get { return (Tree) Content; }
 		}
 
 		public Explorer()
 		{
-			Widget = new Tree();
+			Content = new Tree();
 		}
 
 		public TreeNode AddItemToTree(IItemWithId item, TreeNode root)

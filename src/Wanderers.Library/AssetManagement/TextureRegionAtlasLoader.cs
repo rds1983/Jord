@@ -14,9 +14,9 @@ namespace Wanderers.AssetManagement
 
 		public TextureRegionAtlas Load(AssetLoaderContext context, string assetName)
 		{
-			if (!assetName.EndsWith(".json"))
+			if (!assetName.EndsWith(".xml"))
 			{
-				assetName += ".json";
+				assetName += ".xml";
 			}
 
 			var imageName = Path.ChangeExtension(assetName, ".png");
@@ -24,7 +24,7 @@ namespace Wanderers.AssetManagement
 			var texture = context.Load<Texture2D>(imageName);
 			var data = context.ReadAsText(assetName);
 
-			return TextureRegionAtlas.FromJson(data, texture);
+			return TextureRegionAtlas.FromXml(data, texture);
 		}
 	}
 }

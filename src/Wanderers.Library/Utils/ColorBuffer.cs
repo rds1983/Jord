@@ -124,19 +124,5 @@ namespace Wanderers.Utils
 			texture.SetData(_data);
 			return texture;
 		}
-
-		/// <summary>
-		/// Loads an image in PNG, JPG, BMP, GIF, TGA or PSD format from the stream
-		/// </summary>
-		/// <param name="stream"></param>
-		/// <returns></returns>
-		public static ColorBuffer FromStream(Stream stream)
-		{
-			int width, height;
-			byte[] pixels;
-			Texture2D.TextureDataFromStreamEXT(stream, out width, out height, out pixels);
-
-			return new ColorBuffer(width, height, pixels);
-		}
 	}
 }

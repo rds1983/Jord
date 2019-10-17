@@ -25,6 +25,8 @@ namespace Wanderers.UI
 			}
 		}
 
+		protected override bool AcceptsKeyboardFocus => true;
+
 		public GameView()
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -39,8 +41,6 @@ namespace Wanderers.UI
 
 			_logView.GridColumn = 1;
 			InternalChild.Widgets.Add(_logView);
-
-			CanFocus = true;
 		}
 
 		public override void OnKeyDown(Keys k)

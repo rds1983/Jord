@@ -43,7 +43,7 @@ namespace Wanderers.UI
 		public void Log(string message)
 		{
 			// Add to the end
-			var textBlock = new TextBlock
+			var textBlock = new Label
 			{
 				Text = message,
 				Wrap = true
@@ -125,7 +125,6 @@ namespace Wanderers.UI
 					_gridLog.Widgets.RemoveAt(0);
 					_gridLog.RowsProportions.RemoveAt(0);
 				}
-
 
 				UpdateGridLogPositions();
 

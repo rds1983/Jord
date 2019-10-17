@@ -1,18 +1,15 @@
 <Project>
-  <ExportOptions Namespace="Wanderers.UI" Class="CharacterGenerationDialog" OutputPath="D:/Projects/TroublesOfJord/src/Wanderers.Game/UI" />
-  <Dialog Title="Create Character" Left="361" Top="323" Width="200">
-    <Grid ColumnSpacing="8" RowSpacing="4" GridRow="1">
-      <ColumnsProportions>
-        <Proportion />
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="CharacterGenerationDialog" OutputPath="D:/Projects/Wanderers/src/Wanderers.Game/UI" />
+  <Dialog Title="Create Character" Left="424" Top="187" Width="200">
+    <Grid ColumnSpacing="8" RowSpacing="4">
+      <Grid.DefaultRowProportion Type="Auto" />
+      <Grid.ColumnsProportions>
+        <Proportion Type="Auto" />
         <Proportion Type="Fill" />
-      </ColumnsProportions>
-      <RowsProportions>
-        <Proportion />
-        <Proportion />
-      </RowsProportions>
-      <TextBlock Text="Name:" />
-      <TextField Id="_textName" Text="" GridColumn="1" />
-      <TextBlock Text="Class:" GridRow="2" />
+      </Grid.ColumnsProportions>
+      <Label Text="Name:" />
+      <TextBox Text="" Id="_textName" GridColumn="1" />
+      <Label Text="Class:" GridRow="2" />
       <ComboBox Id="_comboClass" HorizontalAlignment="Stretch" GridColumn="1" GridRow="2">
         <ListItem Text="Warrior" />
         <ListItem Text="Rogue" />

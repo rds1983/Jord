@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderers.Game", "..\src\Wa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderers.MapEditor", "..\src\Wanderers.MapEditor\Wanderers.MapEditor.csproj", "{A7DE805E-8591-499D-B8AC-02A08E7A7D6F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNA.Core", "..\deps\Myra\deps\FNA\FNA.Core.csproj", "{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Myra", "..\deps\Myra\src\Myra\Myra.csproj", "{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderers.Generator", "..\src\Wanderers.Generator\Wanderers.Generator.csproj", "{761AD53C-295D-4128-810A-41E16F2C81A8}"
 EndProject
 Global
@@ -47,21 +43,6 @@ Global
 		{A7DE805E-8591-499D-B8AC-02A08E7A7D6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A7DE805E-8591-499D-B8AC-02A08E7A7D6F}.Release|x64.ActiveCfg = Release|Any CPU
 		{A7DE805E-8591-499D-B8AC-02A08E7A7D6F}.Release|x64.Build.0 = Release|Any CPU
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Debug|Any CPU.Build.0 = Debug|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Debug|x64.ActiveCfg = Debug|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Debug|x64.Build.0 = Debug|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Release|Any CPU.ActiveCfg = Release|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Release|x64.ActiveCfg = Release|x64
-		{8731347B-1934-4AF6-86F6-CCF7F8A18B8A}.Release|x64.Build.0 = Release|x64
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Debug|x64.Build.0 = Debug|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Release|x64.ActiveCfg = Release|Any CPU
-		{955A1D79-312F-4A95-B3FD-1D1E6BCFE33B}.Release|x64.Build.0 = Release|Any CPU
 		{761AD53C-295D-4128-810A-41E16F2C81A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{761AD53C-295D-4128-810A-41E16F2C81A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{761AD53C-295D-4128-810A-41E16F2C81A8}.Debug|x64.ActiveCfg = Debug|Any CPU

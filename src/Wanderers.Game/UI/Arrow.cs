@@ -49,9 +49,9 @@ namespace Wanderers.UI
 			Direction = ArrowDirection.Right;
 		}
 
-		public override void Render(RenderContext context)
+		public override void InternalRender(RenderContext context)
 		{
-			base.Render(context);
+			base.InternalRender(context);
 
 			var bounds = ActualBounds;
 

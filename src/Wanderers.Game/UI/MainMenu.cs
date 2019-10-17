@@ -107,7 +107,6 @@ namespace Wanderers.UI
 			gameView.MapView.Map = TJ.GameSession.Player.Map;
 
 			WanderersGame.Instance.Desktop.Widgets.Add(gameView);
-			WanderersGame.Instance.Desktop.FocusedWidget = gameView;
 		}
 
 		private void QuitMenuItemOnSelected(object sender, EventArgs eventArgs)

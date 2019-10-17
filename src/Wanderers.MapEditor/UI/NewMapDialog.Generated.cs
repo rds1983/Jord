@@ -18,8 +18,8 @@ namespace Wanderers.MapEditor.UI
 			_radioGeneratedGlobalMap.GridRow = 1;
 
 			var grid1 = new Grid();
-			grid1.RowsProportions.Add(new Grid.Proportion());
-			grid1.RowsProportions.Add(new Grid.Proportion());
+			grid1.RowsProportions.Add(new Proportion());
+			grid1.RowsProportions.Add(new Proportion());
 			grid1.GridRow = 1;
 			grid1.Widgets.Add(_radioSingleTileMap);
 			grid1.Widgets.Add(_radioGeneratedGlobalMap);
