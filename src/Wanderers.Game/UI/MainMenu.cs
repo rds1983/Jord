@@ -99,12 +99,12 @@ namespace Wanderers.UI
 
 		private void Play(int slotIndex)
 		{
-			TJ.GameSession = new GameSession(slotIndex);
+			TJ.Session = new GameSession(slotIndex);
 
 			WanderersGame.Instance.Desktop.Widgets.Remove(this);
 
 			var gameView = new GameView();
-			gameView.MapView.Map = TJ.GameSession.Player.Map;
+			gameView.MapView.Map = TJ.Session.Player.Map;
 
 			WanderersGame.Instance.Desktop.Widgets.Add(gameView);
 		}

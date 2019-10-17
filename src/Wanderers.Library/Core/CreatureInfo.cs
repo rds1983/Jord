@@ -20,11 +20,18 @@ namespace Wanderers.Core
 			get; set;
 		}
 
+		[OptionalField]
+		public bool IsAttackable
+		{
+			get; set;
+		}
+
 		public int Gold
 		{
 			get; set;
 		}
 
+		[OptionalField]
 		public Inventory Inventory
 		{
 			get; set;

@@ -231,14 +231,19 @@ namespace Wanderers.Compiling
 
 				var name = p.Name.LowercaseFirstLetter();
 
-				var optionalFieldAttr = p.FindAttribute<OptionalFieldAttribute>();
-
 				JToken token;
-				if (!od.Object.TryGetValue(name, out token) && optionalFieldAttr == null)
+				if (!od.Object.TryGetValue(name, out token))
 				{
-					throw new Exception(string.Format(
-						"Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
-						name, type.Name, id, od.Source));
+					var optionalFieldAttr = p.FindAttribute<OptionalFieldAttribute>();
+					if (optionalFieldAttr == null)
+					{
+						throw new Exception(string.Format(
+							"Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
+							name, type.Name, id, od.Source));
+					} else
+					{
+						continue;
+					}
 				}
 
 				if (p.PropertyType == typeof(string))

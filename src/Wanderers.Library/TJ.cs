@@ -13,6 +13,7 @@ namespace Wanderers
 		public static Action<string> InfoLogHandler = Console.WriteLine;
 		public static Action<string> WarnLogHandler = Console.WriteLine;
 		public static Action<string> ErrorLogHandler = Console.WriteLine;
+		public static Action<string> GameLogHandler = Console.WriteLine;
 
 		public static Module Module { get; set; }
 
@@ -24,7 +25,7 @@ namespace Wanderers
 			}
 		}
 
-		public static GameSession GameSession
+		public static GameSession Session
 		{
 			get; set;
 		}
@@ -90,6 +91,16 @@ namespace Wanderers
 			}
 
 			ErrorLogHandler(FormatMessage(message, args));
+		}
+
+		public static void GameLog(string message, params object[] args)
+		{
+			if (GameLogHandler == null)
+			{
+				return;
+			}
+
+			GameLogHandler(FormatMessage(message, args));
 		}
 	}
 }

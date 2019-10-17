@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using Wanderers.Storage;
-using Wanderers.Utils;
 
 namespace Wanderers.Core
 {
@@ -8,30 +8,13 @@ namespace Wanderers.Core
 	{
 		private readonly Slot _slot;
 		private readonly Character _character;
+		private bool _activeCreaturesDirty = true;
+		private readonly List<Creature> _activeCreatures = new List<Creature>();
+		private readonly List<Creature> _activeCreaturesCopy = new List<Creature>();
 
-		public Slot Slot
-		{
-			get
-			{
-				return _slot;
-			}
-		}
-
-		public Character Character
-		{
-			get
-			{
-				return _character;
-			}
-		}
-
-		public Player Player
-		{
-			get
-			{
-				return _character.Player;
-			}
-		}
+		public Slot Slot { get { return _slot; } }
+		public Character Character { get { return _character; } }
+		public Player Player { get { return _character.Player; } }
 
 		public GameSession(int slotIndex)
 		{
@@ -59,9 +42,41 @@ namespace Wanderers.Core
 			}
 		}
 
+		public void AddActiveCreature(Creature creature)
+		{
+			if (_activeCreatures.Contains(creature))
+			{
+				return;
+			}
+
+			_activeCreatures.Add(creature);
+			_activeCreaturesDirty = true;
+		}
+
+		public void RemoveActiveCreature(Creature creature)
+		{
+			if (!_activeCreatures.Contains(creature))
+			{
+				return;
+			}
+
+			_activeCreatures.Remove(creature);
+			_activeCreaturesDirty = true;
+		}
+
 		public void OnTimer()
 		{
-			Player.OnTimer();
+			if (_activeCreaturesDirty)
+			{
+				_activeCreaturesCopy.Clear();
+				_activeCreaturesCopy.AddRange(_activeCreatures);
+				_activeCreaturesDirty = false;
+			}
+
+			foreach(var creature in _activeCreaturesCopy)
+			{
+				creature.OnTimer();
+			}
 		}
 	}
 }

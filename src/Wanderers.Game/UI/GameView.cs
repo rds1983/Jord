@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D.UI;
-using static Myra.Graphics2D.UI.Grid;
 
 namespace Wanderers.UI
 {

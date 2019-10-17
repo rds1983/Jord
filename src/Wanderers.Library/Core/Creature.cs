@@ -1,42 +1,74 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
-using Wanderers.Utils;
 
 namespace Wanderers.Core
 {
+	public enum CreatureState
+	{
+		Idle,
+		Moving,
+		Fighting
+	}
+
 	public abstract class Creature
 	{
-		private bool _moving;
+		private const int TargetAttackDelayInMs = 1000;
+		private const int AttackMoveInMs = 250;
+		private const int TwoAttackMoveInMs = AttackMoveInMs * 2;
+
+		private CreatureState _state;
 		private const int _movementInterval = 100;
 		private Point[] _movementPoints;
-		private DateTime _movementStart;
+		private DateTime _actionStart;
+		private DateTime? _attackStart;
+		private Vector2 _attackPosition;
 		private Action _movementFinished;
 		private readonly Inventory _inventory = new Inventory();
 
-		public Map Map
+		public Map Map { get; set; }
+		public Vector2 Position { get; set; }
+
+		public Tile Tile
 		{
-			get; set;
+			get
+			{
+				if (Map == null)
+				{
+					return null;
+				}
+
+				return Map.GetTileAt(Position);
+			}
 		}
 
-		public Vector2 Position
-		{
-			get; set;
-		}
+		public abstract Appearance Image { get; }
+		public string Name { get; set; }
+		public int Gold { get; set; }
 
-		public abstract Appearance Image
+		private CreatureState State
 		{
-			get;
-		}
+			get
+			{
+				return _state;
+			}
 
-		public string Name
-		{
-			get; set;
-		}
+			set
+			{
+				if (value == _state)
+				{
+					return;
+				}
 
-		public int Gold
-		{
-			get; set;
+				_state = value;
+
+				if (_state == CreatureState.Idle)
+				{
+					TJ.Session.RemoveActiveCreature(this);
+				} else
+				{
+					TJ.Session.AddActiveCreature(this);
+				}
+			}
 		}
 
 		public Inventory Inventory
@@ -46,6 +78,9 @@ namespace Wanderers.Core
 				return _inventory;
 			}
 		}
+
+		public Creature AttackTarget { get; set; }
+		public int AttackDelayInMs { get; set; }
 
 		public bool IsPlaceable(Map map, Vector2 pos)
 		{
@@ -99,43 +134,9 @@ namespace Wanderers.Core
 			return result;
 		}
 
-//		private static Random _random = new Random();
-
-		public void OnTimer()
+		private void ProcessMovement()
 		{
-			if (!_moving)
-			{
-/*				if (Map == null)
-				{
-					return;
-				}
-
-				var npc = this as NonPlayer;
-				if (npc == null)
-				{
-					return;
-				}
-
-				Point? dest = null;
-				for (var i = 0; i < 100; ++i)
-				{
-					var t = new Point(_random.Next(Map.Size.X), _random.Next(Map.Size.Y));
-					if (TilePassable(t))
-					{
-						dest = t;
-						break;
-					}
-				}
-
-				if (dest != null)
-				{
-					InitiateMovement(dest.Value);
-				}*/
-
-				return;
-			}
-
-			var span = DateTime.Now - _movementStart;
+			var span = DateTime.Now - _actionStart;
 			var totalPart = (float)span.TotalMilliseconds / _movementInterval;
 
 			Point p1, p2;
@@ -145,12 +146,7 @@ namespace Wanderers.Core
 			{
 				// Finished
 				p1 = p2 = _movementPoints[_movementPoints.Length - 1];
-				_moving = false;
-
-				if (_movementFinished != null)
-				{
-					_movementFinished();
-				}
+				State = CreatureState.Idle;
 			}
 			else
 			{
@@ -169,6 +165,77 @@ namespace Wanderers.Core
 			p.Y = p1.Y + part * d.Y;
 
 			SetPosition(p);
+
+			if (State == CreatureState.Idle && _movementFinished != null)
+			{
+				// Movement finished
+				_movementFinished();
+			}
+		}
+
+		private void ProcessFighting()
+		{
+			if (!IsAttackable(AttackTarget))
+			{
+				// End fighting
+				State = CreatureState.Idle;
+				AttackTarget = null;
+				return;
+			}
+
+			var now = DateTime.Now;
+			var span = now - _actionStart;
+			if (span.TotalMilliseconds >= AttackDelayInMs)
+			{
+				_attackStart = now;
+				_actionStart = now;
+				AttackDelayInMs = 3000;
+
+				TJ.GameLog("{0} hits {1}", Name, AttackTarget.Name);
+			}
+
+			if (_attackStart != null)
+			{
+				span = now - _attackStart.Value;
+				var delta = new Vector2(AttackTarget._attackPosition.X - _attackPosition.X,
+					AttackTarget._attackPosition.Y - _attackPosition.Y) / 2;
+
+				if (span.TotalMilliseconds < AttackMoveInMs)
+				{
+					// First phase
+					Position = new Vector2(
+						_attackPosition.X + delta.X * (float)span.TotalMilliseconds / AttackMoveInMs,
+						_attackPosition.Y + delta.Y * (float)span.TotalMilliseconds / AttackMoveInMs);
+				} else if (span.TotalMilliseconds < TwoAttackMoveInMs)
+				{
+					// Second phase
+					var f = (TwoAttackMoveInMs - (float)span.TotalMilliseconds);
+					Position = new Vector2(
+						_attackPosition.X + delta.X * f / TwoAttackMoveInMs,
+						_attackPosition.Y + delta.Y * f / TwoAttackMoveInMs);
+				} else
+				{
+					// Set position back
+					Position = _attackPosition;
+					_attackStart = null;
+				}
+			}
+		}
+
+		public void OnTimer()
+		{
+			switch (State)
+			{
+				case CreatureState.Idle:
+					// Nothing
+					break;
+				case CreatureState.Moving:
+					ProcessMovement();
+					break;
+				case CreatureState.Fighting:
+					ProcessFighting();
+					break;
+			}
 		}
 
 		private bool TilePassable(Point pos)
@@ -182,7 +249,7 @@ namespace Wanderers.Core
 
 		public bool InitiateMovement(Point pos, float distance = 0.0f, Action movementFinished = null)
 		{
-			if (_moving)
+			if (State == CreatureState.Moving)
 			{
 				return false;
 			}
@@ -215,9 +282,47 @@ namespace Wanderers.Core
 				_movementPoints[i] = result[i - 1].Position;
 			}
 
-			_moving = true;
-			_movementStart = DateTime.Now;
+			State = CreatureState.Moving;
+			_actionStart = DateTime.Now;
 			_movementFinished = movementFinished;
+
+			return true;
+		}
+
+		private bool IsAttackable(Creature target)
+		{
+			if (Math.Abs(Position.X - target.Position.X) > 1 ||
+				Math.Abs(Position.Y - target.Position.Y) > 1)
+			{
+				// Too far away
+				return false;
+			}
+
+			return true;
+		}
+
+		public bool Attack(Creature target)
+		{
+			if (!IsAttackable(target))
+			{
+				return false;
+			}
+
+			var now = DateTime.Now;
+
+			_actionStart = now;
+			State = CreatureState.Fighting;
+			AttackTarget = target;
+			AttackDelayInMs = 0;
+			_attackPosition = Position;
+
+			target._actionStart = now;
+			target.AttackTarget = this;
+			target.State = CreatureState.Fighting;
+			target.AttackDelayInMs = TargetAttackDelayInMs;
+			target._attackPosition = target.Position;
+
+			TJ.GameLog("{0} attacked {1}...", Name, target.Name);
 
 			return true;
 		}

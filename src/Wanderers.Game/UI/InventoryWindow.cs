@@ -13,7 +13,7 @@ namespace Wanderers.UI
 		{
 			get
 			{
-				return TJ.GameSession.Player;
+				return TJ.Session.Player;
 			}
 		}
 

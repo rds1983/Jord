@@ -1,0 +1,13 @@
+{
+	"creatureInfos": 
+	{
+		"orc": 
+		{
+			"name": "Orc",
+			"color": "green",
+			"symbol": "o",
+			"isAttackable": true,
+			"gold": 300
+		}
+	}
+}

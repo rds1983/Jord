@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Myra.Graphics2D.UI;
 using System;
+using Wanderers.Core;
 using Wanderers.Utils;
 
 namespace Wanderers.UI
@@ -11,8 +12,8 @@ namespace Wanderers.UI
 		{
 			base.BeforeDraw(context);
 
-			var tl = new Vector2(TJ.GameSession.Player.Position.X - (int)GridSize.X / 2,
-				TJ.GameSession.Player.Position.Y - (int)GridSize.Y / 2);
+			var tl = new Vector2(TJ.Session.Player.Position.X - GridSize.X / 2,
+				TJ.Session.Player.Position.Y - GridSize.Y / 2);
 
 			if (tl.X < 0)
 			{
@@ -42,7 +43,6 @@ namespace Wanderers.UI
 			base.OnTouchDown();
 
 			var gameCoords = ScreenToGame(Desktop.MousePosition);
-
 			if (gameCoords.X < 0 || gameCoords.Y < 0 || gameCoords.X >= Map.Size.X || gameCoords.Y >= Map.Size.Y)
 			{
 				return;
@@ -54,22 +54,39 @@ namespace Wanderers.UI
 				return;
 			}
 
+			if (tile == TJ.Session.Player.Tile)
+			{
+				return;
+			}
+
 			var distance = 0.0f;
 			Action finished = null;
 			if (tile.Creature != null)
 			{
-				distance = 2.0f;
+				var npc = (NonPlayer)tile.Creature;
 
-				finished = () =>
+				if (npc.Info.IsAttackable)
 				{
-					var dialog = new TradeDialog(TJ.GameSession.Player, tile.Creature);
-					dialog.ShowModal(Desktop);
-				};
+					distance = 1.0f;
+
+					finished = () =>
+					{
+						TJ.Session.Player.Attack(npc);
+					};
+				}
+				else if (npc.Info.IsMerchant)
+				{
+					distance = 2.0f;
+
+					finished = () =>
+					{
+						var dialog = new TradeDialog(TJ.Session.Player, tile.Creature);
+						dialog.ShowModal(Desktop);
+					};
+				}
 			}
 
-			TJ.GameSession.Player.InitiateMovement(gameCoords.ToPoint(), distance, finished);
-
-			WanderersGame.Instance.GameLog(string.Format("Moving player to location ({0}, {1})", (int)gameCoords.X, (int)gameCoords.Y));
+			TJ.Session.Player.InitiateMovement(gameCoords.ToPoint(), distance, finished);
 		}
 	}
 }

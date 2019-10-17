@@ -17,7 +17,7 @@ namespace Wanderers
 		private static WanderersGame _instance;
 
 		private readonly GraphicsDeviceManager _graphics;
-		private Desktop _desktop;
+		internal Desktop _desktop;
 
 		public static WanderersGame Instance
 		{
@@ -43,6 +43,17 @@ namespace Wanderers
 			IsMouseVisible = true;
 			Window.AllowUserResizing = true;
 			Window.Title = "Troubles of Jord";
+
+			TJ.GameLogHandler = message =>
+			{
+				var asGameView = _desktop.Widgets[0] as GameView;
+				if (asGameView == null)
+				{
+					return;
+				}
+
+				asGameView.LogView.Log(message);
+			};
 		}
 
 		protected override void LoadContent()
@@ -84,25 +95,13 @@ namespace Wanderers
 			SwitchTo<MainMenu>();
 		}
 
-		public void GameLog(string message)
-		{
-			var asGameView = _desktop.Widgets[0] as GameView;
-			if (asGameView == null)
-			{
-				return;
-			}
-
-			asGameView.LogView.Log(message);
-		}
-
-
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
-			if (TJ.GameSession != null)
+			if (TJ.Session != null)
 			{
-				TJ.GameSession.OnTimer();
+				TJ.Session.OnTimer();
 			}
 		}
 
@@ -128,10 +127,10 @@ namespace Wanderers
 			base.EndRun();
 
 			// Save current game
-			if (TJ.GameSession != null)
+			if (TJ.Session != null)
 			{
-				TJ.GameSession.Slot.CharacterData = new CharacterData(TJ.GameSession.Character);
-				TJ.GameSession.Slot.Save();
+				TJ.Session.Slot.CharacterData = new CharacterData(TJ.Session.Character);
+				TJ.Session.Slot.Save();
 			}
 		}
 	}
