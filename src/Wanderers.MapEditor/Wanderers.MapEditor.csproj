@@ -5,9 +5,14 @@
     <StartupObject />
     <AssemblyName>Wanderers.Editor</AssemblyName>
     <RootNamespace>Wanderers</RootNamespace>
-	<TargetFramework>netcoreapp2.1</TargetFramework>
+	<TargetFramework>net45</TargetFramework>
   </PropertyGroup>
   
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
+    <PackageReference Include="Myra" Version="0.9.6.184" />
+  </ItemGroup>  
+
   <ItemGroup>
     <ProjectReference Include="..\Wanderers.Generator\Wanderers.Generator.csproj" />
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />
