@@ -46,9 +46,9 @@ namespace Wanderers.Compiling.Loaders
 			return (JArray)token;
 		}
 
-		public override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		public override ItemWithId LoadItem(CompilerContext context, string id, ObjectData data)
 		{
-			var map = (Map)base.LoadObject(context, id, data);
+			var map = (Map)base.LoadItem(context, id, data);
 
 			var legend = new Dictionary<char, object>();
 			var legendObject = EnsureObject(data, LegendName);

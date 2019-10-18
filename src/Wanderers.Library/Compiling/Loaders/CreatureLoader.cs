@@ -10,9 +10,9 @@ namespace Wanderers.Compiling.Loaders
 		{
 		}
 
-		public override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		public override ItemWithId LoadItem(CompilerContext context, string id, ObjectData data)
 		{
-			var creature = (CreatureInfo)base.LoadObject(context, id, data);
+			var creature = (CreatureInfo)base.LoadItem(context, id, data);
 
 			JToken t;
 			if (data.Object.TryGetValue("inventory", out t))

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Wanderers.Compiling;
 
 namespace Wanderers.Core.Items
 {
@@ -18,6 +19,7 @@ namespace Wanderers.Core.Items
 			get; set;
 		}
 
+		[IgnoreField]
 		public string TypeDisplayName
 		{
 			get

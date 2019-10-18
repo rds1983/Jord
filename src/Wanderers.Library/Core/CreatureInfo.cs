@@ -1,41 +1,27 @@
-﻿using Wanderers.Compiling;
+﻿using System.Collections.Generic;
+using Wanderers.Compiling;
 
 namespace Wanderers.Core
 {
 	public class CreatureInfo : ItemWithId
 	{
-		public string Name
-		{
-			get; set;
-		}
+		private readonly List<AttackInfo> _attacks = new List<AttackInfo>();
 
-		public Appearance Image
-		{
-			get; set;
-		}
+		public string Name { get; set; }
+		public Appearance Image { get; set; }
+		public int Gold { get; set; }
 
 		[OptionalField]
-		public bool IsMerchant
-		{
-			get; set;
-		}
+		public bool IsMerchant { get; set; }
 
 		[OptionalField]
-		public bool IsAttackable
-		{
-			get; set;
-		}
-
-		public int Gold
-		{
-			get; set;
-		}
+		public bool IsAttackable { get; set; }
 
 		[OptionalField]
-		public Inventory Inventory
-		{
-			get; set;
-		}
+		public Inventory Inventory { get; set; }
+
+		[OptionalField]
+		public List<AttackInfo> Attacks => _attacks;
 
 		public CreatureInfo()
 		{

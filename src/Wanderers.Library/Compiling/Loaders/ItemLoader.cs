@@ -24,8 +24,8 @@ namespace Wanderers.Compiling.Loaders
 					throw new Exception(string.Format("Could not resolve item type '{0}'", typeName));
 				}
 
-				var props = CompilerUtils.GetProperties(type);
-				var item = (BaseItemInfo)LoadObject(context, type, pair.Key, pair.Value);
+				var props = CompilerUtils.GetMembers(type);
+				var item = (BaseItemInfo)LoadItem(context, type, pair.Key, pair.Value);
 				output[item.Id] = item;
 
 				if (CompilerParams.Verbose)

@@ -183,7 +183,7 @@ namespace Wanderers.Compiling
 
 			var id = obj[CompilerUtils.IdName].ToString();
 
-			return (Map)MapLoader.LoadObject(_context, id, od);
+			return (Map)MapLoader.LoadItem(_context, id, od);
 		}
 
 		public void FindSources(string path, bool isTop, List<string> result, bool skipMaps)
