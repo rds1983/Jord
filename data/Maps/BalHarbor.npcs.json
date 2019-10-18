@@ -1,0 +1,23 @@
+{
+	"CreatureInfos": 
+	{
+		"balHarborWeaponMerchant": 
+		{
+			"Name": "Weapon Merchant",
+			"Color": "Blue",
+			"Symbol": "p",
+			"IsMerchant": true,
+			"Gold": 50000,
+			"Inventory": 
+			{
+				"IronRation": 100,
+				"Canteen": 1,
+				"Barrel": 1,
+				"ShortSword": 1,
+				"LeatherArmor": 1,
+				"LeatherLeggings": 1,
+				"SmallShield": 1
+			}
+		}
+	}
+}

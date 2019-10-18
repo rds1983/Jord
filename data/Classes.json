@@ -1,0 +1,16 @@
+﻿{
+  "Classes": {
+    "Warrior": {
+      "Name": "Warrior",
+    },
+    "Mage": {
+      "Name": "Mage",
+    },
+    "Priest": {
+      "Name": "Priest",
+    },
+    "Rogue": {
+      "Name": "Rogue",
+    },
+  }
+}

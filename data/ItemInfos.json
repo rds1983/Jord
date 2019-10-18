@@ -1,0 +1,49 @@
+﻿{
+  "ItemInfos": {
+    "IronRation": {
+      "Name": "iron ration",
+      "Type": "Food",
+      "Price": 10,
+    },
+    "Canteen": {
+      "Name": "canteen",
+      "Type": "WaterContainer",
+      "Price": 15,
+      "capacity": 50
+    },
+    "Barrel": {
+      "Name": "barrel",
+      "Type": "WaterContainer",
+      "Price": 25,
+      "Capacity": 70
+    },
+    "ShortSword": {
+      "Name": "short sword",
+      "Type": "Weapon",
+      "Price": 50,
+      "MinDamage": 3,
+      "MaxDamage": 8
+    },
+    "LeatherArmor": {
+        "Name": "leather armor",
+        "Type": "Armor",
+        "SubType": "Body",
+        "Price": 40,
+        "ArmorClass": 10
+    },
+    "LeatherLeggings": {
+        "Name": "leather leggings",
+        "Type": "Armor",
+        "SubType": "Legs",
+        "Price": 30,
+        "ArmorClass": 8
+    },
+    "SmallShield": {
+        "Name": "small shield",
+        "Type": "Armor",
+        "SubType": "Shield",
+        "Price": 25,
+        "ArmorClass": 5
+    }
+  }
+}

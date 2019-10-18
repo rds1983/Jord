@@ -1,0 +1,54 @@
+﻿{
+  "TileInfos": {
+    "Grass": {
+      "Color": "DarkGreen",
+      "Passable": "True",
+      "Symbol": "."
+    },
+    "HighGrass": {
+      "Color": "Green",
+      "Passable": "True",
+      "Symbol": "."
+    },
+    "Ground": {
+      "Color": "brown",
+      "Passable": "True",
+      "Symbol": "."
+    },
+    "Floor": {
+      "Color": "Gray",
+      "Passable": "True",
+      "Symbol": "."
+    },
+    "Tree": {
+      "Color": "Green",
+      "Passable": "False",
+      "Symbol": "T"
+    },
+    "Mountain": {
+      "Color": "white",
+      "Passable": "False",
+      "Symbol": "^"
+    },
+    "Water": {
+      "Color": "blue",
+      "Passable": "False",
+      "Symbol": "."
+    },
+    "Road": {
+      "Color": "brown",
+      "Passable": "True",
+      "Symbol": "."
+    },
+    "Wall": {
+      "Color": "Gray",
+      "Passable": "False",
+      "Symbol": "#"
+    },
+    "Plato": {
+      "Color": "White",
+      "Passable": "True",
+      "Symbol": "."
+    }
+  }
+}
