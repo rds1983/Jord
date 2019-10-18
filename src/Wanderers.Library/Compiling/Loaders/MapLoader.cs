@@ -13,11 +13,14 @@ namespace Wanderers.Compiling.Loaders
 		{
 		}
 
-		private const string MapName = "map";
-		private const string LegendName = "legend";
-		private const string TileInfoIdName = "tileInfoId";
-		private const string CreatureInfoIdName = "creatureInfoId";
-		private const string DataName = "data";
+		private const string LegendName = "Legend";
+		private const string TileInfoIdName = "TileInfoId";
+		private const string CreatureInfoIdName = "CreatureInfoId";
+		private const string DataName = "Data";
+
+		public MapLoader() : base("Maps")
+		{
+		}
 
 		private JObject EnsureObject(ObjectData root, string name)
 		{
@@ -43,7 +46,7 @@ namespace Wanderers.Compiling.Loaders
 			return (JArray)token;
 		}
 
-		protected override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		public override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
 		{
 			var map = (Map)base.LoadObject(context, id, data);
 
@@ -258,10 +261,10 @@ namespace Wanderers.Compiling.Loaders
 			var root = new JObject();
 			var mapObject = new JObject();
 
-			root[MapName] = mapObject;
+			root[CompilerUtils.MapName] = mapObject;
 
 			mapObject[CompilerUtils.IdName] = map.Id;
-			mapObject["local"] = map.Local;
+			mapObject["Local"] = map.Local;
 
 			var legendNode = new JObject();
 			foreach (var pair in legend)
@@ -289,7 +292,7 @@ namespace Wanderers.Compiling.Loaders
 				var asSpawnSpot = pair.Value as SpawnSpot;
 				if (asSpawnSpot != null)
 				{
-					legendItemNode = new JValue("spawn");
+					legendItemNode = new JValue("Spawn");
 				}
 
 				legendNode[pair.Key.ToString()] = legendItemNode;

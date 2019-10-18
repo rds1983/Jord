@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wanderers.Core.Items;
-using Wanderers.Utils;
-
-namespace Wanderers.Compiling
+namespace Wanderers.Compiling.Loaders
 {
-	public class ItemsLoader: Loader<BaseItemInfo>
+	public class ItemLoader: Loader<BaseItemInfo>
 	{
+		public ItemLoader() : base("ItemInfos")
+		{
+		}
+
 		private void FillItems(CompilerContext context, Dictionary<string, BaseItemInfo> output)
 		{
 			var assembly = GetType().Assembly;
@@ -14,7 +16,7 @@ namespace Wanderers.Compiling
 			{
 				var typeName = pair.Value.Object["type"].ToString();
 
-				var fullTypeName = "Wanderers.Core.Items." + typeName.UppercaseFirstLetter() + "Info";
+				var fullTypeName = "Wanderers.Core.Items." + typeName + "Info";
 				var type = assembly.GetType(fullTypeName);
 
 				if (type == null)
@@ -23,7 +25,7 @@ namespace Wanderers.Compiling
 				}
 
 				var props = CompilerUtils.GetProperties(type);
-				var item = (BaseItemInfo)LoadObject(type, context, pair.Key, pair.Value);
+				var item = (BaseItemInfo)LoadObject(context, type, pair.Key, pair.Value);
 				output[item.Id] = item;
 
 				if (CompilerParams.Verbose)

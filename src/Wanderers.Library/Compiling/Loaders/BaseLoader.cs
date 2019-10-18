@@ -5,23 +5,21 @@ using System;
 using System.Collections.Generic;
 using Wanderers.Core;
 using Wanderers.Core.Items;
-using Wanderers.Utils;
 
-namespace Wanderers.Compiling
+namespace Wanderers.Compiling.Loaders
 {
 	public abstract class BaseLoader
 	{
-		protected class ObjectData
-		{
-			public string Source;
-			public JObject Object;
-		}
-
 		protected readonly Dictionary<string, ObjectData> _sourceData = new Dictionary<string, ObjectData>();
 
 		public abstract string TypeName { get; }
-		public abstract string JsonArrayName { get; }
+		public string JsonArrayName { get; private set; }
 		public abstract Type Type { get; }
+
+		public BaseLoader(string jsonArrayName)
+		{
+			JsonArrayName = jsonArrayName;
+		}
 
 		public void SafelyAddObject(string id, string source, JObject obj)
 		{
@@ -42,12 +40,12 @@ namespace Wanderers.Compiling
 			_sourceData[id] = od;
 		}
 
-		protected virtual ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		public static ItemWithId LoadObject(CompilerContext context, Type type, string id, ObjectData data)
 		{
-			var item = (ItemWithId)Activator.CreateInstance(Type);
+			var item = (ItemWithId)Activator.CreateInstance(type);
 
 			item.Id = id;
-			var props = CompilerUtils.GetProperties(Type);
+			var props = CompilerUtils.GetProperties(type);
 			foreach (var p in props)
 			{
 				if (item is WeaponInfo && p.Name == "SubType")
@@ -59,8 +57,8 @@ namespace Wanderers.Compiling
 				if (p.PropertyType == typeof(Appearance))
 				{
 					// Special case
-					var symbol = data.Object["symbol"].ToString()[0];
-					var color = context.EnsureColor(data.Object["color"].ToString(), data.Source);
+					var symbol = data.Object["Symbol"].ToString()[0];
+					var color = context.EnsureColor(data.Object["Color"].ToString(), data.Source);
 
 					var appearance = new Appearance(symbol, color);
 
@@ -69,7 +67,7 @@ namespace Wanderers.Compiling
 					continue;
 				}
 
-				var name = p.Name.LowercaseFirstLetter();
+				var name = p.Name;
 
 				JToken token;
 				if (!data.Object.TryGetValue(name, out token))
@@ -79,7 +77,7 @@ namespace Wanderers.Compiling
 					{
 						throw new Exception(string.Format(
 							"Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
-							name, Type.Name, id, data.Source));
+							name, type.Name, id, data.Source));
 					}
 					else
 					{
@@ -103,7 +101,7 @@ namespace Wanderers.Compiling
 				}
 				else if (p.PropertyType.IsEnum)
 				{
-					var enumValue = Enum.Parse(p.PropertyType, token.ToString().UppercaseFirstLetter());
+					var enumValue = Enum.Parse(p.PropertyType, token.ToString());
 					p.SetValue(item, enumValue);
 				}
 			}
@@ -111,7 +109,12 @@ namespace Wanderers.Compiling
 			return item;
 		}
 
-		private void FillData<T>(CompilerContext context, Dictionary<string, T> output) where T : ItemWithId, new()
+		public virtual ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		{
+			return LoadObject(context, Type, id, data);
+		}
+
+		public void FillData<T>(CompilerContext context, Dictionary<string, T> output) where T : ItemWithId, new()
 		{
 			foreach (var pair in _sourceData)
 			{

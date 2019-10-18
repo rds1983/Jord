@@ -11,7 +11,7 @@
       "Symbol": "."
     },
     "Ground": {
-      "Color": "brown",
+      "Color": "Brown",
       "Passable": "True",
       "Symbol": "."
     },
@@ -26,17 +26,17 @@
       "Symbol": "T"
     },
     "Mountain": {
-      "Color": "white",
+      "Color": "White",
       "Passable": "False",
       "Symbol": "^"
     },
     "Water": {
-      "Color": "blue",
+      "Color": "Blue",
       "Passable": "False",
       "Symbol": "."
     },
     "Road": {
-      "Color": "brown",
+      "Color": "Brown",
       "Passable": "True",
       "Symbol": "."
     },

@@ -13,7 +13,7 @@ namespace Wanderers.Core
 	public abstract class Creature
 	{
 		private const int TargetAttackDelayInMs = 1000;
-		private const int AttackMoveInMs = 250;
+		private const int AttackMoveInMs = 200;
 		private const int TwoAttackMoveInMs = AttackMoveInMs * 2;
 
 		private CreatureState _state;

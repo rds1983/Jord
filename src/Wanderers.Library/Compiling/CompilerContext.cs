@@ -7,7 +7,6 @@ namespace Wanderers.Compiling
 	public class CompilerContext
 	{
 		private readonly Dictionary<string, Color> _colors = new Dictionary<string, Color>();
-		private Core.Module _module;
 
 		public Dictionary<string, Color> Colors
 		{
@@ -17,13 +16,7 @@ namespace Wanderers.Compiling
 			}
 		}
 
-		public Core.Module Module
-		{
-			get
-			{
-				return _module;
-			}
-		}
+		public Core.Module Module { get; } = new Core.Module();
 
 		public Color EnsureColor(string id, string source)
 		{

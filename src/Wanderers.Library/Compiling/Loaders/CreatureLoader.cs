@@ -2,11 +2,15 @@
 using Wanderers.Core;
 using Wanderers.Core.Items;
 
-namespace Wanderers.Compiling
+namespace Wanderers.Compiling.Loaders
 {
 	public class CreatureLoader: Loader<CreatureInfo>
 	{
-		protected override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
+		public CreatureLoader(): base("CreatureInfos")
+		{
+		}
+
+		public override ItemWithId LoadObject(CompilerContext context, string id, ObjectData data)
 		{
 			var creature = (CreatureInfo)base.LoadObject(context, id, data);
 

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Wanderers.Core;
-using Wanderers.Utils;
 using Microsoft.Xna.Framework;
 using Myra.Utility;
 using Newtonsoft.Json.Linq;
@@ -16,14 +14,8 @@ namespace Wanderers.Compiling
 {
 	public class Compiler
 	{
-		private const string ColorsName = "colors";
-		private const string TileInfosName = "tileInfos";
-		private const string CreatureInfosName = "creatureInfos";
-		private const string ItemInfosName = "itemInfos";
-		private const string ClassesName = "classes";
-		private const string MapName = "map";
+		private const string ColorsName = "Colors";
 
-		private Module _result;
 		private readonly CompilerContext _context = new CompilerContext();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
 
@@ -38,10 +30,22 @@ namespace Wanderers.Compiling
 		public Compiler()
 		{
 			_loaders[typeof(Map)] = new MapLoader();
-			_loaders[typeof(TileInfo)] = new Loader<TileInfo>();
+			_loaders[typeof(TileInfo)] = new Loader<TileInfo>("TileInfos");
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
-			_loaders[typeof(BaseItemInfo)] = new ItemsLoader();
-			_loaders[typeof(Class)] = new Loader<Class>();
+			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
+			_loaders[typeof(Class)] = new Loader<Class>("Classes");
+		}
+
+		private static Color ParseColor(JToken source)
+		{
+			var s = source.ToString();
+			var c = s.FromName();
+			if (c == null)
+			{
+				throw new Exception(string.Format("Could not parse color '{0}'", s));
+			}
+
+			return c.Value;
 		}
 
 		private void FirstRun(IEnumerable<string> sources)
@@ -92,7 +96,7 @@ namespace Wanderers.Compiling
 
 						continue;
 					}
-					else if (key == MapName)
+					else if (key == CompilerUtils.MapName)
 					{
 						// Another special case
 						if (json.Count > 1)
@@ -115,7 +119,7 @@ namespace Wanderers.Compiling
 					}
 
 					BaseLoader loader = null;
-					foreach(var pair2 in _loaders)
+					foreach (var pair2 in _loaders)
 					{
 						if (pair2.Value.JsonArrayName == key)
 						{
@@ -137,7 +141,12 @@ namespace Wanderers.Compiling
 			}
 		}
 
-		public static MapData LoadMapData(Compiler compiler, string path)
+		private void FillData<T>(Dictionary<string, T> output) where T : ItemWithId, new()
+		{
+			_loaders[typeof(T)].FillData(_context, output);
+		}
+
+		public MapData LoadMapData(string path)
 		{
 			var folder = Path.GetDirectoryName(path);
 			var name = Path.GetFileNameWithoutExtension(path);
@@ -146,26 +155,26 @@ namespace Wanderers.Compiling
 			var compiler2 = new Compiler();
 			compiler2.FirstRun(files);
 
-			foreach (var pair in compiler._colors)
+			foreach (var pair in _context.Colors)
 			{
-				compiler2._colors[pair.Key] = pair.Value;
+				compiler2._context.Colors[pair.Key] = pair.Value;
 			}
 
 			// Second run - build data
 			var result = new MapData();
 
 			// Tile Infos
-			compiler2.FillData(TileInfosName, result.TileInfos);
+			compiler2.FillData(result.TileInfos);
 
 			// Creature Infos
-			compiler2.FillData(CreatureInfosName, result.CreatureInfos);
+			compiler2.FillData(result.CreatureInfos);
 
 			return result;
 		}
 
-		public static Map LoadMapFromJson(Compiler compiler, Module module, string json)
+		public Map LoadMapFromJson(Module module, string json)
 		{
-			var obj = (JObject)JObject.Parse(json)[MapName];
+			var obj = (JObject)JObject.Parse(json)[CompilerUtils.MapName];
 			var od = new ObjectData
 			{
 				Source = json,
@@ -174,11 +183,7 @@ namespace Wanderers.Compiling
 
 			var id = obj[CompilerUtils.IdName].ToString();
 
-			var props = BuildProperties<Map>();
-			var result = LoadObject<Map>(compiler, props, id,
-				od,	(o, m) => ProcessMap(module, o, m));
-
-			return result;
+			return (Map)MapLoader.LoadObject(_context, id, od);
 		}
 
 		public void FindSources(string path, bool isTop, List<string> result, bool skipMaps)
@@ -213,52 +218,25 @@ namespace Wanderers.Compiling
 			FirstRun(sources);
 
 			// Second run - build module
-			_result = new Module();
-
 			// Tile Infos
-			FillData(TileInfosName, _result.TileInfos);
+			FillData(_context.Module.TileInfos);
 
 			// Item Infos
-			FillItems(_result.ItemInfos);
+			FillData(_context.Module.ItemInfos);
 
 			// Creature Infos
-			FillData(CreatureInfosName, _result.CreatureInfos, ProcessCreature);
+			FillData(_context.Module.CreatureInfos);
 
 			// Classes
-			FillData(ClassesName, _result.Classes);
+			FillData(_context.Module.Classes);
 
 			if (!skipMaps)
 			{
 				// Maps
-				FillData(MapsName, _result.Maps, ProcessMap);
+				FillData(_context.Module.Maps);
 			}
 
-			return _result;
-		}
-
-		private Dictionary<string, ObjectData> GetObjectDict(string name)
-		{
-
-			Dictionary<string, ObjectData> dict;
-			if (!_sourceData.TryGetValue(name, out dict))
-			{
-				dict = new Dictionary<string, ObjectData>();
-				_sourceData[name] = dict;
-			}
-
-			return dict;
-		}
-
-		private static Color ParseColor(JToken source)
-		{
-			var s = source.ToString();
-			var c = s.FromName();
-			if (c == null)
-			{
-				throw new Exception(string.Format("Could not parse color '{0}'", s));
-			}
-
-			return c.Value;
+			return _context.Module;
 		}
 	}
 }

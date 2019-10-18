@@ -68,14 +68,9 @@ namespace Wanderers
 
 			_desktop = new Desktop();
 
-			var compiler = new Compiler
-			{
-				Params =
-				{
-					Verbose = true
-				}
-			};
+			CompilerParams.Verbose = true;
 
+			var compiler = new Compiler();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 
 			SwitchToMainMenu();

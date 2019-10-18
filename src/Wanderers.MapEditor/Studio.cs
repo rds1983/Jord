@@ -10,6 +10,7 @@ using Wanderers.Utils;
 using System.IO;
 using System.Threading.Tasks;
 using Wanderers.Generator;
+using Wanderers.Compiling.Loaders;
 
 namespace Wanderers.MapEditor
 {
@@ -541,7 +542,7 @@ namespace Wanderers.MapEditor
 
 		private void ProcessSave(string filePath)
 		{
-			var result = Compiler.SaveMapToString(_ui._mapEditor.Map);
+			var result = MapLoader.SaveMapToString(_ui._mapEditor.Map);
 			File.WriteAllText(filePath, result);
 			FilePath = filePath;
 			IsDirty = false;
@@ -585,13 +586,8 @@ namespace Wanderers.MapEditor
 				var modulePath = Path.GetDirectoryName(Path.GetDirectoryName(filePath));
 				if (modulePath != _modulePath)
 				{
-					_compiler = new Compiler
-					{
-						Params =
-					{
-						Verbose = true
-					}
-					};
+					CompilerParams.Verbose = true;
+					_compiler = new Compiler();
 
 					// Load module
 					Module newDocument = _compiler.Process(modulePath, true);
@@ -617,8 +613,7 @@ namespace Wanderers.MapEditor
 					_mapData = null;
 				}
 
-				_mapData = Compiler.LoadMapData(_compiler, filePath);
-
+				_mapData = _compiler.LoadMapData(filePath);
 				if (_mapData != null)
 				{
 					// Add new map data to the module
@@ -633,7 +628,7 @@ namespace Wanderers.MapEditor
 					}
 				}
 
-				Map = Compiler.LoadMapFromJson(_compiler, TJ.Module, json);
+				Map = _compiler.LoadMapFromJson(TJ.Module, json);
 
 				FilePath = filePath;
 				IsDirty = false;

@@ -8,7 +8,8 @@ namespace Wanderers.Compiling
 {
 	public static class CompilerUtils
 	{
-		public const string IdName = "id";
+		public const string IdName = "Id";
+		public const string MapName = "Map";
 
 		private static readonly Dictionary<Type, List<PropertyInfo>> _propsCache = new Dictionary<Type, List<PropertyInfo>>();
 
