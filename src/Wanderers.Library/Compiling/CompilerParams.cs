@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Wanderers.Compiling
+﻿namespace Wanderers.Compiling
 {
-    public struct CompilerParams
-    {
-        public bool Verbose { get; set; }
-    }
+	public static class CompilerParams
+	{
+		public static bool Verbose { get; set; }
+	}
 }
