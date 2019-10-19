@@ -4,21 +4,18 @@ namespace Wanderers.Core
 {
 	public class NonPlayer : Creature
 	{
+		private bool _dirty = true;
 		private readonly CreatureInfo _info;
+		private AttackInfo[] _attacks = null;
 
-		public override Appearance Image
+		public override Appearance Image => _info.Image;
+		public CreatureInfo Info => _info;
+		public override AttackInfo[] Attacks
 		{
 			get
 			{
-				return _info.Image;
-			}
-		}
-
-		public CreatureInfo Info
-		{
-			get
-			{
-				return _info;
+				Update();
+				return _attacks;
 			}
 		}
 
@@ -37,6 +34,19 @@ namespace Wanderers.Core
 			{
 				Inventory.Items.Add(itemPile.Clone());
 			}
+		}
+
+		private void Update()
+		{
+			if (!_dirty)
+			{
+				return;
+			}
+
+
+			_attacks = _info.Attacks.ToArray();
+
+			_dirty = false;
 		}
 	}
 }

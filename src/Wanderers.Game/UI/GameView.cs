@@ -46,8 +46,11 @@ namespace Wanderers.UI
 		{
 			base.OnKeyDown(k);
 
-			var inventoryWindow = new InventoryWindow();
-			inventoryWindow.ShowModal(Desktop);
+			if (k == Keys.I)
+			{
+				var inventoryWindow = new InventoryWindow();
+				inventoryWindow.ShowModal(Desktop);
+			}
 		}
 	}
 }

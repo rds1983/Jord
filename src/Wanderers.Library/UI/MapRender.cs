@@ -102,7 +102,7 @@ namespace Wanderers.UI
 					var appearance = tile.Info.Image;
 					if (tile.Creature != null)
 					{
-						screen = GameToScreen(tile.Creature.Position);
+						screen = GameToScreen(tile.Creature.DisplayPosition);
 						appearance = tile.Creature.Image;
 					}
 
