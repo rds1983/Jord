@@ -126,6 +126,8 @@ namespace Wanderers.Compiling
 					continue;
 				}
 
+
+
 				var ignoreFieldAttr = field.FindAttribute<IgnoreFieldAttribute>();
 				if (ignoreFieldAttr != null)
 				{

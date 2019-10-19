@@ -5,6 +5,6 @@ namespace Wanderers.Compiling.Loaders
 	public class ObjectData
 	{
 		public string Source;
-		public JObject Object;
+		public JObject Data;
 	}
 }

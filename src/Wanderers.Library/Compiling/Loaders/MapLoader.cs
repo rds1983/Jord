@@ -25,10 +25,10 @@ namespace Wanderers.Compiling.Loaders
 		private JObject EnsureObject(ObjectData root, string name)
 		{
 			JToken token;
-			if (!root.Object.TryGetValue(name, out token))
+			if (!root.Data.TryGetValue(name, out token))
 			{
 				throw new Exception(string.Format("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Object[CompilerUtils.IdName], root.Source));
+					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source));
 			}
 
 			return (JObject)token;
@@ -37,10 +37,10 @@ namespace Wanderers.Compiling.Loaders
 		private JArray EnsureArray(ObjectData root, string name)
 		{
 			JToken token;
-			if (!root.Object.TryGetValue(name, out token))
+			if (!root.Data.TryGetValue(name, out token))
 			{
 				throw new Exception(string.Format("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Object[CompilerUtils.IdName], root.Source));
+					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source));
 			}
 
 			return (JArray)token;

@@ -9,7 +9,7 @@
       "Name": "canteen",
       "Type": "WaterContainer",
       "Price": 15,
-      "capacity": 50
+      "Capacity": 50
     },
     "Barrel": {
       "Name": "barrel",

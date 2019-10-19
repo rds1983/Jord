@@ -15,7 +15,7 @@ namespace Wanderers.Compiling.Loaders
 			var creature = (CreatureInfo)base.LoadItem(context, id, data);
 
 			JToken t;
-			if (data.Object.TryGetValue("inventory", out t))
+			if (data.Data.TryGetValue("Inventory", out t))
 			{
 				JObject obj = (JObject)t;
 

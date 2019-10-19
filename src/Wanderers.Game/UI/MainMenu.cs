@@ -79,8 +79,7 @@ namespace Wanderers.UI
 					var data = new CharacterData
 					{
 						Name = dlg._textName.Text,
-						ClassId = (string)dlg._comboClass.SelectedItem.Tag,
-						Inventory = new Dictionary<string, int>()
+						ClassId = (string)dlg._comboClass.SelectedItem.Tag
 					};
 
 					slot.CharacterData = data;
@@ -90,6 +89,7 @@ namespace Wanderers.UI
 				};
 
 				dlg.ShowModal(Desktop);
+				Desktop.FocusedKeyboardWidget = dlg._textName;
 			}
 			else
 			{
@@ -107,6 +107,7 @@ namespace Wanderers.UI
 			gameView.MapView.Map = TJ.Session.Player.Map;
 
 			WanderersGame.Instance.Desktop.Widgets.Add(gameView);
+			gameView.Desktop.FocusedKeyboardWidget = gameView;
 		}
 
 		private void QuitMenuItemOnSelected(object sender, EventArgs eventArgs)

@@ -9,12 +9,12 @@ namespace Wanderers.Compiling.Loaders
 		{
 		}
 
-		private void FillItems(CompilerContext context, Dictionary<string, BaseItemInfo> output)
+		public override void FillData(CompilerContext context, Dictionary<string, BaseItemInfo> output)
 		{
 			var assembly = GetType().Assembly;
 			foreach (var pair in _sourceData)
 			{
-				var typeName = pair.Value.Object["type"].ToString();
+				var typeName = pair.Value.Data["Type"].ToString();
 
 				var fullTypeName = "Wanderers.Core.Items." + typeName + "Info";
 				var type = assembly.GetType(fullTypeName);

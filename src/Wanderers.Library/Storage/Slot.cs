@@ -46,7 +46,7 @@ namespace Wanderers.Storage
 
 			if (File.Exists(CharacterFilePath))
 			{
-				CharacterData = Serialization.LoadFromPath<CharacterData>(CharacterFilePath);
+				CharacterData = CharacterData.FromJson(File.ReadAllText(CharacterFilePath));
 			}
 		}
 
@@ -64,7 +64,8 @@ namespace Wanderers.Storage
 				Directory.CreateDirectory(saveFolder);
 			}
 
-			Serialization.SaveToPath(CharacterData, CharacterFilePath);
+			var s = CharacterData.ToJson();
+			File.WriteAllText(CharacterFilePath, s);
 		}
 	}
 }

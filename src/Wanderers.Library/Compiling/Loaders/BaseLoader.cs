@@ -34,13 +34,41 @@ namespace Wanderers.Compiling.Loaders
 			od = new ObjectData
 			{
 				Source = source,
-				Object = obj
+				Data = obj
 			};
 
 			_sourceData[id] = od;
 		}
 
-		public static object LoadObject(CompilerContext context, Type type, string id, ObjectData data)
+		private static bool TryLoadPrimitive(CompilerContext context, Type type, JToken data, 
+			string source, out object result)
+		{
+			var loaded = true;
+			result = null;
+			if (type == typeof(string))
+			{
+				result = data.ToString();
+			}
+			else if (type == typeof(Color))
+			{
+				result = context.EnsureColor(data.ToString(), source);
+			}
+			else if (type.IsPrimitive)
+			{
+				result = Convert.ChangeType(data.ToString(), type);
+			}
+			else if (type.IsEnum)
+			{
+				result = Enum.Parse(type, data.ToString());
+			} else
+			{
+				loaded = false;
+			}
+
+			return loaded;
+		}
+
+		public static object LoadData(CompilerContext context, Type type, string id, JObject data, string source)
 		{
 			var item = Activator.CreateInstance(type);
 			var members = CompilerUtils.GetMembers(type);
@@ -56,8 +84,8 @@ namespace Wanderers.Compiling.Loaders
 				if (propertyType == typeof(Appearance))
 				{
 					// Special case
-					var symbol = data.Object["Symbol"].ToString()[0];
-					var color = context.EnsureColor(data.Object["Color"].ToString(), data.Source);
+					var symbol = data["Symbol"].ToString()[0];
+					var color = context.EnsureColor(data["Color"].ToString(), source);
 
 					var appearance = new Appearance(symbol, color);
 
@@ -69,14 +97,14 @@ namespace Wanderers.Compiling.Loaders
 				var name = p.Name;
 
 				JToken token;
-				if (!data.Object.TryGetValue(name, out token))
+				if (!data.TryGetValue(name, out token))
 				{
 					var optionalFieldAttr = p.FindAttribute<OptionalFieldAttribute>();
 					if (optionalFieldAttr == null)
 					{
 						throw new Exception(string.Format(
 							"Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
-							name, type.Name, id, data.Source));
+							name, propertyType.Name, id, source));
 					}
 					else
 					{
@@ -84,25 +112,12 @@ namespace Wanderers.Compiling.Loaders
 					}
 				}
 
-				if (propertyType == typeof(string))
+				object objectVal;
+				if (TryLoadPrimitive(context, propertyType, token, source, out objectVal))
 				{
-					p.SetValue(item, token.ToString());
+					p.SetValue(item, objectVal);
 				}
-				else if (propertyType == typeof(Color))
-				{
-					var c = context.EnsureColor(token.ToString(), data.Source);
-					p.SetValue(item, c);
-				}
-				else if (propertyType.IsPrimitive)
-				{
-					var val = Convert.ChangeType(token.ToString(), propertyType);
-					p.SetValue(item, val);
-				}
-				else if (propertyType.IsEnum)
-				{
-					var enumValue = Enum.Parse(propertyType, token.ToString());
-					p.SetValue(item, enumValue);
-				} else
+				else
 				{
 					var value = p.GetValue(item);
 					var asList = value as IList;
@@ -110,15 +125,35 @@ namespace Wanderers.Compiling.Loaders
 					{
 						var collectionType = propertyType.GetGenericArguments()[0];
 						var jarr = (JArray)token;
-						foreach(JObject val in jarr)
+						foreach (JObject val in jarr)
 						{
-							var collectionItem = LoadObject(context, collectionType, id, new ObjectData
-							{
-								Object = val,
-								Source = data.Source
-							});
-
+							var collectionItem = LoadData(context, collectionType, id, val, source);
 							asList.Add(collectionItem);
+						}
+					}
+
+					var asDict = value as IDictionary;
+					if (asDict != null)
+					{
+						var keyType = propertyType.GetGenericArguments()[0];
+						var collectionType = propertyType.GetGenericArguments()[1];
+						var jarr = (JObject)token;
+						foreach (var pair in jarr)
+						{
+							object key = pair.Key;
+							if (keyType.IsEnum)
+							{
+								key = Enum.Parse(keyType, pair.Key.ToString());
+							}
+
+							if (TryLoadPrimitive(context, collectionType, pair.Value, source, out objectVal))
+							{
+								asDict[key] = objectVal;
+							}
+							else
+							{
+								asDict[key] = LoadData(context, collectionType, id, (JObject)pair.Value, source);
+							}
 						}
 					}
 				}
@@ -129,7 +164,7 @@ namespace Wanderers.Compiling.Loaders
 
 		public static ItemWithId LoadItem(CompilerContext context, Type type, string id, ObjectData data)
 		{
-			var item = (ItemWithId)LoadObject(context, type, id, data);
+			var item = (ItemWithId)LoadData(context, type, id, data.Data, data.Source);
 
 			item.Id = id;
 
@@ -141,18 +176,49 @@ namespace Wanderers.Compiling.Loaders
 			return LoadItem(context, Type, id, data);
 		}
 
-		public void FillData<T>(CompilerContext context, Dictionary<string, T> output) where T : ItemWithId, new()
+		public static JToken SaveObject(object obj)
 		{
-			foreach (var pair in _sourceData)
+			var type = obj.GetType();
+			if (type == typeof(string) || type.IsPrimitive || type.IsEnum)
 			{
-				var item = (T)LoadItem(context, pair.Key, pair.Value);
-				output[item.Id] = item;
-
-				if (CompilerParams.Verbose)
-				{
-					TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
-				}
+				return obj.ToString();
 			}
+
+			var asList = obj as IList;
+			if (asList != null)
+			{
+				var arr = new JArray();
+				foreach (var subItem in asList)
+				{
+					var subObj = SaveObject(subItem);
+					arr.Add(subObj);
+				}
+
+				return arr;
+			}
+
+			var asDict = obj as IDictionary;
+			if (asDict != null)
+			{
+				var dict = new JObject();
+				foreach (DictionaryEntry pair in asDict)
+				{
+					dict[pair.Key.ToString()] = SaveObject(pair.Value);
+				}
+
+				return dict;
+			}
+
+			var result = new JObject();
+
+			var members = CompilerUtils.GetMembers(type);
+			foreach (var p in members)
+			{
+				var value = p.GetValue(obj);
+				result.Add(p.Name, SaveObject(value));
+			}
+
+			return result;
 		}
 	}
 }

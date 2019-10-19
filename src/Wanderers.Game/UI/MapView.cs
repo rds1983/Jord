@@ -2,7 +2,6 @@
 using Myra.Graphics2D.UI;
 using System;
 using Wanderers.Core;
-using Wanderers.Utils;
 
 namespace Wanderers.UI
 {

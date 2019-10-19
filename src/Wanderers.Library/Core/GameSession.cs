@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Wanderers.Storage;
 
 namespace Wanderers.Core
@@ -23,23 +22,8 @@ namespace Wanderers.Core
 			_character = _slot.CharacterData.CreateCharacter();
 
 			// Spawn player
-			// First spawn spot
-			var placed = false;
-			foreach (var pair in TJ.Module.Maps)
-			{
-				if (pair.Value.SpawnSpot != null)
-				{
-					var map = pair.Value;
-					Player.Place(map, pair.Value.SpawnSpot.Value.ToVector2());
-					placed = true;
-					break;
-				}
-			}
-
-			if (!placed)
-			{
-				throw new Exception("Could not find a player spawn spot");
-			}
+			var map = TJ.Module.Maps[_slot.CharacterData.StartingMapId];
+			Player.Place(map, map.SpawnSpot.Value.ToVector2());
 		}
 
 		public void AddActiveCreature(Creature creature)

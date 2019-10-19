@@ -143,7 +143,7 @@ namespace Wanderers.Compiling
 
 		private void FillData<T>(Dictionary<string, T> output) where T : ItemWithId, new()
 		{
-			_loaders[typeof(T)].FillData(_context, output);
+			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
 		}
 
 		public MapData LoadMapData(string path)
@@ -178,7 +178,7 @@ namespace Wanderers.Compiling
 			var od = new ObjectData
 			{
 				Source = json,
-				Object = obj
+				Data = obj
 			};
 
 			var id = obj[CompilerUtils.IdName].ToString();
