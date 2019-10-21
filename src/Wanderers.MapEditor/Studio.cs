@@ -11,6 +11,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Wanderers.Generator;
 using Wanderers.Compiling.Loaders;
+using System.Linq;
+using Microsoft.Xna.Framework.Input;
 
 namespace Wanderers.MapEditor
 {
@@ -33,7 +35,6 @@ namespace Wanderers.MapEditor
 		private Compiler _compiler;
 		private string _lastFolder;
 		private string _modulePath;
-		private MapData _mapData = null;
 
 		public string FilePath
 		{
@@ -166,19 +167,43 @@ namespace Wanderers.MapEditor
 			{
 				Load(_state.EditedFile);
 			}
-
 		}
 
 		private void BuildUI()
 		{
-#if DEBUG
-#endif
-
 			_desktop = new Desktop();
+
+			_desktop.KeyDown += (s, a) =>
+			{
+				if (_desktop.HasModalWindow || _ui._mainMenu.IsOpen)
+				{
+					return;
+				}
+
+				if (_desktop.DownKeys.Contains(Keys.LeftControl) || _desktop.DownKeys.Contains(Keys.RightControl))
+				{
+					if (_desktop.DownKeys.Contains(Keys.N))
+					{
+						OnNewMapSelected(this, EventArgs.Empty);
+					}
+					else if (_desktop.DownKeys.Contains(Keys.O))
+					{
+						OpenProjectItemOnClicked(this, EventArgs.Empty);
+					}
+					else if (_desktop.DownKeys.Contains(Keys.S))
+					{
+						SaveItemOnClicked(this, EventArgs.Empty);
+					}
+					else if (_desktop.DownKeys.Contains(Keys.Q))
+					{
+						Exit();
+					}
+				}
+			};
 
 			_ui = new StudioWidget();
 
-			_ui._newMenuItem.Selected += _newMenuItem_Selected;
+			_ui._newMenuItem.Selected += OnNewMapSelected;
 			_ui._openMenuItem.Selected += OpenProjectItemOnClicked;
 			_ui._resizeMenuItem.Selected += OnResizeItemClicked;
 			_ui._saveMenuItem.Selected += SaveItemOnClicked;
@@ -241,7 +266,7 @@ namespace Wanderers.MapEditor
 			UpdateMenuFile();
 		}
 
-		private void _newMenuItem_Selected(object sender, EventArgs e)
+		private void OnNewMapSelected(object sender, EventArgs e)
 		{
 			var dlg = new NewMapDialog();
 
@@ -326,22 +351,22 @@ namespace Wanderers.MapEditor
 							switch (tileType)
 							{
 								case WorldMapTileType.Water:
-									tileInfo = TJ.Module.TileInfos["water"];
+									tileInfo = TJ.Module.TileInfos["Water"];
 									break;
 								case WorldMapTileType.Mountain:
-									tileInfo = TJ.Module.TileInfos["mountain"];
+									tileInfo = TJ.Module.TileInfos["Mountain"];
 									break;
 								case WorldMapTileType.Forest:
-									tileInfo = TJ.Module.TileInfos["tree"];
+									tileInfo = TJ.Module.TileInfos["Tree"];
 									break;
 								case WorldMapTileType.Road:
-									tileInfo = TJ.Module.TileInfos["road"];
+									tileInfo = TJ.Module.TileInfos["Road"];
 									break;
 								case WorldMapTileType.Wall:
-									tileInfo = TJ.Module.TileInfos["wall"];
+									tileInfo = TJ.Module.TileInfos["Wall"];
 									break;
 								default:
-									tileInfo = TJ.Module.TileInfos["grass"];
+									tileInfo = TJ.Module.TileInfos["Grass"];
 									break;
 							}
 
@@ -597,38 +622,7 @@ namespace Wanderers.MapEditor
 
 				var json = File.ReadAllText(filePath);
 
-				if (_mapData != null)
-				{
-					// Remove old map data from module
-					foreach (var pair in _mapData.CreatureInfos)
-					{
-						TJ.Module.CreatureInfos.Remove(pair.Key);
-					}
-
-					foreach (var pair in _mapData.TileInfos)
-					{
-						TJ.Module.TileInfos.Remove(pair.Key);
-					}
-
-					_mapData = null;
-				}
-
-				_mapData = _compiler.LoadMapData(filePath);
-				if (_mapData != null)
-				{
-					// Add new map data to the module
-					foreach (var pair in _mapData.CreatureInfos)
-					{
-						TJ.Module.CreatureInfos.Add(pair.Key, pair.Value);
-					}
-
-					foreach (var pair in _mapData.TileInfos)
-					{
-						TJ.Module.TileInfos.Add(pair.Key, pair.Value);
-					}
-				}
-
-				Map = _compiler.LoadMapFromJson(TJ.Module, json);
+				Map = _compiler.LoadMapFromJson(json);
 
 				FilePath = filePath;
 				IsDirty = false;

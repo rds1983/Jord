@@ -3,7 +3,7 @@ using Myra.Graphics2D.UI;
 
 namespace Wanderers.UI
 {
-	public class GameView: SingleItemContainer<Grid>
+	public class GameView: SingleItemContainer<HorizontalStackPanel>
 	{
 		private readonly MapView _mapView = new MapView();
 		private readonly LogView _logView = new LogView();
@@ -31,14 +31,14 @@ namespace Wanderers.UI
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Stretch;
 
-			InternalChild = new Grid();
+			InternalChild = new HorizontalStackPanel();
 
-			InternalChild.ColumnsProportions.Add(new Proportion(ProportionType.Pixels, MapRender.TileSize.X * 25));
-			InternalChild.ColumnsProportions.Add(new Proportion(ProportionType.Fill));
+			InternalChild.Proportions.Add(new Proportion(ProportionType.Pixels, MapRender.TileSize.X * 25));
+			InternalChild.Proportions.Add(Proportion.Auto);
+			InternalChild.Proportions.Add(Proportion.Fill);
 
 			InternalChild.Widgets.Add(MapView);
-
-			_logView.GridColumn = 1;
+			InternalChild.Widgets.Add(new VerticalSeparator());
 			InternalChild.Widgets.Add(_logView);
 		}
 

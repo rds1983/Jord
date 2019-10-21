@@ -25,7 +25,7 @@ namespace Wanderers.Compiling.Loaders
 				{
 					inventory.Items.Add(new ItemPile
 					{
-						Item = new Item(context.Module.ItemInfos[pair.Key]),
+						Item = new Item(context.Module.EnsureItemInfo(pair.Key)),
 						Quantity = (int)pair.Value
 					});
 				}

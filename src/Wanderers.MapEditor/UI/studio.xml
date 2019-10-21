@@ -7,17 +7,17 @@
     </Grid.RowsProportions>
     <HorizontalMenu VerticalAlignment="Stretch" Id="_mainMenu">
       <MenuItem Id="" Text="&amp;File">
-        <MenuItem Id="_newMenuItem" Text="&amp;New..." />
-        <MenuItem Id="_openMenuItem" Text="&amp;Open..." />
-        <MenuItem Id="_saveMenuItem" Text="&amp;Save" />
+        <MenuItem Id="_newMenuItem" Text="&amp;New..." ShortcutText="Ctrl+N" />
+        <MenuItem Id="_openMenuItem" Text="&amp;Open..." ShortcutText="Ctrl+O" />
+        <MenuItem Id="_saveMenuItem" Text="&amp;Save" ShortcutText="Ctrl+S" />
         <MenuItem Id="_saveAsMenuItem" Text="Save &amp;As" />
         <MenuSeparator />
-        <MenuItem Id="_resizeMenuItem" Text="&amp;Resize Map" />
-        <MenuItem Id="_reloadModuleMenuItem" Text="Reload &amp;Module" />
+        <MenuItem Id="_resizeMenuItem" Text="Resize &amp;Map" />
+        <MenuItem Id="_reloadModuleMenuItem" Text="&amp;Reload Module" ShortcutText="Ctrl+R" />
         <MenuSeparator />
         <MenuItem Id="_debugOptionsMenuItem" Text="&amp;UI Debug Options" />
         <MenuSeparator />
-        <MenuItem Id="_quitMenuItem" Text="&amp;Quit" />
+        <MenuItem Id="_quitMenuItem" Text="&amp;Quit" ShortcutText="Ctrl+Q" />
       </MenuItem>
       <MenuItem Id="" Text="&amp;Help">
         <MenuItem Id="_aboutMenuItem" Text="&amp;About" />

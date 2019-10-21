@@ -146,33 +146,7 @@ namespace Wanderers.Compiling
 			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
 		}
 
-		public MapData LoadMapData(string path)
-		{
-			var folder = Path.GetDirectoryName(path);
-			var name = Path.GetFileNameWithoutExtension(path);
-			var files = Directory.EnumerateFiles(folder, name + ".*.json", SearchOption.TopDirectoryOnly);
-
-			var compiler2 = new Compiler();
-			compiler2.FirstRun(files);
-
-			foreach (var pair in _context.Colors)
-			{
-				compiler2._context.Colors[pair.Key] = pair.Value;
-			}
-
-			// Second run - build data
-			var result = new MapData();
-
-			// Tile Infos
-			compiler2.FillData(result.TileInfos);
-
-			// Creature Infos
-			compiler2.FillData(result.CreatureInfos);
-
-			return result;
-		}
-
-		public Map LoadMapFromJson(Module module, string json)
+		public Map LoadMapFromJson(string json)
 		{
 			var obj = (JObject)JObject.Parse(json)[CompilerUtils.MapName];
 			var od = new ObjectData

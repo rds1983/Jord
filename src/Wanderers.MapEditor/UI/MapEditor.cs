@@ -144,6 +144,7 @@ namespace Wanderers.MapEditor.UI
 					break;
 			}
 
+			Studio.Instance.IsDirty = true;
 			Studio.Instance.UI._mapNavigation.Invalidate();
 		}
 	}
