@@ -31,5 +31,19 @@ namespace Wanderers.Core
 			get;
 			internal set;
 		}
+
+		public Tile()
+		{
+		}
+
+		public Tile(TileInfo info)
+		{
+			if (info == null)
+			{
+				throw new ArgumentNullException(nameof(info));
+			}
+
+			Info = info;
+		}
 	}
 }

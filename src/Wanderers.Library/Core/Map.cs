@@ -72,5 +72,10 @@ namespace Wanderers.Core
 		{
 			_tiles[pos.X, pos.Y] = tile;
 		}
+
+		public void SetTileAt(int x, int y, Tile tile)
+		{
+			_tiles[x, y] = tile;
+		}
 	}
 }

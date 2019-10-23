@@ -4,7 +4,7 @@ using Wanderers.Core;
 
 namespace Wanderers.Compiling.Loaders
 {
-	public class Loader<T>: BaseLoader where T: ItemWithId, new()
+	public class Loader<T>: BaseLoader where T: ItemWithId
 	{
 		public override string TypeName => typeof(T).Name;
 		public override Type Type => typeof(T);

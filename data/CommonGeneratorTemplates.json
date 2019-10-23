@@ -1,0 +1,18 @@
+﻿{
+  "GeneratorConfigs": {
+    "CommonRooms64x64": {
+      "Width": 64,
+      "Height": 64,
+      "Type": "Rooms",
+      "MinimumRoomsCount": 15,
+      "MaximumRoomsCount": 20,
+      "MinimumRoomWidth": 5,
+      "MaximumRoomWidth": 8,
+      "MinimumRoomHeight": 5,
+      "MaximumRoomHeight": 8,
+      "RoomBorderSize": 4,
+      "FillerTileId": "Wall",
+      "SpaceTileId": "Ground"
+    },
+  }
+}

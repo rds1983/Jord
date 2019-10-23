@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Module = Wanderers.Core.Module;
 using Wanderers.Core.Items;
 using Wanderers.Compiling.Loaders;
+using Wanderers.Generation;
 
 namespace Wanderers.Compiling
 {
@@ -34,6 +35,7 @@ namespace Wanderers.Compiling
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
 			_loaders[typeof(Class)] = new Loader<Class>("Classes");
+			_loaders[typeof(BaseGenerator)] = new GeneratorLoader();
 		}
 
 		private static Color ParseColor(JToken source)
@@ -141,7 +143,7 @@ namespace Wanderers.Compiling
 			}
 		}
 
-		private void FillData<T>(Dictionary<string, T> output) where T : ItemWithId, new()
+		private void FillData<T>(Dictionary<string, T> output) where T : ItemWithId
 		{
 			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
 		}
@@ -203,6 +205,9 @@ namespace Wanderers.Compiling
 
 			// Classes
 			FillData(_context.Module.Classes);
+
+			// Generators
+			FillData(_context.Module.GeneratorConfigs);
 
 			if (!skipMaps)
 			{

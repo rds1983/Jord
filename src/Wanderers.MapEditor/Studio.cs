@@ -8,11 +8,10 @@ using Wanderers.Compiling;
 using Myra.Graphics2D.UI.File;
 using Wanderers.Utils;
 using System.IO;
-using System.Threading.Tasks;
-using Wanderers.Generator;
 using Wanderers.Compiling.Loaders;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
+using Wanderers.Generation;
 
 namespace Wanderers.MapEditor
 {
@@ -266,6 +265,41 @@ namespace Wanderers.MapEditor
 			UpdateMenuFile();
 		}
 
+		private void SetNewMap(Map map)
+		{
+			Map = map;
+			FilePath = string.Empty;
+			IsDirty = false;
+		}
+
+		private void OnNewGeneratedMap()
+		{
+			var dlg = new NewGeneratedMapDialog();
+
+			dlg.Closed += (s, a) =>
+			{
+				if (!dlg.Result)
+				{
+					return;
+				}
+
+				try
+				{
+					var id = dlg._textId.Text;
+					var generator = (BaseGenerator)dlg._comboGenerator.SelectedItem.Tag;
+
+					var newMap = generator.Generate();
+					SetNewMap(newMap);
+				}
+				catch (Exception ex)
+				{
+					SetMessageBoxText(dlg, "Error: " + ex.Message);
+				}
+			};
+
+			dlg.ShowModal(_desktop);
+		}
+
 		private void OnNewMapSelected(object sender, EventArgs e)
 		{
 			var dlg = new NewMapDialog();
@@ -276,7 +310,7 @@ namespace Wanderers.MapEditor
 					dlg._radioSingleTileMap.IsPressed = true;
 					break;
 				case 1:
-					dlg._radioGeneratedGlobalMap.IsPressed = true;
+					dlg._radioGeneratedMap.IsPressed = true;
 					break;
 			}
 
@@ -287,15 +321,23 @@ namespace Wanderers.MapEditor
 					return;
 				}
 
-				if (dlg._radioSingleTileMap.IsPressed)
+				try
 				{
-					_state.LastNewMapType = 0;
+
+					if (dlg._radioSingleTileMap.IsPressed)
+					{
+						throw new NotImplementedException();
+						_state.LastNewMapType = 0;
+					}
+					else
+					{
+						OnNewGeneratedMap();
+						_state.LastNewMapType = 1;
+					}
 				}
-				else
+				catch(Exception ex)
 				{
-					// Generate new global map
-					GenerateGlobalMap();
-					_state.LastNewMapType = 1;
+					ReportError(ex.Message);
 				}
 			};
 
@@ -309,7 +351,7 @@ namespace Wanderers.MapEditor
 			Label.Text = newText;
 		}
 
-		private void GenerateGlobalMap()
+/*		private void GenerateGlobalMap()
 		{
 			var dlg = Dialog.CreateMessageBox("Generation...", string.Empty);
 
@@ -409,7 +451,7 @@ namespace Wanderers.MapEditor
 			};
 
 			dlg.ShowModal(_desktop);
-		}
+		}*/
 
 		private void _saveAsMenuItem_Selected(object sender, EventArgs e)
 		{

@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wanderers.Core.Items;
+using Wanderers.Generation;
 
 namespace Wanderers.Compiling.Loaders
 {
-	public class ItemLoader: Loader<BaseItemInfo>
+	public class GeneratorLoader : Loader<BaseGenerator>
 	{
-		public ItemLoader() : base("ItemInfos")
+		public GeneratorLoader() : base("GeneratorConfigs")
 		{
 		}
 
-		public override void FillData(CompilerContext context, Dictionary<string, BaseItemInfo> output)
+		public override void FillData(CompilerContext context, Dictionary<string, BaseGenerator> output)
 		{
 			var assembly = GetType().Assembly;
 			foreach (var pair in _sourceData)
 			{
 				var typeName = pair.Value.Data["Type"].ToString();
 
-				var fullTypeName = "Wanderers.Core.Items." + typeName + "Info";
+				var fullTypeName = "Wanderers.Generation." + typeName + "Generator";
 				var type = assembly.GetType(fullTypeName);
 
 				if (type == null)
@@ -26,7 +27,7 @@ namespace Wanderers.Compiling.Loaders
 				}
 
 				var props = CompilerUtils.GetMembers(type);
-				var item = (BaseItemInfo)LoadItem(context, type, pair.Key, pair.Value);
+				var item = (BaseGenerator)LoadItem(context, type, pair.Key, pair.Value);
 				output[item.Id] = item;
 
 				if (CompilerParams.Verbose)

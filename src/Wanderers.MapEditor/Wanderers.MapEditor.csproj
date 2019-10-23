@@ -14,7 +14,6 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <ProjectReference Include="..\Wanderers.Generator\Wanderers.Generator.csproj" />
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />
   </ItemGroup>
 </Project>
