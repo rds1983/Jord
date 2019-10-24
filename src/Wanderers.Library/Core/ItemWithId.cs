@@ -27,6 +27,9 @@ namespace Wanderers.Core
 			}
 		}
 
+		[IgnoreField]
+		public string Source;
+
 		public event EventHandler IdChanged;
 
 		public override string ToString()

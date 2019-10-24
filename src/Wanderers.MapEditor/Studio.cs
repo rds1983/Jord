@@ -27,44 +27,29 @@ namespace Wanderers.MapEditor
 		private Label _gcMemoryLabel;
 		private Label _fpsLabel;
 		private Label _widgetsCountLabel;
-//		private readonly FramesPerSecondCounter _fpsCounter = new FramesPerSecondCounter();
-		private string _filePath;
+		private string _modulePath;
 		private bool _isDirty;
 		private readonly int[] _customColors;
 		private Compiler _compiler;
 		private string _lastFolder;
-		private string _modulePath;
 
-		public string FilePath
+		public string ModulePath
 		{
 			get
 			{
-				return _filePath;
+				return _modulePath;
 			}
 
 			set
 			{
-				if (value == _filePath)
+				if (_modulePath == value)
 				{
 					return;
 				}
 
-				_filePath = value;
-
-				if (!string.IsNullOrEmpty(_filePath))
-				{
-					// Store last folder
-					try
-					{
-						_lastFolder = Path.GetDirectoryName(_filePath);
-					}
-					catch (Exception)
-					{
-					}
-				}
-
-				UpdateTitle();
+				_modulePath = value;
 				UpdateMenuFile();
+				UpdateTitle();
 			}
 		}
 
@@ -80,6 +65,7 @@ namespace Wanderers.MapEditor
 				_ui._mapEditor.Map = value;
 
 				UpdateToolbox();
+				UpdateMenuFile();
 
 				_ui._mapNavigation.Invalidate();
 			}
@@ -159,12 +145,17 @@ namespace Wanderers.MapEditor
 
 			BuildUI();
 
-			if (_state == null || string.IsNullOrEmpty(_state.EditedFile))
+			if (_state != null)
 			{
-			}
-			else
-			{
-				Load(_state.EditedFile);
+				if (!string.IsNullOrEmpty(_state.ModulePath))
+				{
+					LoadModule(_state.ModulePath);
+
+					if (!string.IsNullOrEmpty(_state.MapId))
+					{
+						SetMap(_state.MapId);
+					}
+				}
 			}
 		}
 
@@ -181,17 +172,21 @@ namespace Wanderers.MapEditor
 
 				if (_desktop.DownKeys.Contains(Keys.LeftControl) || _desktop.DownKeys.Contains(Keys.RightControl))
 				{
-					if (_desktop.DownKeys.Contains(Keys.N))
-					{
-						OnNewMapSelected(this, EventArgs.Empty);
-					}
-					else if (_desktop.DownKeys.Contains(Keys.O))
+					if (_desktop.DownKeys.Contains(Keys.O))
 					{
 						OpenProjectItemOnClicked(this, EventArgs.Empty);
 					}
+					else if (_desktop.DownKeys.Contains(Keys.W))
+					{
+						OnSwitchMapMenuItemSelected(this, EventArgs.Empty);
+					}
+					else if (_desktop.DownKeys.Contains(Keys.N))
+					{
+						OnNewMapSelected(this, EventArgs.Empty);
+					}
 					else if (_desktop.DownKeys.Contains(Keys.S))
 					{
-						SaveItemOnClicked(this, EventArgs.Empty);
+						SaveMapSelected(this, EventArgs.Empty);
 					}
 					else if (_desktop.DownKeys.Contains(Keys.Q))
 					{
@@ -202,11 +197,14 @@ namespace Wanderers.MapEditor
 
 			_ui = new StudioWidget();
 
-			_ui._newMenuItem.Selected += OnNewMapSelected;
-			_ui._openMenuItem.Selected += OpenProjectItemOnClicked;
-			_ui._resizeMenuItem.Selected += OnResizeItemClicked;
-			_ui._saveMenuItem.Selected += SaveItemOnClicked;
-			_ui._saveAsMenuItem.Selected += _saveAsMenuItem_Selected;
+			_ui._openModuleMenuItem.Selected += OpenProjectItemOnClicked;
+
+			_ui._switchMapMenuItem.Selected += OnSwitchMapMenuItemSelected;
+			_ui._newMapMenuItem.Selected += OnNewMapSelected;
+			_ui._resizeMapMenuItem.Selected += OnResizeMapSelected;
+			_ui._saveMapMenuItem.Selected += SaveMapSelected;
+			_ui._saveMapAsMenuItem.Selected += SaveMapAsSelected;
+
 			_ui._debugOptionsMenuItem.Selected += DebugOptionsItemOnSelected;
 			_ui._quitMenuItem.Selected += QuitItemOnDown;
 
@@ -268,7 +266,6 @@ namespace Wanderers.MapEditor
 		private void SetNewMap(Map map)
 		{
 			Map = map;
-			FilePath = string.Empty;
 			IsDirty = false;
 		}
 
@@ -453,12 +450,12 @@ namespace Wanderers.MapEditor
 			dlg.ShowModal(_desktop);
 		}*/
 
-		private void _saveAsMenuItem_Selected(object sender, EventArgs e)
+		private void SaveMapAsSelected(object sender, EventArgs e)
 		{
 			Save(true);
 		}
 
-		private void OnResizeItemClicked(object sender, EventArgs e)
+		private void OnResizeMapSelected(object sender, EventArgs e)
 		{
 			var dlg = new ResizeMapDialog();
 			dlg._spinWidth.Value = Map.Size.X;
@@ -528,21 +525,36 @@ namespace Wanderers.MapEditor
 			dialog.ShowModal(_desktop);
 		}
 
-		private void SaveItemOnClicked(object sender, EventArgs eventArgs)
+		private void SaveMapSelected(object sender, EventArgs eventArgs)
 		{
 			Save(false);
 		}
 
-		private void OpenProjectItemOnClicked(object sender, EventArgs eventArgs)
+		private void OnSwitchMapMenuItemSelected(object sender, EventArgs e)
 		{
-			var dlg = new FileDialog(FileDialogMode.OpenFile)
+			var dlg = new ChooseMapDialog();
+
+			dlg.Closed += (s, a) =>
 			{
-				Filter = MapFilter
+				if (!dlg.Result)
+				{
+					return;
+				}
+
+				var map = (Map)dlg._listMaps.SelectedItem.Tag;
+				SetMap(map.Id);
 			};
 
-			if (!string.IsNullOrEmpty(FilePath))
+			dlg.ShowModal(_desktop);
+		}
+
+		private void OpenProjectItemOnClicked(object sender, EventArgs eventArgs)
+		{
+			var dlg = new FileDialog(FileDialogMode.ChooseFolder);
+
+			if (!string.IsNullOrEmpty(ModulePath))
 			{
-				dlg.Folder = Path.GetDirectoryName(FilePath);
+				dlg.Folder = Path.GetDirectoryName(ModulePath);
 			}
 			else if (!string.IsNullOrEmpty(_lastFolder))
 			{
@@ -562,17 +574,10 @@ namespace Wanderers.MapEditor
 					return;
 				}
 
-				Load(filePath);
+				LoadModule(filePath);
 			};
 
 			dlg.ShowModal(_desktop);
-		}
-
-		protected override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-
-//			_fpsCounter.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -599,7 +604,8 @@ namespace Wanderers.MapEditor
 				Size = new Point(GraphicsDevice.PresentationParameters.BackBufferWidth,
 					GraphicsDevice.PresentationParameters.BackBufferHeight),
 				TopSplitterPosition = _ui._topSplitPane.GetSplitterPosition(0),
-				EditedFile = FilePath,
+				ModulePath = _modulePath,
+				MapId = Map != null?Map.Id:string.Empty,
 				LastFolder = _lastFolder,
 				CustomColors = _customColors,
 			};
@@ -611,23 +617,23 @@ namespace Wanderers.MapEditor
 		{
 			var result = MapLoader.SaveMapToString(_ui._mapEditor.Map);
 			File.WriteAllText(filePath, result);
-			FilePath = filePath;
+			Map.Source = filePath;
 			IsDirty = false;
 		}
 
 		private void Save(bool setFileName)
 		{
-			var filePath = FilePath;
-			if (string.IsNullOrEmpty(FilePath) || setFileName)
+			var filePath = Map.Source;
+			if (string.IsNullOrEmpty(filePath) || setFileName)
 			{
 				var dlg = new FileDialog(FileDialogMode.SaveFile)
 				{
 					Filter = "*.json"
 				};
 
-				if (!string.IsNullOrEmpty(FilePath))
+				if (!string.IsNullOrEmpty(filePath))
 				{
-					dlg.FilePath = FilePath;
+					dlg.FilePath = filePath;
 				}
 
 				dlg.ShowModal(_desktop);
@@ -642,32 +648,36 @@ namespace Wanderers.MapEditor
 			}
 			else
 			{
-				ProcessSave(FilePath);
+				ProcessSave(filePath);
 			}
 		}
 
-		private void Load(string filePath)
+		private void LoadModule(string modulePath)
 		{
 			try
 			{
-				var modulePath = Path.GetDirectoryName(Path.GetDirectoryName(filePath));
-				if (modulePath != _modulePath)
-				{
-					CompilerParams.Verbose = true;
-					_compiler = new Compiler();
+				CompilerParams.Verbose = true;
+				_compiler = new Compiler();
 
-					// Load module
-					Module newDocument = _compiler.Process(modulePath, true);
-					TJ.Module = newDocument;
-					_modulePath = modulePath;
-				}
+				// Load module
+				Module newDocument = _compiler.Process(modulePath);
+				TJ.Module = newDocument;
+				ModulePath = modulePath;
 
-				var json = File.ReadAllText(filePath);
-
-				Map = _compiler.LoadMapFromJson(json);
-
-				FilePath = filePath;
+				Map = null;
 				IsDirty = false;
+			}
+			catch (Exception ex)
+			{
+				ReportError(ex.Message);
+			}
+		}
+
+		private void SetMap(string mapId)
+		{
+			try
+			{
+				Map = TJ.Module.Maps[mapId];
 			}
 			catch (Exception ex)
 			{
@@ -741,11 +751,20 @@ namespace Wanderers.MapEditor
 
 		private void UpdateTitle()
 		{
-			var title = string.IsNullOrEmpty(_filePath) ? "Wanderers Map Editor" : _filePath;
-
-			if (_isDirty)
+			var title = "Wanderers Map Editor";
+			
+			if (!string.IsNullOrEmpty(_modulePath))
 			{
-				title += " *";
+				title = _modulePath;
+
+				if (Map != null && !string.IsNullOrEmpty(Map.Source))
+				{
+					title = Map.Source;
+					if (_isDirty)
+					{
+						title += " *";
+					}
+				}
 			}
 
 			Window.Title = title;
@@ -753,7 +772,13 @@ namespace Wanderers.MapEditor
 
 		private void UpdateMenuFile()
 		{
-			_ui._resizeMenuItem.Enabled = !string.IsNullOrEmpty(FilePath);
+			var moduleLoaded = !string.IsNullOrEmpty(_modulePath);
+
+			_ui._newMapMenuItem.Enabled = moduleLoaded;
+			_ui._switchMapMenuItem.Enabled = moduleLoaded;
+			_ui._saveMapMenuItem.Enabled = moduleLoaded && Map != null;
+			_ui._saveMapAsMenuItem.Enabled = moduleLoaded && Map != null;
+			_ui._resizeMapMenuItem.Enabled = moduleLoaded && Map != null;
 		}
 	}
 }

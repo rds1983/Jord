@@ -148,21 +148,7 @@ namespace Wanderers.Compiling
 			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
 		}
 
-		public Map LoadMapFromJson(string json)
-		{
-			var obj = (JObject)JObject.Parse(json)[CompilerUtils.MapName];
-			var od = new ObjectData
-			{
-				Source = json,
-				Data = obj
-			};
-
-			var id = obj[CompilerUtils.IdName].ToString();
-
-			return (Map)MapLoader.LoadItem(_context, id, od);
-		}
-
-		public void FindSources(string path, bool isTop, List<string> result, bool skipMaps)
+		public void FindSources(string path, bool isTop, List<string> result)
 		{
 			var files = Directory.EnumerateFiles(path, "*.json", SearchOption.TopDirectoryOnly);
 			result.AddRange(files);
@@ -176,20 +162,15 @@ namespace Wanderers.Compiling
 					continue;
 				}
 
-				if (skipMaps && sf.EndsWith("maps"))
-				{
-					continue;
-				}
-
-				FindSources(sf, false, result, skipMaps);
+				FindSources(sf, false, result);
 			}
 		}
 
-		public Module Process(string path, bool skipMaps = false)
+		public Module Process(string path)
 		{
 			// First run - parse json and build object maps
 			var sources = new List<string>();
-			FindSources(path, true, sources, skipMaps);
+			FindSources(path, true, sources);
 
 			FirstRun(sources);
 
@@ -209,11 +190,8 @@ namespace Wanderers.Compiling
 			// Generators
 			FillData(_context.Module.GeneratorConfigs);
 
-			if (!skipMaps)
-			{
-				// Maps
-				FillData(_context.Module.Maps);
-			}
+			// Maps
+			FillData(_context.Module.Maps);
 
 			return _context.Module;
 		}

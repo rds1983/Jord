@@ -21,12 +21,14 @@ namespace Wanderers.MapEditor
 		public Point Size { get; set; }
 		public float TopSplitterPosition { get; set; }
 		public float RightSplitterPosition { get; set; }
-		public string EditedFile { get; set; }
+		public string ModulePath { get; set; }
+		public string MapId { get; set; }
 		public int[] CustomColors { get; set; }
 		public string LastFolder
 		{
 			get; set;
 		}
+
 		public int LastNewMapType
 		{
 			get; set;
@@ -63,14 +65,16 @@ namespace Wanderers.MapEditor
 			return string.Format("Size = {0}\n" +
 			                     "TopSplitter = {1:0.##}\n" +
 			                     "RightSplitter= {2:0.##}\n" +
-			                     "EditedFile = {3}\n" +
-			                     "CustomColors = {4}\n" +
-								 "LastFolder = {5}\n" +
-								 "LastNewMapType = {6}",
+			                     "ModulePath = {3}\n" +
+								 "MapId = {4}\n" +
+								 "CustomColors = {5}\n" +
+								 "LastFolder = {6}\n" +
+								 "LastNewMapType = {7}",
 				Size,
 				TopSplitterPosition,
 				RightSplitterPosition,
-				EditedFile,
+				ModulePath,
+				MapId,
 				CustomColors,
 				LastFolder,
 				LastNewMapType);

@@ -167,6 +167,7 @@ namespace Wanderers.Compiling.Loaders
 			var item = (ItemWithId)LoadData(context, type, id, data.Data, data.Source);
 
 			item.Id = id;
+			item.Source = data.Source;
 
 			return item;
 		}
