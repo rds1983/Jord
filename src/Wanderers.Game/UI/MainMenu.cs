@@ -5,8 +5,6 @@ using Wanderers.Storage;
 using Myra;
 using Myra.Graphics2D.UI;
 using Wanderers.Core;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Wanderers.UI
 {
@@ -19,14 +17,14 @@ namespace Wanderers.UI
 		{
 			BuildUI();
 
-			_startNewGameMenuItem.Selected += StartNewGameMenuItemOnSelected;
+			_playItem.Selected += PlayOnSelected;
 
 			_quitMenuItem.Selected += QuitMenuItemOnSelected;
 
 			_textVersion.Text = "Version " + TJ.Version;
 		}
 
-		private void StartNewGameMenuItemOnSelected(object sender, EventArgs eventArgs)
+		private void PlayOnSelected(object sender, EventArgs eventArgs)
 		{
 			_selectSlotMenu = new VerticalMenu
 			{
@@ -44,7 +42,7 @@ namespace Wanderers.UI
 				var i1 = i;
 				menuItem.Selected += (o, args) =>
 				{
-					StartNewGame(i1);
+					Play(i1);
 				};
 				_selectSlotMenu.Items.Add(menuItem);
 			}
@@ -61,7 +59,7 @@ namespace Wanderers.UI
 			Widgets.Add(_selectSlotMenu);
 		}
 
-		private void StartNewGame(int slotIndex)
+		private void Play(int slotIndex)
 		{
 			_selectedSlotIndex = slotIndex;
 			var slot = TJ.StorageService.Slots[slotIndex];
@@ -85,7 +83,7 @@ namespace Wanderers.UI
 					slot.CharacterData = data;
 					slot.Save();
 
-					Play(slotIndex);
+					WanderersGame.Instance.Play(slotIndex);
 				};
 
 				dlg.ShowModal(Desktop);
@@ -93,21 +91,8 @@ namespace Wanderers.UI
 			}
 			else
 			{
-				Play(slotIndex);
+				WanderersGame.Instance.Play(slotIndex);
 			}
-		}
-
-		private void Play(int slotIndex)
-		{
-			TJ.Session = new GameSession(slotIndex);
-
-			WanderersGame.Instance.Desktop.Widgets.Remove(this);
-
-			var gameView = new GameView();
-			gameView.MapView.Map = TJ.Session.Player.Map;
-
-			WanderersGame.Instance.Desktop.Widgets.Add(gameView);
-			gameView.Desktop.FocusedKeyboardWidget = gameView;
 		}
 
 		private void QuitMenuItemOnSelected(object sender, EventArgs eventArgs)

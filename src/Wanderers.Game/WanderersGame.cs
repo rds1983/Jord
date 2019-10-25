@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
+using Wanderers.Core;
 
 namespace Wanderers
 {
@@ -29,6 +30,8 @@ namespace Wanderers
 		{
 			get { return _desktop; }
 		}
+
+		public int? StartGameIndex;
 
 		public WanderersGame()
 		{
@@ -73,7 +76,24 @@ namespace Wanderers
 			var compiler = new Compiler();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 
-			SwitchToMainMenu();
+			if (StartGameIndex == null)
+			{
+				SwitchToMainMenu();
+			} else
+			{
+				Play(StartGameIndex.Value);
+			}
+		}
+
+		public void Play(int slotIndex)
+		{
+			TJ.Session = new GameSession(slotIndex);
+
+			SwitchTo<GameView>();
+
+			var gameView = (GameView)Desktop.Widgets[0];
+			gameView.MapView.Map = TJ.Session.Player.Map;
+			gameView.Desktop.FocusedKeyboardWidget = gameView;
 		}
 
 		private T SwitchTo<T>() where T : Widget, new()
