@@ -117,7 +117,7 @@ namespace Wanderers.MapEditor.UI
 
 						Map.GetTileAt(MarkPosition.Value).Info = info;
 
-						Studio.Instance.UI._mapNavigation.Invalidate();
+						Studio.Instance.UI._mapNavigation.OnMapChanged();
 					}
 					break;
 				case 1:
@@ -145,7 +145,7 @@ namespace Wanderers.MapEditor.UI
 			}
 
 			Studio.Instance.IsDirty = true;
-			Studio.Instance.UI._mapNavigation.Invalidate();
+			Studio.Instance.UI._mapNavigation.OnMapChanged();
 		}
 	}
 }

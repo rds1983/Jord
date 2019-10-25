@@ -17,12 +17,9 @@ namespace Wanderers.MapEditor
 {
 	public class Studio : Game
 	{
-		private const string MapFilter = "*.json";
-
 		private readonly GraphicsDeviceManager _graphics;
 		private readonly State _state;
 		private Desktop _desktop;
-		private StudioWidget _ui;
 		private Grid _statisticsGrid;
 		private Label _gcMemoryLabel;
 		private Label _fpsLabel;
@@ -57,17 +54,18 @@ namespace Wanderers.MapEditor
 		{
 			get
 			{
-				return _ui._mapEditor.Map;
+				return UI._mapEditor.Map;
 			}
 
 			set
 			{
-				_ui._mapEditor.Map = value;
+				UI._mapEditor.Map = value;
 
 				UpdateToolbox();
 				UpdateMenuFile();
+				UpdateTitle();
 
-				_ui._mapNavigation.Invalidate();
+				UI._mapNavigation.OnMapChanged();
 			}
 		}
 
@@ -87,13 +85,7 @@ namespace Wanderers.MapEditor
 			}
 		}
 
-		public StudioWidget UI
-		{
-			get
-			{
-				return _ui;
-			}
-		}
+		public StudioWidget UI { get; private set; }
 
 		public static Studio Instance { get; private set; }
 
@@ -165,7 +157,7 @@ namespace Wanderers.MapEditor
 
 			_desktop.KeyDown += (s, a) =>
 			{
-				if (_desktop.HasModalWindow || _ui._mainMenu.IsOpen)
+				if (_desktop.HasModalWindow || UI._mainMenu.IsOpen)
 				{
 					return;
 				}
@@ -195,32 +187,32 @@ namespace Wanderers.MapEditor
 				}
 			};
 
-			_ui = new StudioWidget();
+			UI = new StudioWidget();
 
-			_ui._openModuleMenuItem.Selected += OpenProjectItemOnClicked;
+			UI._openModuleMenuItem.Selected += OpenProjectItemOnClicked;
 
-			_ui._switchMapMenuItem.Selected += OnSwitchMapMenuItemSelected;
-			_ui._newMapMenuItem.Selected += OnNewMapSelected;
-			_ui._resizeMapMenuItem.Selected += OnResizeMapSelected;
-			_ui._saveMapMenuItem.Selected += SaveMapSelected;
-			_ui._saveMapAsMenuItem.Selected += SaveMapAsSelected;
+			UI._switchMapMenuItem.Selected += OnSwitchMapMenuItemSelected;
+			UI._newMapMenuItem.Selected += OnNewMapSelected;
+			UI._resizeMapMenuItem.Selected += OnResizeMapSelected;
+			UI._saveMapMenuItem.Selected += SaveMapSelected;
+			UI._saveMapAsMenuItem.Selected += SaveMapAsSelected;
 
-			_ui._debugOptionsMenuItem.Selected += DebugOptionsItemOnSelected;
-			_ui._quitMenuItem.Selected += QuitItemOnDown;
+			UI._debugOptionsMenuItem.Selected += DebugOptionsItemOnSelected;
+			UI._quitMenuItem.Selected += QuitItemOnDown;
 
-			_ui._aboutMenuItem.Selected += AboutItemOnClicked;
+			UI._aboutMenuItem.Selected += AboutItemOnClicked;
 
-			_ui._comboItemTypes.SelectedIndex = 0;
-			_ui._comboItemTypes.SelectedIndexChanged += OnComboTypesIndexChanged;
-			_ui._mapEditor.MarkPositionChanged += (s, a) =>
+			UI._comboItemTypes.SelectedIndex = 0;
+			UI._comboItemTypes.SelectedIndexChanged += OnComboTypesIndexChanged;
+			UI._mapEditor.MarkPositionChanged += (s, a) =>
 			{
-				var pos = _ui._mapEditor.MarkPosition;
-				_ui._textPosition.Text = pos == null ? string.Empty : string.Format("X = {0}, Y = {1}", pos.Value.X, pos.Value.Y);
+				var pos = UI._mapEditor.MarkPosition;
+				UI._textPosition.Text = pos == null ? string.Empty : string.Format("X = {0}, Y = {1}", pos.Value.X, pos.Value.Y);
 			};
 
-			_desktop.Widgets.Add(_ui);
+			_desktop.Widgets.Add(UI);
 
-			_ui._topSplitPane.SetSplitterPosition(0, _state != null ? _state.TopSplitterPosition : 0.75f);
+			UI._topSplitPane.SetSplitterPosition(0, _state != null ? _state.TopSplitterPosition : 0.75f);
 
 			_statisticsGrid = new Grid
 			{
@@ -603,7 +595,7 @@ namespace Wanderers.MapEditor
 			{
 				Size = new Point(GraphicsDevice.PresentationParameters.BackBufferWidth,
 					GraphicsDevice.PresentationParameters.BackBufferHeight),
-				TopSplitterPosition = _ui._topSplitPane.GetSplitterPosition(0),
+				TopSplitterPosition = UI._topSplitPane.GetSplitterPosition(0),
 				ModulePath = _modulePath,
 				MapId = Map != null?Map.Id:string.Empty,
 				LastFolder = _lastFolder,
@@ -615,7 +607,7 @@ namespace Wanderers.MapEditor
 
 		private void ProcessSave(string filePath)
 		{
-			var result = MapLoader.SaveMapToString(_ui._mapEditor.Map);
+			var result = MapLoader.SaveMapToString(UI._mapEditor.Map);
 			File.WriteAllText(filePath, result);
 			Map.Source = filePath;
 			IsDirty = false;
@@ -687,9 +679,9 @@ namespace Wanderers.MapEditor
 
 		private void UpdateToolbox()
 		{
-			_ui._listBoxItems.Items.Clear();
+			UI._listBoxItems.Items.Clear();
 
-			switch (_ui._comboItemTypes.SelectedIndex)
+			switch (UI._comboItemTypes.SelectedIndex)
 			{
 				case 0:
 					foreach (var info in TJ.Module.TileInfos)
@@ -708,7 +700,7 @@ namespace Wanderers.MapEditor
 						item.Image = renderable;
 						item.ImageTextSpacing = 8;
 
-						_ui._listBoxItems.Items.Add(item);
+						UI._listBoxItems.Items.Add(item);
 					}
 					break;
 				case 1:
@@ -719,7 +711,7 @@ namespace Wanderers.MapEditor
 						Tag = null
 					};
 
-					_ui._listBoxItems.Items.Add(erase);
+					UI._listBoxItems.Items.Add(erase);
 
 					foreach (var info in TJ.Module.CreatureInfos)
 					{
@@ -737,7 +729,7 @@ namespace Wanderers.MapEditor
 						item.Image = renderable;
 						item.ImageTextSpacing = 8;
 
-						_ui._listBoxItems.Items.Add(item);
+						UI._listBoxItems.Items.Add(item);
 					}
 					break;
 			}
@@ -774,11 +766,11 @@ namespace Wanderers.MapEditor
 		{
 			var moduleLoaded = !string.IsNullOrEmpty(_modulePath);
 
-			_ui._newMapMenuItem.Enabled = moduleLoaded;
-			_ui._switchMapMenuItem.Enabled = moduleLoaded;
-			_ui._saveMapMenuItem.Enabled = moduleLoaded && Map != null;
-			_ui._saveMapAsMenuItem.Enabled = moduleLoaded && Map != null;
-			_ui._resizeMapMenuItem.Enabled = moduleLoaded && Map != null;
+			UI._newMapMenuItem.Enabled = moduleLoaded;
+			UI._switchMapMenuItem.Enabled = moduleLoaded;
+			UI._saveMapMenuItem.Enabled = moduleLoaded && Map != null;
+			UI._saveMapAsMenuItem.Enabled = moduleLoaded && Map != null;
+			UI._resizeMapMenuItem.Enabled = moduleLoaded && Map != null;
 		}
 	}
 }

@@ -206,19 +206,14 @@ namespace Wanderers.MapEditor.UI
 			ProcessMouseDown();
 		}
 
-		private void ProcessMouseDown()
+		private Vector2 FixPos(Vector2 pos)
 		{
-			var pos = ScreenToGame(Desktop.MousePosition);
-
-			pos.X -= MapEditor.GridSize.X / 2;
-			pos.Y -= MapEditor.GridSize.Y / 2;
-
 			if (pos.X < 0)
 			{
 				pos.X = 0;
 			}
 
-			if (pos.X + MapEditor.GridSize.X >= Map.Size.X)
+			if (Map != null && pos.X + MapEditor.GridSize.X >= Map.Size.X)
 			{
 				pos.X = Map.Size.X - MapEditor.GridSize.X;
 			}
@@ -228,17 +223,31 @@ namespace Wanderers.MapEditor.UI
 				pos.Y = 0;
 			}
 
-			if (pos.Y + MapEditor.GridSize.Y >= Map.Size.Y)
+			if (Map != null && pos.Y + MapEditor.GridSize.Y >= Map.Size.Y)
 			{
 				pos.Y = Map.Size.Y - MapEditor.GridSize.Y;
 			}
 
+			return pos;
+		}
+
+		private void ProcessMouseDown()
+		{
+			var pos = ScreenToGame(Desktop.MousePosition);
+
+			pos.X -= MapEditor.GridSize.X / 2;
+			pos.Y -= MapEditor.GridSize.Y / 2;
+
+			pos = FixPos(pos);
+
 			MapEditor.TopLeft = pos;
 		}
 
-		public void Invalidate()
+		public void OnMapChanged()
 		{
 			_dirty = true;
+
+			MapEditor.TopLeft = FixPos(MapEditor.TopLeft);
 		}
 	}
 }
