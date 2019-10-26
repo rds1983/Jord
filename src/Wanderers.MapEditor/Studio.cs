@@ -449,7 +449,7 @@ namespace Wanderers.MapEditor
 
 		private void OnResizeMapSelected(object sender, EventArgs e)
 		{
-			var dlg = new ResizeMapDialog();
+/*			var dlg = new ResizeMapDialog();
 			dlg._spinWidth.Value = Map.Size.X;
 			dlg._spinHeight.Value = Map.Size.Y;
 
@@ -486,7 +486,7 @@ namespace Wanderers.MapEditor
 				}
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal(_desktop);*/
 		}
 
 		private void OnComboTypesIndexChanged(object sender, EventArgs e)

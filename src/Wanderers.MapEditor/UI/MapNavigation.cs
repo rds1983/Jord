@@ -55,7 +55,7 @@ namespace Wanderers.MapEditor.UI
 			{
 				for (var mapX = 0; mapX < Map.Size.X; ++mapX)
 				{
-					var tile = Map.GetTileAt(mapX, mapY);
+					var tile = Map[mapX, mapY];
 					var rect = new Rectangle(mapX, mapY, TileSize.X, TileSize.Y);
 
 					if (checker(tile))

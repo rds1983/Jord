@@ -189,7 +189,7 @@ namespace Wanderers.Compiling
 			FillData(_context.Module.Classes);
 
 			// Generators
-			FillData(_context.Module.GeneratorConfigs);
+			FillData(_context.Module.Generators);
 
 			// Maps
 			FillData(_context.Module.Maps);

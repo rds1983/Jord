@@ -17,7 +17,7 @@ namespace Wanderers.Core
 		[OptionalField]
 		public bool IsAttackable { get; set; }
 
-		[OptionalField]
+		[IgnoreField]
 		public Inventory Inventory { get; set; }
 
 		[OptionalField]

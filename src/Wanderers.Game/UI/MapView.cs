@@ -5,11 +5,13 @@ using Wanderers.Core;
 
 namespace Wanderers.UI
 {
-	public class MapView: MapRender
+	public class MapView : MapRender
 	{
 		protected override void BeforeDraw(RenderContext context)
 		{
 			base.BeforeDraw(context);
+
+			Map = TJ.Session.Player.Map;
 
 			var tl = new Vector2(TJ.Session.Player.DisplayPosition.X - GridSize.X / 2,
 				TJ.Session.Player.DisplayPosition.Y - GridSize.Y / 2);
@@ -47,7 +49,7 @@ namespace Wanderers.UI
 				return;
 			}
 
-			var tile = Map.GetTileAt(gameCoords);
+			var tile = Map[gameCoords.ToPoint()];
 			if (!tile.Info.Passable)
 			{
 				return;
@@ -83,6 +85,13 @@ namespace Wanderers.UI
 						dialog.ShowModal(Desktop);
 					};
 				}
+			}
+			else if (tile.Exit != null)
+			{
+				finished = () =>
+				{
+					TJ.Session.Player.Enter();
+				};
 			}
 
 			TJ.Session.Player.InitiateMovement(gameCoords.ToPoint(), distance, finished);

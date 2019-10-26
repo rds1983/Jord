@@ -130,7 +130,7 @@ namespace Wanderers.MapEditor.UI
 					{
 						var info = (TileInfo)Studio.Instance.UI._listBoxItems.SelectedItem.Tag;
 
-						Map.GetTileAt(MarkPosition.Value).Info = info;
+						Map[MarkPosition.Value].Info = info;
 
 						Studio.Instance.UI._mapNavigation.OnMapChanged();
 					}
@@ -138,7 +138,7 @@ namespace Wanderers.MapEditor.UI
 				case 1:
 					if (Studio.Instance.UI._listBoxItems.SelectedIndex >= 0)
 					{
-						var tile = Map.GetTileAt(MarkPosition.Value);
+						var tile = Map[MarkPosition.Value];
 						if (tile.Creature != null)
 						{
 							// Remove existing

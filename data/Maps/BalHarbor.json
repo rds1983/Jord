@@ -1,7 +1,11 @@
 {
   "Map": {
+    "Size": {
+      "X": "48",
+      "Y": "48"
+    },
+    "Local": "True",
     "Id": "BalHarbor",
-    "Local": true,
     "Legend": {
       "#": {
         "TileInfoId": "Wall"

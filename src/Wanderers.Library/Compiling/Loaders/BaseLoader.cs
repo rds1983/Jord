@@ -111,13 +111,15 @@ namespace Wanderers.Compiling.Loaders
 					}
 				}
 
-				object objectVal;
-				if (TryLoadPrimitive(context, propertyType, token, source, out objectVal))
+				do
 				{
-					p.SetValue(item, objectVal);
-				}
-				else
-				{
+					object objectVal;
+					if (TryLoadPrimitive(context, propertyType, token, source, out objectVal))
+					{
+						p.SetValue(item, objectVal);
+						break;
+					}
+
 					var value = p.GetValue(item);
 					var asList = value as IList;
 					if (asList != null)
@@ -129,6 +131,8 @@ namespace Wanderers.Compiling.Loaders
 							var collectionItem = LoadData(context, collectionType, id, val, source);
 							asList.Add(collectionItem);
 						}
+
+						break;
 					}
 
 					var asDict = value as IDictionary;
@@ -154,8 +158,17 @@ namespace Wanderers.Compiling.Loaders
 								asDict[key] = LoadData(context, collectionType, id, (JObject)pair.Value, source);
 							}
 						}
+
+						break;
 					}
+
+					// Sub object
+					var subObject = LoadData(context, p.Type, string.Empty, (JObject)token, source);
+					p.SetValue(item, subObject);
+
+					break;
 				}
+				while (true);
 			}
 
 			return item;

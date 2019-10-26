@@ -105,7 +105,6 @@ namespace Wanderers
 			SwitchTo<GameView>();
 
 			var gameView = (GameView)Desktop.Widgets[0];
-			gameView.MapView.Map = TJ.Session.Player.Map;
 			gameView.Desktop.FocusedKeyboardWidget = gameView;
 		}
 

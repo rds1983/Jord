@@ -10,7 +10,7 @@ namespace Wanderers.MapEditor.UI
 		{
 			BuildUI();
 
-			var generators = (from c in TJ.Module.GeneratorConfigs.Values orderby c.Id select c).ToArray();
+			var generators = (from c in TJ.Module.Generators.Values orderby c.Id select c).ToArray();
 			foreach (var g in generators)
 			{
 				_comboGenerator.Items.Add(new ListItem(g.Id, null, g));

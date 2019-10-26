@@ -123,22 +123,23 @@ namespace Wanderers.Compiling.Loaders
 			}
 
 			var dataObject = EnsureArray(data, DataName);
-			var lines = new List<List<Tile>>();
 
-			int? width = null;
 			var pos = Point.Zero;
-
 			var entities = new List<Tuple<Creature, Point>>();
 			for (var i = 0; i < dataObject.Count; ++i)
 			{
 				var lineToken = dataObject[i];
-				var lineData = new List<Tile>();
 				var line = lineToken.ToString();
 
 				pos.X = 0;
-				Tile tile = null;
 				for(var j = 0; j < line.Length; ++j)
 				{
+					Tile lastTile = null;
+					if (pos.X > 0)
+					{
+						lastTile = map[pos.X - 1, pos.Y];
+					}
+
 					var symbol = line[j];
 					object item;
 
@@ -166,12 +167,12 @@ namespace Wanderers.Compiling.Loaders
 							RaiseError("Exit sequence lacks closing figure bracket. Source: '{0}'", data.Source);
 						}
 
-						if (tile == null)
+						if (lastTile == null)
 						{
 							RaiseError("Last tile is null. Source: '{0}'", data.Source);
 						}
 
-						tile.Exit = Exit.FromString(sb.ToString());
+						lastTile.Exit = Exit.FromString(sb.ToString());
 
 						continue;
 					}
@@ -185,7 +186,7 @@ namespace Wanderers.Compiling.Loaders
 
 					if (item is SpawnSpot)
 					{
-						map.SpawnSpot = tile.Position;
+						map.SpawnSpot = lastTile.Position;
 						continue;
 					}
 
@@ -193,54 +194,20 @@ namespace Wanderers.Compiling.Loaders
 					if (asCreatureInfo != null)
 					{
 						var npc = new NonPlayer(asCreatureInfo);
-						entities.Add(new Tuple<Creature, Point>(npc, tile.Position));
+						entities.Add(new Tuple<Creature, Point>(npc, lastTile.Position));
 						continue;
 					}
-
-					// New tile
-					tile = new Tile
-					{
-						Position = pos
-					};
 
 					var asTileInfo = item as TileInfo;
 					if (asTileInfo != null)
 					{
-						tile.Info = asTileInfo;
+						map[pos].Info = asTileInfo;
 					}
-
-					lineData.Add(tile);
 
 					++pos.X;
 				}
 
-				if (width == null)
-				{
-					width = lineData.Count;
-				}
-				else if (width.Value != lineData.Count)
-				{
-					RaiseError("All map lines should have same width. Map width '{0}', this line('{1}') width '{2}', source = '{3}'",
-						width.Value,
-						i,
-						lineData.Count,
-						data.Source);
-				}
-
-				lines.Add(lineData);
-
 				++pos.Y;
-			}
-
-			map.Size = new Point(width.Value, lines.Count);
-
-			for (var i = 0; i < lines.Count; ++i)
-			{
-				var line = lines[i];
-				for (var j = 0; j < line.Count; ++j)
-				{
-					map.SetTileAt(new Point(j, i), line[j]);
-				}
 			}
 
 			// Place entities
@@ -280,7 +247,7 @@ namespace Wanderers.Compiling.Loaders
 			{
 				for (var x = 0; x < map.Size.X; ++x)
 				{
-					var tile = map.GetTileAt(x, y);
+					var tile = map[x, y];
 
 					if (!tileInfos.ContainsKey(tile.Info.Id))
 					{
@@ -307,12 +274,11 @@ namespace Wanderers.Compiling.Loaders
 
 			// Build json object
 			var root = new JObject();
-			var mapObject = new JObject();
 
-			root[CompilerUtils.MapName] = mapObject;
+			var mapObject = (JObject)SaveObject(map);
 
 			mapObject[CompilerUtils.IdName] = map.Id;
-			mapObject["Local"] = map.Local;
+			root[CompilerUtils.MapName] = mapObject;
 
 			var legendNode = new JObject();
 			foreach (var pair in legend)
@@ -356,7 +322,7 @@ namespace Wanderers.Compiling.Loaders
 				sb.Clear();
 				for (var x = 0; x < map.Size.X; ++x)
 				{
-					var tile = map.GetTileAt(x, y);
+					var tile = map[x, y];
 					sb.Append(tileInfos[tile.Info.Id]);
 
 					if (tile.Exit != null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Wanderers.Compiling;
 
 namespace Wanderers.Core
 {
@@ -31,7 +32,7 @@ namespace Wanderers.Core
 					return null;
 				}
 
-				return Map.GetTileAt(Position);
+				return Map[Position];
 			}
 		}
 
@@ -67,6 +68,7 @@ namespace Wanderers.Core
 			}
 		}
 
+		[IgnoreField]
 		public Inventory Inventory
 		{
 			get
@@ -78,7 +80,7 @@ namespace Wanderers.Core
 		public Creature AttackTarget { get; set; }
 		public int AttackDelayInMs { get; set; }
 
-		public bool IsPlaceable(Map map, Vector2 pos)
+		public bool IsPlaceable(Map map, Point pos)
 		{
 			if (pos.X < 0 || pos.X >= map.Size.X ||
 				pos.Y < 0 || pos.Y >= map.Size.Y)
@@ -87,7 +89,7 @@ namespace Wanderers.Core
 				return false;
 			}
 
-			var tile = map.GetTileAt(pos);
+			var tile = map[pos];
 			if (tile.Creature != null || tile.Info == null || !tile.Info.Passable)
 			{
 				return false;
@@ -98,8 +100,8 @@ namespace Wanderers.Core
 
 		public void SetPosition(Point position)
 		{
-			var currentTile = Map.GetTileAt(Position);
-			var newTile = Map.GetTileAt(position);
+			var currentTile = Map[Position];
+			var newTile = Map[position];
 
 			if (currentTile != newTile)
 			{
@@ -111,7 +113,7 @@ namespace Wanderers.Core
 			DisplayPosition = position.ToVector2();
 		}
 
-		public bool IsMoveable(Map map, Vector2 pos)
+		public bool IsMoveable(Map map, Point pos)
 		{
 			var result = false;
 			var x = (int)pos.X;
@@ -119,7 +121,7 @@ namespace Wanderers.Core
 
 			if (x >= 0 && y >= 0 && x < map.Size.X && y < map.Size.Y)
 			{
-				var tile = map.GetTileAt(pos);
+				var tile = map[pos];
 				if (tile.Info.Passable &&
 					(tile.Creature == null ||
 					 (tile.Creature == this)))
@@ -133,7 +135,7 @@ namespace Wanderers.Core
 
 		private bool TilePassable(Point pos)
 		{
-			var tile = Map.GetTileAt(pos);
+			var tile = Map[pos];
 
 			return tile.Info.Passable &&
 				   (tile.Creature == null ||
@@ -152,7 +154,7 @@ namespace Wanderers.Core
 			Position = position;
 			DisplayPosition = position.ToVector2();
 
-			var tile = map.GetTileAt(position);
+			var tile = map[position];
 			tile.Creature = this;
 		}
 
@@ -163,7 +165,7 @@ namespace Wanderers.Core
 				return false;
 			}
 
-			var tile = Map.GetTileAt(Position);
+			var tile = Map[Position];
 			tile.Creature = null;
 
 			Map = null;

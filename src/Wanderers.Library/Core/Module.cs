@@ -11,7 +11,7 @@ namespace Wanderers.Core
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();
 		public Dictionary<string, CreatureInfo> CreatureInfos { get; } = new Dictionary<string, CreatureInfo>();
 		public Dictionary<string, BaseItemInfo> ItemInfos { get; } = new Dictionary<string, BaseItemInfo>();
-		public Dictionary<string, BaseGenerator> GeneratorConfigs { get; } = new Dictionary<string, BaseGenerator>();
+		public Dictionary<string, BaseGenerator> Generators { get; } = new Dictionary<string, BaseGenerator>();
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
 		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
 
@@ -46,9 +46,9 @@ namespace Wanderers.Core
 			return Ensure(ItemInfos, id);
 		}
 
-		public BaseGenerator EnsureGeneratorConfig(string id)
+		public BaseGenerator EnsureGenerator(string id)
 		{
-			return Ensure(GeneratorConfigs, id);
+			return Ensure(Generators, id);
 		}
 
 		public Map EnsureMap(string id)

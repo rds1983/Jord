@@ -8,7 +8,6 @@ namespace Wanderers.Core
 	{
 		private Tile[,] _tiles;
 
-		[IgnoreField]
 		public Point Size
 		{
 			get
@@ -25,6 +24,17 @@ namespace Wanderers.Core
 			set
 			{
 				_tiles = new Tile[value.X, value.Y];
+
+				for(var x = 0; x < value.X; ++x)
+				{
+					for(var y = 0; y < value.Y; ++y)
+					{
+						this[x, y] = new Tile
+						{
+							Position = new Point(x, y)
+						};
+					}
+				}
 			}
 		}
 
@@ -36,46 +46,32 @@ namespace Wanderers.Core
 
 		public bool Local { get; set; }
 
-		[Browsable(false)]
 		[IgnoreField]
-		public Tile[,] Tiles
+		public Tile this[int x, int y]
 		{
-			get { return _tiles; }
+			get
+			{
+				return _tiles[x, y];
+			}
+
+			private set
+			{
+				_tiles[x, y] = value;
+			}
+		}
+
+		[IgnoreField]
+		public Tile this[Point p]
+		{
+			get
+			{
+				return this[p.X, p.Y];
+			}
 		}
 
 		public Map()
 		{
 			Local = true;
-		}
-
-		public Tile GetTileAt(int x, int y)
-		{
-			return _tiles[x, y];
-		}
-
-		public Tile GetTileAt(Point pos)
-		{
-			return _tiles[pos.X, pos.Y];
-		}
-
-		public Tile GetTileAt(Vector2 pos)
-		{
-			return _tiles[(int)pos.X, (int)pos.Y];
-		}
-
-		public static Tile GetTileAt(Tile[,] tiles, int x, int y)
-		{
-			return tiles[x, y];
-		}
-
-		public void SetTileAt(Point pos, Tile tile)
-		{
-			_tiles[pos.X, pos.Y] = tile;
-		}
-
-		public void SetTileAt(int x, int y, Tile tile)
-		{
-			_tiles[x, y] = tile;
 		}
 	}
 }

@@ -78,17 +78,17 @@ namespace Wanderers.UI
 		{
 			base.InternalRender(context);
 
-			if (Map == null || Font == null || SmallFont == null)
-			{
-				return;
-			}
-
 			var tileSize = TileSize;
 			var gridSize = new Point(context.View.Width / tileSize.X,
 									 context.View.Height / tileSize.Y);
 			GridSize = gridSize;
 
 			BeforeDraw(context);
+
+			if (Font == null || SmallFont == null || Map == null)
+			{
+				return;
+			}
 
 			var mapViewPort = new Rectangle((int)TopLeft.X,
 				(int)TopLeft.Y,
@@ -103,7 +103,7 @@ namespace Wanderers.UI
 						continue;
 
 					var pos = new Point(mapX, mapY);
-					var tile = Map.GetTileAt(pos);
+					var tile = Map[pos];
 					BeforeDrawTile(context, tile);
 
 					var screen = GameToScreen(pos);

@@ -34,7 +34,7 @@ namespace Wanderers.Generation
 			{
 				for(var y = 0; y < Height; ++y)
 				{
-					map.SetTileAt(x, y, new Tile(fillerTile));
+					map[x, y].Info = fillerTile;
 				}
 			}
 
@@ -63,7 +63,7 @@ namespace Wanderers.Generation
 								continue;
 							}
 
-							if (map.GetTileAt(x, y).Info == spaceTile)
+							if (map[x, y].Info == spaceTile)
 							{
 								found = false;
 								goto finishAttempt;
@@ -88,7 +88,7 @@ namespace Wanderers.Generation
 							continue;
 						}
 
-						map.GetTileAt(x, y).Info = spaceTile;
+						map[x, y].Info = spaceTile;
 					}
 				}
 			}
