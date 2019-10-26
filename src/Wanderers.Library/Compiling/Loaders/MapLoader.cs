@@ -128,7 +128,7 @@ namespace Wanderers.Compiling.Loaders
 			int? width = null;
 			var pos = Point.Zero;
 
-			var entities = new List<Tuple<Creature, Vector2>>();
+			var entities = new List<Tuple<Creature, Point>>();
 			for (var i = 0; i < dataObject.Count; ++i)
 			{
 				var lineToken = dataObject[i];
@@ -193,7 +193,7 @@ namespace Wanderers.Compiling.Loaders
 					if (asCreatureInfo != null)
 					{
 						var npc = new NonPlayer(asCreatureInfo);
-						entities.Add(new Tuple<Creature, Vector2>(npc, tile.Position.ToVector2()));
+						entities.Add(new Tuple<Creature, Point>(npc, tile.Position));
 						continue;
 					}
 

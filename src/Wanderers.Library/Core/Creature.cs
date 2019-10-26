@@ -19,7 +19,7 @@ namespace Wanderers.Core
 		private readonly Inventory _inventory = new Inventory();
 
 		public Map Map { get; set; }
-		public Vector2 Position { get; set; }
+		public Point Position { get; set; }
 		public Vector2 DisplayPosition { get; set; }
 
 		public Tile Tile
@@ -96,7 +96,7 @@ namespace Wanderers.Core
 			return true;
 		}
 
-		public void SetPosition(Vector2 position)
+		public void SetPosition(Point position)
 		{
 			var currentTile = Map.GetTileAt(Position);
 			var newTile = Map.GetTileAt(position);
@@ -108,7 +108,7 @@ namespace Wanderers.Core
 			}
 
 			Position = position;
-			DisplayPosition = position;
+			DisplayPosition = position.ToVector2();
 		}
 
 		public bool IsMoveable(Map map, Vector2 pos)
@@ -140,7 +140,7 @@ namespace Wanderers.Core
 					tile.Creature == this);
 		}
 
-		public void Place(Map map, Vector2 position)
+		public void Place(Map map, Point position)
 		{
 			if (position.X < 0 || position.X >= map.Size.X ||
 				position.Y < 0 || position.Y >= map.Size.Y)
@@ -150,7 +150,7 @@ namespace Wanderers.Core
 
 			Map = map;
 			Position = position;
-			DisplayPosition = position;
+			DisplayPosition = position.ToVector2();
 
 			var tile = map.GetTileAt(position);
 			tile.Creature = this;

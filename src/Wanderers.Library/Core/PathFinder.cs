@@ -101,7 +101,7 @@ namespace Wanderers.Core
 				}
 
 				// Iterate through adjancent nodes
-				for (var d = 0; d < DirectionsCount; d++)
+				for (var d = 0; d < 4; d++)
 				{
 					var delta = AllDirections[d];
 					var newPos = node.Position;

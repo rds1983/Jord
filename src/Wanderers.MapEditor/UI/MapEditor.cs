@@ -154,7 +154,7 @@ namespace Wanderers.MapEditor.UI
 
 						var info = (CreatureInfo)tag;
 						var npc = new NonPlayer(info);
-						npc.Place(Map, tile.Position.ToVector2());
+						npc.Place(Map, tile.Position);
 					}
 					break;
 			}

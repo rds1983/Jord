@@ -11,8 +11,8 @@ namespace Wanderers.UI
 		{
 			base.BeforeDraw(context);
 
-			var tl = new Vector2(TJ.Session.Player.Position.X - GridSize.X / 2,
-				TJ.Session.Player.Position.Y - GridSize.Y / 2);
+			var tl = new Vector2(TJ.Session.Player.DisplayPosition.X - GridSize.X / 2,
+				TJ.Session.Player.DisplayPosition.Y - GridSize.Y / 2);
 
 			if (tl.X < 0)
 			{
