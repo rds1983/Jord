@@ -45,6 +45,11 @@ namespace Wanderers.MapEditor.UI
 		{
 			base.BeforeDraw(context);
 
+			if (Map == null)
+			{
+				return;
+			}
+
 			if (Map.SpawnSpot != null)
 			{
 				var screen = GameToScreen(Map.SpawnSpot.Value);

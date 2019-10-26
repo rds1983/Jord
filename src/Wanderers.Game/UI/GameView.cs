@@ -51,6 +51,11 @@ namespace Wanderers.UI
 				var inventoryWindow = new InventoryWindow();
 				inventoryWindow.ShowModal(Desktop);
 			}
+
+			if (k == Keys.E)
+			{
+				TJ.Session.Player.Enter();
+			}
 		}
 	}
 }
