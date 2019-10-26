@@ -49,6 +49,16 @@
       "Color": "White",
       "Passable": "True",
       "Symbol": "."
-    }
+    },
+    "ExitDown": {
+      "Color": "White",
+      "Passable": "True",
+      "Symbol": ">"
+    },
+    "ExitUp": {
+      "Color": "White",
+      "Passable": "True",
+      "Symbol": "<"
+    }        
   }
 }

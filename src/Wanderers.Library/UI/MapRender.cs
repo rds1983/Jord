@@ -66,6 +66,14 @@ namespace Wanderers.UI
 			VerticalAlignment = VerticalAlignment.Stretch;
 		}
 
+		protected virtual void BeforeDraw(RenderContext context)
+		{
+		}
+
+		protected virtual void BeforeDrawTile(RenderContext context, Tile tile)
+		{
+		}
+
 		public override void InternalRender(RenderContext context)
 		{
 			base.InternalRender(context);
@@ -96,6 +104,7 @@ namespace Wanderers.UI
 
 					var pos = new Point(mapX, mapY);
 					var tile = Map.GetTileAt(pos);
+					BeforeDrawTile(context, tile);
 
 					var screen = GameToScreen(pos);
 
@@ -186,10 +195,6 @@ namespace Wanderers.UI
 			var tileSize = TileSize;
 			return new Point(Map.Size.X * tileSize.X,
 				Map.Size.Y * tileSize.Y);
-		}
-
-		protected virtual void BeforeDraw(RenderContext context)
-		{
 		}
 	}
 }

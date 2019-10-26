@@ -17,6 +17,7 @@ namespace Wanderers.Compiling.Loaders
 		private const string TileInfoIdName = "TileInfoId";
 		private const string CreatureInfoIdName = "CreatureInfoId";
 		private const string DataName = "Data";
+		private const string ForbiddenLegendItems = "{}";
 
 		public MapLoader() : base("Maps")
 		{
@@ -27,8 +28,8 @@ namespace Wanderers.Compiling.Loaders
 			JToken token;
 			if (!root.Data.TryGetValue(name, out token))
 			{
-				throw new Exception(string.Format("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source));
+				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
+					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source);
 			}
 
 			return (JObject)token;
@@ -39,15 +40,20 @@ namespace Wanderers.Compiling.Loaders
 			JToken token;
 			if (!root.Data.TryGetValue(name, out token))
 			{
-				throw new Exception(string.Format("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source));
+				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
+					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source);
 			}
 
 			return (JArray)token;
 		}
 
-		public override ItemWithId LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
 		{
+			if (context.Module.MapTemplates.ContainsKey(id))
+			{
+				RaiseError("There's already MapTemplate with id '{0}'", id);
+			}
+
 			var map = (Map)base.LoadItem(context, id, data);
 
 			var legend = new Dictionary<char, object>();
@@ -56,15 +62,21 @@ namespace Wanderers.Compiling.Loaders
 			{
 				if (string.IsNullOrEmpty(pair.Key))
 				{
-					throw new Exception(string.Format("Map legend item id could not be empty, source = '{0}'",
-						data.Source));
+					RaiseError("Map legend item id could not be empty, source = '{0}'",
+						data.Source);
 				}
 
 				if (pair.Key.Length != 1)
 				{
-					throw new Exception(string.Format("Map legend item id {0} could consist only from single symbol, source = '{1}'",
+					RaiseError("Map legend item id {0} could consist only from single symbol, source = '{1}'",
 						pair.Key,
-						data.Source));
+						data.Source);
+				}
+
+				var symbol = pair.Key[0];
+				if (ForbiddenLegendItems.IndexOf(symbol) != -1)
+				{
+					RaiseError("Symbol '{0}' can't be used in legend. Source = '{1}'", symbol, data.Source);
 				}
 
 				object item = null;
@@ -85,9 +97,9 @@ namespace Wanderers.Compiling.Loaders
 						TileInfo info;
 						if (!context.Module.TileInfos.TryGetValue(token.ToString(), out info))
 						{
-							throw new Exception(string.Format("Could not find tileInfo with id '{0}', source = '{1}'",
+							RaiseError("Could not find tileInfo with id '{0}', source = '{1}'",
 								token,
-								data.Source));
+								data.Source);
 						}
 
 						item = info;
@@ -98,16 +110,16 @@ namespace Wanderers.Compiling.Loaders
 						CreatureInfo info;
 						if (!context.Module.CreatureInfos.TryGetValue(token.ToString(), out info))
 						{
-							throw new Exception(string.Format("Could not find creatureInfo with id '{0}', source = '{1}'",
+							RaiseError("Could not find creatureInfo with id '{0}', source = '{1}'",
 								token,
-								data.Source));
+								data.Source);
 						}
 
 						item = info;
 					}
 				}
 
-				legend[pair.Key[0]] = item;
+				legend[symbol] = item;
 			}
 
 			var dataObject = EnsureArray(data, DataName);
@@ -125,14 +137,50 @@ namespace Wanderers.Compiling.Loaders
 
 				pos.X = 0;
 				Tile tile = null;
-				foreach (var symbol in line)
+				for(var j = 0; j < line.Length; ++j)
 				{
+					var symbol = line[j];
 					object item;
+
+					if (symbol == '{')
+					{
+						// Exit
+						var sb = new StringBuilder();
+						++j;
+
+						var hasEnd = false;
+						for(; j < line.Length; ++j)
+						{
+							symbol = line[j];
+							if (symbol == '}')
+							{
+								hasEnd = true;
+								break;
+							}
+
+							sb.Append(symbol);
+						}
+
+						if (!hasEnd)
+						{
+							RaiseError("Exit sequence lacks closing figure bracket. Source: '{0}'", data.Source);
+						}
+
+						if (tile == null)
+						{
+							RaiseError("Last tile is null. Source: '{0}'", data.Source);
+						}
+
+						tile.Exit = Exit.FromString(sb.ToString());
+
+						continue;
+					}
+
 					if (!legend.TryGetValue(symbol, out item))
 					{
-						throw new Exception(string.Format("Unknown symbol '{0}', source = '{1}'",
+						RaiseError("Unknown symbol '{0}', source = '{1}'",
 							symbol,
-							data.Source));
+							data.Source);
 					}
 
 					if (item is SpawnSpot)
@@ -172,11 +220,11 @@ namespace Wanderers.Compiling.Loaders
 				}
 				else if (width.Value != lineData.Count)
 				{
-					throw new Exception(string.Format("All map lines should have same width. Map width '{0}', this line('{1}') width '{2}', source = '{3}'",
+					RaiseError("All map lines should have same width. Map width '{0}', this line('{1}') width '{2}', source = '{3}'",
 						width.Value,
 						i,
 						lineData.Count,
-						data.Source));
+						data.Source);
 				}
 
 				lines.Add(lineData);
@@ -206,7 +254,7 @@ namespace Wanderers.Compiling.Loaders
 
 		private static char GenerateCode(Dictionary<char, object> legend, char code)
 		{
-			while (legend.ContainsKey(code))
+			while (legend.ContainsKey(code) || ForbiddenLegendItems.IndexOf(code) != -1)
 			{
 				++code;
 			}
@@ -310,6 +358,13 @@ namespace Wanderers.Compiling.Loaders
 				{
 					var tile = map.GetTileAt(x, y);
 					sb.Append(tileInfos[tile.Info.Id]);
+
+					if (tile.Exit != null)
+					{
+						sb.Append('{');
+						sb.Append(tile.Exit.ToString());
+						sb.Append('}');
+					}
 
 					if (tile.Creature != null)
 					{

@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Wanderers.Core;
 using Wanderers.Storage;
+using Wanderers.Utils;
 using Module = Wanderers.Core.Module;
 
 namespace Wanderers
@@ -41,28 +42,6 @@ namespace Wanderers
 			}
 		}
 
-		private static string FormatMessage(string message, params object[] args)
-		{
-			string str;
-			try
-			{
-				if (args != null && args.Length > 0)
-				{
-					str = string.Format(message, args);
-				}
-				else
-				{
-					str = message;
-				}
-			}
-			catch (FormatException)
-			{
-				str = message;
-			}
-
-			return str;
-		}
-
 		public static void LogInfo(string message, params object[] args)
 		{
 			if (InfoLogHandler == null)
@@ -70,7 +49,7 @@ namespace Wanderers
 				return;
 			}
 
-			InfoLogHandler(FormatMessage(message, args));
+			InfoLogHandler(StringUtils.FormatMessage(message, args));
 		}
 
 		public static void LogWarn(string message, params object[] args)
@@ -80,7 +59,7 @@ namespace Wanderers
 				return;
 			}
 
-			WarnLogHandler(FormatMessage(message, args));
+			WarnLogHandler(StringUtils.FormatMessage(message, args));
 		}
 
 		public static void LogError(string message, params object[] args)
@@ -90,7 +69,7 @@ namespace Wanderers
 				return;
 			}
 
-			ErrorLogHandler(FormatMessage(message, args));
+			ErrorLogHandler(StringUtils.FormatMessage(message, args));
 		}
 
 		public static void GameLog(string message, params object[] args)
@@ -100,7 +79,7 @@ namespace Wanderers
 				return;
 			}
 
-			GameLogHandler(FormatMessage(message, args));
+			GameLogHandler(StringUtils.FormatMessage(message, args));
 		}
 	}
 }

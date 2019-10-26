@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Wanderers.Core
 {
-	public class Map : ItemWithId
+	public class Map : BaseObject
 	{
 		private Tile[,] _tiles;
 

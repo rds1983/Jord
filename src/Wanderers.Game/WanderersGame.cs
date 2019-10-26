@@ -25,7 +25,6 @@ namespace Wanderers
 			get { return _instance; }
 		}
 
-
 		public Desktop Desktop
 		{
 			get { return _desktop; }
@@ -85,17 +84,6 @@ namespace Wanderers
 			}
 		}
 
-		public void Play(int slotIndex)
-		{
-			TJ.Session = new GameSession(slotIndex);
-
-			SwitchTo<GameView>();
-
-			var gameView = (GameView)Desktop.Widgets[0];
-			gameView.MapView.Map = TJ.Session.Player.Map;
-			gameView.Desktop.FocusedKeyboardWidget = gameView;
-		}
-
 		private T SwitchTo<T>() where T : Widget, new()
 		{
 			_desktop.Widgets.Clear();
@@ -108,6 +96,17 @@ namespace Wanderers
 		public void SwitchToMainMenu()
 		{
 			SwitchTo<MainMenu>();
+		}
+
+		public void Play(int slotIndex)
+		{
+			TJ.Session = new GameSession(slotIndex);
+
+			SwitchTo<GameView>();
+
+			var gameView = (GameView)Desktop.Widgets[0];
+			gameView.MapView.Map = TJ.Session.Player.Map;
+			gameView.Desktop.FocusedKeyboardWidget = gameView;
 		}
 
 		protected override void Update(GameTime gameTime)

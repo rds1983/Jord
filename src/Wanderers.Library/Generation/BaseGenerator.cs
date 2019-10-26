@@ -2,7 +2,7 @@
 
 namespace Wanderers.Generation
 {
-	public abstract class BaseGenerator: ItemWithId
+	public abstract class BaseGenerator: BaseObject
 	{
 		public int Width = 64;
 		public int Height = 64;

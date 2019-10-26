@@ -1,6 +1,6 @@
 ﻿namespace Wanderers.Core
 {
-	public class Class : ItemWithId
+	public class Class : BaseObject
 	{
 		public string Name
 		{

@@ -10,7 +10,7 @@ namespace Wanderers.Compiling.Loaders
 		{
 		}
 
-		public override ItemWithId LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
 		{
 			var creature = (CreatureInfo)base.LoadItem(context, id, data);
 

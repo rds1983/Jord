@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Wanderers.Core;
 using Wanderers.Core.Items;
+using Wanderers.Utils;
 
 namespace Wanderers.Compiling.Loaders
 {
@@ -26,9 +27,8 @@ namespace Wanderers.Compiling.Loaders
 			ObjectData od;
 			if (_sourceData.TryGetValue(id, out od))
 			{
-				throw new Exception(string.Format(
-					"Two {0} with same id '{1}' had been declared. Conflicting source: '{2}' and '{3}'",
-					TypeName, id, source, od.Source));
+				RaiseError("Two {0} with same id '{1}' had been declared. Conflicting source: '{2}' and '{3}'",
+					TypeName, id, source, od.Source);
 			}
 
 			od = new ObjectData
@@ -102,9 +102,8 @@ namespace Wanderers.Compiling.Loaders
 					var optionalFieldAttr = p.FindAttribute<OptionalFieldAttribute>();
 					if (optionalFieldAttr == null)
 					{
-						throw new Exception(string.Format(
-							"Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
-							name, propertyType.Name, id, source));
+						RaiseError("Could not find mandatory field {0} for {1}, id: '{2}', source: '{3}'",
+							name, propertyType.Name, id, source);
 					}
 					else
 					{
@@ -162,9 +161,9 @@ namespace Wanderers.Compiling.Loaders
 			return item;
 		}
 
-		public static ItemWithId LoadItem(CompilerContext context, Type type, string id, ObjectData data)
+		public static BaseObject LoadItem(CompilerContext context, Type type, string id, ObjectData data)
 		{
-			var item = (ItemWithId)LoadData(context, type, id, data.Data, data.Source);
+			var item = (BaseObject)LoadData(context, type, id, data.Data, data.Source);
 
 			item.Id = id;
 			item.Source = data.Source;
@@ -172,7 +171,7 @@ namespace Wanderers.Compiling.Loaders
 			return item;
 		}
 
-		public virtual ItemWithId LoadItem(CompilerContext context, string id, ObjectData data)
+		public virtual BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
 		{
 			return LoadItem(context, Type, id, data);
 		}
@@ -220,6 +219,11 @@ namespace Wanderers.Compiling.Loaders
 			}
 
 			return result;
+		}
+
+		protected static void RaiseError(string message, params object[] args)
+		{
+			throw new Exception(StringUtils.FormatMessage(message, args));
 		}
 	}
 }

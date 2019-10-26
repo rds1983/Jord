@@ -5,7 +5,7 @@ using Wanderers.Compiling;
 
 namespace Wanderers.Core.Items
 {
-	public class BaseItemInfo : ItemWithId
+	public class BaseItemInfo : BaseObject
 	{
 		private static readonly Dictionary<Type, string> _typeDisplayNames = new Dictionary<Type, string>();
 

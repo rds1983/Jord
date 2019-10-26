@@ -31,6 +31,7 @@ namespace Wanderers.Compiling
 		public Compiler()
 		{
 			_loaders[typeof(Map)] = new MapLoader();
+			_loaders[typeof(MapTemplate)] = new MapTemplateLoader();
 			_loaders[typeof(TileInfo)] = new Loader<TileInfo>("TileInfos");
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
@@ -143,7 +144,7 @@ namespace Wanderers.Compiling
 			}
 		}
 
-		private void FillData<T>(Dictionary<string, T> output) where T : ItemWithId
+		private void FillData<T>(Dictionary<string, T> output) where T : BaseObject
 		{
 			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
 		}
@@ -192,6 +193,9 @@ namespace Wanderers.Compiling
 
 			// Maps
 			FillData(_context.Module.Maps);
+
+			// Map templates
+			FillData(_context.Module.MapTemplates);
 
 			return _context.Module;
 		}

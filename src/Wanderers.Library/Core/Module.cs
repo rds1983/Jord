@@ -13,6 +13,7 @@ namespace Wanderers.Core
 		public Dictionary<string, BaseItemInfo> ItemInfos { get; } = new Dictionary<string, BaseItemInfo>();
 		public Dictionary<string, BaseGenerator> GeneratorConfigs { get; } = new Dictionary<string, BaseGenerator>();
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
+		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
 
 		private static T Ensure<T>(Dictionary<string, T> data, string id)
 		{
@@ -53,6 +54,11 @@ namespace Wanderers.Core
 		public Map EnsureMap(string id)
 		{
 			return Ensure(Maps, id);
+		}
+
+		public MapTemplate EnsureMapTemplate(string id)
+		{
+			return Ensure(MapTemplates, id);
 		}
 	}
 }

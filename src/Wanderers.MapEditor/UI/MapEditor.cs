@@ -62,6 +62,21 @@ namespace Wanderers.MapEditor.UI
 			}
 		}
 
+		protected override void BeforeDrawTile(RenderContext context, Tile tile)
+		{
+			base.BeforeDrawTile(context, tile);
+
+			if (tile.Exit == null)
+			{
+				return;
+			}
+
+			var screen = GameToScreen(tile.Position);
+
+			var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
+			context.Batch.FillRectangle(rect, Color.Blue);
+		}
+
 		public override void OnMouseMoved()
 		{
 			base.OnMouseMoved();

@@ -3,7 +3,7 @@ using Wanderers.Compiling;
 
 namespace Wanderers.Core
 {
-	public class CreatureInfo : ItemWithId
+	public class CreatureInfo : BaseObject
 	{
 		private readonly List<AttackInfo> _attacks = new List<AttackInfo>();
 
