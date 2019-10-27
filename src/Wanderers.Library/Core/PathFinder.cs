@@ -43,7 +43,7 @@ namespace Wanderers.Core
 		private readonly Dictionary<int, PathGridNode> _nodes = new Dictionary<int, PathGridNode>();
 		private readonly FastPriorityQueue<PathGridNode> _openSet;
 
-		public Func<Point, Point, float> HeuristicFunction = DefaultHeurisric;
+		public Func<Point, Point, float> HeuristicFunction = HeuristicManhattan;
 
 		public PathFinder(Point start, Point dest, Point size, 
 			Func<Point, bool> passableChecker, Func<Point, bool> finishedChecker)
@@ -169,12 +169,12 @@ namespace Wanderers.Core
 			return result;
 		}
 
-		private static float DefaultHeurisric(Point a, Point b)
+		public static float HeuristicManhattan(Point a, Point b)
 		{
-			var dx = b.X - a.X;
-			var dy = b.Y - a.Y;
+			var dx = Math.Abs(b.X - a.X);
+			var dy = Math.Abs(b.Y - a.Y);
 
-			return (float)Math.Sqrt((dx * dx) + (dy * dy));
+			return dx + dy;
 		}
 	}
 }

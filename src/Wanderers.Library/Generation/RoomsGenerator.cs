@@ -65,10 +65,7 @@ namespace Wanderers.Generation
 				destPos,
 				new Point(Width, Height),
 				p => true,
-				p => p == destPos)
-			{
-				HeuristicFunction = (a, b) => 8 * (a.X - b.X) * (a.Y - b.Y)
-			};
+				p => p == destPos);
 
 			var steps = pathFinder.Process();
 
