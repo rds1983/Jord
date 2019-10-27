@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Myra;
 using Myra.Graphics2D.UI;
 using System;
 using Wanderers.Core;
@@ -37,6 +38,19 @@ namespace Wanderers.UI
 			}
 
 			TopLeft = tl;
+		}
+
+		protected override void BeforeDrawTile(RenderContext context, Tile tile)
+		{
+			base.BeforeDrawTile(context, tile);
+
+			if (tile.Highlighted)
+			{
+				var screen = GameToScreen(tile.Position);
+
+				var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
+				context.Batch.FillRectangle(rect, Color.LightGreen);
+			}
 		}
 
 		public override void OnTouchDown()

@@ -1,0 +1,21 @@
+{
+	"CreatureInfos": 
+	{
+		"SewersRat": 
+		{
+			"Name": "Rat",
+			"Color": "White",
+			"Symbol": "r",
+			"IsAttackable": true,
+			"Gold": 10,
+            "Attacks": [
+                {
+                    "AttackType": "Claw",
+                    "MinDamage": 5,
+                    "MaxDamage": 10,
+                    "Delay": 3000
+                }
+            ]
+		}
+	}
+}

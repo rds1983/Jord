@@ -32,6 +32,8 @@ namespace Wanderers.Core
 			internal set;
 		}
 
+		public bool Highlighted;
+
 		public Exit Exit;
 
 		public Tile()

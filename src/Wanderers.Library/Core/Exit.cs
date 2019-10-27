@@ -1,10 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using Wanderers.Compiling;
 
 namespace Wanderers.Core
 {
 	public class Exit
 	{
 		public string MapId;
+		public string ExitMapId;
+		public string TileInfoId;
+
+		[OptionalField]
 		public Point? Position;
 
 		public override string ToString()

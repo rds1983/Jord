@@ -1,7 +1,17 @@
 {
   "MapTemplates": {
     "Sewers1": {
-        "GeneratorId": "CommonRooms64x64"
+        "GeneratorId": "CommonRooms64x64",
+        "Exits": [
+            {
+                "MapId": "BalHarbor",
+                "ExitMapId": "Sewers1",
+                "TileInfoId": "ExitUp"
+            }
+        ],
+        "Creatures": {
+            "SewersRat": 50
+        }
     }
   }
 }

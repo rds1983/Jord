@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Wanderers.Compiling;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Wanderers.Core
 {
@@ -72,6 +73,23 @@ namespace Wanderers.Core
 		public Map()
 		{
 			Local = true;
+		}
+
+		public Tile EnsureExitTileById(string id)
+		{
+			for (var x = 0; x < Size.X; ++x)
+			{
+				for (var y = 0; y < Size.Y; ++y)
+				{
+					var tile = this[x, y];
+					if (tile.Exit != null && tile.Exit.MapId == id)
+					{
+						return tile;
+					}
+				}
+			}
+
+			throw new Exception(string.Format("Could not find exit with id '{0}'.", id));
 		}
 	}
 }

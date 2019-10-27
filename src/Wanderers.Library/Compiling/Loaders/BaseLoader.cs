@@ -70,6 +70,12 @@ namespace Wanderers.Compiling.Loaders
 
 		public static object LoadData(CompilerContext context, Type type, string id, JObject data, string source)
 		{
+			// Erase Nullable
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+			{
+				type = type.GenericTypeArguments[0];
+			}
+
 			var item = Activator.CreateInstance(type);
 			var members = CompilerUtils.GetMembers(type);
 			foreach (var p in members)
