@@ -100,13 +100,6 @@ namespace Wanderers.UI
 					};
 				}
 			}
-			else if (tile.Exit != null)
-			{
-				finished = () =>
-				{
-					TJ.Session.Player.Enter();
-				};
-			}
 
 			TJ.Session.Player.InitiateMovement(gameCoords.ToPoint(), distance, finished);
 		}

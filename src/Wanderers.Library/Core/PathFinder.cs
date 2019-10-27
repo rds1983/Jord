@@ -43,10 +43,7 @@ namespace Wanderers.Core
 		private readonly Dictionary<int, PathGridNode> _nodes = new Dictionary<int, PathGridNode>();
 		private readonly FastPriorityQueue<PathGridNode> _openSet;
 
-		public Point Start
-		{
-			get { return _start; }
-		}
+		public Func<Point, Point, float> HeuristicFunction = DefaultHeurisric;
 
 		public PathFinder(Point start, Point dest, Point size, 
 			Func<Point, bool> passableChecker, Func<Point, bool> finishedChecker)
@@ -127,7 +124,7 @@ namespace Wanderers.Core
 					}
 					else
 					{
-						tentativeG += SquareRootFromTwo;
+						tentativeG += 2.0f;
 					}
 
 					if (tentativeG < neighborNode.G)
@@ -165,18 +162,19 @@ namespace Wanderers.Core
 			if (!_nodes.TryGetValue(key, out result))
 			{
 				result = new PathGridNode();
+				result.Position = pos;
 				_nodes[key] = result;
 			}
 
 			return result;
 		}
 
-		private static float HeuristicFunction(Point start, Point end)
+		private static float DefaultHeurisric(Point a, Point b)
 		{
-			var dx = end.X - start.X;
-			var dy = end.Y - start.Y;
+			var dx = b.X - a.X;
+			var dy = b.Y - a.Y;
 
-			return dx * dx + dy * dy;
+			return (float)Math.Sqrt((dx * dx) + (dy * dy));
 		}
 	}
 }
