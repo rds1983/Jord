@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Priority_Queue;
 
 namespace Wanderers.Core
 {
@@ -27,13 +28,11 @@ namespace Wanderers.Core
 			new Point(1, 1),
 		};
 
-		private class PathGridNode
+		private class PathGridNode: FastPriorityQueueNode
 		{
 			public PathGridNode Parent;
-			public float F, G;
+			public float F = float.MaxValue, G = float.MaxValue;
 			public Point Position;
-			public bool IsOpen;
-			public bool IsClosed;
 		};
 
 		private readonly Point _start;
@@ -42,9 +41,7 @@ namespace Wanderers.Core
 		private readonly Func<Point, bool> _passableChecker;
 		private readonly Func<Point, bool> _finishedChecker;
 		private readonly Dictionary<int, PathGridNode> _nodes = new Dictionary<int, PathGridNode>();
-
-		private readonly SortedDictionary<float, Stack<PathGridNode>> _openSet =
-			new SortedDictionary<float, Stack<PathGridNode>>();
+		private readonly FastPriorityQueue<PathGridNode> _openSet;
 
 		public Point Start
 		{
@@ -60,11 +57,14 @@ namespace Wanderers.Core
 			_passableChecker = passableChecker;
 			_finishedChecker = finishedChecker;
 
+			_openSet = new FastPriorityQueue<PathGridNode>(_size.X * _size.Y);
+
 			var startNode = GetNode(start);
 			startNode.G = 0;
 			startNode.F = HeuristicFunction(_start, _destination);
 			startNode.Position = start;
-			AddToOpenSet(startNode);
+
+			_openSet.Enqueue(startNode, startNode.F);
 		}
 
 		public ResultStep[] Process()
@@ -73,7 +73,7 @@ namespace Wanderers.Core
 
 			while (_openSet.Count > 0)
 			{
-				var node = PopFromOpenSet();
+				var node = _openSet.Dequeue();
 
 				if (_finishedChecker(node.Position))
 				{
@@ -118,6 +118,8 @@ namespace Wanderers.Core
 						continue; // Not reacheable
 					}
 
+					var neighborNode = GetNode(newPos);
+					
 					float tentativeG = node.G;
 					if (d < 4)
 					{
@@ -128,21 +130,20 @@ namespace Wanderers.Core
 						tentativeG += SquareRootFromTwo;
 					}
 
-					var neighborNode = GetNode(newPos);
-					if (neighborNode.IsClosed && tentativeG >= neighborNode.G)
-					{
-						continue;
-					}
-
-					if (!neighborNode.IsOpen || tentativeG < neighborNode.G)
+					if (tentativeG < neighborNode.G)
 					{
 						neighborNode.Parent = node;
 						neighborNode.G = tentativeG;
 						neighborNode.F = neighborNode.G + HeuristicFunction(newPos, _destination);
 						neighborNode.Position = newPos;
-						if (!neighborNode.IsOpen)
+
+						if (!_openSet.Contains(neighborNode))
 						{
-							AddToOpenSet(neighborNode);
+							_openSet.Enqueue(neighborNode, neighborNode.F);
+						}
+						else
+						{
+							_openSet.UpdatePriority(neighborNode, neighborNode.F);
 						}
 					}
 				}
@@ -170,40 +171,12 @@ namespace Wanderers.Core
 			return result;
 		}
 
-		private void AddToOpenSet(PathGridNode node)
-		{
-			node.IsOpen = true;
-			node.IsClosed = false;
-			Stack<PathGridNode> nodes;
-			if (!_openSet.TryGetValue(node.F, out nodes))
-			{
-				nodes = new Stack<PathGridNode>();
-				_openSet[node.F] = nodes;
-			}
-
-			nodes.Push(node);
-		}
-
-		private PathGridNode PopFromOpenSet()
-		{
-			// Top node should have lowest F
-			var first = _openSet.First();
-
-			var node = first.Value.Pop();
-			if (first.Value.Count == 0)
-			{
-				_openSet.Remove(first.Key);
-			}
-
-			node.IsOpen = false;
-			node.IsClosed = true;
-
-			return node;
-		}
-
 		private static float HeuristicFunction(Point start, Point end)
 		{
-			return 8.0f * (Math.Abs((float)(end.X - start.X)) * Math.Abs((float)(end.Y - start.Y)));
+			var dx = end.X - start.X;
+			var dy = end.Y - start.Y;
+
+			return dx * dx + dy * dy;
 		}
 	}
 }
