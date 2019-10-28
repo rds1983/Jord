@@ -1,5 +1,5 @@
 # Wanderers of Abarim
 
 # Credits
-* [FNA](https://github.com/FNA-XNA/FNA)
+* [MonoGame](http://www.monogame.net/)
 * [Myra](https://github.com/rds1983/Myra)
