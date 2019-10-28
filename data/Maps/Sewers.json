@@ -10,7 +10,7 @@
             }
         ],
         "Creatures": {
-            "SewersRat": 50
+            "SewersRat": 10
         }
     }
   }

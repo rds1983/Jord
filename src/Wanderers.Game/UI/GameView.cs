@@ -1,45 +1,25 @@
-﻿using Microsoft.Xna.Framework.Input;
-using Myra.Graphics2D.UI;
+using Microsoft.Xna.Framework.Input;
 
 namespace Wanderers.UI
 {
-	public class GameView: SingleItemContainer<HorizontalStackPanel>
+	public partial class GameView
 	{
-		private readonly MapView _mapView = new MapView();
-		private readonly LogView _logView = new LogView();
-
-		public MapView MapView
-		{
-			get
-			{
-				return _mapView;
-			}
-		}
-
-		public LogView LogView
-		{
-			get
-			{
-				return _logView;
-			}
-		}
+		public MapView MapView { get; } = new MapView();
+		public MiniMap MapNavigation { get; } = new MiniMap();
+		public LogView LogView { get; } = new LogView();
 
 		protected override bool AcceptsKeyboardFocus => true;
 
 		public GameView()
 		{
-			HorizontalAlignment = HorizontalAlignment.Stretch;
-			VerticalAlignment = VerticalAlignment.Stretch;
+			BuildUI();
 
-			InternalChild = new HorizontalStackPanel();
+			_mapViewContainer.Widgets.Add(MapView);
 
-			InternalChild.Proportions.Add(new Proportion(ProportionType.Pixels, MapRender.TileSize.X * 25));
-			InternalChild.Proportions.Add(Proportion.Auto);
-			InternalChild.Proportions.Add(Proportion.Fill);
+			MapNavigation.MapEditor = MapView;
+			_mapContainer.Widgets.Add(MapNavigation);
 
-			InternalChild.Widgets.Add(MapView);
-			InternalChild.Widgets.Add(new VerticalSeparator());
-			InternalChild.Widgets.Add(_logView);
+			_logContainer.Widgets.Add(LogView);
 		}
 
 		public override void OnKeyDown(Keys k)
@@ -54,7 +34,10 @@ namespace Wanderers.UI
 
 			if (k == Keys.E)
 			{
-				TJ.Session.Player.Enter();
+				if (TJ.Session.Player.Enter())
+				{
+					MapNavigation.InvalidateImage();
+				}
 			}
 		}
 	}

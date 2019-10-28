@@ -107,11 +107,11 @@ namespace Wanderers.Core
 			return true;
 		}
 
-		public void Enter()
+		public bool Enter()
 		{
 			if (Tile == null || Tile.Exit == null)
 			{
-				return;
+				return false;
 			}
 
 			Map map = null;
@@ -155,6 +155,8 @@ namespace Wanderers.Core
 
 			Remove();
 			Place(map, exitTile.Position);
+
+			return true;
 		}
 	}
 }

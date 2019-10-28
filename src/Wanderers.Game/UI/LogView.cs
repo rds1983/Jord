@@ -1,6 +1,5 @@
 ﻿using Myra.Graphics2D.UI;
 using System;
-using static Myra.Graphics2D.UI.Grid;
 
 namespace Wanderers.UI
 {
@@ -16,6 +15,7 @@ namespace Wanderers.UI
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Stretch;
+			ClipToBounds = true;
 
 			InternalChild = new Panel();
 

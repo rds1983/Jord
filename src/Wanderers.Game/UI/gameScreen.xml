@@ -1,0 +1,32 @@
+<Project>
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="GameView" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
+  <HorizontalStackPanel>
+    <HorizontalStackPanel.Proportions>
+      <Proportion Type="Part" Value="2" />
+      <Proportion Type="Auto" />
+      <Proportion Type="Part" />
+    </HorizontalStackPanel.Proportions>
+    <Panel Id="_mapViewContainer" />
+    <VerticalSeparator />
+    <VerticalStackPanel>
+      <HorizontalStackPanel>
+        <HorizontalStackPanel.Proportions>
+          <Proportion Type="Part" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Part" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Part" />
+        </HorizontalStackPanel.Proportions>
+        <Label Text="H: 50/100" Id="_labelHp" HorizontalAlignment="Center" />
+        <VerticalSeparator />
+        <Label Text="M: 50/100" Id="_labelMana" HorizontalAlignment="Center" />
+        <VerticalSeparator />
+        <Label Text="E: 50/100" Id="_labelEnergy" HorizontalAlignment="Center" />
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <Panel Id="_mapContainer" Height="247" />
+      <HorizontalSeparator />
+      <Panel Id="_logContainer" />
+    </VerticalStackPanel>
+  </HorizontalStackPanel>
+</Project>
