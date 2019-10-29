@@ -285,7 +285,7 @@ namespace Wanderers.UI
 				return true;
 			}
 
-			var msg = Dialog.CreateMessageBox(Resources.TextNotEnoughGold, Resources.TextNotEnoughGold);
+			var msg = CreateMessageBox(Resources.TextNotEnoughGold, Resources.TextNotEnoughGold);
 			msg.ShowModal(Desktop);
 
 			return false;

@@ -2,15 +2,9 @@
 {
 	public class WeaponInfo : EquipInfo
 	{
-		public int MinDamage
-		{
-			get; set;
-		}
-
-		public int MaxDamage
-		{
-			get; set;
-		}
+		public int MinDamage;
+		public int MaxDamage;
+		public AttackType AttackType;
 
 		public WeaponInfo()
 		{

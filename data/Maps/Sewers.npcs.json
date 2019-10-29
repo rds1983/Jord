@@ -3,8 +3,8 @@
 	{
 		"SewersRat": 
 		{
-			"Name": "Rat",
-			"Color": "White",
+			"Name": "a sewer rat",
+			"Color": "Gray",
 			"Symbol": "r",
 			"IsAttackable": true,
 			"Gold": 10,

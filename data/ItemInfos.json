@@ -22,7 +22,8 @@
       "Type": "Weapon",
       "Price": 50,
       "MinDamage": 3,
-      "MaxDamage": 8
+      "MaxDamage": 8,
+      "AttackType": "Slash"
     },
     "LeatherArmor": {
         "Name": "leather armor",

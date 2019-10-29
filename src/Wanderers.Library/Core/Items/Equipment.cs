@@ -29,7 +29,14 @@ namespace Wanderers.Core.Items
 			}
 		}
 
-		public Item Equip(Item item)
+		public event EventHandler Changed;
+
+		public Item GetItemByType(EquipType type)
+		{
+			return (from i in _items where i.Slot == type select i.Item).FirstOrDefault();
+		}
+
+		public void Equip(Item item)
 		{
 			var asEquip = item.Info as EquipInfo;
 			if (asEquip == null)
@@ -43,7 +50,7 @@ namespace Wanderers.Core.Items
 				throw new Exception(string.Format("Slot {0} doesnt exist in Equipment", asEquip.SubType.ToString()));
 			}
 
-			var index = 0;
+			int? index = null;
 
 			// Try to find empty slot
 			for (var i = 0; i < slots.Length; ++i)
@@ -55,12 +62,18 @@ namespace Wanderers.Core.Items
 				}
 			}
 
-			var slot = slots[index];
+			if (index == null)
+			{
+				return;
+			}
+
+			var slot = slots[index.Value];
 
 			var result = slot.Item;
 
 			slot.Item = item;
-			return result;
+
+			Changed?.Invoke(this, EventArgs.Empty);
 		}
 
 		public Item Remove(int slotIndex)
@@ -68,6 +81,9 @@ namespace Wanderers.Core.Items
 			var slot = _items[slotIndex];
 			var result = slot.Item;
 			slot.Item = null;
+
+			Changed?.Invoke(this, EventArgs.Empty);
+
 			return result;
 		}
 	}

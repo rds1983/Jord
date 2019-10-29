@@ -8,6 +8,8 @@ namespace Wanderers.UI
 {
 	public class MapView : MapRender
 	{
+		private bool DrawHighlight;
+
 		protected override void BeforeDraw(RenderContext context)
 		{
 			base.BeforeDraw(context);
@@ -44,7 +46,7 @@ namespace Wanderers.UI
 		{
 			base.BeforeDrawTile(context, tile);
 
-			if (tile.Highlighted)
+			if (Config.DrawHighlight && tile.Highlighted)
 			{
 				var screen = GameToScreen(tile.Position);
 

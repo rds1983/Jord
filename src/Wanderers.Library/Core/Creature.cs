@@ -116,8 +116,8 @@ namespace Wanderers.Core
 		public bool IsMoveable(Map map, Point pos)
 		{
 			var result = false;
-			var x = (int)pos.X;
-			var y = (int)pos.Y;
+			var x = pos.X;
+			var y = pos.Y;
 
 			if (x >= 0 && y >= 0 && x < map.Size.X && y < map.Size.Y)
 			{
