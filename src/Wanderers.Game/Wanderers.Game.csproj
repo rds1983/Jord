@@ -9,6 +9,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />
   </ItemGroup>
   
