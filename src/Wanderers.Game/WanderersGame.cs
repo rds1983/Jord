@@ -13,7 +13,7 @@ namespace Wanderers
 {
 	public class WanderersGame : Game
 	{
-		private const string DataPath = "../../../../../data";
+		private const string DataPath = "data";
 
 		private static WanderersGame _instance;
 

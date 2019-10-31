@@ -1,4 +1,4 @@
-# Wanderers of Abarim
+# Troubles of Jord
 
 # Credits
 * [SlothMUD](http://www.slothmud.org/)

@@ -5,7 +5,7 @@ namespace Wanderers.Storage
 {
 	public class Slot
 	{
-		private const string SavesFolderName = "Saves";
+		private const string SavesFolderName = "saves";
 
 		private readonly int _index;
 
