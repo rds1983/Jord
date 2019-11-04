@@ -37,7 +37,7 @@ namespace Wanderers.Core
 		}
 
 		public abstract Appearance Image { get; }
-		public abstract AttackInfo[] Attacks { get; }
+		public abstract BattleStats BattleStats { get; }
 
 		public string Name { get; set; }
 		public int Gold { get; set; }

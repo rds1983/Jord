@@ -15,7 +15,9 @@
                     "MaxDamage": 10,
                     "Delay": 3000
                 }
-            ]
+            ],
+            ArmorClass: 14,
+            HitRoll: 1
 		}
 	}
 }

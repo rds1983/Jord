@@ -1,5 +1,5 @@
 <Project>
-  <Project.ExportOptions Namespace="Wanderers.UI" Class="InventoryWindow" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="InventoryWindow" OutputPath="D:\Projects\TroublesOfJord\src\Wanderers.Game\UI" />
   <Window Title="Items" Left="24">
     <VerticalStackPanel Width="1000" PaddingTop="16" PaddingBottom="16">
       <VerticalStackPanel.Proportions>
@@ -89,9 +89,11 @@
         <Grid.ColumnsProportions>
           <Proportion Type="Part" />
           <Proportion Type="Part" />
+          <Proportion Type="Part" />
         </Grid.ColumnsProportions>
         <Label Text="AC: 100" Id="_textAc" />
-        <Label Text="Attacks: 4-8/6-10" Id="_textAttacks" GridColumn="1" />
+        <Label Text="Hit Roll: 20" Id="_textHitRoll" GridColumn="1" />
+        <Label Text="Attacks: 4-8/6-10" Id="_textAttacks" GridColumn="2" />
       </Grid>
     </VerticalStackPanel>
   </Window>

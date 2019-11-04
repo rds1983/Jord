@@ -38,20 +38,22 @@ namespace Wanderers.UI
 
 		private void UpdateStats()
 		{
-			_textAc.Text = "AC: " + Player.AC.ToString();
+			var stats = Player.BattleStats;
+			_textAc.Text = "AC: " + stats.ArmorClass.ToString();
+			_textHitRoll.Text = "Hit Roll: " + stats.HitRoll;
 
 			var sb = new StringBuilder();
 
 			sb.Append("Attacks: ");
-			for(var i = 0; i < Player.Attacks.Length; ++i)
+			for(var i = 0; i < stats.Attacks.Length; ++i)
 			{
-				var attack = Player.Attacks[i];
+				var attack = stats.Attacks[i];
 
 				sb.Append(attack.MinDamage);
 				sb.Append('-');
 				sb.Append(attack.MaxDamage);
 
-				if (i < Player.Attacks.Length - 1)
+				if (i < Player.BattleStats.Attacks.Length - 1)
 				{
 					sb.Append('/');
 				}

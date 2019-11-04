@@ -23,8 +23,8 @@ namespace Wanderers.Core
 				return;
 			}
 
-			var attacks = Attacks;
-			if (attacks.Length == 0)
+			var attacks = BattleStats.Attacks;
+			if (attacks == null || attacks.Length == 0)
 			{
 				return;
 			}
@@ -43,14 +43,25 @@ namespace Wanderers.Core
 
 				var attack = attacks[_currentAttackIndex];
 
-				var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
+				var attackRoll = MathUtils.RollD20() + BattleStats.HitRoll;
+
+				if (attackRoll < AttackTarget.BattleStats.ArmorClass)
+				{
+					// Miss
+					var message = AttackInfo.GetMissMessage(attackRoll, Name, AttackTarget.Name, attack.AttackType);
+					TJ.GameLog(message);
+				}
+				else
+				{
+					var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
+
+					var message = AttackInfo.GetAttackMessage(attackRoll, damage, Name, AttackTarget.Name, attack.AttackType);
+					TJ.GameLog(message);
+				}
 
 				++_currentAttackIndex;
 
 				AttackDelayInMs = attack.Delay;
-
-				var message = AttackInfo.GetAttackMessage(damage, Name, AttackTarget.Name, attack.AttackType);
-				TJ.GameLog(message);
 			}
 
 			if (_attackStart != null)

@@ -5,17 +5,17 @@ namespace Wanderers.Core
 	public class NonPlayer : Creature
 	{
 		private bool _dirty = true;
-		private readonly CreatureInfo _info;
-		private AttackInfo[] _attacks = null;
+		private readonly BattleStats _battleStats = new BattleStats();
 
-		public override Appearance Image => _info.Image;
-		public CreatureInfo Info => _info;
-		public override AttackInfo[] Attacks
+		public override Appearance Image => Info.Image;
+		public CreatureInfo Info { get; }
+
+		public override BattleStats BattleStats
 		{
 			get
 			{
 				Update();
-				return _attacks;
+				return _battleStats;
 			}
 		}
 
@@ -26,9 +26,9 @@ namespace Wanderers.Core
 				throw new ArgumentNullException(nameof(info));
 			}
 
-			_info = info;
-			Name = _info.Name;
-			Gold = _info.Gold;
+			Info = info;
+			Name = Info.Name;
+			Gold = Info.Gold;
 
 			foreach (var itemPile in info.Inventory.Items)
 			{
@@ -43,8 +43,9 @@ namespace Wanderers.Core
 				return;
 			}
 
-
-			_attacks = _info.Attacks.ToArray();
+			_battleStats.Attacks = Info.Attacks.ToArray();
+			_battleStats.ArmorClass = Info.ArmorClass;
+			_battleStats.HitRoll = Info.HitRoll;
 
 			_dirty = false;
 		}

@@ -18,5 +18,10 @@ namespace Wanderers.Utils
 		{
 			return new Point((int)v.X, (int)v.Y);
 		}
+
+		public static int RollD20()
+		{
+			return _random.Next(1, 21);
+		}
 	}
 }

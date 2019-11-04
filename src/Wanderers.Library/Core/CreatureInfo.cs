@@ -23,6 +23,12 @@ namespace Wanderers.Core
 		[OptionalField]
 		public List<AttackInfo> Attacks => _attacks;
 
+		[OptionalField]
+		public int ArmorClass;
+
+		[OptionalField]
+		public int HitRoll;
+
 		public CreatureInfo()
 		{
 			Inventory = new Inventory();
