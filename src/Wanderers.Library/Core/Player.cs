@@ -7,7 +7,7 @@ namespace Wanderers.Core
 	{
 		public const int PlayerRoundInMs = 6000;
 
-		private readonly BattleStats _battleStats = new BattleStats();
+		private readonly CreatureStats _stats = new CreatureStats();
 
 		private readonly Appearance _playerAppearance = new Appearance('@', Color.White);
 		private bool _dirty = true;
@@ -16,12 +16,12 @@ namespace Wanderers.Core
 
 		public Equipment Equipment { get; } = new Equipment();
 
-		public override BattleStats BattleStats
+		public override CreatureStats Stats
 		{
 			get
 			{
 				Update();
-				return _battleStats;
+				return _stats;
 			}
 		}
 
@@ -30,8 +30,12 @@ namespace Wanderers.Core
 			Equipment.Changed += (s, a) => Invalidate();
 		}
 
-		private void UpdateBattleStats()
+		private void UpdateStats()
 		{
+			// Life
+			_stats.Life.MaximumHP = _stats.Life.MaximumMana = _stats.Life.MaximumStamina = 50;
+
+			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);
 
 			var delay = PlayerRoundInMs / 2;
@@ -46,13 +50,14 @@ namespace Wanderers.Core
 				attackInfo = new AttackInfo(weaponInfo.AttackType, weaponInfo.MinDamage, weaponInfo.MaxDamage, delay);
 			}
 
-			_battleStats.Attacks = new AttackInfo[]
+			var battleStats = _stats.Battle;
+			battleStats.Attacks = new AttackInfo[]
 			{
 				attackInfo,
 				attackInfo
 			};
 
-			_battleStats.ArmorClass = 0;
+			battleStats.ArmorClass = 0;
 
 			foreach (var slot in Equipment.Items)
 			{
@@ -63,10 +68,10 @@ namespace Wanderers.Core
 
 				var info = (EquipInfo)slot.Item.Info;
 
-				_battleStats.ArmorClass += info.ArmorClass;
+				battleStats.ArmorClass += info.ArmorClass;
 			}
 
-			_battleStats.HitRoll = 2;
+			battleStats.HitRoll = 2;
 		}
 
 		private void Update()
@@ -76,7 +81,7 @@ namespace Wanderers.Core
 				return;
 			}
 
-			UpdateBattleStats();
+			UpdateStats();
 
 			_dirty = false;
 		}

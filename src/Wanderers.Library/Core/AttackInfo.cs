@@ -105,5 +105,10 @@ namespace Wanderers.Core
 			return string.Format("{0} viciously massacres {1} to small fragments with {2}. Attack Roll={3}, damage={4}.", 
 				attackerName, targetName, GetAttackNoun(attackType), attackRoll, damage);
 		}
+
+		public static string GetNpcDeathMessage(string name)
+		{
+			return string.Format("{0} is dead! R.I.P. Your blood freezes as you hear {0}'s death cry.", name);
+		}
 	}
 }

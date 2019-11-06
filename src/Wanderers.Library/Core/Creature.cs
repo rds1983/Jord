@@ -8,7 +8,8 @@ namespace Wanderers.Core
 	{
 		Idle,
 		Moving,
-		Fighting
+		Fighting,
+		Dying
 	}
 
 	public abstract partial class Creature
@@ -37,19 +38,21 @@ namespace Wanderers.Core
 		}
 
 		public abstract Appearance Image { get; }
-		public abstract BattleStats BattleStats { get; }
+		public abstract CreatureStats Stats { get; }
 
 		public string Name { get; set; }
 		public int Gold { get; set; }
 
-		private CreatureState State
+		public float Opacity = 1.0f;
+
+		public CreatureState State
 		{
 			get
 			{
 				return _state;
 			}
 
-			set
+			private set
 			{
 				if (value == _state)
 				{
@@ -63,7 +66,13 @@ namespace Wanderers.Core
 					TJ.Session.RemoveActiveCreature(this);
 				} else
 				{
+					_actionStart = DateTime.Now;
 					TJ.Session.AddActiveCreature(this);
+				}
+
+				if (_state != CreatureState.Fighting)
+				{
+					AttackTarget = null;
 				}
 			}
 		}
@@ -139,7 +148,8 @@ namespace Wanderers.Core
 
 			return tile.Info.Passable &&
 				   (tile.Creature == null ||
-					tile.Creature == this);
+					tile.Creature == this ||
+					tile.Creature.State == CreatureState.Dying);
 		}
 
 		public void Place(Map map, Point position)
@@ -160,6 +170,9 @@ namespace Wanderers.Core
 
 		public bool Remove()
 		{
+			State = CreatureState.Idle;
+			AttackTarget = null;
+
 			if (Map == null)
 			{
 				return false;
@@ -185,6 +198,9 @@ namespace Wanderers.Core
 					break;
 				case CreatureState.Fighting:
 					ProcessFighting();
+					break;
+				case CreatureState.Dying:
+					ProcessDying();
 					break;
 			}
 		}

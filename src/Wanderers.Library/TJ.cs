@@ -31,6 +31,19 @@ namespace Wanderers
 			get; set;
 		}
 
+		public static Player Player
+		{
+			get
+			{
+				if (Session == null)
+				{
+					return null;
+				}
+
+				return Session.Player;
+			}
+		}
+
 		public static string Version
 		{
 			get

@@ -24,6 +24,7 @@ namespace Wanderers.Core
 			// Spawn player
 			var map = TJ.Module.Maps[_slot.CharacterData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
+			Player.Stats.Life.Restore();
 		}
 
 		public void AddActiveCreature(Creature creature)

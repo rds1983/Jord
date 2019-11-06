@@ -74,6 +74,60 @@ namespace Wanderers.UI
 		{
 		}
 
+		private void RenderNpc(RenderContext context, Point pos, NonPlayer npc)
+		{
+			var tileSize = TileSize;
+
+			if (npc.Info.IsMerchant)
+			{
+				var screen = GameToScreen(new Vector2(pos.X, pos.Y - 0.5f));
+
+				var opacity = 1.0f;
+
+				var now = DateTime.Now;
+				if (_lastStamp == null || (now - _lastStamp.Value).TotalMilliseconds >= SignPeriodInMs * 2)
+				{
+					_lastStamp = now;
+				}
+				else
+				{
+					var passed = (now - _lastStamp.Value).TotalMilliseconds;
+					if (passed >= SignPeriodInMs * 2)
+					{
+						_lastStamp = now;
+					}
+					else if (passed >= SignPeriodInMs)
+					{
+						opacity = 0.5f + 0.5f * (float)(passed - SignPeriodInMs) / SignPeriodInMs;
+					}
+					else
+					{
+						opacity = 1.0f - 0.5f * (float)(passed) / SignPeriodInMs;
+					}
+				}
+
+				Appearance.MerchantSign.Draw(context.Batch, SmallFont, new Rectangle(screen.X, screen.Y,
+					tileSize.X, tileSize.Y), opacity);
+			}
+
+			if (npc.Stats.Life.MaximumHP != 0 &&
+				npc.Stats.Life.CurrentHP < npc.Stats.Life.MaximumHP)
+			{
+				var topLeft = GameToScreen(new Vector2(npc.DisplayPosition.X + 0.2f, npc.DisplayPosition.Y + 1.0f));
+				var bottomRight = GameToScreen(new Vector2(npc.DisplayPosition.X + 0.8f, npc.DisplayPosition.Y + 1.2f));
+
+				var size = bottomRight - topLeft;
+
+				var hpWidth = npc.Stats.Life.CurrentHP * size.X / npc.Stats.Life.MaximumHP;
+
+				// Red background
+				context.FillRectangle(new Rectangle(topLeft, size), Color.Red);
+
+				// Green hps
+				context.FillRectangle(new Rectangle(topLeft, new Point(hpWidth, size.Y)), Color.Green);
+			}
+		}
+
 		public override void InternalRender(RenderContext context)
 		{
 			base.InternalRender(context);
@@ -108,49 +162,22 @@ namespace Wanderers.UI
 
 					var screen = GameToScreen(pos);
 
+					var opacity = 1.0f;
 					var appearance = tile.Info.Image;
 					if (tile.Creature != null)
 					{
 						screen = GameToScreen(tile.Creature.DisplayPosition);
 						appearance = tile.Creature.Image;
+						opacity = tile.Creature.Opacity;
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
-					appearance.Draw(context.Batch, Font, rect);
+					appearance.Draw(context.Batch, Font, rect, opacity);
 
 					var asNpc = tile.Creature as NonPlayer;
 					if (asNpc != null)
 					{
-						if (asNpc.Info.IsMerchant)
-						{
-							screen = GameToScreen(new Vector2(pos.X, pos.Y - 0.5f));
-
-							var opacity = 1.0f;
-
-							var now = DateTime.Now;
-							if (_lastStamp == null || (now - _lastStamp.Value).TotalMilliseconds >= SignPeriodInMs * 2)
-							{
-								_lastStamp = now;
-							}
-							else
-							{
-								var passed = (now - _lastStamp.Value).TotalMilliseconds;
-								if (passed >= SignPeriodInMs * 2)
-								{
-									_lastStamp = now;
-								}
-								else if (passed >= SignPeriodInMs)
-								{
-									opacity = 0.5f + 0.5f * (float)(passed - SignPeriodInMs) / SignPeriodInMs;
-								}
-								else
-								{
-									opacity = 1.0f - 0.5f * (float)(passed) / SignPeriodInMs;
-								}
-							}
-
-							Appearance.MerchantSign.Draw(context.Batch, SmallFont, new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y), opacity);
-						}
+						RenderNpc(context, pos, asNpc);
 					}
 				}
 			}

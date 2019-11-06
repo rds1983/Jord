@@ -22,7 +22,6 @@ namespace Wanderers.Core
 			get; private set;
 		}
 
-
 		public Appearance(char symbol, Color color)
 		{
 			_symbol = symbol.ToString();

@@ -1,5 +1,5 @@
 <Project>
-  <Project.ExportOptions Namespace="Wanderers.UI" Class="GameView" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="GameView" OutputPath="D:\Projects\TroublesOfJord\src\Wanderers.Game\UI" />
   <HorizontalStackPanel>
     <HorizontalStackPanel.Proportions>
       <Proportion Type="Part" Value="2" />
@@ -21,7 +21,7 @@
         <VerticalSeparator />
         <Label Text="M: 50/100" Id="_labelMana" HorizontalAlignment="Center" />
         <VerticalSeparator />
-        <Label Text="E: 50/100" Id="_labelEnergy" HorizontalAlignment="Center" />
+        <Label Text="E: 50/100" Id="_labelStamina" HorizontalAlignment="Center" />
       </HorizontalStackPanel>
       <HorizontalSeparator />
       <Panel Id="_mapContainer" Height="247" />

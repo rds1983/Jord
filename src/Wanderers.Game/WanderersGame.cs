@@ -100,12 +100,36 @@ namespace Wanderers
 
 		public void Play(int slotIndex)
 		{
+			if (TJ.Player != null)
+			{
+				TJ.Player.Stats.Life.Changed -= Life_Changed;
+			}
+
 			TJ.Session = new GameSession(slotIndex);
+
+			TJ.Player.Stats.Life.Changed += Life_Changed;
 
 			SwitchTo<GameView>();
 
 			var gameView = (GameView)Desktop.Widgets[0];
 			gameView.Desktop.FocusedKeyboardWidget = gameView;
+
+			UpdateStats();
+		}
+
+		private void UpdateStats()
+		{
+			var gameView = (GameView)Desktop.Widgets[0];
+
+			var life = TJ.Player.Stats.Life;
+			gameView._labelHp.Text = string.Format("H: {0}/{1}", life.CurrentHP, life.MaximumHP);
+			gameView._labelMana.Text = string.Format("M: {0}/{1}", life.CurrentMana, life.MaximumMana);
+			gameView._labelStamina.Text = string.Format("S: {0}/{1}", life.CurrentStamina, life.MaximumStamina);
+		}
+
+		private void Life_Changed(object sender, System.EventArgs e)
+		{
+			UpdateStats();
 		}
 
 		protected override void Update(GameTime gameTime)

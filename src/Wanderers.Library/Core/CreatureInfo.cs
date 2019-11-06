@@ -29,6 +29,9 @@ namespace Wanderers.Core
 		[OptionalField]
 		public int HitRoll;
 
+		[OptionalField]
+		public int MaxHp, MaxMana, MaxStamina;
+
 		public CreatureInfo()
 		{
 			Inventory = new Inventory();

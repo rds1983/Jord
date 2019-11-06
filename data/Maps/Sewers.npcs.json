@@ -16,8 +16,9 @@
                     "Delay": 3000
                 }
             ],
-            ArmorClass: 14,
-            HitRoll: 1
+            ArmorClass: 5,
+            HitRoll: 1,
+            MaxHp: 50
 		}
 	}
 }

@@ -5,17 +5,17 @@ namespace Wanderers.Core
 	public class NonPlayer : Creature
 	{
 		private bool _dirty = true;
-		private readonly BattleStats _battleStats = new BattleStats();
+		private readonly CreatureStats _stats = new CreatureStats();
 
 		public override Appearance Image => Info.Image;
 		public CreatureInfo Info { get; }
 
-		public override BattleStats BattleStats
+		public override CreatureStats Stats
 		{
 			get
 			{
 				Update();
-				return _battleStats;
+				return _stats;
 			}
 		}
 
@@ -34,6 +34,8 @@ namespace Wanderers.Core
 			{
 				Inventory.Items.Add(itemPile.Clone());
 			}
+
+			Stats.Life.Restore();
 		}
 
 		private void Update()
@@ -43,9 +45,15 @@ namespace Wanderers.Core
 				return;
 			}
 
-			_battleStats.Attacks = Info.Attacks.ToArray();
-			_battleStats.ArmorClass = Info.ArmorClass;
-			_battleStats.HitRoll = Info.HitRoll;
+			var lifeStats = _stats.Life;
+			lifeStats.MaximumHP = Info.MaxHp;
+			lifeStats.MaximumMana = Info.MaxMana;
+			lifeStats.MaximumStamina = Info.MaxStamina;
+
+			var battleStats = _stats.Battle;
+			battleStats.Attacks = Info.Attacks.ToArray();
+			battleStats.ArmorClass = Info.ArmorClass;
+			battleStats.HitRoll = Info.HitRoll;
 
 			_dirty = false;
 		}
