@@ -8,8 +8,7 @@ namespace Wanderers.Core
 	{
 		Idle,
 		Moving,
-		Fighting,
-		Dying
+		Fighting
 	}
 
 	public abstract partial class Creature
@@ -148,8 +147,7 @@ namespace Wanderers.Core
 
 			return tile.Info.Passable &&
 				   (tile.Creature == null ||
-					tile.Creature == this ||
-					tile.Creature.State == CreatureState.Dying);
+					tile.Creature == this);
 		}
 
 		public void Place(Map map, Point position)
@@ -198,9 +196,6 @@ namespace Wanderers.Core
 					break;
 				case CreatureState.Fighting:
 					ProcessFighting();
-					break;
-				case CreatureState.Dying:
-					ProcessDying();
 					break;
 			}
 		}

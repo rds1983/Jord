@@ -14,7 +14,51 @@ namespace Wanderers.Core
 		private const int DyingTransparentPeriodInMs = 1000;
 
 		private DateTime? _attackStart;
+		private AttackInfo _currentAttack;
 		private int _currentAttackIndex;
+
+		private void ProcessAttack()
+		{
+			if (_currentAttack == null)
+			{
+				return;
+			}
+
+			var battleStats = Stats.Battle;
+
+			var attackRoll = MathUtils.RollD20() + battleStats.HitRoll;
+			var damage = MathUtils.Random.Next(_currentAttack.MinDamage, _currentAttack.MaxDamage + 1);
+
+			if (attackRoll < AttackTarget.Stats.Battle.ArmorClass || damage <= 0)
+			{
+				// Miss
+				var message = AttackInfo.GetMissMessage(attackRoll, Name, AttackTarget.Name, _currentAttack.AttackType);
+				TJ.GameLog(message);
+			}
+			else
+			{
+				AttackTarget.Stats.Life.CurrentHP -= damage;
+
+				if (AttackTarget.Stats.Life.CurrentHP > 0)
+				{
+					var message = AttackInfo.GetAttackMessage(attackRoll, damage, Name, AttackTarget.Name, _currentAttack.AttackType);
+					TJ.GameLog(message);
+				}
+				else if (AttackTarget is NonPlayer)
+				{
+					var message = AttackInfo.GetNpcDeathMessage(AttackTarget.Name);
+					TJ.GameLog(message);
+
+					// Death
+					AttackTarget.Remove();
+
+					// End fight
+					State = CreatureState.Idle;
+				}
+			}
+
+			_currentAttack = null;
+		}
 
 		private void ProcessFighting()
 		{
@@ -32,7 +76,6 @@ namespace Wanderers.Core
 				return;
 			}
 
-			var endFighting = false;
 			var now = DateTime.Now;
 			var span = now - _actionStart;
 			if (span.TotalMilliseconds >= AttackDelayInMs)
@@ -45,41 +88,10 @@ namespace Wanderers.Core
 					_currentAttackIndex = 0;
 				}
 
-				var attack = attacks[_currentAttackIndex];
-
-				var attackRoll = MathUtils.RollD20() + battleStats.HitRoll;
-				var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
-
-				if (attackRoll < AttackTarget.Stats.Battle.ArmorClass || damage <= 0)
-				{
-					// Miss
-					var message = AttackInfo.GetMissMessage(attackRoll, Name, AttackTarget.Name, attack.AttackType);
-					TJ.GameLog(message);
-				}
-				else
-				{
-					AttackTarget.Stats.Life.CurrentHP -= damage;
-
-					if (AttackTarget.Stats.Life.CurrentHP > 0)
-					{
-						var message = AttackInfo.GetAttackMessage(attackRoll, damage, Name, AttackTarget.Name, attack.AttackType);
-						TJ.GameLog(message);
-					} else if (AttackTarget is NonPlayer)
-					{
-						var message = AttackInfo.GetNpcDeathMessage(AttackTarget.Name);
-						TJ.GameLog(message);
-
-						// Death
-						AttackTarget.State = CreatureState.Dying;
-
-						// End fighting
-						endFighting = true;
-					}
-				}
+				_currentAttack = attacks[_currentAttackIndex];
 
 				++_currentAttackIndex;
-
-				AttackDelayInMs = attack.Delay;
+				AttackDelayInMs = _currentAttack.Delay;
 			}
 
 			if (_attackStart != null)
@@ -96,6 +108,8 @@ namespace Wanderers.Core
 				}
 				else if (span.TotalMilliseconds < TwoAttackMoveInMs)
 				{
+					ProcessAttack();
+
 					// Second phase
 					var f = (TwoAttackMoveInMs - (float)span.TotalMilliseconds);
 					DisplayPosition = new Vector2(
@@ -104,14 +118,12 @@ namespace Wanderers.Core
 				}
 				else
 				{
+					ProcessAttack();
+
 					_attackStart = null;
 				}
 			}
 
-			if (endFighting)
-			{
-				State = CreatureState.Idle;
-			}
 		}
 
 		private bool IsAttackable(Creature target)
@@ -148,27 +160,6 @@ namespace Wanderers.Core
 			TJ.GameLog("{0} attacked {1}...", Name, target.Name);
 
 			return true;
-		}
-
-		private void ProcessDying()
-		{
-			var passed = (DateTime.Now - _actionStart).TotalMilliseconds;
-			if (passed < DyingOpaquePeriodInMs)
-			{
-				// Do nothing
-				return;
-			}
-
-			passed -= DyingOpaquePeriodInMs;
-			if (passed < DyingTransparentPeriodInMs)
-			{
-				// Update opacity
-				Opacity = (float)(DyingTransparentPeriodInMs - passed) / DyingTransparentPeriodInMs;
-				return;
-			}
-
-			// Remove
-			Remove();
 		}
 	}
 }
