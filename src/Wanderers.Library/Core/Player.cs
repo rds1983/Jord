@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Wanderers.Core.Items;
+using Wanderers.Core.Skills;
 
 namespace Wanderers.Core
 {
@@ -8,6 +9,7 @@ namespace Wanderers.Core
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
+		private IUsableAbility[] _usableAbilities = null;
 
 		private readonly Appearance _playerAppearance = new Appearance('@', Color.White);
 		private bool _dirty = true;
@@ -22,6 +24,22 @@ namespace Wanderers.Core
 			{
 				Update();
 				return _stats;
+			}
+		}
+
+		public IUsableAbility[] UsableAbilities
+		{
+			get
+			{
+				if (_usableAbilities == null)
+				{
+					_usableAbilities = new IUsableAbility[]
+					{
+						new Kick()
+					};
+				}
+
+				return _usableAbilities;
 			}
 		}
 

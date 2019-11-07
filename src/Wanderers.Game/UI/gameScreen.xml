@@ -1,12 +1,20 @@
 <Project>
-  <Project.ExportOptions Namespace="Wanderers.UI" Class="GameView" OutputPath="D:\Projects\TroublesOfJord\src\Wanderers.Game\UI" />
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="GameView" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
   <HorizontalStackPanel>
     <HorizontalStackPanel.Proportions>
       <Proportion Type="Part" Value="2" />
       <Proportion Type="Auto" />
       <Proportion Type="Part" />
     </HorizontalStackPanel.Proportions>
-    <Panel Id="_mapViewContainer" />
+    <VerticalStackPanel>
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
+      <Panel Id="_mapViewContainer" />
+      <HorizontalSeparator />
+      <HorizontalStackPanel HorizontalAlignment="Center" Id="_skillsContainer" Height="60" />
+      <HorizontalSeparator />
+    </VerticalStackPanel>
     <VerticalSeparator />
     <VerticalStackPanel>
       <HorizontalStackPanel>

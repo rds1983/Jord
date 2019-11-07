@@ -1,0 +1,16 @@
+<Project>
+  <Project.ExportOptions Namespace="Wanderers.UI" Class="SkillWidget" OutputPath="D:\Projects\Wanderers\src\Wanderers.Game\UI" />
+  <Grid ColumnSpacing="4" RowSpacing="4">
+    <Grid.ColumnsProportions>
+      <Proportion Type="Auto" />
+      <Proportion Type="Fill" />
+    </Grid.ColumnsProportions>
+    <Grid.RowsProportions>
+      <Proportion Type="Auto" />
+      <Proportion Type="Fill" />
+    </Grid.RowsProportions>
+    <Label Text="5" Id="_labelIndex" />
+    <CheckBox Text="" Id="_checkBoxAuto" HorizontalAlignment="Center" GridColumn="1" />
+    <TextButton Text="Kick" Id="_buttonSkill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" GridRow="1" GridColumnSpan="2" />
+  </Grid>
+</Project>
