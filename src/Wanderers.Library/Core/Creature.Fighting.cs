@@ -16,6 +16,7 @@ namespace Wanderers.Core
 		private DateTime? _attackStart;
 		private AttackInfo _currentAttack;
 		private int _currentAttackIndex;
+		private bool _endFighting = false;
 
 		private void ProcessAttack()
 		{
@@ -53,7 +54,7 @@ namespace Wanderers.Core
 					AttackTarget.Remove();
 
 					// End fight
-					State = CreatureState.Idle;
+					_endFighting = true;
 				}
 			}
 
@@ -121,6 +122,12 @@ namespace Wanderers.Core
 					ProcessAttack();
 
 					_attackStart = null;
+
+					if (_endFighting)
+					{
+						State = CreatureState.Idle;
+						_endFighting = false;
+					}
 				}
 			}
 
