@@ -86,7 +86,7 @@ namespace Wanderers.UI
 					WanderersGame.Instance.Play(slotIndex);
 				};
 
-				dlg.ShowModal(Desktop);
+				dlg.ShowModal();
 				Desktop.FocusedKeyboardWidget = dlg._textName;
 			}
 			else

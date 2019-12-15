@@ -98,7 +98,7 @@ namespace Wanderers.UI
 					finished = () =>
 					{
 						var dialog = new TradeDialog(TJ.Session.Player, tile.Creature);
-						dialog.ShowModal(Desktop);
+						dialog.ShowModal();
 					};
 				}
 			}

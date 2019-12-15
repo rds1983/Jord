@@ -19,7 +19,6 @@ namespace Wanderers.MapEditor
 	{
 		private readonly GraphicsDeviceManager _graphics;
 		private readonly State _state;
-		private Desktop _desktop;
 		private Grid _statisticsGrid;
 		private Label _gcMemoryLabel;
 		private Label _fpsLabel;
@@ -153,34 +152,32 @@ namespace Wanderers.MapEditor
 
 		private void BuildUI()
 		{
-			_desktop = new Desktop();
-
-			_desktop.KeyDown += (s, a) =>
+			Desktop.KeyDown += (s, a) =>
 			{
-				if (_desktop.HasModalWindow || UI._mainMenu.IsOpen)
+				if (Desktop.HasModalWidget || UI._mainMenu.IsOpen)
 				{
 					return;
 				}
 
-				if (_desktop.DownKeys.Contains(Keys.LeftControl) || _desktop.DownKeys.Contains(Keys.RightControl))
+				if (Desktop.DownKeys.Contains(Keys.LeftControl) || Desktop.DownKeys.Contains(Keys.RightControl))
 				{
-					if (_desktop.DownKeys.Contains(Keys.O))
+					if (Desktop.DownKeys.Contains(Keys.O))
 					{
 						OpenProjectItemOnClicked(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.W))
+					else if (Desktop.DownKeys.Contains(Keys.W))
 					{
 						OnSwitchMapMenuItemSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.N))
+					else if (Desktop.DownKeys.Contains(Keys.N))
 					{
 						OnNewMapSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.S))
+					else if (Desktop.DownKeys.Contains(Keys.S))
 					{
 						SaveMapSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.Q))
+					else if (Desktop.DownKeys.Contains(Keys.Q))
 					{
 						Exit();
 					}
@@ -210,7 +207,7 @@ namespace Wanderers.MapEditor
 				UI._textPosition.Text = pos == null ? string.Empty : string.Format("X = {0}, Y = {1}", pos.Value.X, pos.Value.Y);
 			};
 
-			_desktop.Widgets.Add(UI);
+			Desktop.Widgets.Add(UI);
 
 			UI._topSplitPane.SetSplitterPosition(0, _state != null ? _state.TopSplitterPosition : 0.75f);
 
@@ -250,7 +247,7 @@ namespace Wanderers.MapEditor
 			_statisticsGrid.VerticalAlignment = VerticalAlignment.Bottom;
 			_statisticsGrid.Left = 10;
 			_statisticsGrid.Top = -10;
-			_desktop.Widgets.Add(_statisticsGrid);
+			Desktop.Widgets.Add(_statisticsGrid);
 
 			UpdateMenuFile();
 		}
@@ -286,7 +283,7 @@ namespace Wanderers.MapEditor
 				}
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 		private void OnNewMapSelected(object sender, EventArgs e)
@@ -330,7 +327,7 @@ namespace Wanderers.MapEditor
 				}
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 		private static void SetMessageBoxText(Dialog dlg, string newText)
@@ -439,7 +436,7 @@ namespace Wanderers.MapEditor
 				IsDirty = false;
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}*/
 
 		private void SaveMapAsSelected(object sender, EventArgs e)
@@ -486,7 +483,7 @@ namespace Wanderers.MapEditor
 				}
 			};
 
-			dlg.ShowModal(_desktop);*/
+			dlg.ShowModal();*/
 		}
 
 		private void OnComboTypesIndexChanged(object sender, EventArgs e)
@@ -496,13 +493,13 @@ namespace Wanderers.MapEditor
 
 		private void DebugOptionsItemOnSelected(object sender1, EventArgs eventArgs)
 		{
-			var dlg = new DebugOptionsDialog();
+			var dlg = new DebugOptionsWindow();
 
 			dlg.AddOption("Show debug info",
 						() => { ShowDebugInfo = true; },
 						() => { ShowDebugInfo = false; });
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 
@@ -514,7 +511,7 @@ namespace Wanderers.MapEditor
 		private void AboutItemOnClicked(object sender, EventArgs eventArgs)
 		{
 			var dialog = Dialog.CreateMessageBox("About", "Wanderers Studio " + TJ.Version);
-			dialog.ShowModal(_desktop);
+			dialog.ShowModal();
 		}
 
 		private void SaveMapSelected(object sender, EventArgs eventArgs)
@@ -537,7 +534,7 @@ namespace Wanderers.MapEditor
 				SetMap(map.Id);
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 		private void OpenProjectItemOnClicked(object sender, EventArgs eventArgs)
@@ -569,7 +566,7 @@ namespace Wanderers.MapEditor
 				LoadModule(filePath);
 			};
 
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -578,11 +575,11 @@ namespace Wanderers.MapEditor
 
 			_gcMemoryLabel.Text = string.Format("GC Memory: {0} kb", GC.GetTotalMemory(false) / 1024);
 //			_fpsLabel.Text = string.Format("FPS: {0:0.##}", _fpsCounter.FramesPerSecond);
-			_widgetsCountLabel.Text = string.Format("Total Widgets: {0}", _desktop.CalculateTotalWidgets(true));
+			_widgetsCountLabel.Text = string.Format("Total Widgets: {0}", Desktop.CalculateTotalWidgets(true));
 
 			GraphicsDevice.Clear(Color.Black);
 
-			_desktop.Render();
+			Desktop.Render();
 
 //			_fpsCounter.Draw(gameTime);
 		}
@@ -628,7 +625,7 @@ namespace Wanderers.MapEditor
 					dlg.FilePath = filePath;
 				}
 
-				dlg.ShowModal(_desktop);
+				dlg.ShowModal();
 
 				dlg.Closed += (s, a) =>
 				{
@@ -738,7 +735,7 @@ namespace Wanderers.MapEditor
 		private void ReportError(string message)
 		{
 			Dialog dlg = Dialog.CreateMessageBox("Error", message);
-			dlg.ShowModal(_desktop);
+			dlg.ShowModal();
 		}
 
 		private void UpdateTitle()

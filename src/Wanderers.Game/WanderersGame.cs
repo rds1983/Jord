@@ -14,27 +14,15 @@ namespace Wanderers
 	public class WanderersGame : Game
 	{
 		private const string DataPath = "data";
-
-		private static WanderersGame _instance;
-
 		private readonly GraphicsDeviceManager _graphics;
-		internal Desktop _desktop;
 
-		public static WanderersGame Instance
-		{
-			get { return _instance; }
-		}
-
-		public Desktop Desktop
-		{
-			get { return _desktop; }
-		}
+		public static WanderersGame Instance { get; private set; }
 
 		public int? StartGameIndex;
 
 		public WanderersGame()
 		{
-			_instance = this;
+			Instance = this;
 
 			_graphics = new GraphicsDeviceManager(this)
 			{
@@ -48,7 +36,7 @@ namespace Wanderers
 
 			TJ.GameLogHandler = message =>
 			{
-				var asGameView = _desktop.Widgets[0] as GameView;
+				var asGameView = Desktop.Widgets[0] as GameView;
 				if (asGameView == null)
 				{
 					return;
@@ -68,8 +56,6 @@ namespace Wanderers
 			MyraEnvironment.DrawFocusedWidgetFrame = true;
 			MyraEnvironment.DrawWidgetsFrames = true;*/
 
-			_desktop = new Desktop();
-
 			CompilerParams.Verbose = true;
 
 			var compiler = new Compiler();
@@ -86,9 +72,9 @@ namespace Wanderers
 
 		private T SwitchTo<T>() where T : Widget, new()
 		{
-			_desktop.Widgets.Clear();
+			Desktop.Widgets.Clear();
 			var widget = new T();
-			_desktop.Widgets.Add(widget);
+			Desktop.Widgets.Add(widget);
 
 			return widget;
 		}
@@ -112,7 +98,7 @@ namespace Wanderers
 			SwitchTo<GameView>();
 
 			var gameView = (GameView)Desktop.Widgets[0];
-			gameView.Desktop.FocusedKeyboardWidget = gameView;
+			Desktop.FocusedKeyboardWidget = gameView;
 
 			UpdateStats();
 		}
@@ -156,7 +142,7 @@ namespace Wanderers
 
 			GraphicsDevice.Clear(Color.Black);
 
-			_desktop.Render();
+			Desktop.Render();
 		}
 
 		protected override void EndRun()

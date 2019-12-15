@@ -10,6 +10,7 @@ using Module = Wanderers.Core.Module;
 using Wanderers.Core.Items;
 using Wanderers.Compiling.Loaders;
 using Wanderers.Generation;
+using Myra;
 
 namespace Wanderers.Compiling
 {

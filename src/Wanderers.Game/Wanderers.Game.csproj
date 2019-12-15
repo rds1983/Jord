@@ -14,7 +14,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Myra" Version="0.9.6.184" />
+    <PackageReference Include="Myra" Version="0.9.7.185" />
   </ItemGroup>  
   
   <ItemGroup>

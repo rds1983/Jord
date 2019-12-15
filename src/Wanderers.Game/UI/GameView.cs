@@ -86,7 +86,7 @@ namespace Wanderers.UI
 			if (k == Keys.I)
 			{
 				var inventoryWindow = new InventoryWindow();
-				inventoryWindow.ShowModal(Desktop);
+				inventoryWindow.ShowModal();
 			}
 
 			if (k == Keys.E)
