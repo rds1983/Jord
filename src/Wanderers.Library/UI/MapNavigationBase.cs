@@ -5,8 +5,6 @@ using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Myra;
 using System;
-using System.Xml.Serialization;
-using System.ComponentModel;
 using Wanderers.Utils;
 
 namespace Wanderers.UI

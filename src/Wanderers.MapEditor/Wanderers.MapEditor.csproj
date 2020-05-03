@@ -6,12 +6,7 @@
     <AssemblyName>Wanderers.MapEditor</AssemblyName>
     <RootNamespace>Wanderers</RootNamespace>
 	<TargetFramework>net45</TargetFramework>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
-    <PackageReference Include="Myra" Version="0.9.7.185" />
-  </ItemGroup>  
+  </PropertyGroup>  
 
   <ItemGroup>
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />

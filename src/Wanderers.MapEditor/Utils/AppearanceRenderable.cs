@@ -6,7 +6,7 @@ using Wanderers.Core;
 
 namespace Wanderers.Utils
 {
-	public class AppearanceRenderable : IRenderable
+	public class AppearanceRenderable : IImage
 	{
 		private Point? _size;
 		private SpriteFont _font;
@@ -54,7 +54,6 @@ namespace Wanderers.Utils
 
 			_appearance = appearance;
 		}
-
 
 		public void Draw(SpriteBatch batch, Rectangle dest, Color color)
 		{

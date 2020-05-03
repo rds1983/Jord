@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Input;
+using Myra.Extended.Widgets;
 using Myra.Graphics2D.UI;
 using System;
 using Wanderers.Core;

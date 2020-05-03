@@ -43,7 +43,7 @@ namespace Wanderers.Compiling
 		private static Color ParseColor(JToken source)
 		{
 			var s = source.ToString();
-			var c = s.FromName();
+			var c = ColorStorage.FromName(s);
 			if (c == null)
 			{
 				throw new Exception(string.Format("Could not parse color '{0}'", s));

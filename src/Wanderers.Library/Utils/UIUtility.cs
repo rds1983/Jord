@@ -7,8 +7,8 @@ namespace Wanderers.Utils
 	{
 		public static void SetGridStyle(this Grid grid)
 		{
-			grid.SelectionBackground = DefaultAssets.UISpritesheet["tree-selection"];
-			grid.SelectionHoverBackground = DefaultAssets.UISpritesheet["button-over"];
+			grid.SelectionBackground = DefaultAssets.UITextureRegionAtlas["tree-selection"];
+			grid.SelectionHoverBackground = DefaultAssets.UITextureRegionAtlas["button-over"];
 		}
 	}
 }

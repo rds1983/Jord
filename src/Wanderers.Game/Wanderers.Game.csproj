@@ -9,12 +9,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
     <ProjectReference Include="..\Wanderers.Library\Wanderers.Library.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Myra" Version="0.9.7.185" />
   </ItemGroup>  
   
   <ItemGroup>
@@ -29,6 +24,10 @@
     <None Include="..\..\data\**\*.*" LinkBase="data">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>  
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Myra.Extended" Version="1.0.0.1" />
   </ItemGroup>
   
   <ItemGroup>
