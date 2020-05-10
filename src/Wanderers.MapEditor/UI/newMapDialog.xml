@@ -1,9 +1,0 @@
-<Project>
-  <Project.ExportOptions Namespace="Wanderers.MapEditor.UI" Class="NewMapDialog" OutputPath="D:/Projects/Wanderers/src/Wanderers.MapEditor/UI" />
-  <Dialog Title="New Map" Left="467" Top="191">
-    <VerticalStackPanel>
-      <RadioButton Text="Single Tile Map" Id="_radioSingleTileMap" />
-      <RadioButton Text="Generated Map" Id="_radioGeneratedMap" />
-    </VerticalStackPanel>
-  </Dialog>
-</Project>

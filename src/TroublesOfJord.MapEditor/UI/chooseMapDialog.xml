@@ -1,0 +1,6 @@
+<Project>
+  <Project.ExportOptions Namespace="TroublesOfJord.MapEditor.UI" Class="ChooseMapDialog" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.MapEditor\UI" />
+  <Dialog Title="Choose Map" Left="424" Top="62">
+    <ListBox Id="_listMaps" Width="200" Height="300" />
+  </Dialog>
+</Project>

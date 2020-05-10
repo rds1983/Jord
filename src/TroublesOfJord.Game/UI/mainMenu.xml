@@ -1,0 +1,11 @@
+<Project>
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="MainMenu" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
+  <Grid Id="Root">
+    <Label Text="Troubles of Jord" TextColor="#FF8040FF" HorizontalAlignment="Center" />
+    <VerticalMenu HorizontalAlignment="Center" VerticalAlignment="Center" Id="_mainMenu" Width="200">
+      <MenuItem Id="_playItem" Text="Play" />
+      <MenuItem Id="_quitMenuItem" Text="Quit" />
+    </VerticalMenu>
+    <Label Text="Version 1.0" TextColor="#00FF00FF" Id="_textVersion" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+  </Grid>
+</Project>

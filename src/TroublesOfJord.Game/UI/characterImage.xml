@@ -1,0 +1,22 @@
+<Project>
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="CharacterImage" OutputPath="D:/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
+  <Grid ShowGridLines="True" RowSpacing="4" HorizontalAlignment="Left" VerticalAlignment="Top" Id="Root" Width="200" Height="300">
+    <Grid.RowsProportions>
+      <Proportion Type="Auto" />
+      <Proportion Type="Fill" Value="6" />
+      <Proportion Type="Auto" />
+    </Grid.RowsProportions>
+    <Label Text="Henry" Wrap="True" Id="_textName" />
+    <Grid RowSpacing="4" GridRow="2">
+      <Grid.DefaultRowProportion Type="Auto" />
+      <Grid.ColumnsProportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </Grid.ColumnsProportions>
+      <Label Text="HP:" Wrap="True" />
+      <Label Text="IP:" Wrap="True" Id="" GridRow="1" />
+      <Label Text="100/100" Wrap="True" Id="_textHP" HorizontalAlignment="Center" GridColumn="1" />
+      <Label Text="100/100" Wrap="True" Id="_textIP" HorizontalAlignment="Center" GridColumn="1" GridRow="1" />
+    </Grid>
+  </Grid>
+</Project>

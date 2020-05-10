@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFramework>net45</TargetFramework>
+    <AssemblyName>TroublesOfJord.Generator</AssemblyName>
+    <RootNamespace>TroublesOfJord.Generator</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.Portable" PrivateAssets="All" Version="3.6.0.1625" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TroublesOfJord.Library\TroublesOfJord.Library.csproj" />
+  </ItemGroup>
+</Project>

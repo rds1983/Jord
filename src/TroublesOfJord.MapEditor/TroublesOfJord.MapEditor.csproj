@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon />
+    <StartupObject />
+    <AssemblyName>TroublesOfJord.MapEditor</AssemblyName>
+    <RootNamespace>TroublesOfJord</RootNamespace>
+	<TargetFramework>net45</TargetFramework>
+  </PropertyGroup>  
+
+  <ItemGroup>
+    <ProjectReference Include="..\TroublesOfJord.Library\TroublesOfJord.Library.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,40 @@
+<Project>
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="GameView" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
+  <HorizontalStackPanel>
+    <HorizontalStackPanel.Proportions>
+      <Proportion Type="Part" Value="2" />
+      <Proportion Type="Auto" />
+      <Proportion Type="Part" />
+    </HorizontalStackPanel.Proportions>
+    <VerticalStackPanel>
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
+      <Panel Id="_mapViewContainer" />
+      <HorizontalSeparator />
+      <HorizontalStackPanel HorizontalAlignment="Center" Id="_skillsContainer" Height="60" />
+      <HorizontalSeparator />
+    </VerticalStackPanel>
+    <VerticalSeparator />
+    <VerticalStackPanel>
+      <HorizontalStackPanel>
+        <HorizontalStackPanel.Proportions>
+          <Proportion Type="Part" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Part" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Part" />
+        </HorizontalStackPanel.Proportions>
+        <Label Text="H: 50/100" Id="_labelHp" HorizontalAlignment="Center" />
+        <VerticalSeparator />
+        <Label Text="M: 50/100" Id="_labelMana" HorizontalAlignment="Center" />
+        <VerticalSeparator />
+        <Label Text="E: 50/100" Id="_labelStamina" HorizontalAlignment="Center" />
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <Panel Id="_mapContainer" Height="247" />
+      <HorizontalSeparator />
+      <Panel Id="_logContainer" />
+    </VerticalStackPanel>
+  </HorizontalStackPanel>
+</Project>
