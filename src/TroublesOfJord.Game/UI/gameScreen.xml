@@ -1,5 +1,5 @@
 <Project>
-  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="GameView" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="GameView" OutputPath="C:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
   <HorizontalStackPanel>
     <HorizontalStackPanel.Proportions>
       <Proportion Type="Part" Value="2" />
@@ -12,11 +12,18 @@
       </VerticalStackPanel.Proportions>
       <Panel Id="_mapViewContainer" />
       <HorizontalSeparator />
-      <HorizontalStackPanel HorizontalAlignment="Center" Id="_skillsContainer" Height="60" />
+      <HorizontalStackPanel HorizontalAlignment="Center" Height="60" Id="_skillsContainer" />
       <HorizontalSeparator />
     </VerticalStackPanel>
     <VerticalSeparator />
     <VerticalStackPanel>
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Auto" />
+        <Proportion Type="Auto" />
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
       <HorizontalStackPanel>
         <HorizontalStackPanel.Proportions>
           <Proportion Type="Part" />
@@ -25,14 +32,14 @@
           <Proportion Type="Auto" />
           <Proportion Type="Part" />
         </HorizontalStackPanel.Proportions>
-        <Label Text="H: 50/100" Id="_labelHp" HorizontalAlignment="Center" />
+        <Label Text="H: 50/100" HorizontalAlignment="Center" Id="_labelHp" />
         <VerticalSeparator />
-        <Label Text="M: 50/100" Id="_labelMana" HorizontalAlignment="Center" />
+        <Label Text="M: 50/100" HorizontalAlignment="Center" Id="_labelMana" />
         <VerticalSeparator />
-        <Label Text="E: 50/100" Id="_labelStamina" HorizontalAlignment="Center" />
+        <Label Text="E: 50/100" HorizontalAlignment="Center" Id="_labelStamina" />
       </HorizontalStackPanel>
       <HorizontalSeparator />
-      <Panel Id="_mapContainer" Height="247" />
+      <Panel Height="247" Id="_mapContainer" />
       <HorizontalSeparator />
       <Panel Id="_logContainer" />
     </VerticalStackPanel>
