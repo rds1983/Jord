@@ -3,6 +3,7 @@ using System.Reflection;
 using TroublesOfJord.Core;
 using TroublesOfJord.Storage;
 using TroublesOfJord.Utils;
+using XNAssets;
 using Module = TroublesOfJord.Core.Module;
 
 namespace TroublesOfJord
@@ -15,6 +16,8 @@ namespace TroublesOfJord
 		public static Action<string> WarnLogHandler = Console.WriteLine;
 		public static Action<string> ErrorLogHandler = Console.WriteLine;
 		public static Action<string> GameLogHandler = Console.WriteLine;
+
+		public static AssetManager AssetManager;
 
 		public static Module Module { get; set; }
 

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using TroublesOfJord.Core;
+using XNAssets;
 
 namespace TroublesOfJord
 {
@@ -57,6 +58,9 @@ namespace TroublesOfJord
 			MyraEnvironment.DrawWidgetsFrames = true;*/
 
 			CompilerParams.Verbose = true;
+
+			var dataPath = Path.Combine(Files.ExecutableFolder, DataPath);
+			TJ.AssetManager = new AssetManager(GraphicsDevice, new FileAssetResolver(dataPath));
 
 			var compiler = new Compiler();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));

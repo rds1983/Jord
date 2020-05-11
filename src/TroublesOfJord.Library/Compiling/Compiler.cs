@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using TroublesOfJord.Core;
 using Microsoft.Xna.Framework;
-using Myra.Utility;
 using Newtonsoft.Json.Linq;
 using Module = TroublesOfJord.Core.Module;
 using TroublesOfJord.Core.Items;
@@ -21,16 +20,9 @@ namespace TroublesOfJord.Compiling
 		private readonly CompilerContext _context = new CompilerContext();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
 
-		private MapLoader MapLoader
-		{
-			get
-			{
-				return (MapLoader)_loaders[typeof(Map)];
-			}
-		}
-
 		public Compiler()
 		{
+			_loaders[typeof(TileSet)] = new TileSetLoader();
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(MapTemplate)] = new MapTemplateLoader();
 			_loaders[typeof(TileInfo)] = new Loader<TileInfo>("TileInfos");
@@ -97,6 +89,27 @@ namespace TroublesOfJord.Compiling
 								TJ.LogInfo("Parsed color '{0}': '{1}'", pair2.Key, c.ToString());
 							}
 						}
+
+						continue;
+					}
+					else if (key == CompilerUtils.TileSetName)
+					{
+						// Another special case
+						if (json.Count > 1)
+						{
+							throw new Exception(string.Format("Tileset file can have only one tileset entry. Source: '{0}'", s));
+						}
+
+						var obj = (JObject)pair.Value;
+						JToken idToken;
+						if (!obj.TryGetValue(CompilerUtils.IdName, out idToken))
+						{
+							throw new Exception(string.Format("Tileset object lacks id. Source: '{0}'", s));
+						}
+
+						var id = idToken.ToString();
+
+						_loaders[typeof(TileSet)].SafelyAddObject(id, s, (JObject)pair.Value);
 
 						continue;
 					}
@@ -177,6 +190,10 @@ namespace TroublesOfJord.Compiling
 			FirstRun(sources);
 
 			// Second run - build module
+
+			// Tile Sets
+			FillData(_context.Module.TileSets);
+
 			// Tile Infos
 			FillData(_context.Module.TileInfos);
 

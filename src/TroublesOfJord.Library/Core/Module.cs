@@ -7,6 +7,9 @@ namespace TroublesOfJord.Core
 {
 	public class Module
 	{
+
+
+		public Dictionary<string, TileSet> TileSets { get; } = new Dictionary<string, TileSet>();
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();
 		public Dictionary<string, CreatureInfo> CreatureInfos { get; } = new Dictionary<string, CreatureInfo>();
@@ -24,6 +27,11 @@ namespace TroublesOfJord.Core
 			}
 
 			return result;
+		}
+
+		public TileSet EnsureTileSet(string id)
+		{
+			return Ensure(TileSets, id);
 		}
 
 		public TileInfo EnsureTileInfo(string id)

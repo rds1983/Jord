@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Myra.Graphics2D.TextureAtlases;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Utils;
@@ -96,6 +98,14 @@ namespace TroublesOfJord.Compiling.Loaders
 					var appearance = new Appearance(symbol, color);
 
 					p.SetValue(item, appearance);
+
+					continue;
+				}
+				if (propertyType == typeof(TextureRegionAtlas))
+				{
+					var textureAtlasFile = Path.Combine(Path.GetDirectoryName(source), data[p.Name].ToString());
+
+					var textureAtlas = TJ.AssetManager.Load<TextureRegionAtlas>(textureAtlasFile);
 
 					continue;
 				}
