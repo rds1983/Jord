@@ -7,8 +7,6 @@ namespace TroublesOfJord.Core
 {
 	public class Module
 	{
-
-
 		public Dictionary<string, TileSet> TileSets { get; } = new Dictionary<string, TileSet>();
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();

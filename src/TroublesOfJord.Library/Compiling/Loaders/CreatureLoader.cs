@@ -10,9 +10,9 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(Module module, string id, ObjectData data)
 		{
-			var creature = (CreatureInfo)base.LoadItem(context, id, data);
+			var creature = (CreatureInfo)base.LoadItem(module, id, data);
 
 			JToken t;
 			if (data.Data.TryGetValue("Inventory", out t))
@@ -25,7 +25,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				{
 					inventory.Items.Add(new ItemPile
 					{
-						Item = new Item(context.Module.EnsureItemInfo(pair.Key)),
+						Item = new Item(module.EnsureItemInfo(pair.Key)),
 						Quantity = (int)pair.Value
 					});
 				}

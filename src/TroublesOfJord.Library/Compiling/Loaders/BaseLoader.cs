@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Myra;
 using Myra.Graphics2D.TextureAtlases;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,6 +10,7 @@ using System.IO;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Utils;
+using XNAssets.Utility;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
@@ -42,8 +45,18 @@ namespace TroublesOfJord.Compiling.Loaders
 			_sourceData[id] = od;
 		}
 
-		private static bool TryLoadPrimitive(CompilerContext context, Type type, JToken data, 
-			string source, out object result)
+		private static Color EnsureColor(string id, string source)
+		{
+			var result = ColorStorage.FromName(id);
+			if (result == null)
+			{
+				throw new Exception(string.Format("Could not find color '{0}'. Source: {1}", id, source));
+			}
+
+			return result.Value;
+		}
+
+		private static bool TryLoadPrimitive(Type type, JToken data, string source, out object result)
 		{
 			var loaded = true;
 			result = null;
@@ -53,7 +66,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			}
 			else if (type == typeof(Color))
 			{
-				result = context.EnsureColor(data.ToString(), source);
+				result = EnsureColor(data.ToString(), source);
 			}
 			else if (type.IsPrimitive)
 			{
@@ -70,7 +83,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			return loaded;
 		}
 
-		public static object LoadData(CompilerContext context, Type type, string id, JObject data, string source)
+		public static object LoadData(Module context, Type type, string id, JObject data, string source)
 		{
 			// Erase Nullable
 			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -93,7 +106,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				{
 					// Special case
 					var symbol = data["Symbol"].ToString()[0];
-					var color = context.EnsureColor(data["Color"].ToString(), source);
+					var color = EnsureColor(data["Color"].ToString(), source);
 
 					var appearance = new Appearance(symbol, color);
 
@@ -103,9 +116,18 @@ namespace TroublesOfJord.Compiling.Loaders
 				}
 				if (propertyType == typeof(TextureRegionAtlas))
 				{
-					var textureAtlasFile = Path.Combine(Path.GetDirectoryName(source), data[p.Name].ToString());
+					var textureAtlasFolder = Path.GetDirectoryName(source);
+					var textureAtlasFile = Path.Combine(textureAtlasFolder, data[p.Name].ToString());
 
-					var textureAtlas = TJ.AssetManager.Load<TextureRegionAtlas>(textureAtlasFile);
+					var textureAtlasData = File.ReadAllText(textureAtlasFile);
+					var textureAtlas = TextureRegionAtlas.Load(textureAtlasData,
+						n =>
+						{
+							using (var stream = File.OpenRead(Path.Combine(textureAtlasFolder, n)))
+								return  Texture2DExtensions.FromStream(MyraEnvironment.GraphicsDevice, stream, false);
+						}
+					);
+					p.SetValue(item, textureAtlas);
 
 					continue;
 				}
@@ -130,7 +152,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				do
 				{
 					object objectVal;
-					if (TryLoadPrimitive(context, propertyType, token, source, out objectVal))
+					if (TryLoadPrimitive(propertyType, token, source, out objectVal))
 					{
 						p.SetValue(item, objectVal);
 						break;
@@ -165,7 +187,7 @@ namespace TroublesOfJord.Compiling.Loaders
 								key = Enum.Parse(keyType, pair.Key.ToString());
 							}
 
-							if (TryLoadPrimitive(context, collectionType, pair.Value, source, out objectVal))
+							if (TryLoadPrimitive(collectionType, pair.Value, source, out objectVal))
 							{
 								asDict[key] = objectVal;
 							}
@@ -190,7 +212,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			return item;
 		}
 
-		public static BaseObject LoadItem(CompilerContext context, Type type, string id, ObjectData data)
+		public static BaseObject LoadItem(Module context, Type type, string id, ObjectData data)
 		{
 			var item = (BaseObject)LoadData(context, type, id, data.Data, data.Source);
 
@@ -200,7 +222,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			return item;
 		}
 
-		public virtual BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
+		public virtual BaseObject LoadItem(Module context, string id, ObjectData data)
 		{
 			return LoadItem(context, Type, id, data);
 		}

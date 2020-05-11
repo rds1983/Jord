@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TroublesOfJord.Core;
+﻿using TroublesOfJord.Core;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
@@ -9,14 +8,14 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(Module module, string id, ObjectData data)
 		{
-			if (context.Module.Maps.ContainsKey(id))
+			if (module.Maps.ContainsKey(id))
 			{
 				RaiseError("There's already Map with id '{0}'", id);
 			}
 
-			return base.LoadItem(context, id, data);
+			return base.LoadItem(module, id, data);
 		}
 	}
 }

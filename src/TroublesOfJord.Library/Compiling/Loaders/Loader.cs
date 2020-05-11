@@ -13,11 +13,11 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public virtual void FillData(CompilerContext context, Dictionary<string, T> output)
+		public virtual void FillData(Module module, Dictionary<string, T> output)
 		{
 			foreach (var pair in _sourceData)
 			{
-				var item = (T)LoadItem(context, pair.Key, pair.Value);
+				var item = (T)LoadItem(module, pair.Key, pair.Value);
 				output[item.Id] = item;
 
 				if (CompilerParams.Verbose)

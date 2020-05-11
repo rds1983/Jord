@@ -59,9 +59,6 @@ namespace TroublesOfJord
 
 			CompilerParams.Verbose = true;
 
-			var dataPath = Path.Combine(Files.ExecutableFolder, DataPath);
-			TJ.AssetManager = new AssetManager(GraphicsDevice, new FileAssetResolver(dataPath));
-
 			var compiler = new Compiler();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 

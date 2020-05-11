@@ -82,7 +82,7 @@ namespace TroublesOfJord.Storage
 		public static CharacterData FromJson(string data)
 		{
 			var obj = JObject.Parse(data);
-			return (CharacterData)BaseLoader.LoadData(new CompilerContext(),
+			return (CharacterData)BaseLoader.LoadData(new Module(),
 				typeof(CharacterData),
 				string.Empty,
 				obj,

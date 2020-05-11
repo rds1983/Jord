@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TroublesOfJord.Core;
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Module = TroublesOfJord.Core.Module;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Compiling.Loaders;
 using TroublesOfJord.Generation;
-using Myra;
 
 namespace TroublesOfJord.Compiling
 {
 	public class Compiler
 	{
-		private const string ColorsName = "Colors";
-
-		private readonly CompilerContext _context = new CompilerContext();
+		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
 
 		public Compiler()
@@ -32,26 +28,12 @@ namespace TroublesOfJord.Compiling
 			_loaders[typeof(BaseGenerator)] = new GeneratorLoader();
 		}
 
-		private static Color ParseColor(JToken source)
-		{
-			var s = source.ToString();
-			var c = ColorStorage.FromName(s);
-			if (c == null)
-			{
-				throw new Exception(string.Format("Could not parse color '{0}'", s));
-			}
-
-			return c.Value;
-		}
-
 		private void FirstRun(IEnumerable<string> sources)
 		{
 			if (CompilerParams.Verbose)
 			{
 				TJ.LogInfo("{0} source files found", sources.Count());
 			}
-
-			_context.Colors.Clear();
 
 			// First run - parse json and build object maps
 			foreach (var s in sources)
@@ -76,25 +58,9 @@ namespace TroublesOfJord.Compiling
 				foreach (var pair in json)
 				{
 					var key = pair.Key;
-					if (key == ColorsName)
+					if (key == CompilerUtils.TileSetName)
 					{
 						// Special case
-						foreach (var pair2 in (JObject)pair.Value)
-						{
-							var c = ParseColor(pair2.Value);
-							_context.Colors[pair2.Key] = c;
-
-							if (CompilerParams.Verbose)
-							{
-								TJ.LogInfo("Parsed color '{0}': '{1}'", pair2.Key, c.ToString());
-							}
-						}
-
-						continue;
-					}
-					else if (key == CompilerUtils.TileSetName)
-					{
-						// Another special case
 						if (json.Count > 1)
 						{
 							throw new Exception(string.Format("Tileset file can have only one tileset entry. Source: '{0}'", s));
@@ -160,7 +126,7 @@ namespace TroublesOfJord.Compiling
 
 		private void FillData<T>(Dictionary<string, T> output) where T : BaseObject
 		{
-			((Loader<T>)_loaders[typeof(T)]).FillData(_context, output);
+			((Loader<T>)_loaders[typeof(T)]).FillData(_module, output);
 		}
 
 		public void FindSources(string path, bool isTop, List<string> result)
@@ -192,30 +158,30 @@ namespace TroublesOfJord.Compiling
 			// Second run - build module
 
 			// Tile Sets
-			FillData(_context.Module.TileSets);
+			FillData(_module.TileSets);
 
 			// Tile Infos
-			FillData(_context.Module.TileInfos);
+			FillData(_module.TileInfos);
 
 			// Item Infos
-			FillData(_context.Module.ItemInfos);
+			FillData(_module.ItemInfos);
 
 			// Creature Infos
-			FillData(_context.Module.CreatureInfos);
+			FillData(_module.CreatureInfos);
 
 			// Classes
-			FillData(_context.Module.Classes);
+			FillData(_module.Classes);
 
 			// Generators
-			FillData(_context.Module.Generators);
+			FillData(_module.Generators);
 
 			// Maps
-			FillData(_context.Module.Maps);
+			FillData(_module.Maps);
 
 			// Map templates
-			FillData(_context.Module.MapTemplates);
+			FillData(_module.MapTemplates);
 
-			return _context.Module;
+			return _module;
 		}
 	}
 }

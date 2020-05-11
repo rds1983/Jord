@@ -8,14 +8,14 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(Module module, string id, ObjectData data)
 		{
-			if (context.Module.TileSets.ContainsKey(id))
+			if (module.TileSets.ContainsKey(id))
 			{
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}
 
-			var tileSet = (TileSet)base.LoadItem(context, id, data);
+			var tileSet = (TileSet)base.LoadItem(module, id, data);
 
 
 			return tileSet;

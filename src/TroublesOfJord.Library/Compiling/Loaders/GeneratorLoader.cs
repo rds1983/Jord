@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TroublesOfJord.Core.Items;
+using TroublesOfJord.Core;
 using TroublesOfJord.Generation;
 
 namespace TroublesOfJord.Compiling.Loaders
@@ -11,7 +11,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public override void FillData(CompilerContext context, Dictionary<string, BaseGenerator> output)
+		public override void FillData(Module module, Dictionary<string, BaseGenerator> output)
 		{
 			var assembly = GetType().Assembly;
 			foreach (var pair in _sourceData)
@@ -27,7 +27,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				}
 
 				var props = CompilerUtils.GetMembers(type);
-				var item = (BaseGenerator)LoadItem(context, type, pair.Key, pair.Value);
+				var item = (BaseGenerator)LoadItem(module, type, pair.Key, pair.Value);
 				output[item.Id] = item;
 
 				if (CompilerParams.Verbose)

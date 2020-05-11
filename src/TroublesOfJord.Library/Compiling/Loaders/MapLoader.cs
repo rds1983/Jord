@@ -47,14 +47,14 @@ namespace TroublesOfJord.Compiling.Loaders
 			return (JArray)token;
 		}
 
-		public override BaseObject LoadItem(CompilerContext context, string id, ObjectData data)
+		public override BaseObject LoadItem(Module module, string id, ObjectData data)
 		{
-			if (context.Module.MapTemplates.ContainsKey(id))
+			if (module.MapTemplates.ContainsKey(id))
 			{
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}
 
-			var map = (Map)base.LoadItem(context, id, data);
+			var map = (Map)base.LoadItem(module, id, data);
 
 			var legend = new Dictionary<char, object>();
 			var legendObject = EnsureObject(data, LegendName);
@@ -95,7 +95,7 @@ namespace TroublesOfJord.Compiling.Loaders
 					if (obj.TryGetValue(TileInfoIdName, out token))
 					{
 						TileInfo info;
-						if (!context.Module.TileInfos.TryGetValue(token.ToString(), out info))
+						if (!module.TileInfos.TryGetValue(token.ToString(), out info))
 						{
 							RaiseError("Could not find tileInfo with id '{0}', source = '{1}'",
 								token,
@@ -108,7 +108,7 @@ namespace TroublesOfJord.Compiling.Loaders
 					if (obj.TryGetValue(CreatureInfoIdName, out token))
 					{
 						CreatureInfo info;
-						if (!context.Module.CreatureInfos.TryGetValue(token.ToString(), out info))
+						if (!module.CreatureInfos.TryGetValue(token.ToString(), out info))
 						{
 							RaiseError("Could not find creatureInfo with id '{0}', source = '{1}'",
 								token,
