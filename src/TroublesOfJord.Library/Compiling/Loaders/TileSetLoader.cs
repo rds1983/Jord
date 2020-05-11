@@ -17,7 +17,6 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			var tileSet = (TileSet)base.LoadItem(module, id, data);
 
-
 			return tileSet;
 		}
 	}

@@ -8,40 +8,13 @@ namespace TroublesOfJord.Utils
 {
 	public class AppearanceRenderable : IImage
 	{
-		private Point? _size;
-		private SpriteFont _font;
 		private readonly Appearance _appearance;
 
 		public Point Size
 		{
 			get
 			{
-				if (_size != null)
-				{
-					return _size.Value;
-				}
-
-				_size = Font.MeasureString(_appearance.Symbol.ToString()).ToPoint();
-				return _size.Value;
-			}
-		}
-
-		public SpriteFont Font
-		{
-			get
-			{
-				return _font;
-			}
-
-			set
-			{
-				if (value == _font)
-				{
-					return;
-				}
-
-				_font = value;
-				_size = null;
+				return _appearance.Image.Size;
 			}
 		}
 
@@ -57,7 +30,7 @@ namespace TroublesOfJord.Utils
 
 		public void Draw(SpriteBatch batch, Rectangle dest, Color color)
 		{
-			_appearance.Draw(batch, Font, dest);
+			_appearance.Draw(batch, dest);
 		}
 	}
 }

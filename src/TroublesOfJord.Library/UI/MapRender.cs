@@ -106,8 +106,8 @@ namespace TroublesOfJord.UI
 					}
 				}
 
-				Appearance.MerchantSign.Draw(context.Batch, SmallFont, new Rectangle(screen.X, screen.Y,
-					tileSize.X, tileSize.Y), opacity);
+/*				Appearance.MerchantSign.Draw(context.Batch, SmallFont, new Rectangle(screen.X, screen.Y,
+					tileSize.X, tileSize.Y), opacity);*/
 			}
 
 			if (npc.Stats.Life.MaximumHP != 0 &&
@@ -172,7 +172,7 @@ namespace TroublesOfJord.UI
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
-					appearance.Draw(context.Batch, Font, rect, opacity);
+					appearance.Draw(context.Batch, rect, opacity);
 
 					var asNpc = tile.Creature as NonPlayer;
 					if (asNpc != null)

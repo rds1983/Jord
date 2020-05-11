@@ -689,12 +689,7 @@ namespace TroublesOfJord.MapEditor
 							Tag = info.Value
 						};
 
-						var renderable = new AppearanceRenderable(info.Value.Image)
-						{
-							Font = DefaultAssets.Font
-						};
-
-						item.Image = renderable;
+						item.Image = new AppearanceRenderable(info.Value.Image);
 						item.ImageTextSpacing = 8;
 
 						UI._listBoxItems.Items.Add(item);
@@ -718,12 +713,7 @@ namespace TroublesOfJord.MapEditor
 							Tag = info.Value
 						};
 
-						var renderable = new AppearanceRenderable(info.Value.Image)
-						{
-							Font = DefaultAssets.Font
-						};
-
-						item.Image = renderable;
+						item.Image = new AppearanceRenderable(info.Value.Image);
 						item.ImageTextSpacing = 8;
 
 						UI._listBoxItems.Items.Add(item);

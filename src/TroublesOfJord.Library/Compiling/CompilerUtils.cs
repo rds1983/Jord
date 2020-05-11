@@ -86,6 +86,7 @@ namespace TroublesOfJord.Compiling
 		public const string IdName = "Id";
 		public const string MapName = "Map";
 		public const string TileSetName = "TileSet";
+		public const string ModuleInfoName = "ModuleInfo";
 
 		private static readonly Dictionary<Type, List<IMemberWrapper>> _membersCache = new Dictionary<Type, List<IMemberWrapper>>();
 

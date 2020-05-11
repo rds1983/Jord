@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.TextureAtlases;
 using Newtonsoft.Json.Linq;
@@ -105,10 +104,11 @@ namespace TroublesOfJord.Compiling.Loaders
 				if (propertyType == typeof(Appearance))
 				{
 					// Special case
-					var symbol = data["Symbol"].ToString()[0];
+					var symbol = data["Symbol"].ToString();
 					var color = EnsureColor(data["Color"].ToString(), source);
 
-					var appearance = new Appearance(symbol, color);
+					var region = context.CurrentTileSet.TextureAtlas.EnsureRegion(symbol);
+					var appearance = new Appearance(symbol, color, region);
 
 					p.SetValue(item, appearance);
 

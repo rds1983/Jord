@@ -1,19 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Myra.Graphics2D.TextureAtlases;
+using System;
 
 namespace TroublesOfJord.Core
 {
 	public class Appearance
 	{
-		public static Appearance MerchantSign = new Appearance('$', Color.Gold);
-
 		private readonly string _symbol;
 
-		public char Symbol
+		public string Symbol
 		{
 			get
 			{
-				return _symbol[0];
+				return _symbol;
 			}
 		}
 
@@ -22,20 +22,26 @@ namespace TroublesOfJord.Core
 			get; private set;
 		}
 
-		public Appearance(char symbol, Color color)
+		public TextureRegion Image;
+
+		public Appearance(string symbol, Color color, TextureRegion image)
 		{
+			if (image == null)
+			{
+				throw new ArgumentNullException(nameof(image));
+			}
+
 			_symbol = symbol.ToString();
 			Color = color;
+			Image = image;
 		}
 
-		public void Draw(SpriteBatch batch, SpriteFont font, Rectangle rect, float opacity = 1.0f)
+		public void Draw(SpriteBatch batch, Rectangle rect, float opacity = 1.0f)
 		{
-			var measureSize = font.MeasureString(_symbol);
+			var pos = new Vector2(rect.X + (rect.Width - Image.Size.X) / 2,
+				rect.Y + (rect.Height - Image.Size.Y) / 2);
 
-			var pos = new Vector2(rect.X + (rect.Width - measureSize.X) / 2,
-				rect.Y + (rect.Height - measureSize.Y) / 2);
-
-			batch.DrawString(font, _symbol, pos, Color * opacity);
+			Image.Draw(batch, pos, Color * opacity);
 		}
 	}
 }

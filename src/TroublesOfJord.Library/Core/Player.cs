@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using TroublesOfJord.Core.Items;
+﻿using TroublesOfJord.Core.Items;
 using TroublesOfJord.Core.Skills;
 
 namespace TroublesOfJord.Core
@@ -11,10 +10,9 @@ namespace TroublesOfJord.Core
 		private readonly CreatureStats _stats = new CreatureStats();
 		private IUsableAbility[] _usableAbilities = null;
 
-		private readonly Appearance _playerAppearance = new Appearance('@', Color.White);
 		private bool _dirty = true;
 
-		public override Appearance Image => _playerAppearance;
+		public override Appearance Image => TJ.Module.ModuleInfo.PlayerAppearance;
 
 		public Equipment Equipment { get; } = new Equipment();
 

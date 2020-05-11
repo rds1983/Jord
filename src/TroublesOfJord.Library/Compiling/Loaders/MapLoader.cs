@@ -251,7 +251,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 					if (!tileInfos.ContainsKey(tile.Info.Id))
 					{
-						tileInfos[tile.Info.Id] = AddToLegend(tile.Info.Image.Symbol, tile.Info, legend);
+						tileInfos[tile.Info.Id] = AddToLegend(tile.Info.Image.Symbol[0], tile.Info, legend);
 					}
 
 					if (tile.Creature != null)
@@ -259,7 +259,7 @@ namespace TroublesOfJord.Compiling.Loaders
 						var npc = (NonPlayer)tile.Creature;
 						if (!creatureInfos.ContainsKey(npc.Info.Id))
 						{
-							creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Image.Symbol, npc.Info, legend);
+							creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Image.Symbol[0], npc.Info, legend);
 						}
 					}
 				}

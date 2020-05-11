@@ -16,6 +16,10 @@ namespace TroublesOfJord.Core
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
 		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
 
+		public TileSet CurrentTileSet;
+
+		public ModuleInfo ModuleInfo;
+
 		private static T Ensure<T>(Dictionary<string, T> data, string id)
 		{
 			T result;

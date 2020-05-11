@@ -1,0 +1,6 @@
+{
+	"TileSet": {
+		"Id": "ASCIIDroidSans",
+		"TextureAtlas": "ASCIIDroidSans.xml",
+	}
+}

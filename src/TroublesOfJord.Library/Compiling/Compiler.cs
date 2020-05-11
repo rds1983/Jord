@@ -15,6 +15,7 @@ namespace TroublesOfJord.Compiling
 	{
 		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
+		private ObjectData _moduleInfo;
 
 		public Compiler()
 		{
@@ -60,7 +61,6 @@ namespace TroublesOfJord.Compiling
 					var key = pair.Key;
 					if (key == CompilerUtils.TileSetName)
 					{
-						// Special case
 						if (json.Count > 1)
 						{
 							throw new Exception(string.Format("Tileset file can have only one tileset entry. Source: '{0}'", s));
@@ -81,7 +81,6 @@ namespace TroublesOfJord.Compiling
 					}
 					else if (key == CompilerUtils.MapName)
 					{
-						// Another special case
 						if (json.Count > 1)
 						{
 							throw new Exception(string.Format("Map file can have only one map entry. Source: '{0}'", s));
@@ -97,6 +96,17 @@ namespace TroublesOfJord.Compiling
 						var id = idToken.ToString();
 
 						_loaders[typeof(Map)].SafelyAddObject(id, s, (JObject)pair.Value);
+
+						continue;
+					}
+					else if (key == CompilerUtils.ModuleInfoName)
+					{
+						var obj = (JObject)pair.Value;
+						_moduleInfo = new ObjectData
+						{
+							Source = s,
+							Data = obj
+						};
 
 						continue;
 					}
@@ -159,6 +169,21 @@ namespace TroublesOfJord.Compiling
 
 			// Tile Sets
 			FillData(_module.TileSets);
+
+			if (_module.TileSets.Count > 0)
+			{
+				_module.CurrentTileSet = _module.TileSets.First().Value;
+			}
+
+			// Module Info
+			if (_moduleInfo == null)
+			{
+				throw new Exception("Couldn't find mandatory 'ModuleInfo' node");
+			}
+
+			var id = _moduleInfo.Data[CompilerUtils.IdName].ToString();
+			_module.ModuleInfo = (ModuleInfo)BaseLoader.LoadData(_module, typeof(ModuleInfo), id, _moduleInfo.Data, _moduleInfo.Source);
+			_module.ModuleInfo.Id = id;
 
 			// Tile Infos
 			FillData(_module.TileInfos);
