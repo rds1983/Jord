@@ -19,7 +19,7 @@ namespace TroublesOfJord.Compiling
 
 		public Compiler()
 		{
-			_loaders[typeof(TileSet)] = new TileSetLoader();
+			_loaders[typeof(TileSet)] = new Loader<TileSet>("TileSets");
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(MapTemplate)] = new MapTemplateLoader();
 			_loaders[typeof(TileInfo)] = new Loader<TileInfo>("TileInfos");

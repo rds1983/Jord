@@ -5,24 +5,22 @@ namespace TroublesOfJord.Core
 {
 	public class GameSession
 	{
-		private readonly Slot _slot;
-		private readonly Character _character;
 		private bool _activeCreaturesDirty = true;
 		private readonly List<Creature> _activeCreatures = new List<Creature>();
 		private readonly List<Creature> _activeCreaturesCopy = new List<Creature>();
 
-		public Slot Slot { get { return _slot; } }
-		public Character Character { get { return _character; } }
-		public Player Player { get { return _character.Player; } }
+		public Slot Slot { get; }
+		public Character Character { get; }
+		public Player Player { get { return Character.Player; } }
 
 		public GameSession(int slotIndex)
 		{
-			_slot = TJ.StorageService.Slots[slotIndex];
+			Slot = TJ.StorageService.Slots[slotIndex];
 
-			_character = _slot.CharacterData.CreateCharacter();
+			Character = Slot.CharacterData.CreateCharacter();
 
 			// Spawn player
-			var map = TJ.Module.Maps[_slot.CharacterData.StartingMapId];
+			var map = TJ.Module.Maps[Slot.CharacterData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
 		}

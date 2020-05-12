@@ -73,9 +73,8 @@ namespace TroublesOfJord
 
 		private T SwitchTo<T>() where T : Widget, new()
 		{
-			Desktop.Widgets.Clear();
 			var widget = new T();
-			Desktop.Widgets.Add(widget);
+			Desktop.Root = widget;
 
 			return widget;
 		}
@@ -98,7 +97,7 @@ namespace TroublesOfJord
 
 			SwitchTo<GameView>();
 
-			var gameView = (GameView)Desktop.Widgets[0];
+			var gameView = (GameView)Desktop.Root;
 			Desktop.FocusedKeyboardWidget = gameView;
 
 			UpdateStats();

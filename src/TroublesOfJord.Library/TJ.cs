@@ -3,15 +3,12 @@ using System.Reflection;
 using TroublesOfJord.Core;
 using TroublesOfJord.Storage;
 using TroublesOfJord.Utils;
-using XNAssets;
 using Module = TroublesOfJord.Core.Module;
 
 namespace TroublesOfJord
 {
 	public static class TJ
 	{
-		private static readonly StorageService _storageService = new StorageService();
-
 		public static Action<string> InfoLogHandler = Console.WriteLine;
 		public static Action<string> WarnLogHandler = Console.WriteLine;
 		public static Action<string> ErrorLogHandler = Console.WriteLine;
@@ -19,13 +16,7 @@ namespace TroublesOfJord
 
 		public static Module Module { get; set; }
 
-		public static StorageService StorageService
-		{
-			get
-			{
-				return _storageService;
-			}
-		}
+		public static StorageService StorageService { get; } = new StorageService();
 
 		public static GameSession Session
 		{

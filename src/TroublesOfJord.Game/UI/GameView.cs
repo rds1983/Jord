@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Myra.Extended.Widgets;
 using Myra.Graphics2D.UI;
@@ -8,6 +9,8 @@ namespace TroublesOfJord.UI
 {
 	public partial class GameView
 	{
+		private DateTime? _delayStarted;
+		private int _delayInMs = 0;
 		public MapView MapView { get; } = new MapView();
 		public MiniMap MapNavigation { get; } = new MiniMap();
 		public LogView LogView { get; } = new LogView();
@@ -44,6 +47,7 @@ namespace TroublesOfJord.UI
 			MapNavigation.MapEditor = MapView;
 			_mapContainer.Widgets.Add(MapNavigation);
 
+			LogView.ShowVerticalScrollBar = false;
 			_logContainer.Widgets.Add(LogView);
 
 			UpdateSkills();
@@ -80,21 +84,80 @@ namespace TroublesOfJord.UI
 			}
 		}
 
-		public override void OnKeyDown(Keys k)
+		private void ProcessInput()
 		{
-			base.OnKeyDown(k);
+			if (!Active || _delayStarted != null)
+			{
+				return;
+			}
 
-			if (k == Keys.I)
+			var keys = Keyboard.GetState();
+
+			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
+			{
+				TJ.Player.MoveTo(new Point(-1, 0));
+			}
+			else if (keys.IsKeyDown(Keys.Right) || keys.IsKeyDown(Keys.NumPad6))
+			{
+				TJ.Player.MoveTo(new Point(1, 0));
+			}
+			else if (keys.IsKeyDown(Keys.Up) || keys.IsKeyDown(Keys.NumPad8))
+			{
+				TJ.Player.MoveTo(new Point(0, -1));
+			}
+			else if (keys.IsKeyDown(Keys.Down) || keys.IsKeyDown(Keys.NumPad2))
+			{
+				TJ.Player.MoveTo(new Point(0, 1));
+			}
+			else if (keys.IsKeyDown(Keys.NumPad7))
+			{
+				TJ.Player.MoveTo(new Point(-1, -1));
+			}
+			else if (keys.IsKeyDown(Keys.NumPad9))
+			{
+				TJ.Player.MoveTo(new Point(1, -1));
+			}
+			else if (keys.IsKeyDown(Keys.NumPad1))
+			{
+				TJ.Player.MoveTo(new Point(-1, 1));
+			}
+			else if (keys.IsKeyDown(Keys.NumPad3))
+			{
+				TJ.Player.MoveTo(new Point(1, 1));
+			}
+			else if (keys.IsKeyDown(Keys.I))
 			{
 				var inventoryWindow = new InventoryWindow();
 				inventoryWindow.ShowModal();
 			}
-
-			if (k == Keys.E)
+			else if (keys.IsKeyDown(Keys.E))
 			{
 				if (TJ.Session.Player.Enter())
 				{
 					MapNavigation.InvalidateImage();
+				}
+			}
+
+			var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
+			if (!isRunning)
+			{
+				_delayStarted = DateTime.Now;
+				_delayInMs = Config.TurnDelayInMs;
+			}
+		}
+
+		public override void InternalRender(RenderContext batch)
+		{
+			base.InternalRender(batch);
+
+			ProcessInput();
+
+			if (_delayStarted != null)
+			{
+				var passed = (DateTime.Now - _delayStarted.Value).TotalMilliseconds;
+				if (passed >= _delayInMs)
+				{
+					_delayStarted = null;
 				}
 			}
 		}

@@ -7,18 +7,29 @@ namespace TroublesOfJord.Core
 {
 	partial class Creature
 	{
-		private const int _movementInterval = 100;
+		private const int MovementInterval = 50;
 		private Point _movementTarget;
 		private readonly Queue<Point> _movementQueue = new Queue<Point>();
 
 		private Action _movementFinished;
+
+		public void MoveTo(Point delta)
+		{
+			var newPosition = Position + delta;
+			if (!TilePassable(newPosition) || delta == Point.Zero)
+			{
+				return;
+			}
+
+			SetPosition(newPosition);
+		}
 
 		private void ProcessMovement()
 		{
 			var now = DateTime.Now;
 
 			var span = now - _actionStart;
-			var totalPart = (float)span.TotalMilliseconds / _movementInterval;
+			var totalPart = (float)span.TotalMilliseconds / MovementInterval;
 			if (totalPart >= 1.0f)
 			{
 				Map[_movementTarget].Highlighted = false;
