@@ -5,21 +5,8 @@ using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
-	public enum CreatureState
-	{
-		Idle,
-		Moving,
-		Fighting
-	}
-
 	public abstract partial class Creature
 	{
-		private CreatureState _state;
-
-		private DateTime _actionStart;
-
-		private readonly Inventory _inventory = new Inventory();
-
 		public Map Map { get; set; }
 		public Point Position { get; set; }
 		public Vector2 DisplayPosition { get; set; }
@@ -45,46 +32,8 @@ namespace TroublesOfJord.Core
 
 		public float Opacity = 1.0f;
 
-		public CreatureState State
-		{
-			get
-			{
-				return _state;
-			}
-
-			private set
-			{
-				if (value == _state)
-				{
-					return;
-				}
-
-				_state = value;
-
-				if (_state == CreatureState.Idle)
-				{
-					TJ.Session.RemoveActiveCreature(this);
-				} else
-				{
-					_actionStart = DateTime.Now;
-					TJ.Session.AddActiveCreature(this);
-				}
-
-				if (_state != CreatureState.Fighting)
-				{
-					AttackTarget = null;
-				}
-			}
-		}
-
 		[IgnoreField]
-		public Inventory Inventory
-		{
-			get
-			{
-				return _inventory;
-			}
-		}
+		public Inventory Inventory { get; } = new Inventory();
 
 		public Creature AttackTarget { get; set; }
 		public int AttackDelayInMs { get; set; }
@@ -169,7 +118,6 @@ namespace TroublesOfJord.Core
 
 		public bool Remove()
 		{
-			State = CreatureState.Idle;
 			AttackTarget = null;
 
 			if (Map == null)
@@ -183,22 +131,6 @@ namespace TroublesOfJord.Core
 			Map = null;
 
 			return true;
-		}
-
-		public void OnTimer()
-		{
-			switch (State)
-			{
-				case CreatureState.Idle:
-					// Nothing
-					break;
-				case CreatureState.Moving:
-					ProcessMovement();
-					break;
-				case CreatureState.Fighting:
-					ProcessFighting();
-					break;
-			}
 		}
 	}
 }

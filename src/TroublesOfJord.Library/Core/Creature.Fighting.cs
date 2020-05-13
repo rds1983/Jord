@@ -1,24 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using TroublesOfJord.Utils;
-
-namespace TroublesOfJord.Core
+﻿namespace TroublesOfJord.Core
 {
 	partial class Creature
 	{
-		private const int TargetAttackDelayInMs = 1000;
-		private const int AttackMoveInMs = 200;
-		private const int TwoAttackMoveInMs = AttackMoveInMs * 2;
-
-		private const int DyingOpaquePeriodInMs = 1000;
-		private const int DyingTransparentPeriodInMs = 1000;
-
-		private DateTime? _attackStart;
-		private AttackInfo _currentAttack;
-		private int _currentAttackIndex;
-		private bool _endFighting = false;
-
-		private void ProcessAttack()
+/*		private void ProcessAttack()
 		{
 			if (_currentAttack == null)
 			{
@@ -130,7 +114,6 @@ namespace TroublesOfJord.Core
 					}
 				}
 			}
-
 		}
 
 		private bool IsAttackable(Creature target)
@@ -167,6 +150,6 @@ namespace TroublesOfJord.Core
 			TJ.GameLog("{0} attacked {1}...", Name, target.Name);
 
 			return true;
-		}
+		}*/
 	}
 }

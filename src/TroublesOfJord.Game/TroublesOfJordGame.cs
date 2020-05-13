@@ -118,16 +118,6 @@ namespace TroublesOfJord
 			UpdateStats();
 		}
 
-		protected override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-
-			if (TJ.Session != null)
-			{
-				TJ.Session.OnTimer();
-			}
-		}
-
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
