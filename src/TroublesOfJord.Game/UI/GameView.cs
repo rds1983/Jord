@@ -84,6 +84,70 @@ namespace TroublesOfJord.UI
 			}
 		}
 
+		private bool ProcessMovement(ref KeyboardState keys)
+		{
+			var processed = true;
+
+			var delta = Point.Zero;
+			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
+			{
+				delta = new Point(-1, 0);
+			}
+			else if (keys.IsKeyDown(Keys.Right) || keys.IsKeyDown(Keys.NumPad6))
+			{
+				delta = new Point(1, 0);
+			}
+			else if (keys.IsKeyDown(Keys.Up) || keys.IsKeyDown(Keys.NumPad8))
+			{
+				delta = new Point(0, -1);
+			}
+			else if (keys.IsKeyDown(Keys.Down) || keys.IsKeyDown(Keys.NumPad2))
+			{
+				delta = new Point(0, 1);
+			}
+			else if (keys.IsKeyDown(Keys.NumPad7))
+			{
+				delta = new Point(-1, -1);
+			}
+			else if (keys.IsKeyDown(Keys.NumPad9))
+			{
+				delta = new Point(1, -1);
+			}
+			else if (keys.IsKeyDown(Keys.NumPad1))
+			{
+				delta = new Point(-1, 1);
+			}
+			else if (keys.IsKeyDown(Keys.NumPad3))
+			{
+				delta = new Point(1, 1);
+			} else
+			{
+				processed = false;
+			}
+
+			if (processed)
+			{
+				var newPos = TJ.Player.Position + delta;
+				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Size.X && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Size.Y)
+				{
+					var creature = (NonPlayer)TJ.Player.Map[newPos].Creature;
+					if (creature != null && creature.Info.IsMerchant)
+					{
+						// Initiate trade
+						var dialog = new TradeDialog(TJ.Session.Player, creature);
+						dialog.ShowModal();
+					}
+					else
+					{
+						TJ.Player.MoveTo(delta);
+					}
+
+				}
+			}
+
+			return processed;
+		}
+
 		private void ProcessInput()
 		{
 			if (!Active || _delayStarted != null)
@@ -93,37 +157,8 @@ namespace TroublesOfJord.UI
 
 			var keys = Keyboard.GetState();
 
-			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
+			if (ProcessMovement(ref keys))
 			{
-				TJ.Player.MoveTo(new Point(-1, 0));
-			}
-			else if (keys.IsKeyDown(Keys.Right) || keys.IsKeyDown(Keys.NumPad6))
-			{
-				TJ.Player.MoveTo(new Point(1, 0));
-			}
-			else if (keys.IsKeyDown(Keys.Up) || keys.IsKeyDown(Keys.NumPad8))
-			{
-				TJ.Player.MoveTo(new Point(0, -1));
-			}
-			else if (keys.IsKeyDown(Keys.Down) || keys.IsKeyDown(Keys.NumPad2))
-			{
-				TJ.Player.MoveTo(new Point(0, 1));
-			}
-			else if (keys.IsKeyDown(Keys.NumPad7))
-			{
-				TJ.Player.MoveTo(new Point(-1, -1));
-			}
-			else if (keys.IsKeyDown(Keys.NumPad9))
-			{
-				TJ.Player.MoveTo(new Point(1, -1));
-			}
-			else if (keys.IsKeyDown(Keys.NumPad1))
-			{
-				TJ.Player.MoveTo(new Point(-1, 1));
-			}
-			else if (keys.IsKeyDown(Keys.NumPad3))
-			{
-				TJ.Player.MoveTo(new Point(1, 1));
 			}
 			else if (keys.IsKeyDown(Keys.I))
 			{
