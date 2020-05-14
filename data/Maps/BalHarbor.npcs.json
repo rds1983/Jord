@@ -4,7 +4,7 @@
 		"BalHarborWeaponMerchant": 
 		{
 			"Name": "Weapon Merchant",
-			"Color": "Blue",
+			"Image": "CreatureWeaponMerchant",
 			"Symbol": "p",
 			"IsMerchant": true,
 			"Gold": 50000,

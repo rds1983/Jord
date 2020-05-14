@@ -14,7 +14,7 @@ namespace TroublesOfJord.Utils
 		{
 			get
 			{
-				return _appearance.Image.Size;
+				return _appearance.TextureRegion.Size;
 			}
 		}
 

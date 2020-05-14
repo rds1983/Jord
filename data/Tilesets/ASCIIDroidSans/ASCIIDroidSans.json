@@ -2,5 +2,71 @@
 	"TileSet": {
 		"Id": "ASCIIDroidSans",
 		"TextureAtlas": "ASCIIDroidSans.xml",
+		"Images": {
+			"TileGrass": {
+			  "Color": "DarkGreen",
+			  "Symbol": "."
+			},
+			"TileHighGrass": {
+			  "Color": "Green",
+			  "Symbol": "."
+			},
+			"TileGround": {
+			  "Color": "Brown",
+			  "Symbol": "."
+			},
+			"TileFloor": {
+			  "Color": "Gray",
+			  "Symbol": "."
+			},
+			"TileTree": {
+			  "Color": "Green",
+			  "Symbol": "T"
+			},
+			"TileMountain": {
+			  "Color": "White",
+			  "Symbol": "^"
+			},
+			"TileWater": {
+			  "Color": "Blue",
+			  "Symbol": "."
+			},
+			"TileRoad": {
+			  "Color": "Brown",
+			  "Symbol": "."
+			},
+			"TileWall": {
+			  "Color": "Gray",
+			  "Symbol": "#"
+			},
+			"TilePlato": {
+			  "Color": "White",
+			  "Symbol": "."
+			},
+			"TileExitDown": {
+			  "Color": "White",
+			  "Symbol": ">"
+			},
+			"TileExitUp": {
+			  "Color": "White",
+			  "Symbol": "<"
+			},
+			"Player": {
+			  "Color": "White",
+			  "Symbol": "p"
+			},
+			"CreatureOrc": {
+			  "Color": "Green",
+			  "Symbol": "o"
+			},
+			"CreatureWeaponMerchant": {
+			  "Color": "Blue",
+			  "Symbol": "p"
+			},
+			"CreatureRat": {
+			  "Color": "Gray",
+			  "Symbol": "r"
+			},
+		}
 	}
 }

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using TroublesOfJord.Compiling;
 using TroublesOfJord.Compiling.Loaders;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
@@ -14,10 +14,8 @@ namespace TroublesOfJord.Storage
 		public int Gold { get; set; }
 		public string StartingMapId { get; set; } = "BalHarbor";
 
-		[OptionalField]
 		public Dictionary<string, int> Inventory { get; } = new Dictionary<string, int>();
 
-		[OptionalField]
 		public Dictionary<EquipType, string> Equipment { get; } = new Dictionary<EquipType, string>();
 
 		public CharacterData()
@@ -74,19 +72,12 @@ namespace TroublesOfJord.Storage
 
 		public string ToJson()
 		{
-			var obj = BaseLoader.SaveObject(this);
-
-			return obj.ToString();
+			return JsonConvert.SerializeObject(this, Formatting.Indented);
 		}
 
 		public static CharacterData FromJson(string data)
 		{
-			var obj = JObject.Parse(data);
-			return (CharacterData)BaseLoader.LoadData(new Module(),
-				typeof(CharacterData),
-				string.Empty,
-				obj,
-				string.Empty);
+			return JsonConvert.DeserializeObject<CharacterData>(data);
 		}
 	}
 }

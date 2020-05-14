@@ -1,40 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using TroublesOfJord.Core;
+﻿using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	public class ItemLoader: Loader<BaseItemInfo>
+	class ItemLoader : Loader<BaseItemInfo>
 	{
 		public ItemLoader() : base("ItemInfos")
 		{
 		}
 
-		public override void FillData(Module module, Dictionary<string, BaseItemInfo> output)
+		public override BaseItemInfo LoadItem(Module module, string id, ObjectData data)
 		{
-			var assembly = GetType().Assembly;
-			foreach (var pair in _sourceData)
+			BaseItemInfo result = null;
+
+			var type = EnsureString(data, "Type");
+			if (type == "Food")
 			{
-				var typeName = pair.Value.Data["Type"].ToString();
-
-				var fullTypeName = "TroublesOfJord.Core.Items." + typeName + "Info";
-				var type = assembly.GetType(fullTypeName);
-
-				if (type == null)
+				var food = new FoodInfo
 				{
-					throw new Exception(string.Format("Could not resolve item type '{0}'", typeName));
-				}
 
-				var props = CompilerUtils.GetMembers(type);
-				var item = (BaseItemInfo)LoadItem(module, type, pair.Key, pair.Value);
-				output[item.Id] = item;
+				};
 
-				if (CompilerParams.Verbose)
-				{
-					TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
-				}
+				result = food;
 			}
+			else if (type == "WaterContainer")
+			{
+				var waterContainer = new WaterContainerInfo
+				{
+					Capacity = EnsureInt(data, "Capacity")
+				};
+
+				result = waterContainer;
+			}
+			else if (type == "Weapon")
+			{
+				var weapon = new WeaponInfo
+				{
+					MinDamage = EnsureInt(data, "MinDamage"),
+					MaxDamage = EnsureInt(data, "MaxDamage"),
+					AttackType = EnsureEnum<AttackType>(data, "AttackType")
+				};
+
+				result = weapon;
+			}
+			else if (type == "Armor")
+			{
+				var armor = new ArmorInfo
+				{
+					ArmorClass = EnsureInt(data, "ArmorClass")
+				};
+
+				result = armor;
+			}
+
+			result.Name = EnsureString(data, Compiler.NameName);
+			result.Price = EnsureInt(data, "Price");
+
+			return result;
 		}
 	}
 }

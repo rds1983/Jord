@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using TroublesOfJord.Compiling;
 using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
@@ -32,7 +31,6 @@ namespace TroublesOfJord.Core
 
 		public float Opacity = 1.0f;
 
-		[IgnoreField]
 		public Inventory Inventory { get; } = new Inventory();
 
 		public Creature AttackTarget { get; set; }

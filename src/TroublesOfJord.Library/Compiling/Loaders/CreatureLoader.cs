@@ -4,15 +4,36 @@ using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	public class CreatureLoader: Loader<CreatureInfo>
+	class CreatureLoader: Loader<CreatureInfo>
 	{
 		public CreatureLoader(): base("CreatureInfos")
 		{
 		}
 
-		public override BaseObject LoadItem(Module module, string id, ObjectData data)
+		public override CreatureInfo LoadItem(Module module, string id, ObjectData data)
 		{
-			var creature = (CreatureInfo)base.LoadItem(module, id, data);
+			var result = new CreatureInfo
+			{
+				Name = EnsureString(data, Compiler.NameName),
+				Image = EnsureAppearance(module, data, Compiler.ImageName),
+				Gold = EnsureInt(data, "Gold"),
+				IsMerchant = OptionalBool(data, "IsMerchant", false),
+				IsAttackable = OptionalBool(data, "IsAttackable", false),
+			};
+
+			EnsureBaseMapObject(module, data, result);
+
+			if (result.IsAttackable)
+			{
+				result.ArmorClass = EnsureInt(data, "ArmorClass");
+				result.HitRoll = EnsureInt(data, "HitRoll");
+
+				var attacks = (JArray)data.Data["Attacks"];
+				foreach(JObject attackObj in attacks)
+				{
+					result.Attacks.Add(ParseAttack(attackObj, data.Source));
+				}
+			}
 
 			JToken t;
 			if (data.Data.TryGetValue("Inventory", out t))
@@ -30,10 +51,10 @@ namespace TroublesOfJord.Compiling.Loaders
 					});
 				}
 
-				creature.Inventory = inventory;
+				result.Inventory = inventory;
 			}
 
-			return creature;
+			return result;
 		}
 	}
 }

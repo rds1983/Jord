@@ -1,8 +1,7 @@
 ﻿namespace TroublesOfJord.Core
 {
-	public class TileInfo: BaseObject
+	public class TileInfo: BaseMapObject
 	{
-		public Appearance Image { get; set; }
 		public bool Passable { get; set; }
 	}
 }

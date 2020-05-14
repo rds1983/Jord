@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using TroublesOfJord.Compiling;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 
 namespace TroublesOfJord.Core
@@ -39,7 +37,6 @@ namespace TroublesOfJord.Core
 			}
 		}
 
-		[IgnoreField]
 		public Point? SpawnSpot
 		{
 			get; set;
@@ -47,7 +44,6 @@ namespace TroublesOfJord.Core
 
 		public bool Local { get; set; }
 
-		[IgnoreField]
 		public Tile this[int x, int y]
 		{
 			get
@@ -61,7 +57,6 @@ namespace TroublesOfJord.Core
 			}
 		}
 
-		[IgnoreField]
 		public Tile this[Point p]
 		{
 			get

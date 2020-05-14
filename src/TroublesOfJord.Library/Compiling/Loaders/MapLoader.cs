@@ -7,7 +7,7 @@ using TroublesOfJord.Core;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	public class MapLoader: Loader<Map>
+	class MapLoader: Loader<Map>
 	{
 		private class SpawnSpot
 		{
@@ -29,7 +29,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			if (!root.Data.TryGetValue(name, out token))
 			{
 				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source);
+					name, JsonArrayName, root.Data[Compiler.IdName], root.Source);
 			}
 
 			return (JObject)token;
@@ -41,20 +41,24 @@ namespace TroublesOfJord.Compiling.Loaders
 			if (!root.Data.TryGetValue(name, out token))
 			{
 				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[CompilerUtils.IdName], root.Source);
+					name, JsonArrayName, root.Data[Compiler.IdName], root.Source);
 			}
 
 			return (JArray)token;
 		}
 
-		public override BaseObject LoadItem(Module module, string id, ObjectData data)
+		public override Map LoadItem(Module module, string id, ObjectData data)
 		{
 			if (module.MapTemplates.ContainsKey(id))
 			{
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}
 
-			var map = (Map)base.LoadItem(module, id, data);
+			var map = new Map
+			{
+				Size = EnsurePoint(data.Data, data.Source, "Size"),
+				Local = EnsureBool(data, "Local")
+			};
 
 			var legend = new Dictionary<char, object>();
 			var legendObject = EnsureObject(data, LegendName);
@@ -251,7 +255,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 					if (!tileInfos.ContainsKey(tile.Info.Id))
 					{
-						tileInfos[tile.Info.Id] = AddToLegend(tile.Info.Image.Symbol[0], tile.Info, legend);
+						tileInfos[tile.Info.Id] = AddToLegend(tile.Info.Symbol, tile.Info, legend);
 					}
 
 					if (tile.Creature != null)
@@ -259,7 +263,7 @@ namespace TroublesOfJord.Compiling.Loaders
 						var npc = (NonPlayer)tile.Creature;
 						if (!creatureInfos.ContainsKey(npc.Info.Id))
 						{
-							creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Image.Symbol[0], npc.Info, legend);
+							creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Symbol, npc.Info, legend);
 						}
 					}
 				}
@@ -275,10 +279,18 @@ namespace TroublesOfJord.Compiling.Loaders
 			// Build json object
 			var root = new JObject();
 
-			var mapObject = (JObject)SaveObject(map);
+			var mapObject = new JObject
+			{
+				[Compiler.IdName] = map.Id,
+				["Size"] = new JObject
+				{ 
+					["X"] = map.Size.X,
+					["Y"] = map.Size.Y,
+				}
+				["Local"] = map.Local
+			};
 
-			mapObject[CompilerUtils.IdName] = map.Id;
-			root[CompilerUtils.MapName] = mapObject;
+			root[Compiler.MapName] = mapObject;
 
 			var legendNode = new JObject();
 			foreach (var pair in legend)

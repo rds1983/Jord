@@ -10,6 +10,8 @@ mkdir "ZipPackage\x86"
 set "CONFIGURATION=bin\Release\net45"
 
 rem Copy output files
-xcopy "src\Wanderers.Game\%CONFIGURATION%\*.*" "ZipPackage\*.*" /s /e
-copy "src\Wanderers.MapEditor\%CONFIGURATION%\Wanderers.MapEditor.exe" "ZipPackage" /Y
-xcopy "data\*.*" "ZipPackage\data\*.*" /s
+xcopy "src\TroublesOfJord.Game\%CONFIGURATION%\*.*" "ZipPackage\*.*" /s /e
+copy "src\TroublesOfJord.MapEditor\%CONFIGURATION%\TroublesOfJord.MapEditor.exe" "ZipPackage" /Y
+del "ZipPackage\data\Tilesets\ASCIIDroidSans\ASCIIDroidSans.bmfc"
+del "ZipPackage\data\Tilesets\ASCIIDroidSans\ASCIIDroidSans.fnt"
+del "ZipPackage\data\Tilesets\ASCIIDroidSans\DroidSans.ttf"

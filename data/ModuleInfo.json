@@ -1,7 +1,6 @@
 {
 	"ModuleInfo": {
 		"Id": "Main",
-		"Color": "White",
-		"Symbol": "@",
+		"PlayerImage": "Player"
 	}
 }

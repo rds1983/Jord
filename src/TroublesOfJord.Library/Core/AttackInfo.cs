@@ -26,7 +26,6 @@ namespace TroublesOfJord.Core
 		public AttackType AttackType;
 		public int MinDamage;
 		public int MaxDamage;
-		public int Delay;
 
 		private static readonly AttackNames[] _attackNames = new AttackNames[Enum.GetNames(typeof(AttackType)).Length];
 
@@ -37,16 +36,11 @@ namespace TroublesOfJord.Core
 			_attackNames[(int)AttackType.Claw] = new AttackNames("claw", "claws");
 		}
 
-		public AttackInfo(AttackType attackType, int minDamage, int maxDamage, int delay)
+		public AttackInfo(AttackType attackType, int minDamage, int maxDamage)
 		{
 			AttackType = attackType;
 			MinDamage = minDamage;
 			MaxDamage = maxDamage;
-			Delay = delay;
-		}
-
-		public AttackInfo()
-		{
 		}
 
 		public static string GetAttackNoun(AttackType attackType)

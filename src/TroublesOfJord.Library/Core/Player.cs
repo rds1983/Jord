@@ -54,16 +54,15 @@ namespace TroublesOfJord.Core
 			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);
 
-			var delay = PlayerRoundInMs / 2;
 			AttackInfo attackInfo = null;
 			if (weapon == null)
 			{
-				attackInfo = new AttackInfo(AttackType.Hit, 1, 4, delay);
+				attackInfo = new AttackInfo(AttackType.Hit, 1, 4);
 			}
 			else
 			{
 				var weaponInfo = (WeaponInfo)weapon.Info;
-				attackInfo = new AttackInfo(weaponInfo.AttackType, weaponInfo.MinDamage, weaponInfo.MaxDamage, delay);
+				attackInfo = new AttackInfo(weaponInfo.AttackType, weaponInfo.MinDamage, weaponInfo.MaxDamage);
 			}
 
 			var battleStats = _stats.Battle;

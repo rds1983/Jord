@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TroublesOfJord.Compiling;
 
 namespace TroublesOfJord.Core.Items
 {
@@ -19,7 +18,6 @@ namespace TroublesOfJord.Core.Items
 			get; set;
 		}
 
-		[IgnoreField]
 		public string TypeDisplayName
 		{
 			get

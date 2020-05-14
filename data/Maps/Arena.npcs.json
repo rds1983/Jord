@@ -4,10 +4,12 @@
 		"Orc": 
 		{
 			"Name": "Orc",
-			"Color": "Green",
+			"Image": "CreatureOrc",
 			"Symbol": "o",
 			"IsAttackable": true,
 			"Gold": 300,
+			"ArmorClass": 0,
+			"HitRoll": 0,
             "Attacks": [
                 {
                     "AttackType": "Hit",

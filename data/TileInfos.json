@@ -1,62 +1,62 @@
 ﻿{
   "TileInfos": {
     "Grass": {
-      "Color": "DarkGreen",
+	  "Image": "TileGrass",
       "Passable": "True",
       "Symbol": "."
     },
     "HighGrass": {
-      "Color": "Green",
+	  "Image": "TileHighGrass",
       "Passable": "True",
       "Symbol": "."
     },
     "Ground": {
-      "Color": "Brown",
+	  "Image": "TileGround",
       "Passable": "True",
       "Symbol": "."
     },
     "Floor": {
-      "Color": "Gray",
+	  "Image": "TileFloor",
       "Passable": "True",
       "Symbol": "."
     },
     "Tree": {
-      "Color": "Green",
+	  "Image": "TileTree",
       "Passable": "False",
       "Symbol": "T"
     },
     "Mountain": {
-      "Color": "White",
+	  "Image": "TileMountain",
       "Passable": "False",
       "Symbol": "^"
     },
     "Water": {
-      "Color": "Blue",
+	  "Image": "TileWater",
       "Passable": "False",
       "Symbol": "."
     },
     "Road": {
-      "Color": "Brown",
+	  "Image": "TileRoad",
       "Passable": "True",
       "Symbol": "."
     },
     "Wall": {
-      "Color": "Gray",
+	  "Image": "TileWall",
       "Passable": "False",
       "Symbol": "#"
     },
     "Plato": {
-      "Color": "White",
+	  "Image": "TilePlato",
       "Passable": "True",
       "Symbol": "."
     },
     "ExitDown": {
-      "Color": "White",
+	  "Image": "TileExitDown",
       "Passable": "True",
       "Symbol": ">"
     },
     "ExitUp": {
-      "Color": "White",
+	  "Image": "TileExitUp",
       "Passable": "True",
       "Symbol": "<"
     }        

@@ -1,40 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using TroublesOfJord.Core;
+﻿using TroublesOfJord.Core;
 using TroublesOfJord.Generation;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	public class GeneratorLoader : Loader<BaseGenerator>
+	class GeneratorLoader : Loader<BaseGenerator>
 	{
 		public GeneratorLoader() : base("GeneratorConfigs")
 		{
 		}
 
-		public override void FillData(Module module, Dictionary<string, BaseGenerator> output)
+		public override BaseGenerator LoadItem(Module module, string id, ObjectData data)
 		{
-			var assembly = GetType().Assembly;
-			foreach (var pair in _sourceData)
+			BaseGenerator result = null;
+
+			var type = EnsureString(data, "Type");
+			if (type == "Rooms")
 			{
-				var typeName = pair.Value.Data["Type"].ToString();
-
-				var fullTypeName = "TroublesOfJord.Generation." + typeName + "Generator";
-				var type = assembly.GetType(fullTypeName);
-
-				if (type == null)
+				var roomsConfig = new RoomsGenerator
 				{
-					throw new Exception(string.Format("Could not resolve item type '{0}'", typeName));
-				}
+					MinimumRoomsCount = EnsureInt(data, "MinimumRoomsCount"),
+					MaximumRoomsCount = EnsureInt(data, "MaximumRoomsCount"),
+					MinimumRoomWidth = EnsureInt(data, "MinimumRoomWidth"),
+					MaximumRoomWidth = EnsureInt(data, "MaximumRoomWidth"),
+					MinimumRoomHeight = EnsureInt(data, "MinimumRoomHeight"),
+					MaximumRoomHeight = EnsureInt(data, "MaximumRoomHeight"),
+					RoomBorderSize = EnsureInt(data, "RoomBorderSize"),
+					FillerTileId = EnsureString(data, "FillerTileId"),
+					SpaceTileId = EnsureString(data, "SpaceTileId"),
+				};
 
-				var props = CompilerUtils.GetMembers(type);
-				var item = (BaseGenerator)LoadItem(module, type, pair.Key, pair.Value);
-				output[item.Id] = item;
-
-				if (CompilerParams.Verbose)
-				{
-					TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
-				}
+				result = roomsConfig;
 			}
+			else
+			{
+				RaiseError("Could not resolve type {0}. Source = {1}", type, data.Source);
+			}
+
+			result.Width = EnsureInt(data, "Width");
+			result.Height = EnsureInt(data, "Height");
+
+			return result;
 		}
 	}
 }

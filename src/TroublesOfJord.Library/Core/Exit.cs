@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using TroublesOfJord.Compiling;
 
 namespace TroublesOfJord.Core
 {
@@ -9,7 +8,6 @@ namespace TroublesOfJord.Core
 		public string ExitMapId;
 		public string TileInfoId;
 
-		[OptionalField]
 		public Point? Position;
 
 		public override string ToString()

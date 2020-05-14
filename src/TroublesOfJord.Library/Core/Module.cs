@@ -31,6 +31,11 @@ namespace TroublesOfJord.Core
 			return result;
 		}
 
+		public Appearance EnsureAppearance(string id)
+		{
+			return Ensure(CurrentTileSet.Appearances, id);
+		}
+
 		public TileSet EnsureTileSet(string id)
 		{
 			return Ensure(TileSets, id);

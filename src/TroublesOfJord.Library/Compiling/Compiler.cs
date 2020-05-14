@@ -13,19 +13,26 @@ namespace TroublesOfJord.Compiling
 {
 	public class Compiler
 	{
+		public const string IdName = "Id";
+		public const string NameName = "Name";
+		public const string ImageName = "Image";
+		public const string MapName = "Map";
+		public const string TileSetName = "TileSet";
+		public const string ModuleInfoName = "ModuleInfo";
+
 		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
 		private ObjectData _moduleInfo;
 
 		public Compiler()
 		{
-			_loaders[typeof(TileSet)] = new Loader<TileSet>("TileSets");
+			_loaders[typeof(TileSet)] = new TileSetLoader();
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(MapTemplate)] = new MapTemplateLoader();
-			_loaders[typeof(TileInfo)] = new Loader<TileInfo>("TileInfos");
+			_loaders[typeof(TileInfo)] = new TileInfoLoader();
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
-			_loaders[typeof(Class)] = new Loader<Class>("Classes");
+			_loaders[typeof(Class)] = new ClassLoader();
 			_loaders[typeof(BaseGenerator)] = new GeneratorLoader();
 		}
 
@@ -59,7 +66,7 @@ namespace TroublesOfJord.Compiling
 				foreach (var pair in json)
 				{
 					var key = pair.Key;
-					if (key == CompilerUtils.TileSetName)
+					if (key == TileSetName)
 					{
 						if (json.Count > 1)
 						{
@@ -68,7 +75,7 @@ namespace TroublesOfJord.Compiling
 
 						var obj = (JObject)pair.Value;
 						JToken idToken;
-						if (!obj.TryGetValue(CompilerUtils.IdName, out idToken))
+						if (!obj.TryGetValue(IdName, out idToken))
 						{
 							throw new Exception(string.Format("Tileset object lacks id. Source: '{0}'", s));
 						}
@@ -79,7 +86,7 @@ namespace TroublesOfJord.Compiling
 
 						continue;
 					}
-					else if (key == CompilerUtils.MapName)
+					else if (key == MapName)
 					{
 						if (json.Count > 1)
 						{
@@ -88,7 +95,7 @@ namespace TroublesOfJord.Compiling
 
 						var obj = (JObject)pair.Value;
 						JToken idToken;
-						if (!obj.TryGetValue(CompilerUtils.IdName, out idToken))
+						if (!obj.TryGetValue(IdName, out idToken))
 						{
 							throw new Exception(string.Format("Map object lacks id. Source: '{0}'", s));
 						}
@@ -99,7 +106,7 @@ namespace TroublesOfJord.Compiling
 
 						continue;
 					}
-					else if (key == CompilerUtils.ModuleInfoName)
+					else if (key == ModuleInfoName)
 					{
 						var obj = (JObject)pair.Value;
 						_moduleInfo = new ObjectData
@@ -157,6 +164,16 @@ namespace TroublesOfJord.Compiling
 			}
 		}
 
+		private static ModuleInfo LoadModuleInfo(Module module, ObjectData od)
+		{
+			return new ModuleInfo
+			{
+				Id = BaseLoader.EnsureId(od),
+				PlayerAppearance = BaseLoader.EnsureAppearance(module, od, "PlayerImage"),
+				Source = od.Source
+			};
+		}
+
 		public Module Process(string path)
 		{
 			// First run - parse json and build object maps
@@ -181,9 +198,7 @@ namespace TroublesOfJord.Compiling
 				throw new Exception("Couldn't find mandatory 'ModuleInfo' node");
 			}
 
-			var id = _moduleInfo.Data[CompilerUtils.IdName].ToString();
-			_module.ModuleInfo = (ModuleInfo)BaseLoader.LoadData(_module, typeof(ModuleInfo), id, _moduleInfo.Data, _moduleInfo.Source);
-			_module.ModuleInfo.Id = id;
+			_module.ModuleInfo = LoadModuleInfo(_module, _moduleInfo);
 
 			// Tile Infos
 			FillData(_module.TileInfos);
