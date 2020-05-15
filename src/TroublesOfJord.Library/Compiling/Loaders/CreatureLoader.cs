@@ -18,15 +18,18 @@ namespace TroublesOfJord.Compiling.Loaders
 				Image = EnsureAppearance(module, data, Compiler.ImageName),
 				Gold = EnsureInt(data, "Gold"),
 				IsMerchant = OptionalBool(data, "IsMerchant", false),
-				IsAttackable = OptionalBool(data, "IsAttackable", false),
+				CreatureType = EnsureEnum<CreatureType>(data.Data, data.Source, "Type")
 			};
 
 			EnsureBaseMapObject(module, data, result);
 
-			if (result.IsAttackable)
+			if (result.CreatureType != CreatureType.Npc)
 			{
 				result.ArmorClass = EnsureInt(data, "ArmorClass");
 				result.HitRoll = EnsureInt(data, "HitRoll");
+				result.MaxHp = EnsureInt(data, "MaxHp");
+				result.MaxMana = OptionalInt(data, "MaxMana");
+				result.MaxStamina = OptionalInt(data, "MaxStamina");
 
 				var attacks = (JArray)data.Data["Attacks"];
 				foreach(JObject attackObj in attacks)

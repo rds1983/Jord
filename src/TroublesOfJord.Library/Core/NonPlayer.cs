@@ -57,5 +57,33 @@ namespace TroublesOfJord.Core
 
 			_dirty = false;
 		}
+
+		public void Act()
+		{
+			if (Info.CreatureType == CreatureType.Npc)
+			{
+				return;
+			}
+
+			// Attack player if he is nearby
+			for(var x = Math.Max(Position.X - 1, 0); x <= Math.Min(Position.X + 1, Map.Size.X - 1); ++x)
+			{
+				for (var y = Math.Max(Position.Y - 1, 0); y <= Math.Min(Position.Y + 1, Map.Size.Y - 1); ++y)
+				{
+					if (x == Position.X && y == Position.Y)
+					{
+						continue;
+					}
+
+					var player = Map[x, y].Creature as Player;
+					if (player == null)
+					{
+						continue;
+					}
+
+					Attack(player);
+				}
+			}
+		}
 	}
 }

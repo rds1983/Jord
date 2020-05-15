@@ -1,21 +1,43 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
 	partial class Creature
 	{
-		public void MoveTo(Point delta)
+		public bool MoveTo(Point delta)
 		{
-			var newPosition = Position + delta;
-			if (!TilePassable(newPosition) || delta == Point.Zero)
+			if (delta == Point.Zero)
 			{
-				return;
+				return false;
+			}
+
+			var newPosition = Position + delta;
+
+			if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X >= Map.Size.X || newPosition.Y >= Map.Size.Y)
+			{
+				return false;
+			}
+
+			var newTile = Map[newPosition];
+			var creature = newTile.Creature;
+			if (creature != null)
+			{
+				var asNonPlayer = creature as NonPlayer;
+				if (asNonPlayer != null && asNonPlayer.Info.CreatureType != CreatureType.Npc)
+				{
+					Attack(creature);
+
+					return true;
+				}
+			}
+
+			if (!newTile.Info.Passable)
+			{
+				return false;
 			}
 
 			SetPosition(newPosition);
+			return true;
 		}
 
 		public bool Enter()

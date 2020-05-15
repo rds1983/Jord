@@ -6,10 +6,11 @@
 			"Name": "Orc",
 			"Image": "CreatureOrc",
 			"Symbol": "o",
-			"IsAttackable": true,
+			"Type": "Aggressive",
 			"Gold": 300,
 			"ArmorClass": 0,
 			"HitRoll": 0,
+			"MaxHp": 200,
             "Attacks": [
                 {
                     "AttackType": "Hit",

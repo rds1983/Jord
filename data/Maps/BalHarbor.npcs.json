@@ -6,6 +6,7 @@
 			"Name": "Weapon Merchant",
 			"Image": "CreatureWeaponMerchant",
 			"Symbol": "p",
+			"Type": "Npc",
 			"IsMerchant": true,
 			"Gold": 50000,
 			"Inventory": 

@@ -2,6 +2,13 @@
 
 namespace TroublesOfJord.Core
 {
+	public enum CreatureType
+	{
+		Npc,
+		Attackable,
+		Aggressive
+	}
+
 	public class CreatureInfo : BaseMapObject
 	{
 		private readonly List<AttackInfo> _attacks = new List<AttackInfo>();
@@ -9,9 +16,9 @@ namespace TroublesOfJord.Core
 		public string Name { get; set; }
 		public int Gold { get; set; }
 
-		public bool IsMerchant { get; set; }
+		public CreatureType CreatureType;
 
-		public bool IsAttackable { get; set; }
+		public bool IsMerchant { get; set; }
 
 		public Inventory Inventory { get; set; }
 

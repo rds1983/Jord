@@ -36,20 +36,6 @@ namespace TroublesOfJord
 			}
 		}
 
-		public static bool IsFighting
-		{
-			get
-			{
-				var player = Player;
-				if (player == null)
-				{
-					return false;
-				}
-
-				return player.AttackTarget != null;
-			}
-		}
-
 		public static string Version
 		{
 			get

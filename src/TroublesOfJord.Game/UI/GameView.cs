@@ -11,10 +11,12 @@ namespace TroublesOfJord.UI
 	{
 		private DateTime? _delayStarted;
 		private int _delayInMs = 0;
+		private KeyboardState _lastKeys;
 		public MapView MapView { get; } = new MapView();
 		public MiniMap MapNavigation { get; } = new MiniMap();
 		public LogView LogView { get; } = new LogView();
 		public readonly SkillWidget[] Skills = new SkillWidget[10];
+
 
 		protected override bool AcceptsKeyboardFocus => true;
 
@@ -86,7 +88,7 @@ namespace TroublesOfJord.UI
 
 		private bool ProcessMovement(ref KeyboardState keys)
 		{
-			var processed = true;
+			var isMovement = true;
 
 			var delta = Point.Zero;
 			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
@@ -122,10 +124,11 @@ namespace TroublesOfJord.UI
 				delta = new Point(1, 1);
 			} else
 			{
-				processed = false;
+				isMovement = false;
 			}
 
-			if (processed)
+			var result = false;
+			if (isMovement)
 			{
 				var newPos = TJ.Player.Position + delta;
 				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Size.X && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Size.Y)
@@ -139,13 +142,18 @@ namespace TroublesOfJord.UI
 					}
 					else
 					{
-						TJ.Player.MoveTo(delta);
+						result = TJ.Player.MoveTo(delta);
 					}
 
 				}
 			}
 
-			return processed;
+			return result;
+		}
+
+		private bool IsKeyPressed(ref KeyboardState keys, Keys key)
+		{
+			return keys.IsKeyDown(key) && !_lastKeys.IsKeyDown(key);
 		}
 
 		private void ProcessInput()
@@ -157,15 +165,16 @@ namespace TroublesOfJord.UI
 
 			var keys = Keyboard.GetState();
 
-			if (ProcessMovement(ref keys))
+			var acted = ProcessMovement(ref keys);
+			if (acted)
 			{
 			}
-			else if (keys.IsKeyDown(Keys.I))
+			else if (IsKeyPressed(ref keys, Keys.I))
 			{
 				var inventoryWindow = new InventoryWindow();
 				inventoryWindow.ShowModal();
 			}
-			else if (keys.IsKeyDown(Keys.E))
+			else if (IsKeyPressed(ref keys, Keys.E))
 			{
 				if (TJ.Session.Player.Enter())
 				{
@@ -173,12 +182,36 @@ namespace TroublesOfJord.UI
 				}
 			}
 
-			var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
-			if (!isRunning)
+			if (acted)
 			{
+				var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
 				_delayStarted = DateTime.Now;
-				_delayInMs = Config.TurnDelayInMs;
+				if (!isRunning)
+				{
+					_delayInMs = Config.TurnDelayInMs;
+				} else
+				{
+					_delayInMs = Config.TurnDelayInMs / 2;
+				}
+
+				// Let npcs act
+				var map = TJ.Player.Map;
+				for (var x = 0; x < map.Size.X; ++x)
+				{
+					for (var y = 0; y < map.Size.Y; ++y)
+					{
+						var npc = map[x, y].Creature as NonPlayer;
+						if (npc == null)
+						{
+							continue;
+						}
+
+						npc.Act();
+					}
+				}
 			}
+
+			_lastKeys = keys;
 		}
 
 		public override void InternalRender(RenderContext batch)

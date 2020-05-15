@@ -6,7 +6,7 @@
 			"Name": "a sewer rat",
 			"Image": "CreatureRat",
 			"Symbol": "r",
-			"IsAttackable": true,
+			"Type": "Aggressive",
 			"Gold": 10,
             "Attacks": [
                 {

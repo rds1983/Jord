@@ -33,9 +33,6 @@ namespace TroublesOfJord.Core
 
 		public Inventory Inventory { get; } = new Inventory();
 
-		public Creature AttackTarget { get; set; }
-		public int AttackDelayInMs { get; set; }
-
 		public bool IsPlaceable(Map map, Point pos)
 		{
 			if (pos.X < 0 || pos.X >= map.Size.X ||
@@ -89,15 +86,6 @@ namespace TroublesOfJord.Core
 			return result;
 		}
 
-		private bool TilePassable(Point pos)
-		{
-			var tile = Map[pos];
-
-			return tile.Info.Passable &&
-				   (tile.Creature == null ||
-					tile.Creature == this);
-		}
-
 		public void Place(Map map, Point position)
 		{
 			if (position.X < 0 || position.X >= map.Size.X ||
@@ -116,8 +104,6 @@ namespace TroublesOfJord.Core
 
 		public bool Remove()
 		{
-			AttackTarget = null;
-
 			if (Map == null)
 			{
 				return false;

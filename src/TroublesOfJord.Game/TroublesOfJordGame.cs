@@ -101,6 +101,8 @@ namespace TroublesOfJord
 			Desktop.FocusedKeyboardWidget = gameView;
 
 			UpdateStats();
+
+			TJ.GameLog("Welcome to 'Troubles of Jord' version {0}.", TJ.Version);
 		}
 
 		private void UpdateStats()

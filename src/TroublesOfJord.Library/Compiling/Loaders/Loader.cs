@@ -205,6 +205,28 @@ namespace TroublesOfJord.Compiling.Loaders
 			return token.ToString();
 		}
 
+		public static int OptionalInt(JObject obj, string source, string fieldName, int def = 0)
+		{
+			var value = Optional(obj, fieldName);
+			if (value == null)
+			{
+				return def;
+			}
+
+			int result;
+			if (!int.TryParse(value, out result))
+			{
+				RaiseError("Can't parse '{0}' as int value. Source: {1}", value, source);
+			}
+
+			return result;
+		}
+
+		public static int OptionalInt(ObjectData data, string fieldName, int def = 0)
+		{
+			return OptionalInt(data.Data, data.Source, fieldName, def);
+		}
+
 		public static bool OptionalBool(JObject obj, string source, string fieldName, bool def)
 		{
 			var value = Optional(obj, fieldName);
@@ -213,7 +235,13 @@ namespace TroublesOfJord.Compiling.Loaders
 				return def;
 			}
 
-			return bool.Parse(value);
+			bool result;
+			if (!bool.TryParse(value, out result))
+			{
+				RaiseError("Can't parse '{0}' as bool value. Source: {1}", value, source);
+			}
+
+			return result;
 		}
 
 		public static bool OptionalBool(ObjectData data, string fieldName, bool def)
