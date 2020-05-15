@@ -47,7 +47,8 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				var armor = new ArmorInfo
 				{
-					ArmorClass = EnsureInt(data, "ArmorClass")
+					ArmorClass = EnsureInt(data, "ArmorClass"),
+					SubType = EnsureEnum<EquipType>(data, "SubType")
 				};
 
 				result = armor;
