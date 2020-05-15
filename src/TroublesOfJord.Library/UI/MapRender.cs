@@ -106,8 +106,12 @@ namespace TroublesOfJord.UI
 					}
 				}
 
-/*				Appearance.MerchantSign.Draw(context.Batch, SmallFont, new Rectangle(screen.X, screen.Y,
-					tileSize.X, tileSize.Y), opacity);*/
+				var font = Font;
+				var measureSize = font.MeasureString("$");
+				var x = screen.X + (tileSize.X - measureSize.X) / 2;
+				var y = screen.Y + (tileSize.Y - measureSize.Y) / 2 - 8;
+
+				context.Batch.DrawString(font, "$", new Vector2(x, y), Color.Gold * opacity);
 			}
 
 			if (npc.Stats.Life.MaximumHP != 0 &&

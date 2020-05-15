@@ -53,7 +53,7 @@
 			},
 			"Player": {
 			  "Color": "White",
-			  "Symbol": "p"
+			  "Symbol": "@"
 			},
 			"CreatureOrc": {
 			  "Color": "Green",
