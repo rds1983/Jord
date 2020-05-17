@@ -1,9 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
 	partial class Creature
 	{
+		public void SetPosition(Point position)
+		{
+			var currentTile = Map[Position];
+			var newTile = Map[position];
+
+			if (currentTile != newTile)
+			{
+				newTile.Creature = currentTile.Creature;
+				currentTile.Creature = null;
+			}
+
+			Position = position;
+			DisplayPosition = position.ToVector2();
+		}
+
 		public bool MoveTo(Point delta)
 		{
 			if (delta == Point.Zero)
@@ -37,6 +53,7 @@ namespace TroublesOfJord.Core
 			}
 
 			SetPosition(newPosition);
+
 			return true;
 		}
 

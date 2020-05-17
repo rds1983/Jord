@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Priority_Queue;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
@@ -15,17 +16,6 @@ namespace TroublesOfJord.Core
 
 		private static readonly float SquareRootFromTwo = (float)Math.Sqrt(2);
 		private const int DirectionsCount = 8;
-
-		public static readonly Point[] AllDirections = {
-			new Point(-1, 0),
-			new Point(1, 0),
-			new Point(0, -1),
-			new Point(0, 1),
-			new Point(-1, -1),
-			new Point(1, -1),
-			new Point(-1, 1),
-			new Point(1, 1),
-		};
 
 		private class PathGridNode: FastPriorityQueueNode
 		{
@@ -99,7 +89,7 @@ namespace TroublesOfJord.Core
 				// Iterate through adjancent nodes
 				for (var d = 0; d < 4; d++)
 				{
-					var delta = AllDirections[d];
+					var delta = CoreUtils.AllDirections[d];
 					var newPos = node.Position;
 					newPos += delta;
 

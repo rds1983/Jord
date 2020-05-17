@@ -1,16 +1,14 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Myra.Extended.Widgets;
 using Myra.Graphics2D.UI;
 using System;
 using TroublesOfJord.Core;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.UI
 {
 	public partial class GameView
 	{
-		private DateTime? _delayStarted;
-		private int _delayInMs = 0;
 		private KeyboardState _lastKeys;
 		public MapView MapView { get; } = new MapView();
 		public MiniMap MapNavigation { get; } = new MiniMap();
@@ -88,48 +86,45 @@ namespace TroublesOfJord.UI
 
 		private bool ProcessMovement(ref KeyboardState keys)
 		{
-			var isMovement = true;
+			MovementDirection? direction = null;
 
-			var delta = Point.Zero;
 			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
 			{
-				delta = new Point(-1, 0);
+				direction = MovementDirection.Left;
 			}
 			else if (keys.IsKeyDown(Keys.Right) || keys.IsKeyDown(Keys.NumPad6))
 			{
-				delta = new Point(1, 0);
+				direction = MovementDirection.Right;
 			}
 			else if (keys.IsKeyDown(Keys.Up) || keys.IsKeyDown(Keys.NumPad8))
 			{
-				delta = new Point(0, -1);
+				direction = MovementDirection.Up;
 			}
 			else if (keys.IsKeyDown(Keys.Down) || keys.IsKeyDown(Keys.NumPad2))
 			{
-				delta = new Point(0, 1);
+				direction = MovementDirection.Down;
 			}
 			else if (keys.IsKeyDown(Keys.NumPad7))
 			{
-				delta = new Point(-1, -1);
+				direction = MovementDirection.UpLeft;
 			}
 			else if (keys.IsKeyDown(Keys.NumPad9))
 			{
-				delta = new Point(1, -1);
+				direction = MovementDirection.UpRight;
 			}
 			else if (keys.IsKeyDown(Keys.NumPad1))
 			{
-				delta = new Point(-1, 1);
+				direction = MovementDirection.DownLeft;
 			}
 			else if (keys.IsKeyDown(Keys.NumPad3))
 			{
-				delta = new Point(1, 1);
-			} else
-			{
-				isMovement = false;
+				direction = MovementDirection.DownRight;
 			}
 
 			var result = false;
-			if (isMovement)
+			if (direction != null)
 			{
+				var delta = direction.Value.GetDelta();
 				var newPos = TJ.Player.Position + delta;
 				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Size.X && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Size.Y)
 				{
@@ -142,9 +137,9 @@ namespace TroublesOfJord.UI
 					}
 					else
 					{
-						result = TJ.Player.MoveTo(delta);
+						var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
+						result = TJ.Session.MovePlayer(direction.Value, isRunning);
 					}
-
 				}
 			}
 
@@ -158,13 +153,12 @@ namespace TroublesOfJord.UI
 
 		private void ProcessInput()
 		{
-			if (!Active || _delayStarted != null)
+			if (!Active || !TJ.Session.AcceptsInput)
 			{
 				return;
 			}
 
 			var keys = Keyboard.GetState();
-
 			var acted = ProcessMovement(ref keys);
 			if (acted)
 			{
@@ -182,35 +176,6 @@ namespace TroublesOfJord.UI
 				}
 			}
 
-			if (acted)
-			{
-				var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
-				_delayStarted = DateTime.Now;
-				if (!isRunning)
-				{
-					_delayInMs = Config.TurnDelayInMs;
-				} else
-				{
-					_delayInMs = Config.TurnDelayInMs / 2;
-				}
-
-				// Let npcs act
-				var map = TJ.Player.Map;
-				for (var x = 0; x < map.Size.X; ++x)
-				{
-					for (var y = 0; y < map.Size.Y; ++y)
-					{
-						var npc = map[x, y].Creature as NonPlayer;
-						if (npc == null)
-						{
-							continue;
-						}
-
-						npc.Act();
-					}
-				}
-			}
-
 			_lastKeys = keys;
 		}
 
@@ -219,15 +184,7 @@ namespace TroublesOfJord.UI
 			base.InternalRender(batch);
 
 			ProcessInput();
-
-			if (_delayStarted != null)
-			{
-				var passed = (DateTime.Now - _delayStarted.Value).TotalMilliseconds;
-				if (passed >= _delayInMs)
-				{
-					_delayStarted = null;
-				}
-			}
+			TJ.Session.Update();
 		}
 	}
 }
