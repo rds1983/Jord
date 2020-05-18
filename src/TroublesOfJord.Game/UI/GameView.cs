@@ -172,7 +172,7 @@ namespace TroublesOfJord.UI
 			{
 				if (TJ.Session.Player.Enter())
 				{
-					MapNavigation.InvalidateImage();
+					TJ.Session.UpdateTilesVisibility();
 				}
 			}
 

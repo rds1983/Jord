@@ -36,6 +36,8 @@ namespace TroublesOfJord.Core
 
 		public Exit Exit;
 
+		public bool Visible;
+
 		public Tile()
 		{
 		}

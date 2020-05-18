@@ -60,6 +60,11 @@ namespace TroublesOfJord.UI
 									continue;
 								}
 
+								if (!tile.Visible)
+								{
+									continue;
+								}
+
 								var color = tile.Info.Image.Color;
 								if (tile.Creature != null && !(tile.Creature is Player))
 								{

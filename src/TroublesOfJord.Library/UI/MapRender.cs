@@ -162,6 +162,12 @@ namespace TroublesOfJord.UI
 
 					var pos = new Point(mapX, mapY);
 					var tile = Map[pos];
+
+					if (!tile.Visible)
+					{
+						continue;
+					}
+
 					BeforeDrawTile(context, tile);
 
 					var screen = GameToScreen(pos);
