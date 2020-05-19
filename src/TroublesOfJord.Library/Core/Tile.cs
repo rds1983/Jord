@@ -91,5 +91,40 @@ namespace TroublesOfJord.Core
 			}
 			return X == other.X && Y == other.Y && IsTransparent == other.IsTransparent && IsWalkable == other.IsWalkable && IsInFov == other.IsInFov && IsExplored == other.IsExplored;
 		}
+
+		/// <summary>
+		/// Provides a simple visual representation of the Cell using the following symbols:
+		/// - `%`: `Cell` is not in field-of-view
+		/// - `.`: `Cell` is transparent, walkable, and in field-of-view
+		/// - `s`: `Cell` is walkable and in field-of-view (but not transparent)
+		/// - `o`: `Cell` is transparent and in field-of-view (but not walkable)
+		/// - `#`: `Cell` is in field-of-view (but not transparent or walkable)
+		/// </summary>
+		/// <returns>A string representation of the Cell using special symbols to denote Cell properties</returns>
+		public override string ToString()
+		{
+			if (IsWalkable)
+			{
+				if (IsTransparent)
+				{
+					return ".";
+				}
+				else
+				{
+					return "s";
+				}
+			}
+			else
+			{
+				if (IsTransparent)
+				{
+					return "o";
+				}
+				else
+				{
+					return "#";
+				}
+			}
+		}
 	}
 }
