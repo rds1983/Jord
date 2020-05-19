@@ -100,8 +100,8 @@ namespace TroublesOfJord
 			var gameView = (GameView)Desktop.Root;
 			Desktop.FocusedKeyboardWidget = gameView;
 
-			TJ.Session.MapRender = gameView.MapView;
 			TJ.Session.MapNavigationBase = gameView.MapNavigation;
+			TJ.Session.UpdateTilesVisibility();
 
 			UpdateStats();
 

@@ -255,7 +255,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		}
 	}
 
-	abstract class Loader<T> : BaseLoader where T : BaseObject
+	abstract class Loader<T> : BaseLoader where T : IBaseObject
 	{
 		public override string TypeName => typeof(T).Name;
 		public override Type Type => typeof(T);

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\FNA\FNA.csproj" />
     <ProjectReference Include="..\..\..\Myra\src\Myra\Myra.FNA.csproj" />
+    <ProjectReference Include="..\..\..\RogueSharp\RogueSharp\RogueSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

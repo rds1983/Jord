@@ -54,9 +54,8 @@ namespace TroublesOfJord.Compiling.Loaders
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}
 
-			var map = new Map
+			var map = new Map(EnsurePoint(data.Data, data.Source, "Size"))
 			{
-				Size = EnsurePoint(data.Data, data.Source, "Size"),
 				Local = EnsureBool(data, "Local")
 			};
 
@@ -247,9 +246,9 @@ namespace TroublesOfJord.Compiling.Loaders
 			var legend = new Dictionary<char, object>();
 			var tileInfos = new Dictionary<string, char>();
 			var creatureInfos = new Dictionary<string, char>();
-			for (var y = 0; y < map.Size.Y; ++y)
+			for (var y = 0; y < map.Height; ++y)
 			{
-				for (var x = 0; x < map.Size.X; ++x)
+				for (var x = 0; x < map.Width; ++x)
 				{
 					var tile = map[x, y];
 
@@ -284,8 +283,8 @@ namespace TroublesOfJord.Compiling.Loaders
 				[Compiler.IdName] = map.Id,
 				["Size"] = new JObject
 				{ 
-					["X"] = map.Size.X,
-					["Y"] = map.Size.Y,
+					["X"] = map.Width,
+					["Y"] = map.Height,
 				}
 				["Local"] = map.Local
 			};
@@ -329,10 +328,10 @@ namespace TroublesOfJord.Compiling.Loaders
 			// Data
 			var dataArray = new JArray();
 			var sb = new StringBuilder();
-			for (var y = 0; y < map.Size.Y; ++y)
+			for (var y = 0; y < map.Height; ++y)
 			{
 				sb.Clear();
-				for (var x = 0; x < map.Size.X; ++x)
+				for (var x = 0; x < map.Width; ++x)
 				{
 					var tile = map[x, y];
 					sb.Append(tileInfos[tile.Info.Id]);

@@ -86,10 +86,7 @@ namespace TroublesOfJord.Generation
 			var fillerTile = TJ.Module.EnsureTileInfo(FillerTileId);
 			var spaceTile = TJ.Module.EnsureTileInfo(SpaceTileId);
 
-			var map = new Map
-			{
-				Size = new Point(Width, Height)
-			};
+			var map = new Map(Width, Height);
 
 			for (var x = 0; x < Width; ++x)
 			{

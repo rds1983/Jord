@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA", "..\FNA\FNA.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TroublesOfJord.FontToTextureAtlas", "src\TroublesOfJord.FontToTextureAtlas\TroublesOfJord.FontToTextureAtlas.csproj", "{146CAF0C-77AF-4A65-ADD2-5F8608E63768}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RogueSharp", "..\RogueSharp\RogueSharp\RogueSharp.csproj", "{A8ECA433-4269-4494-867F-FE2377FDE19D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,18 @@ Global
 		{146CAF0C-77AF-4A65-ADD2-5F8608E63768}.Release|x64.Build.0 = Release|Any CPU
 		{146CAF0C-77AF-4A65-ADD2-5F8608E63768}.Release|x86.ActiveCfg = Release|Any CPU
 		{146CAF0C-77AF-4A65-ADD2-5F8608E63768}.Release|x86.Build.0 = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|x64.Build.0 = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Debug|x86.Build.0 = Debug|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|x64.ActiveCfg = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|x64.Build.0 = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|x86.ActiveCfg = Release|Any CPU
+		{A8ECA433-4269-4494-867F-FE2377FDE19D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

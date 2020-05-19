@@ -28,7 +28,7 @@ namespace TroublesOfJord.UI
 		{
 			get
 			{
-				return (float)Map.Size.X / Map.Size.Y;
+				return (float)Map.Width / Map.Height;
 			}
 		}
 
@@ -41,9 +41,9 @@ namespace TroublesOfJord.UI
 		private void UpdateLayer(Func<Tile, bool> checker)
 		{
 			// Bottom layer
-			for (var mapY = 0; mapY < Map.Size.Y; ++mapY)
+			for (var mapY = 0; mapY < Map.Height; ++mapY)
 			{
-				for (var mapX = 0; mapX < Map.Size.X; ++mapX)
+				for (var mapX = 0; mapX < Map.Width; ++mapX)
 				{
 					var tile = Map[mapX, mapY];
 					var rect = new Rectangle(mapX, mapY, TileSize.X, TileSize.Y);
@@ -54,19 +54,19 @@ namespace TroublesOfJord.UI
 						{
 							for (var x = rect.Left; x < rect.Right; ++x)
 							{
-								if (x >= Map.Size.X ||
-									y >= Map.Size.Y)
+								if (x >= Map.Width ||
+									y >= Map.Height)
 								{
 									continue;
 								}
 
-								if (!tile.Visible)
+								if (!tile.IsExplored)
 								{
 									continue;
 								}
 
 								var color = tile.Info.Image.Color;
-								if (tile.Creature != null && !(tile.Creature is Player))
+								if (tile.IsInFov && tile.Creature != null && !(tile.Creature is Player))
 								{
 									color = tile.Creature.Image.Color;
 								}
@@ -87,10 +87,10 @@ namespace TroublesOfJord.UI
 			}
 
 			if (_colorBuffer == null ||
-				_colorBuffer.Width != Map.Size.X ||
-				_colorBuffer.Height != Map.Size.Y)
+				_colorBuffer.Width != Map.Width ||
+				_colorBuffer.Height != Map.Height)
 			{
-				_colorBuffer = new ColorBuffer(Map.Size.X, Map.Size.Y);
+				_colorBuffer = new ColorBuffer(Map.Width, Map.Height);
 			}
 
 			// Bottom layer
@@ -147,8 +147,8 @@ namespace TroublesOfJord.UI
 			int x, width;
 			GetScreenHorizontal(out x, out width);
 
-			return new Point(x + (int)(gamePosition.X * width / Map.Size.X),
-				ActualBounds.Y + (int)(gamePosition.Y * ActualBounds.Height / Map.Size.Y));
+			return new Point(x + (int)(gamePosition.X * width / Map.Width),
+				ActualBounds.Y + (int)(gamePosition.Y * ActualBounds.Height / Map.Height));
 		}
 
 		public Vector2 ScreenToGame(Point position)
@@ -157,8 +157,8 @@ namespace TroublesOfJord.UI
 
 			var tilePosition = new Vector2
 			{
-				X = position.X * Map.Size.X / ActualBounds.Width,
-				Y = position.Y * Map.Size.Y / ActualBounds.Height,
+				X = position.X * Map.Width / ActualBounds.Width,
+				Y = position.Y * Map.Height / ActualBounds.Height,
 			};
 
 			if (tilePosition.X < 0)
@@ -166,9 +166,9 @@ namespace TroublesOfJord.UI
 				tilePosition.X = 0;
 			}
 
-			if (tilePosition.X >= Map.Size.X)
+			if (tilePosition.X >= Map.Width)
 			{
-				tilePosition.X = Map.Size.X - 1;
+				tilePosition.X = Map.Width - 1;
 			}
 
 			if (tilePosition.Y < 0)
@@ -176,9 +176,9 @@ namespace TroublesOfJord.UI
 				tilePosition.Y = 0;
 			}
 
-			if (tilePosition.Y >= Map.Size.Y)
+			if (tilePosition.Y >= Map.Height)
 			{
-				tilePosition.Y = Map.Size.Y - 1;
+				tilePosition.Y = Map.Height - 1;
 			}
 
 			return tilePosition;

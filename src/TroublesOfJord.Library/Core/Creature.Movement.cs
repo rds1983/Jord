@@ -29,7 +29,7 @@ namespace TroublesOfJord.Core
 
 			var newPosition = Position + delta;
 
-			if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X >= Map.Size.X || newPosition.Y >= Map.Size.Y)
+			if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X >= Map.Width || newPosition.Y >= Map.Height)
 			{
 				return false;
 			}
@@ -71,9 +71,9 @@ namespace TroublesOfJord.Core
 			{
 				var mapTemplate = TJ.Module.EnsureMapTemplate(Tile.Exit.MapId);
 				map = mapTemplate.Generate();
-				for(var x = 0; x < map.Size.X; ++x)
+				for(var x = 0; x < map.Width; ++x)
 				{
-					for(var y = 0; y < map.Size.Y; ++y)
+					for(var y = 0; y < map.Height; ++y)
 					{
 						var tile = map[x, y];
 						if (tile.Exit == null)

@@ -1,10 +1,16 @@
 ﻿namespace TroublesOfJord.Core
 {
-	public class BaseObject
+	public interface IBaseObject
 	{
-		public string Id;
+		string Id { get; set; }
+		string Source { get; set; }
+	}
 
-		public string Source;
+	public class BaseObject : IBaseObject
+	{
+		public string Id { get; set; }
+
+		public string Source { get; set; }
 
 		public override string ToString()
 		{

@@ -21,9 +21,9 @@ namespace TroublesOfJord.UI
 				tl.X = 0;
 			}
 
-			if (tl.X >= Map.Size.X - GridSize.X)
+			if (tl.X >= Map.Width - GridSize.X)
 			{
-				tl.X = Map.Size.X - GridSize.X;
+				tl.X = Map.Width - GridSize.X;
 			}
 
 			if (tl.Y < 0)
@@ -31,9 +31,9 @@ namespace TroublesOfJord.UI
 				tl.Y = 0;
 			}
 
-			if (tl.Y >= Map.Size.Y - GridSize.Y)
+			if (tl.Y >= Map.Height - GridSize.Y)
 			{
-				tl.Y = Map.Size.Y - GridSize.Y;
+				tl.Y = Map.Height - GridSize.Y;
 			}
 
 			TopLeft = tl;

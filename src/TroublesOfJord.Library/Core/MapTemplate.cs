@@ -18,9 +18,9 @@ namespace TroublesOfJord.Core
 			var map = generator.Generate();
 
 			var freeTiles = new List<Tile>();
-			for (var x = 0; x < map.Size.X; ++x)
+			for (var x = 0; x < map.Width; ++x)
 			{
-				for (var y = 0; y < map.Size.Y; ++y)
+				for (var y = 0; y < map.Height; ++y)
 				{
 					var tile = map[x, y];
 					if (tile.Info.Passable && tile.Creature == null)

@@ -157,13 +157,13 @@ namespace TroublesOfJord.UI
 			{
 				for (var mapX = mapViewPort.X; mapX < mapViewPort.Right; ++mapX)
 				{
-					if (mapX < 0 || mapX >= Map.Size.X || mapY < 0 || mapY >= Map.Size.Y)
+					if (mapX < 0 || mapX >= Map.Width || mapY < 0 || mapY >= Map.Height)
 						continue;
 
 					var pos = new Point(mapX, mapY);
 					var tile = Map[pos];
 
-					if (!tile.Visible)
+					if (!tile.IsExplored)
 					{
 						continue;
 					}
@@ -174,7 +174,7 @@ namespace TroublesOfJord.UI
 
 					var opacity = 1.0f;
 					var appearance = tile.Info.Image;
-					if (tile.Creature != null)
+					if (tile.IsInFov && tile.Creature != null)
 					{
 						screen = GameToScreen(tile.Creature.DisplayPosition);
 						appearance = tile.Creature.Image;
@@ -230,8 +230,8 @@ namespace TroublesOfJord.UI
 			}
 
 			var tileSize = TileSize;
-			return new Point(Map.Size.X * tileSize.X,
-				Map.Size.Y * tileSize.Y);
+			return new Point(Map.Width * tileSize.X,
+				Map.Height * tileSize.Y);
 		}
 	}
 }

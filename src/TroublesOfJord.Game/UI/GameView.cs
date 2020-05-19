@@ -126,7 +126,7 @@ namespace TroublesOfJord.UI
 			{
 				var delta = direction.Value.GetDelta();
 				var newPos = TJ.Player.Position + delta;
-				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Size.X && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Size.Y)
+				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Width && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Height)
 				{
 					var creature = (NonPlayer)TJ.Player.Map[newPos].Creature;
 					if (creature != null && creature.Info.IsMerchant)

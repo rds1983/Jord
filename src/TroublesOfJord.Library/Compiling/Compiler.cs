@@ -141,7 +141,7 @@ namespace TroublesOfJord.Compiling
 			}
 		}
 
-		private void FillData<T>(Dictionary<string, T> output) where T : BaseObject
+		private void FillData<T>(Dictionary<string, T> output) where T : IBaseObject
 		{
 			((Loader<T>)_loaders[typeof(T)]).FillData(_module, output);
 		}

@@ -66,9 +66,9 @@ namespace TroublesOfJord.Core
 			}
 
 			// Attack player if he is nearby
-			for(var x = Math.Max(Position.X - 1, 0); x <= Math.Min(Position.X + 1, Map.Size.X - 1); ++x)
+			for(var x = Math.Max(Position.X - 1, 0); x <= Math.Min(Position.X + 1, Map.Width - 1); ++x)
 			{
-				for (var y = Math.Max(Position.Y - 1, 0); y <= Math.Min(Position.Y + 1, Map.Size.Y - 1); ++y)
+				for (var y = Math.Max(Position.Y - 1, 0); y <= Math.Min(Position.Y + 1, Map.Height - 1); ++y)
 				{
 					if (x == Position.X && y == Position.Y)
 					{

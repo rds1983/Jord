@@ -35,8 +35,8 @@ namespace TroublesOfJord.Core
 
 		public bool IsPlaceable(Map map, Point pos)
 		{
-			if (pos.X < 0 || pos.X >= map.Size.X ||
-				pos.Y < 0 || pos.Y >= map.Size.Y)
+			if (pos.X < 0 || pos.X >= map.Width ||
+				pos.Y < 0 || pos.Y >= map.Height)
 			{
 				// Out of range
 				return false;
@@ -53,8 +53,8 @@ namespace TroublesOfJord.Core
 
 		public void Place(Map map, Point position)
 		{
-			if (position.X < 0 || position.X >= map.Size.X ||
-				position.Y < 0 || position.Y >= map.Size.Y)
+			if (position.X < 0 || position.X >= map.Width ||
+				position.Y < 0 || position.Y >= map.Height)
 			{
 				throw new ArgumentOutOfRangeException("position");
 			}
