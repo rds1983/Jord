@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using TroublesOfJord.Storage;
 using TroublesOfJord.UI;
@@ -123,9 +122,36 @@ namespace TroublesOfJord.Core
 
 		public void UpdateTilesVisibility()
 		{
-			Player.Map.ComputeFov(Player.Position.X, Player.Position.Y, 25, true);
+			var map = Player.Map;
 
-			MapNavigationBase.InvalidateImage();
+			// Reset IsInFov for the whole map
+			for(var x = 0; x < map.Width; ++x)
+			{
+				for(var y = 0; y < map.Height; ++y)
+				{
+					map.GetCell(x, y).IsInFov = false;
+				}
+			}
+
+			map.ComputeFov(Player.Position.X, Player.Position.Y, 8, true);
+
+			var mapDirty = false;
+			foreach(var index in map.FieldOfView.CellIndices)
+			{
+				var tile = map.CellFor(index);
+
+				tile.IsInFov = true;
+				if (!tile.IsExplored)
+				{
+					mapDirty = true;
+					tile.IsExplored = true;
+				}
+			}
+
+			if (mapDirty)
+			{
+				MapNavigationBase.InvalidateImage();
+			}
 		}
 	}
 }
