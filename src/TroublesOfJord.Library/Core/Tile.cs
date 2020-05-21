@@ -7,7 +7,6 @@ namespace TroublesOfJord.Core
 	public class Tile: ICell
 	{
 		private TileInfo _info;
-		private bool _isTransparent, _isWalkable;
 
 		public TileInfo Info
 		{
@@ -24,8 +23,6 @@ namespace TroublesOfJord.Core
 				}
 
 				_info = value;
-				_isTransparent = _info.Passable;
-				_isWalkable = _info.Passable;
 			}
 		}
 
@@ -51,10 +48,9 @@ namespace TroublesOfJord.Core
 			}
 		}
 
-		public bool IsTransparent { get => _isTransparent; set => _isTransparent = value; }
-		public bool IsWalkable { get => _isWalkable; set => _isWalkable = value; }
 		public bool IsInFov { get; set; }
 		public bool IsExplored { get; set; }
+		ICellInfo ICell.Info { get => Info; set => Info = (TileInfo)value; }
 
 		public bool Highlighted;
 
@@ -89,7 +85,7 @@ namespace TroublesOfJord.Core
 			{
 				return true;
 			}
-			return X == other.X && Y == other.Y && IsTransparent == other.IsTransparent && IsWalkable == other.IsWalkable && IsInFov == other.IsInFov && IsExplored == other.IsExplored;
+			return X == other.X && Y == other.Y && Info == other.Info && IsInFov == other.IsInFov && IsExplored == other.IsExplored;
 		}
 
 		/// <summary>
@@ -103,9 +99,9 @@ namespace TroublesOfJord.Core
 		/// <returns>A string representation of the Cell using special symbols to denote Cell properties</returns>
 		public override string ToString()
 		{
-			if (IsWalkable)
+			if (Info.IsWalkable)
 			{
-				if (IsTransparent)
+				if (Info.IsTransparent)
 				{
 					return ".";
 				}
@@ -116,7 +112,7 @@ namespace TroublesOfJord.Core
 			}
 			else
 			{
-				if (IsTransparent)
+				if (Info.IsTransparent)
 				{
 					return "o";
 				}

@@ -185,7 +185,7 @@ namespace TroublesOfJord.UI
 					appearance.Draw(context.Batch, rect, opacity);
 
 					var asNpc = tile.Creature as NonPlayer;
-					if (asNpc != null)
+					if (tile.IsInFov && asNpc != null)
 					{
 						RenderNpc(context, pos, asNpc);
 					}

@@ -3,7 +3,7 @@
     "Id": "Arena",
     "Size": {
         "X": 48,
-        "Y": 48
+        "Y": 27
     },
     "Local": true,
     "Legend": {

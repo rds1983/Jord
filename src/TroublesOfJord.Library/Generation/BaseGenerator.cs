@@ -1,12 +1,15 @@
-﻿using TroublesOfJord.Core;
+﻿using RogueSharp.MapCreation;
+using TroublesOfJord.Core;
 
 namespace TroublesOfJord.Generation
 {
-	public abstract class BaseGenerator: BaseObject
+	public class BaseGenerator: BaseObject
 	{
-		public int Width = 64;
-		public int Height = 64;
+		public IMapCreationStrategy<Map, Tile> MapCreationStrategy;
 
-		public abstract Map Generate();
+		public Map Generate()
+		{
+			return MapCreationStrategy.CreateMap();
+		}
 	}
 }
