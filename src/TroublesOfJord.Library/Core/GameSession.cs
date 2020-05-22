@@ -133,7 +133,7 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			map.ComputeFov(Player.Position.X, Player.Position.Y, 8, true);
+			map.ComputeFov(Player.Position.X, Player.Position.Y, 12, true);
 
 			var mapDirty = false;
 			foreach(var index in map.FieldOfView.CellIndices)

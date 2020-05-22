@@ -172,7 +172,7 @@ namespace TroublesOfJord.UI
 
 					var screen = GameToScreen(pos);
 
-					var opacity = 1.0f;
+					var opacity = tile.IsInFov ? 1.0f : 0.5f;
 					var appearance = tile.Info.Image;
 					if (tile.IsInFov && tile.Creature != null)
 					{
@@ -182,6 +182,7 @@ namespace TroublesOfJord.UI
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
+
 					appearance.Draw(context.Batch, rect, opacity);
 
 					var asNpc = tile.Creature as NonPlayer;
