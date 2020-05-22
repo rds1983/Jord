@@ -6,15 +6,7 @@
       <Proportion Type="Auto" />
       <Proportion Type="Part" />
     </HorizontalStackPanel.Proportions>
-    <VerticalStackPanel>
-      <VerticalStackPanel.Proportions>
-        <Proportion Type="Fill" />
-      </VerticalStackPanel.Proportions>
-      <Panel Id="_mapViewContainer" />
-      <HorizontalSeparator />
-      <HorizontalStackPanel HorizontalAlignment="Center" Height="60" Id="_skillsContainer" />
-      <HorizontalSeparator />
-    </VerticalStackPanel>
+    <Panel Id="_mapViewContainer" />
     <VerticalSeparator />
     <VerticalStackPanel>
       <VerticalStackPanel.Proportions>
