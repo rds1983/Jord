@@ -15,6 +15,8 @@ namespace TroublesOfJord.Core
 			get; set;
 		}
 
+		public bool Explored { get; set; }
+
 		public bool Local { get; set; }
 
 		public Tile this[int x, int y]

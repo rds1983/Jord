@@ -59,6 +59,16 @@ namespace TroublesOfJord.Compiling.Loaders
 				Local = EnsureBool(data, "Local")
 			};
 
+			map.Explored = OptionalBool(data, "Explored", false);
+
+			if (map.Explored)
+			{
+				foreach(var tile in map.GetAllCells())
+				{
+					tile.IsExplored = true;
+				}
+			}
+
 			var legend = new Dictionary<char, object>();
 			var legendObject = EnsureObject(data, LegendName);
 			foreach (var pair in legendObject)
@@ -286,6 +296,7 @@ namespace TroublesOfJord.Compiling.Loaders
 					["X"] = map.Width,
 					["Y"] = map.Height,
 				},
+				["Explored"] = map.Explored,
 				["Local"] = map.Local
 			};
 
