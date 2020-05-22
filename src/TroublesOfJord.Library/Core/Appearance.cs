@@ -27,10 +27,12 @@ namespace TroublesOfJord.Core
 
 		public void Draw(SpriteBatch batch, Rectangle rect, float opacity = 1.0f)
 		{
-			var pos = new Vector2(rect.X + (rect.Width - TextureRegion.Size.X) / 2,
-				rect.Y + (rect.Height - TextureRegion.Size.Y) / 2);
+			var r = new Rectangle(rect.X + (rect.Width - TextureRegion.Size.X) / 2,
+				rect.Y + (rect.Height - TextureRegion.Size.Y) / 2,
+				TextureRegion.Size.X,
+				TextureRegion.Size.Y);
 
-			TextureRegion.Draw(batch, pos, Color * opacity);
+			TextureRegion.Draw(batch, r, Color * opacity);
 		}
 	}
 }

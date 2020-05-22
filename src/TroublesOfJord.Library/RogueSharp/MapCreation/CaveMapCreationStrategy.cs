@@ -137,7 +137,7 @@ namespace RogueSharp.MapCreation
 			}
 		}
 
-		private static TMap Clone<TMap>(TMap map) where TMap : IMap<TCell>, new()
+		private static TMap Clone(TMap map)
 		{
 			var result = new TMap();
 			result.Initialize(map.Width, map.Height);

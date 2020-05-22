@@ -15,7 +15,6 @@ namespace TroublesOfJord.UI
 		public LogView LogView { get; } = new LogView();
 		public readonly SkillWidget[] Skills = new SkillWidget[10];
 
-
 		protected override bool AcceptsKeyboardFocus => true;
 
 		public GameView()

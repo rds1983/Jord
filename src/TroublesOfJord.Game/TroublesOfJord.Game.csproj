@@ -9,7 +9,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Myra.Extended\src\Myra.Extended.FNA.csproj" />
     <ProjectReference Include="..\TroublesOfJord.Library\TroublesOfJord.Library.csproj" />
   </ItemGroup>  
   
@@ -25,6 +24,11 @@
     <None Include="..\..\data\**\*.*" LinkBase="data">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>  
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
+    <PackageReference Include="Myra.Extended" Version="1.1.0.2" />
   </ItemGroup>
   
   <ItemGroup>
