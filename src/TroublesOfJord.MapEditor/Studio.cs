@@ -447,8 +447,8 @@ namespace TroublesOfJord.MapEditor
 		private void OnResizeMapSelected(object sender, EventArgs e)
 		{
 /*			var dlg = new ResizeMapDialog();
-			dlg._spinWidth.Value = Map.Size.X;
-			dlg._spinHeight.Value = Map.Size.Y;
+			dlg._spinWidth.Value = Map.Width;
+			dlg._spinHeight.Value = Map.Height;
 
 			dlg.Closed += (s, a) =>
 			{
@@ -464,9 +464,9 @@ namespace TroublesOfJord.MapEditor
 				Map.Size = new Point((int)dlg._spinWidth.Value, (int)dlg._spinHeight.Value);
 
 				// Update tiles
-				for (var y = 0; y < Map.Size.Y; ++y)
+				for (var y = 0; y < Map.Height; ++y)
 				{
-					for (var x = 0; x < Map.Size.X; ++x)
+					for (var x = 0; x < Map.Width; ++x)
 					{
 						var pos = new Point(x, y);
 						if (x < oldSize.X && y < oldSize.Y)

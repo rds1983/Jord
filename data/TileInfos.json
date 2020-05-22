@@ -15,6 +15,11 @@
       "Passable": "True",
       "Symbol": "."
     },
+    "OpenDoor": {
+	  "Image": "TileOpenDoor",
+      "Passable": "True",
+      "Symbol": "`"
+    },
     "Floor": {
 	  "Image": "TileFloor",
       "Passable": "True",
@@ -33,7 +38,7 @@
     "Water": {
 	  "Image": "TileWater",
       "Passable": "False",
-      "Symbol": "."
+      "Symbol": "~"
     },
     "Road": {
 	  "Image": "TileRoad",

@@ -8,7 +8,7 @@ using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	abstract class BaseLoader
+	public abstract class BaseLoader
 	{
 		protected readonly Dictionary<string, ObjectData> _sourceData = new Dictionary<string, ObjectData>();
 
@@ -255,7 +255,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		}
 	}
 
-	abstract class Loader<T> : BaseLoader where T : IBaseObject
+	public abstract class Loader<T> : BaseLoader where T : IBaseObject
 	{
 		public override string TypeName => typeof(T).Name;
 		public override Type Type => typeof(T);

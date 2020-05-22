@@ -41,6 +41,11 @@ namespace TroublesOfJord.MapEditor.UI
 
 		public event EventHandler MarkPositionChanged;
 
+		public MapEditor()
+		{
+			IgnoreFov = true;
+		}
+
 		protected override void BeforeDraw(RenderContext context)
 		{
 			base.BeforeDraw(context);
@@ -93,7 +98,7 @@ namespace TroublesOfJord.MapEditor.UI
 
 			var gameCoords = ScreenToGame(Desktop.MousePosition);
 
-			if (gameCoords.X >= Map.Size.X || gameCoords.Y >= Map.Size.Y)
+			if (gameCoords.X >= Map.Width || gameCoords.Y >= Map.Height)
 			{
 				MarkPosition = null;
 			}

@@ -15,6 +15,10 @@
 			  "Color": "Brown",
 			  "Symbol": "."
 			},
+			"TileOpenDoor": {
+			  "Color": "Brown",
+			  "Symbol": "`"
+			},
 			"TileFloor": {
 			  "Color": "Gray",
 			  "Symbol": "."
@@ -29,7 +33,7 @@
 			},
 			"TileWater": {
 			  "Color": "Blue",
-			  "Symbol": "."
+			  "Symbol": "~"
 			},
 			"TileRoad": {
 			  "Color": "Brown",

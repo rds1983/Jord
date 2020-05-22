@@ -54,6 +54,8 @@ namespace TroublesOfJord.UI
 			}
 		}
 
+		public bool IgnoreFov;
+
 		public MapRender()
 		{
 			Font = DefaultAssets.Font;
@@ -163,7 +165,7 @@ namespace TroublesOfJord.UI
 					var pos = new Point(mapX, mapY);
 					var tile = Map[pos];
 
-					if (!tile.IsExplored)
+					if (!IgnoreFov && !tile.IsExplored)
 					{
 						continue;
 					}
@@ -172,9 +174,10 @@ namespace TroublesOfJord.UI
 
 					var screen = GameToScreen(pos);
 
-					var opacity = tile.IsInFov ? 1.0f : 0.5f;
+					var isInFov = IgnoreFov || tile.IsInFov;
+					var opacity = isInFov ? 1.0f : 0.5f;
 					var appearance = tile.Info.Image;
-					if (tile.IsInFov && tile.Creature != null)
+					if (isInFov && tile.Creature != null)
 					{
 						screen = GameToScreen(tile.Creature.DisplayPosition);
 						appearance = tile.Creature.Image;
@@ -182,11 +185,10 @@ namespace TroublesOfJord.UI
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
-
 					appearance.Draw(context.Batch, rect, opacity);
 
 					var asNpc = tile.Creature as NonPlayer;
-					if (tile.IsInFov && asNpc != null)
+					if (isInFov && asNpc != null)
 					{
 						RenderNpc(context, pos, asNpc);
 					}

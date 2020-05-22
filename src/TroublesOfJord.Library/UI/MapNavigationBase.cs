@@ -32,6 +32,8 @@ namespace TroublesOfJord.UI
 			}
 		}
 
+		public bool IgnoreFov;
+
 		public MapNavigationBase()
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -60,13 +62,15 @@ namespace TroublesOfJord.UI
 									continue;
 								}
 
-								if (!tile.IsExplored)
+								if (!IgnoreFov && !tile.IsExplored)
 								{
 									continue;
 								}
 
+								var isInFov = IgnoreFov || tile.IsInFov;
+
 								var color = tile.Info.Image.Color;
-								if (tile.IsInFov && tile.Creature != null && !(tile.Creature is Player))
+								if (isInFov && tile.Creature != null && !(tile.Creature is Player))
 								{
 									color = tile.Creature.Image.Color;
 								}

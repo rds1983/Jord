@@ -2,14 +2,17 @@ using TroublesOfJord.Core;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.UI;
 using Microsoft.Xna.Framework.Input;
-using System.Xml.Serialization;
-using System.ComponentModel;
 using TroublesOfJord.UI;
 
 namespace TroublesOfJord.MapEditor.UI
 {
 	public class MapNavigation : MapNavigationBase
 	{
+		public MapNavigation()
+		{
+			IgnoreFov = true;
+		}
+
 		public override void OnMouseMoved()
 		{
 			base.OnMouseMoved();
@@ -45,9 +48,9 @@ namespace TroublesOfJord.MapEditor.UI
 				pos.X = 0;
 			}
 
-			if (Map != null && pos.X + MapEditor.GridSize.X >= Map.Size.X)
+			if (Map != null && pos.X + MapEditor.GridSize.X >= Map.Width)
 			{
-				pos.X = Map.Size.X - MapEditor.GridSize.X;
+				pos.X = Map.Width - MapEditor.GridSize.X;
 			}
 
 			if (pos.Y < 0)
@@ -55,9 +58,9 @@ namespace TroublesOfJord.MapEditor.UI
 				pos.Y = 0;
 			}
 
-			if (Map != null && pos.Y + MapEditor.GridSize.Y >= Map.Size.Y)
+			if (Map != null && pos.Y + MapEditor.GridSize.Y >= Map.Height)
 			{
-				pos.Y = Map.Size.Y - MapEditor.GridSize.Y;
+				pos.Y = Map.Height - MapEditor.GridSize.Y;
 			}
 
 			return pos;

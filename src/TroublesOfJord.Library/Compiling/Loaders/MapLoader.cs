@@ -7,7 +7,7 @@ using TroublesOfJord.Core;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	class MapLoader: Loader<Map>
+	public class MapLoader: Loader<Map>
 	{
 		private class SpawnSpot
 		{
@@ -285,7 +285,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				{ 
 					["X"] = map.Width,
 					["Y"] = map.Height,
-				}
+				},
 				["Local"] = map.Local
 			};
 
