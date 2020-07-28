@@ -86,7 +86,7 @@ namespace TroublesOfJord.UI
 					TroublesOfJordGame.Instance.Play(slotIndex);
 				};
 
-				dlg.ShowModal();
+				dlg.ShowModal(Desktop);
 				Desktop.FocusedKeyboardWidget = dlg._textName;
 			}
 			else

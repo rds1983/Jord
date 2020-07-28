@@ -14,10 +14,10 @@ namespace TroublesOfJord.UI
 		public MiniMap MapNavigation { get; } = new MiniMap();
 		public LogView LogView { get; } = new LogView();
 
-		protected override bool AcceptsKeyboardFocus => true;
-
 		public GameView()
 		{
+			AcceptsKeyboardFocus = true;
+
 			BuildUI();
 
 			_mapViewContainer.Widgets.Add(MapView);
@@ -86,7 +86,7 @@ namespace TroublesOfJord.UI
 					{
 						// Initiate trade
 						var dialog = new TradeDialog(TJ.Session.Player, creature);
-						dialog.ShowModal();
+						dialog.ShowModal(Desktop);
 					}
 					else
 					{
@@ -119,7 +119,7 @@ namespace TroublesOfJord.UI
 			else if (IsKeyPressed(ref keys, Keys.I))
 			{
 				var inventoryWindow = new InventoryWindow();
-				inventoryWindow.ShowModal();
+				inventoryWindow.ShowModal(Desktop);
 			}
 			else if (IsKeyPressed(ref keys, Keys.E))
 			{

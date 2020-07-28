@@ -28,6 +28,7 @@ namespace TroublesOfJord.MapEditor
 		private readonly int[] _customColors;
 		private Compiler _compiler;
 		private string _lastFolder;
+		private Desktop _desktop;
 
 		public string ModulePath
 		{
@@ -152,32 +153,33 @@ namespace TroublesOfJord.MapEditor
 
 		private void BuildUI()
 		{
-			Desktop.KeyDown += (s, a) =>
+			_desktop = new Desktop();
+			_desktop.KeyDown += (s, a) =>
 			{
-				if (Desktop.HasModalWidget || UI._mainMenu.IsOpen)
+				if (_desktop.HasModalWidget || UI._mainMenu.IsOpen)
 				{
 					return;
 				}
 
-				if (Desktop.DownKeys.Contains(Keys.LeftControl) || Desktop.DownKeys.Contains(Keys.RightControl))
+				if (_desktop.DownKeys.Contains(Keys.LeftControl) || _desktop.DownKeys.Contains(Keys.RightControl))
 				{
-					if (Desktop.DownKeys.Contains(Keys.O))
+					if (_desktop.DownKeys.Contains(Keys.O))
 					{
 						OpenProjectItemOnClicked(this, EventArgs.Empty);
 					}
-					else if (Desktop.DownKeys.Contains(Keys.W))
+					else if (_desktop.DownKeys.Contains(Keys.W))
 					{
 						OnSwitchMapMenuItemSelected(this, EventArgs.Empty);
 					}
-					else if (Desktop.DownKeys.Contains(Keys.N))
+					else if (_desktop.DownKeys.Contains(Keys.N))
 					{
 						OnNewMapSelected(this, EventArgs.Empty);
 					}
-					else if (Desktop.DownKeys.Contains(Keys.S))
+					else if (_desktop.DownKeys.Contains(Keys.S))
 					{
 						SaveMapSelected(this, EventArgs.Empty);
 					}
-					else if (Desktop.DownKeys.Contains(Keys.Q))
+					else if (_desktop.DownKeys.Contains(Keys.Q))
 					{
 						Exit();
 					}
@@ -207,7 +209,7 @@ namespace TroublesOfJord.MapEditor
 				UI._textPosition.Text = pos == null ? string.Empty : string.Format("X = {0}, Y = {1}", pos.Value.X, pos.Value.Y);
 			};
 
-			Desktop.Widgets.Add(UI);
+			_desktop.Widgets.Add(UI);
 
 			UI._topSplitPane.SetSplitterPosition(0, _state != null ? _state.TopSplitterPosition : 0.75f);
 
@@ -247,7 +249,7 @@ namespace TroublesOfJord.MapEditor
 			_statisticsGrid.VerticalAlignment = VerticalAlignment.Bottom;
 			_statisticsGrid.Left = 10;
 			_statisticsGrid.Top = -10;
-			Desktop.Widgets.Add(_statisticsGrid);
+			_desktop.Widgets.Add(_statisticsGrid);
 
 			UpdateMenuFile();
 		}
@@ -283,7 +285,7 @@ namespace TroublesOfJord.MapEditor
 				}
 			};
 
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 		private void OnNewMapSelected(object sender, EventArgs e)
@@ -327,7 +329,7 @@ namespace TroublesOfJord.MapEditor
 				}
 			};
 
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 		private static void SetMessageBoxText(Dialog dlg, string newText)
@@ -499,7 +501,7 @@ namespace TroublesOfJord.MapEditor
 						() => { ShowDebugInfo = true; },
 						() => { ShowDebugInfo = false; });
 
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 
@@ -511,7 +513,7 @@ namespace TroublesOfJord.MapEditor
 		private void AboutItemOnClicked(object sender, EventArgs eventArgs)
 		{
 			var dialog = Dialog.CreateMessageBox("About", "TroublesOfJord Studio " + TJ.Version);
-			dialog.ShowModal();
+			dialog.ShowModal(_desktop);
 		}
 
 		private void SaveMapSelected(object sender, EventArgs eventArgs)
@@ -534,7 +536,7 @@ namespace TroublesOfJord.MapEditor
 				SetMap(map.Id);
 			};
 
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 		private void OpenProjectItemOnClicked(object sender, EventArgs eventArgs)
@@ -566,7 +568,7 @@ namespace TroublesOfJord.MapEditor
 				LoadModule(filePath);
 			};
 
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -575,11 +577,11 @@ namespace TroublesOfJord.MapEditor
 
 			_gcMemoryLabel.Text = string.Format("GC Memory: {0} kb", GC.GetTotalMemory(false) / 1024);
 //			_fpsLabel.Text = string.Format("FPS: {0:0.##}", _fpsCounter.FramesPerSecond);
-			_widgetsCountLabel.Text = string.Format("Total Widgets: {0}", Desktop.CalculateTotalWidgets(true));
+			_widgetsCountLabel.Text = string.Format("Total Widgets: {0}", _desktop.CalculateTotalWidgets(true));
 
 			GraphicsDevice.Clear(Color.Black);
 
-			Desktop.Render();
+			_desktop.Render();
 
 //			_fpsCounter.Draw(gameTime);
 		}
@@ -625,7 +627,7 @@ namespace TroublesOfJord.MapEditor
 					dlg.FilePath = filePath;
 				}
 
-				dlg.ShowModal();
+				dlg.ShowModal(_desktop);
 
 				dlg.Closed += (s, a) =>
 				{
@@ -725,7 +727,7 @@ namespace TroublesOfJord.MapEditor
 		private void ReportError(string message)
 		{
 			Dialog dlg = Dialog.CreateMessageBox("Error", message);
-			dlg.ShowModal();
+			dlg.ShowModal(_desktop);
 		}
 
 		private void UpdateTitle()

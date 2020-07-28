@@ -287,7 +287,7 @@ namespace TroublesOfJord.UI
 			}
 
 			var msg = CreateMessageBox(TroublesOfJord.Resources.TextNotEnoughGold, TroublesOfJord.Resources.TextNotEnoughGold);
-			msg.ShowModal();
+			msg.ShowModal(Desktop);
 
 			return false;
 		}

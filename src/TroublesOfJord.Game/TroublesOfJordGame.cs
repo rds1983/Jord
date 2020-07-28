@@ -16,6 +16,7 @@ namespace TroublesOfJord
 	{
 		private const string DataPath = "data";
 		private readonly GraphicsDeviceManager _graphics;
+		private Desktop _desktop;
 
 		public static TroublesOfJordGame Instance { get; private set; }
 
@@ -37,7 +38,7 @@ namespace TroublesOfJord
 
 			TJ.GameLogHandler = message =>
 			{
-				var asGameView = Desktop.Widgets[0] as GameView;
+				var asGameView = _desktop.Widgets[0] as GameView;
 				if (asGameView == null)
 				{
 					return;
@@ -52,6 +53,7 @@ namespace TroublesOfJord
 			base.LoadContent();
 
 			MyraEnvironment.Game = this;
+			_desktop = new Desktop();
 
 /*			MyraEnvironment.DisableClipping = true;
 			MyraEnvironment.DrawFocusedWidgetFrame = true;
@@ -74,7 +76,7 @@ namespace TroublesOfJord
 		private T SwitchTo<T>() where T : Widget, new()
 		{
 			var widget = new T();
-			Desktop.Root = widget;
+			_desktop.Root = widget;
 
 			return widget;
 		}
@@ -97,8 +99,8 @@ namespace TroublesOfJord
 
 			SwitchTo<GameView>();
 
-			var gameView = (GameView)Desktop.Root;
-			Desktop.FocusedKeyboardWidget = gameView;
+			var gameView = (GameView)_desktop.Root;
+			_desktop.FocusedKeyboardWidget = gameView;
 
 			TJ.Session.MapNavigationBase = gameView.MapNavigation;
 			TJ.Session.UpdateTilesVisibility();
@@ -110,7 +112,7 @@ namespace TroublesOfJord
 
 		private void UpdateStats()
 		{
-			var gameView = (GameView)Desktop.Widgets[0];
+			var gameView = (GameView)_desktop.Widgets[0];
 
 			var life = TJ.Player.Stats.Life;
 			gameView._labelHp.Text = string.Format("H: {0}/{1}", life.CurrentHP, life.MaximumHP);
@@ -137,7 +139,7 @@ namespace TroublesOfJord
 
 			GraphicsDevice.Clear(Color.Black);
 
-			Desktop.Render();
+			_desktop.Render();
 		}
 
 		protected override void EndRun()
