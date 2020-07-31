@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TroublesOfJord.Storage;
 using TroublesOfJord.UI;
 using TroublesOfJord.Utils;
@@ -8,29 +7,11 @@ namespace TroublesOfJord.Core
 {
 	public class GameSession
 	{
-		private class AnimationTask
-		{
-			public Action<float> Update;
-			public Action Finished;
-		}
-
-		private DateTime? _delayStarted;
-		private int _delayInMs = 0;
-		private readonly List<AnimationTask> _animations = new List<AnimationTask>();
-
 		public Slot Slot { get; }
 		public Character Character { get; }
 		public Player Player { get { return Character.Player; } }
 
 		public MapNavigationBase MapNavigationBase;
-
-		public bool AcceptsInput
-		{
-			get
-			{
-				return _delayStarted == null;
-			}
-		}
 
 		public GameSession(int slotIndex)
 		{
@@ -66,58 +47,10 @@ namespace TroublesOfJord.Core
 					}
 				}
 
-				_delayStarted = DateTime.Now;
-				if (!isRunning)
-				{
-					_delayInMs = Config.TurnDelayInMs;
-				}
-				else
-				{
-					_delayInMs = Config.TurnDelayInMs / 2;
-				}
-
 				UpdateTilesVisibility();
 			}
 
 			return result;
-		}
-
-		public void Update()
-		{
-			if (_delayStarted == null)
-			{
-				return;
-			}
-
-			var passed = (DateTime.Now - _delayStarted.Value).TotalMilliseconds;
-
-			if (passed < _delayInMs)
-			{
-				var part = (float)passed / _delayInMs;
-				foreach (var task in _animations)
-				{
-					task?.Update(part);
-				}
-			}
-			else if (passed >= _delayInMs)
-			{
-				foreach (var task in _animations)
-				{
-					task?.Finished();
-				}
-				_animations.Clear();
-
-				_delayStarted = null;
-			}
-		}
-
-		internal void AddAnimationTask(Action<float> onUpdate, Action onFinished)
-		{
-			_animations.Add(new AnimationTask
-			{
-				Update = onUpdate,
-				Finished = onFinished
-			});
 		}
 
 		public void UpdateTilesVisibility()

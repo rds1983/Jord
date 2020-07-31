@@ -18,6 +18,14 @@ namespace TroublesOfJord
 		private readonly GraphicsDeviceManager _graphics;
 		private Desktop _desktop;
 
+		public Desktop Desktop
+		{
+			get
+			{
+				return _desktop;
+			}
+		}
+
 		public static TroublesOfJordGame Instance { get; private set; }
 
 		public int? StartGameIndex;

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Input;
 using Myra.Extended.Widgets;
 using Myra.Graphics2D.UI;
 using System;
+using System.Linq;
 using TroublesOfJord.Core;
 using TroublesOfJord.Utils;
 
@@ -9,7 +10,13 @@ namespace TroublesOfJord.UI
 {
 	public partial class GameView
 	{
-		private KeyboardState _lastKeys;
+		private const int RepeatKeyDownStartInMs = 400;
+		private const int RepeatKeyDownInternalInMs = 40;
+
+		private DateTime?  _lastKeyDown;
+		private int _keyDownCount = 0;
+		private Keys[] _downKeys, _lastDownKeys;
+
 		public MapView MapView { get; } = new MapView();
 		public MiniMap MapNavigation { get; } = new MiniMap();
 		public LogView LogView { get; } = new LogView();
@@ -37,39 +44,79 @@ namespace TroublesOfJord.UI
 			ability.Use();
 		}
 
-		private bool ProcessMovement(ref KeyboardState keys)
+		private void UpdateKeyboardInput()
+		{
+			_downKeys = Keyboard.GetState().GetPressedKeys();
+
+			if (_downKeys != null && _lastDownKeys != null)
+			{
+				var now = DateTime.Now;
+				foreach (var key in _downKeys)
+				{
+					if (!_lastDownKeys.Contains(key))
+					{
+						KeyDownHandler(key);
+
+						_lastKeyDown = now;
+						_keyDownCount = 0;
+					}
+				}
+
+				foreach (var key in _lastDownKeys)
+				{
+					if (!_downKeys.Contains(key))
+					{
+						_lastKeyDown = null;
+						_keyDownCount = 0;
+					}
+					else if (_lastKeyDown != null &&
+					  ((_keyDownCount == 0 && (now - _lastKeyDown.Value).TotalMilliseconds > RepeatKeyDownStartInMs) ||
+					  (_keyDownCount > 0 && (now - _lastKeyDown.Value).TotalMilliseconds > RepeatKeyDownInternalInMs)))
+					{
+						KeyDownHandler(key);
+
+						_lastKeyDown = now;
+						++_keyDownCount;
+					}
+				}
+			}
+
+			_lastDownKeys = _downKeys.ToArray();
+		}
+
+		private bool ProcessMovement(Keys key)
 		{
 			MovementDirection? direction = null;
 
-			if (keys.IsKeyDown(Keys.Left) || keys.IsKeyDown(Keys.NumPad4))
+			if (key == Keys.Left || key == Keys.NumPad4)
 			{
 				direction = MovementDirection.Left;
 			}
-			else if (keys.IsKeyDown(Keys.Right) || keys.IsKeyDown(Keys.NumPad6))
+			else if (key == Keys.Right || key == Keys.NumPad6)
 			{
 				direction = MovementDirection.Right;
 			}
-			else if (keys.IsKeyDown(Keys.Up) || keys.IsKeyDown(Keys.NumPad8))
+			else if (key == Keys.Up || key == Keys.NumPad8)
 			{
 				direction = MovementDirection.Up;
 			}
-			else if (keys.IsKeyDown(Keys.Down) || keys.IsKeyDown(Keys.NumPad2))
+			else if (key == Keys.Down || key == Keys.NumPad2)
 			{
 				direction = MovementDirection.Down;
 			}
-			else if (keys.IsKeyDown(Keys.NumPad7))
+			else if (key == Keys.NumPad7)
 			{
 				direction = MovementDirection.UpLeft;
 			}
-			else if (keys.IsKeyDown(Keys.NumPad9))
+			else if (key == Keys.NumPad9)
 			{
 				direction = MovementDirection.UpRight;
 			}
-			else if (keys.IsKeyDown(Keys.NumPad1))
+			else if (key == Keys.NumPad1)
 			{
 				direction = MovementDirection.DownLeft;
 			}
-			else if (keys.IsKeyDown(Keys.NumPad3))
+			else if (key == Keys.NumPad3)
 			{
 				direction = MovementDirection.DownRight;
 			}
@@ -90,7 +137,7 @@ namespace TroublesOfJord.UI
 					}
 					else
 					{
-						var isRunning = keys.IsKeyDown(Keys.LeftShift) || keys.IsKeyDown(Keys.RightShift);
+						var isRunning = _downKeys.Contains(Keys.LeftShift) || _downKeys.Contains(Keys.RightShift);
 						result = TJ.Session.MovePlayer(direction.Value, isRunning);
 					}
 				}
@@ -99,45 +146,36 @@ namespace TroublesOfJord.UI
 			return result;
 		}
 
-		private bool IsKeyPressed(ref KeyboardState keys, Keys key)
+		private void KeyDownHandler(Keys key)
 		{
-			return keys.IsKeyDown(key) && !_lastKeys.IsKeyDown(key);
-		}
-
-		private void ProcessInput()
-		{
-			if (!Active || !TJ.Session.AcceptsInput)
+			if (!Active)
 			{
 				return;
 			}
 
-			var keys = Keyboard.GetState();
-			var acted = ProcessMovement(ref keys);
+			var acted = ProcessMovement(key);
 			if (acted)
 			{
 			}
-			else if (IsKeyPressed(ref keys, Keys.I))
+			else if (key == Keys.I)
 			{
 				var inventoryWindow = new InventoryWindow();
 				inventoryWindow.ShowModal(Desktop);
 			}
-			else if (IsKeyPressed(ref keys, Keys.E))
+			else if (key == Keys.E)
 			{
 				if (TJ.Session.Player.Enter())
 				{
 					TJ.Session.UpdateTilesVisibility();
 				}
 			}
-
-			_lastKeys = keys;
 		}
 
 		public override void InternalRender(RenderContext batch)
 		{
 			base.InternalRender(batch);
 
-			ProcessInput();
-			TJ.Session.Update();
+			UpdateKeyboardInput();
 		}
 	}
 }
