@@ -60,15 +60,6 @@ namespace TroublesOfJord.UI
 						_lastKeyDown = now;
 						_keyDownCount = 0;
 					}
-				}
-
-				foreach (var key in _lastDownKeys)
-				{
-					if (!_downKeys.Contains(key))
-					{
-						_lastKeyDown = null;
-						_keyDownCount = 0;
-					}
 					else if (_lastKeyDown != null &&
 					  ((_keyDownCount == 0 && (now - _lastKeyDown.Value).TotalMilliseconds > RepeatKeyDownStartInMs) ||
 					  (_keyDownCount > 0 && (now - _lastKeyDown.Value).TotalMilliseconds > RepeatKeyDownInternalInMs)))
@@ -81,7 +72,7 @@ namespace TroublesOfJord.UI
 				}
 			}
 
-			_lastDownKeys = _downKeys.ToArray();
+			_lastDownKeys = _downKeys;
 		}
 
 		private bool ProcessMovement(Keys key)
