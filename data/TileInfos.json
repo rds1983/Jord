@@ -1,67 +1,67 @@
 ﻿{
   "TileInfos": {
     "Grass": {
-	  "Image": "TileGrass",
+      "Image": "TileGrass",
       "Passable": "True",
       "Symbol": "."
     },
     "HighGrass": {
-	  "Image": "TileHighGrass",
+      "Image": "TileHighGrass",
       "Passable": "True",
       "Symbol": "."
     },
     "Ground": {
-	  "Image": "TileGround",
+      "Image": "TileGround",
       "Passable": "True",
       "Symbol": "."
     },
     "OpenDoor": {
-	  "Image": "TileOpenDoor",
+      "Image": "TileOpenDoor",
       "Passable": "True",
       "Symbol": "`"
     },
     "Floor": {
-	  "Image": "TileFloor",
+      "Image": "TileFloor",
       "Passable": "True",
       "Symbol": "."
     },
     "Tree": {
-	  "Image": "TileTree",
+      "Image": "TileTree",
       "Passable": "False",
       "Symbol": "T"
     },
     "Mountain": {
-	  "Image": "TileMountain",
+      "Image": "TileMountain",
       "Passable": "False",
       "Symbol": "^"
     },
     "Water": {
-	  "Image": "TileWater",
+      "Image": "TileWater",
       "Passable": "False",
       "Symbol": "~"
     },
     "Road": {
-	  "Image": "TileRoad",
+      "Image": "TileRoad",
       "Passable": "True",
       "Symbol": "."
     },
     "Wall": {
-	  "Image": "TileWall",
+      "Image": "TileWall",
       "Passable": "False",
       "Symbol": "#"
     },
     "Plato": {
-	  "Image": "TilePlato",
+      "Image": "TilePlato",
       "Passable": "True",
       "Symbol": "."
     },
     "ExitDown": {
-	  "Image": "TileExitDown",
+      "Image": "TileExitDown",
       "Passable": "True",
       "Symbol": ">"
     },
     "ExitUp": {
-	  "Image": "TileExitUp",
+      "Image": "TileExitUp",
       "Passable": "True",
       "Symbol": "<"
     }        

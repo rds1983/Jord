@@ -54,11 +54,11 @@ namespace TroublesOfJord.Compiling.Loaders
 		public static JToken EnsureJToken(JObject obj, string source, string fieldName)
 		{
 			var token = obj[fieldName];
-
 			if (token == null)
 			{
 				RaiseError("Could not find mandatory '{0}' field. Source: {1}", fieldName, source);
 			}
+
 			return token;
 		}
 
@@ -89,6 +89,11 @@ namespace TroublesOfJord.Compiling.Loaders
 			return EnsureT<JObject>(obj, source, fieldName);
 		}
 
+		public static JObject EnsureJObject(ObjectData obj, string fieldName)
+		{
+			return EnsureT<JObject>(obj.Data, obj.Source, fieldName);
+		}
+
 		public static string EnsureString(JObject obj, string source, string fieldName)
 		{
 			var token = EnsureJToken(obj, source, fieldName);
@@ -100,9 +105,8 @@ namespace TroublesOfJord.Compiling.Loaders
 			return EnsureString(data.Data, data.Source, fieldName);
 		}
 
-		public static int EnsureInt(JObject obj, string source, string fieldName)
+		public static int StringToInt(string value, string source)
 		{
-			var value = EnsureString(obj, source, fieldName);
 			int result;
 			if (!int.TryParse(value, out result))
 			{
@@ -110,6 +114,12 @@ namespace TroublesOfJord.Compiling.Loaders
 			}
 
 			return result;
+		}
+
+		public static int EnsureInt(JObject obj, string source, string fieldName)
+		{
+			var value = EnsureString(obj, source, fieldName);
+			return StringToInt(value, source);
 		}
 
 		public static int EnsureInt(ObjectData data, string fieldName)
@@ -194,10 +204,19 @@ namespace TroublesOfJord.Compiling.Loaders
 			return EnsureId(data.Data, data.Source);
 		}
 
-		public static string Optional(JObject obj, string fieldName)
+		public static JToken Optional(JObject obj, string fieldName)
 		{
-			var token = obj[fieldName];
+			return obj[fieldName];
+		}
 
+		public static JObject OptionalJObject(JObject obj, string fieldName)
+		{
+			return (JObject)Optional(obj, fieldName);
+		}
+
+		public static string OptionalString(JObject obj, string fieldName)
+		{
+			var token = Optional(obj, fieldName);
 			if (token == null)
 			{
 				return null;
@@ -207,7 +226,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public static int OptionalInt(JObject obj, string source, string fieldName, int def = 0)
 		{
-			var value = Optional(obj, fieldName);
+			var value = OptionalString(obj, fieldName);
 			if (value == null)
 			{
 				return def;
@@ -229,7 +248,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public static bool OptionalBool(JObject obj, string source, string fieldName, bool def)
 		{
-			var value = Optional(obj, fieldName);
+			var value = OptionalString(obj, fieldName);
 			if (value == null)
 			{
 				return def;

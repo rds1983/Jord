@@ -1,0 +1,13 @@
+﻿{
+	"Abilities": {
+		"DoubleAttack": {
+			"Name": "Double Attack",
+			"Requirements": {
+				"Warrior": 1
+			},
+			"Bonuses": {
+				"Attacks": 1
+			}
+		}
+	}
+}

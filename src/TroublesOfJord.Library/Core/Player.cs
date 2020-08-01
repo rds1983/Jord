@@ -1,5 +1,8 @@
-﻿using TroublesOfJord.Core.Items;
-using TroublesOfJord.Core.Skills;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using TroublesOfJord.Core.Abilities;
+using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Core
 {
@@ -8,13 +11,17 @@ namespace TroublesOfJord.Core
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
-		private IUsableAbility[] _usableAbilities = null;
 
 		private bool _dirty = true;
+
+		public Class Class { get; set; }
 
 		public override Appearance Image => TJ.Module.ModuleInfo.PlayerAppearance;
 
 		public Equipment Equipment { get; } = new Equipment();
+
+		public AbilityInfo[] Abilities { get; set; }
+
 
 		public override CreatureStats Stats
 		{
@@ -22,22 +29,6 @@ namespace TroublesOfJord.Core
 			{
 				Update();
 				return _stats;
-			}
-		}
-
-		public IUsableAbility[] UsableAbilities
-		{
-			get
-			{
-				if (_usableAbilities == null)
-				{
-					_usableAbilities = new IUsableAbility[]
-					{
-						new Kick()
-					};
-				}
-
-				return _usableAbilities;
 			}
 		}
 
@@ -54,7 +45,7 @@ namespace TroublesOfJord.Core
 			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);
 
-			AttackInfo attackInfo = null;
+			AttackInfo attackInfo;
 			if (weapon == null)
 			{
 				attackInfo = new AttackInfo(AttackType.Hit, 1, 4);
@@ -65,12 +56,27 @@ namespace TroublesOfJord.Core
 				attackInfo = new AttackInfo(weaponInfo.AttackType, weaponInfo.MinDamage, weaponInfo.MaxDamage);
 			}
 
-			var battleStats = _stats.Battle;
-			battleStats.Attacks = new AttackInfo[]
+			var attacksCount = 1;
+			foreach(var ability in Abilities)
 			{
-				attackInfo,
-				attackInfo
-			};
+				foreach(var pair in ability.Bonuses)
+				{
+					switch (pair.Key)
+					{
+						case BonusType.Attacks:
+							attacksCount += pair.Value;
+							break;
+					}
+				}
+			}
+
+			var battleStats = _stats.Battle;
+			battleStats.Attacks = new AttackInfo[attacksCount];
+
+			for(var i = 0; i < attacksCount; ++i)
+			{
+				battleStats.Attacks[i] = attackInfo;
+			}
 
 			battleStats.ArmorClass = 0;
 
@@ -104,6 +110,18 @@ namespace TroublesOfJord.Core
 		public void Invalidate()
 		{
 			_dirty = true;
+		}
+
+		public AbilityInfo[] BuildFreeAbilities()
+		{
+			// TODO:
+			return TJ.Module.Abilities.Values.ToArray();
+		}
+
+		public AbilityInfo[] BuildLearnedAbilities()
+		{
+			// TODO:
+			return new AbilityInfo[0];
 		}
 	}
 }

@@ -30,23 +30,23 @@ namespace TroublesOfJord.Storage
 			}
 		}
 
-		private string CharacterFilePath
+		private string PlayerFilePath
 		{
 			get
 			{
-				return Path.Combine(SaveFolder, "character.json");
+				return Path.Combine(SaveFolder, "player.json");
 			}
 		}
 
-		public CharacterData CharacterData { get; set; }
+		public PlayerData PlayerData { get; set; }
 
 		public Slot(int index)
 		{
 			_index = index;
 
-			if (File.Exists(CharacterFilePath))
+			if (File.Exists(PlayerFilePath))
 			{
-				CharacterData = CharacterData.FromJson(File.ReadAllText(CharacterFilePath));
+				PlayerData = PlayerData.FromJson(File.ReadAllText(PlayerFilePath));
 			}
 		}
 
@@ -64,8 +64,8 @@ namespace TroublesOfJord.Storage
 				Directory.CreateDirectory(saveFolder);
 			}
 
-			var s = CharacterData.ToJson();
-			File.WriteAllText(CharacterFilePath, s);
+			var s = PlayerData.ToJson();
+			File.WriteAllText(PlayerFilePath, s);
 		}
 	}
 }

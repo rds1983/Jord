@@ -36,14 +36,6 @@ namespace TroublesOfJord.UI
 			_logContainer.Widgets.Add(LogView);
 		}
 
-		private void _buttonSkill_TouchDown(object sender, EventArgs e)
-		{
-			var widget = (Widget)sender;
-			var ability = (IUsableAbility)widget.Tag;
-
-			ability.Use();
-		}
-
 		private void UpdateKeyboardInput()
 		{
 			_downKeys = Keyboard.GetState().GetPressedKeys();

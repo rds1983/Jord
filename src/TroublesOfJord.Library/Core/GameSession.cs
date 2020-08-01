@@ -1,5 +1,4 @@
-﻿using System;
-using TroublesOfJord.Storage;
+﻿using TroublesOfJord.Storage;
 using TroublesOfJord.UI;
 using TroublesOfJord.Utils;
 
@@ -8,8 +7,7 @@ namespace TroublesOfJord.Core
 	public class GameSession
 	{
 		public Slot Slot { get; }
-		public Character Character { get; }
-		public Player Player { get { return Character.Player; } }
+		public Player Player { get; }
 
 		public MapNavigationBase MapNavigationBase;
 
@@ -17,10 +15,10 @@ namespace TroublesOfJord.Core
 		{
 			Slot = TJ.StorageService.Slots[slotIndex];
 
-			Character = Slot.CharacterData.CreateCharacter();
+			Player = Slot.PlayerData.CreateCharacter();
 
 			// Spawn player
-			var map = TJ.Module.Maps[Slot.CharacterData.StartingMapId];
+			var map = TJ.Module.Maps[Slot.PlayerData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
 		}

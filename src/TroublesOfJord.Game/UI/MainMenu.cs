@@ -35,8 +35,8 @@ namespace TroublesOfJord.UI
 			for (var i = 0; i < StorageService.SlotsCount; ++i)
 			{
 				var slot = TJ.StorageService.Slots[i];
-				var name = slot.CharacterData == null ? Strings.EmptySlotName :
-					slot.CharacterData.Name + ", " + slot.CharacterData.ClassId;
+				var name = slot.PlayerData == null ? Strings.EmptySlotName :
+					slot.PlayerData.Name + ", " + slot.PlayerData.ClassId;
 				var menuItem = new MenuItem(string.Empty, name);
 
 				var i1 = i;
@@ -63,7 +63,7 @@ namespace TroublesOfJord.UI
 		{
 			_selectedSlotIndex = slotIndex;
 			var slot = TJ.StorageService.Slots[slotIndex];
-			if (slot.CharacterData == null)
+			if (slot.PlayerData == null)
 			{
 				var dlg = new CharacterGenerationDialog();
 
@@ -74,13 +74,13 @@ namespace TroublesOfJord.UI
 						return;
 					}
 
-					var data = new CharacterData
+					var data = new PlayerData
 					{
 						Name = dlg._textName.Text,
 						ClassId = (string)dlg._comboClass.SelectedItem.Tag
 					};
 
-					slot.CharacterData = data;
+					slot.PlayerData = data;
 					slot.Save();
 
 					TroublesOfJordGame.Instance.Play(slotIndex);

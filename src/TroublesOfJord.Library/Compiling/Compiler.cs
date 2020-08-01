@@ -8,6 +8,7 @@ using Module = TroublesOfJord.Core.Module;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Compiling.Loaders;
 using TroublesOfJord.Generation;
+using TroublesOfJord.Core.Abilities;
 
 namespace TroublesOfJord.Compiling
 {
@@ -34,6 +35,7 @@ namespace TroublesOfJord.Compiling
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
 			_loaders[typeof(Class)] = new ClassLoader();
 			_loaders[typeof(BaseGenerator)] = new GeneratorLoader();
+			_loaders[typeof(AbilityInfo)] = new AbilityLoader();
 		}
 
 		private void FirstRun(IEnumerable<string> sources)
@@ -220,6 +222,9 @@ namespace TroublesOfJord.Compiling
 
 			// Map templates
 			FillData(_module.MapTemplates);
+
+			// Abilities
+			FillData(_module.Abilities);
 
 			return _module;
 		}

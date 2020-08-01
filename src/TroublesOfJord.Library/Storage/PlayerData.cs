@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using TroublesOfJord.Compiling.Loaders;
+using System.Linq;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Storage
 {
-	public class CharacterData
+	public class PlayerData
 	{
 		public string Name { get; set; }
 		public string ClassId { get; set; }
@@ -17,23 +16,24 @@ namespace TroublesOfJord.Storage
 		public Dictionary<string, int> Inventory { get; } = new Dictionary<string, int>();
 
 		public Dictionary<EquipType, string> Equipment { get; } = new Dictionary<EquipType, string>();
+		public string[] LearnedAbilities;
 
-		public CharacterData()
+		public PlayerData()
 		{
 		}
 
-		public CharacterData(Character character): this()
+		public PlayerData(Player player): this()
 		{
-			Name = character.Player.Name;
-			ClassId = character.Class.Id;
-			Gold = character.Player.Gold;
+			Name = player.Name;
+			ClassId = player.Class.Id;
+			Gold = player.Gold;
 
-			foreach (var item in character.Player.Inventory.Items)
+			foreach (var item in player.Inventory.Items)
 			{
 				Inventory[item.Item.Info.Id] = item.Quantity;
 			}
 
-			foreach (var item in character.Player.Equipment.Items)
+			foreach (var item in player.Equipment.Items)
 			{
 				if (item == null || item.Item == null)
 				{
@@ -42,30 +42,31 @@ namespace TroublesOfJord.Storage
 
 				Equipment[item.Slot] = item.Item.Info.Id;
 			}
+
+			var abilities = player.BuildLearnedAbilities();
+			LearnedAbilities = (from a in abilities select a.Name).ToArray();
 		}
 
-		public Character CreateCharacter()
+		public Player CreateCharacter()
 		{
-			var result = new Character
+			var result = new Player
 			{
-				Class = TJ.Module.Classes[ClassId]
-			};
-
-			result.Player = new Player
-			{
+				Class = TJ.Module.Classes[ClassId],
 				Name = Name,
 				Gold = Gold
 			};
 
 			foreach (var pair in Inventory)
 			{
-				result.Player.Inventory.Add(new Item(TJ.Module.ItemInfos[pair.Key]), pair.Value);
+				result.Inventory.Add(new Item(TJ.Module.ItemInfos[pair.Key]), pair.Value);
 			}
 
 			foreach(var pair in Equipment)
 			{
-				result.Player.Equipment.Equip(new Item(TJ.Module.ItemInfos[pair.Value]));
+				result.Equipment.Equip(new Item(TJ.Module.ItemInfos[pair.Value]));
 			}
+
+			result.Abilities = result.BuildFreeAbilities();
 
 			return result;
 		}
@@ -75,9 +76,9 @@ namespace TroublesOfJord.Storage
 			return JsonConvert.SerializeObject(this, Formatting.Indented);
 		}
 
-		public static CharacterData FromJson(string data)
+		public static PlayerData FromJson(string data)
 		{
-			return JsonConvert.DeserializeObject<CharacterData>(data);
+			return JsonConvert.DeserializeObject<PlayerData>(data);
 		}
 	}
 }

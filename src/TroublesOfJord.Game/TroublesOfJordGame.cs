@@ -157,7 +157,7 @@ namespace TroublesOfJord
 			// Save current game
 			if (TJ.Session != null)
 			{
-				TJ.Session.Slot.CharacterData = new CharacterData(TJ.Session.Character);
+				TJ.Session.Slot.PlayerData = new PlayerData(TJ.Session.Player);
 				TJ.Session.Slot.Save();
 			}
 		}

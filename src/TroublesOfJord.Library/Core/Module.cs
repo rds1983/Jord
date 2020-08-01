@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Generation;
 
@@ -15,6 +16,7 @@ namespace TroublesOfJord.Core
 		public Dictionary<string, BaseGenerator> Generators { get; } = new Dictionary<string, BaseGenerator>();
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
 		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
+		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 
 		public TileSet CurrentTileSet;
 
@@ -74,6 +76,11 @@ namespace TroublesOfJord.Core
 		public MapTemplate EnsureMapTemplate(string id)
 		{
 			return Ensure(MapTemplates, id);
+		}
+
+		public AbilityInfo EnsureAbility(string id)
+		{
+			return Ensure(Abilities, id);
 		}
 	}
 }
