@@ -6,7 +6,7 @@
 			"Name": "a sewer rat",
 			"Image": "CreatureRat",
 			"Symbol": "r",
-			"Type": "Aggressive",
+			"Type": "Enemy",
 			"Gold": 10,
             "Attacks": [
                 {
@@ -16,9 +16,9 @@
                     "Delay": 3000
                 }
             ],
-            ArmorClass: 5,
-            HitRoll: 1,
-            MaxHp: 50
+            "ArmorClass": 5,
+            "HitRoll": 1,
+            "MaxHp": 50
 		}
 	}
 }

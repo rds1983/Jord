@@ -1,7 +1,7 @@
 <Project>
-  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="InventoryWindow" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
-  <Window Title="Items" Left="24">
-    <VerticalStackPanel Width="1000" PaddingTop="16" PaddingBottom="16">
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="InventoryWindow" OutputPath="C:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
+  <Window Title="Items" IsDraggable="False" Left="90">
+    <VerticalStackPanel Width="1000" Padding="0, 16">
       <VerticalStackPanel.Proportions>
         <Proportion Type="Fill" />
       </VerticalStackPanel.Proportions>
@@ -16,7 +16,7 @@
           <Label Text="Equipment" />
           <HorizontalSeparator />
           <ScrollViewer>
-            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridEquipment" GridRow="1">
+            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Top="-51" GridRow="1" Id="_gridEquipment">
               <Grid.DefaultColumnProportion Type="Auto" />
               <Grid.DefaultRowProportion Type="Auto" />
               <Label Text="&lt;light&gt;" />
@@ -62,7 +62,7 @@
         <VerticalStackPanel>
           <Panel>
             <Label Text="Inventory" />
-            <Label Text="Gold: 50000" Id="_textGold" HorizontalAlignment="Right" />
+            <Label Text="Gold: 50000" HorizontalAlignment="Right" Id="_textGold" />
           </Panel>
           <HorizontalSeparator />
           <ScrollViewer>
@@ -92,8 +92,8 @@
           <Proportion Type="Part" />
         </Grid.ColumnsProportions>
         <Label Text="AC: 100" Id="_textAc" />
-        <Label Text="Hit Roll: 20" Id="_textHitRoll" GridColumn="1" />
-        <Label Text="Attacks: 4-8/6-10" Id="_textAttacks" GridColumn="2" />
+        <Label Text="Hit Roll: 20" GridColumn="1" Id="_textHitRoll" />
+        <Label Text="Attacks: 4-8/6-10" GridColumn="2" Id="_textAttacks" />
       </Grid>
     </VerticalStackPanel>
   </Window>

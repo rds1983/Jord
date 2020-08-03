@@ -60,7 +60,7 @@ namespace TroublesOfJord.Core
 
 		public void Act()
 		{
-			if (Info.CreatureType == CreatureType.Npc)
+			if (Info.CreatureType.IsNpc())
 			{
 				return;
 			}

@@ -76,11 +76,31 @@ namespace TroublesOfJord.UI
 		{
 		}
 
+		private static string NpcMarker(NonPlayer npc, out Color color)
+		{
+			string result = null;
+			color = Color.White;
+			switch (npc.Info.CreatureType)
+			{
+				case CreatureType.Merchant:
+					result = "$";
+					color = Color.Gold;
+					break;
+				case CreatureType.Instructor:
+					result = "^";
+					break;
+			}
+
+			return result;
+		}
+
 		private void RenderNpc(RenderContext context, Point pos, NonPlayer npc)
 		{
 			var tileSize = TileSize;
 
-			if (npc.Info.IsMerchant)
+			Color markerColor;
+			var marker = NpcMarker(npc, out markerColor);
+			if (!string.IsNullOrEmpty(marker))
 			{
 				var screen = GameToScreen(new Vector2(pos.X, pos.Y - 0.5f));
 
@@ -109,11 +129,11 @@ namespace TroublesOfJord.UI
 				}
 
 				var font = Font;
-				var measureSize = font.MeasureString("$");
+				var measureSize = font.MeasureString(marker);
 				var x = screen.X + (tileSize.X - measureSize.X) / 2;
 				var y = screen.Y + (tileSize.Y - measureSize.Y) / 2 - 8;
 
-				context.Batch.DrawString(font, "$", new Vector2(x, y), Color.Gold * opacity);
+				context.Batch.DrawString(font, marker, new Vector2(x, y), markerColor * opacity);
 			}
 
 			if (npc.Stats.Life.MaximumHP != 0 &&

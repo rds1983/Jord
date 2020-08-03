@@ -6,8 +6,7 @@
 			"Name": "Weapon Merchant",
 			"Image": "CreatureWeaponMerchant",
 			"Symbol": "p",
-			"Type": "Npc",
-			"IsMerchant": true,
+			"Type": "Merchant",
 			"Gold": 50000,
 			"Inventory": 
 			{
@@ -19,6 +18,13 @@
 				"LeatherLeggings": 1,
 				"SmallShield": 1
 			}
+		},
+		"BalHarborInstructor": 
+		{
+			"Name": "Instructor",
+			"Image": "CreatureInstructor",
+			"Symbol": "p",
+			"Type": "Instructor",
 		}
 	}
 }

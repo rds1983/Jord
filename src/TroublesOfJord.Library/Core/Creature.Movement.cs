@@ -39,7 +39,7 @@ namespace TroublesOfJord.Core
 			if (creature != null)
 			{
 				var asNonPlayer = creature as NonPlayer;
-				if (asNonPlayer != null && asNonPlayer.Info.CreatureType != CreatureType.Npc)
+				if (asNonPlayer != null && asNonPlayer.Info.CreatureType.IsEnemy())
 				{
 					Attack(creature);
 

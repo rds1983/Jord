@@ -112,7 +112,7 @@ namespace TroublesOfJord.UI
 				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Width && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Height)
 				{
 					var creature = (NonPlayer)TJ.Player.Map[newPos].Creature;
-					if (creature != null && creature.Info.IsMerchant)
+					if (creature != null && creature.Info.CreatureType == CreatureType.Merchant)
 					{
 						// Initiate trade
 						var dialog = new TradeDialog(TJ.Session.Player, creature);

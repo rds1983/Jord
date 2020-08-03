@@ -4,9 +4,10 @@ namespace TroublesOfJord.Core
 {
 	public enum CreatureType
 	{
-		Npc,
-		Attackable,
-		Aggressive
+		Enemy,
+		NeutralEnemy,
+		Merchant,
+		Instructor
 	}
 
 	public class CreatureInfo : BaseMapObject
@@ -17,8 +18,6 @@ namespace TroublesOfJord.Core
 		public int Gold { get; set; }
 
 		public CreatureType CreatureType;
-
-		public bool IsMerchant { get; set; }
 
 		public Inventory Inventory { get; set; }
 

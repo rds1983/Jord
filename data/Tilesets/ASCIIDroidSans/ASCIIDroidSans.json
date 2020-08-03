@@ -67,6 +67,10 @@
 			  "Color": "Blue",
 			  "Symbol": "p"
 			},
+			"CreatureInstructor": {
+			  "Color": "Green",
+			  "Symbol": "p"
+			},			
 			"CreatureRat": {
 			  "Color": "Gray",
 			  "Symbol": "r"

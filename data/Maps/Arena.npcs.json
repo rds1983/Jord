@@ -6,7 +6,7 @@
 			"Name": "Orc",
 			"Image": "CreatureOrc",
 			"Symbol": "o",
-			"Type": "Aggressive",
+			"Type": "Enemy",
 			"Gold": 300,
 			"ArmorClass": 0,
 			"HitRoll": 0,

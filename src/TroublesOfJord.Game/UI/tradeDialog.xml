@@ -1,7 +1,7 @@
 <Project>
-  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="TradeDialog" OutputPath="D:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
-  <Dialog Title="Trade" Left="124">
-    <VerticalStackPanel Width="800" Height="400" PaddingTop="16" PaddingBottom="16">
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="TradeDialog" OutputPath="C:\Projects\TroublesOfJord\src\TroublesOfJord.Game\UI" />
+  <Dialog Title="Trade" IsDraggable="False" Left="190">
+    <VerticalStackPanel Width="800" Height="400" Padding="0, 16">
       <VerticalStackPanel.Proportions>
         <Proportion Type="Fill" />
       </VerticalStackPanel.Proportions>
@@ -14,7 +14,7 @@
         <VerticalStackPanel>
           <Panel>
             <Label Text="player" Id="_textNameLeft" />
-            <Label Text="Gold: 1000" Id="_textGoldLeft" HorizontalAlignment="Right" />
+            <Label Text="Gold: 1000" HorizontalAlignment="Right" Id="_textGoldLeft" />
           </Panel>
           <HorizontalSeparator />
           <ScrollViewer>
@@ -33,13 +33,13 @@
           </ScrollViewer>
         </VerticalStackPanel>
         <VerticalStackPanel VerticalAlignment="Center" Id="_gridGoldTransfer">
-          <Label Text="500" Id="_textGoldTransfer" HorizontalAlignment="Center" />
-          <Panel Id="_panelArrow" Height="20" />
+          <Label Text="500" HorizontalAlignment="Center" Id="_textGoldTransfer" />
+          <Panel Height="20" Id="_panelArrow" />
         </VerticalStackPanel>
         <VerticalStackPanel>
           <Panel>
             <Label Text="merchant" Id="_textNameRight" />
-            <Label Text="Gold: 50000" Id="_textGoldRight" HorizontalAlignment="Right" />
+            <Label Text="Gold: 50000" HorizontalAlignment="Right" Id="_textGoldRight" />
           </Panel>
           <HorizontalSeparator />
           <ScrollViewer>

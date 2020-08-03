@@ -16,14 +16,17 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				Name = EnsureString(data, Compiler.NameName),
 				Image = EnsureAppearance(module, data, Compiler.ImageName),
-				Gold = EnsureInt(data, "Gold"),
-				IsMerchant = OptionalBool(data, "IsMerchant", false),
 				CreatureType = EnsureEnum<CreatureType>(data.Data, data.Source, "Type")
 			};
 
+			if (result.CreatureType != CreatureType.Instructor)
+			{
+				result.Gold = EnsureInt(data, "Gold");
+			}
+
 			EnsureBaseMapObject(module, data, result);
 
-			if (result.CreatureType != CreatureType.Npc)
+			if (result.CreatureType.IsEnemy())
 			{
 				result.ArmorClass = EnsureInt(data, "ArmorClass");
 				result.HitRoll = EnsureInt(data, "HitRoll");
