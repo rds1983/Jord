@@ -15,6 +15,7 @@ namespace TroublesOfJord.Core
 		private readonly List<AttackInfo> _attacks = new List<AttackInfo>();
 
 		public string Name { get; set; }
+		public int Experience { get; set; }
 		public int Gold { get; set; }
 
 		public CreatureType CreatureType;

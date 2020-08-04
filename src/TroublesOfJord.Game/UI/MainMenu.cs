@@ -77,6 +77,7 @@ namespace TroublesOfJord.UI
 					var data = new PlayerData
 					{
 						Name = dlg._textName.Text,
+						Level = 1,
 						ClassId = (string)dlg._comboClass.SelectedItem.Tag
 					};
 

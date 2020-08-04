@@ -4,6 +4,10 @@ namespace TroublesOfJord.Core
 {
 	partial class Creature
 	{
+		protected virtual void OnKilledTarget(Creature target)
+		{
+		}
+
 		public void Attack(Creature target)
 		{
 			var battleStats = Stats.Battle;
@@ -34,13 +38,9 @@ namespace TroublesOfJord.Core
 						var message = AttackInfo.GetAttackMessage(attackRoll, damage, Name, target.Name, attack.AttackType);
 						TJ.GameLog(message);
 					}
-					else if (target is NonPlayer)
+					else
 					{
-						var message = AttackInfo.GetNpcDeathMessage(target.Name);
-						TJ.GameLog(message);
-
-						// Death
-						target.Remove();
+						OnKilledTarget(target);
 						break;
 					}
 				}

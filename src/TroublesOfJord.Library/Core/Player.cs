@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Linq;
 using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Core.Items;
 
@@ -13,6 +11,9 @@ namespace TroublesOfJord.Core
 		private readonly CreatureStats _stats = new CreatureStats();
 
 		private bool _dirty = true;
+
+		public int Level { get; set; }
+		public int Experience { get; set; }
 
 		public Class Class { get; set; }
 
@@ -122,6 +123,24 @@ namespace TroublesOfJord.Core
 		{
 			// TODO:
 			return new AbilityInfo[0];
+		}
+
+		protected override void OnKilledTarget(Creature target)
+		{
+			base.OnKilledTarget(target);
+
+			var nonPlayer = (NonPlayer)target;
+
+			Experience += nonPlayer.Info.Experience;
+			Gold += nonPlayer.Info.Gold;
+
+			var message = AttackInfo.GetNpcDeathMessage(target.Name);
+			TJ.GameLog(message);
+
+			message = AttackInfo.GetExpGoldMessage(nonPlayer.Info.Experience, nonPlayer.Info.Gold);
+			TJ.GameLog(message);
+
+			target.Remove();
 		}
 	}
 }

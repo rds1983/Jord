@@ -1,0 +1,13 @@
+﻿{
+  "Levels": [
+	{ "Level": 2, "Experience": 2000, "Gold": 150 },
+	{ "Level": 3, "Experience": 4000, "Gold": 200 },
+	{ "Level": 4, "Experience": 9000, "Gold": 250 },
+	{ "Level": 5, "Experience": 15000, "Gold": 300 },
+	{ "Level": 6, "Experience": 20000, "Gold": 540 },
+	{ "Level": 7, "Experience": 30000, "Gold": 780 },
+	{ "Level": 8, "Experience": 40000, "Gold": 1020 },
+	{ "Level": 9, "Experience": 80000, "Gold": 1260 },
+	{ "Level": 10, "Experience": 120000, "Gold": 1500 },
+  ]
+}

@@ -20,6 +20,7 @@ namespace TroublesOfJord.Compiling
 		public const string MapName = "Map";
 		public const string TileSetName = "TileSet";
 		public const string ModuleInfoName = "ModuleInfo";
+		public const string LevelsName = "Levels";
 
 		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
@@ -116,6 +117,22 @@ namespace TroublesOfJord.Compiling
 							Source = s,
 							Data = obj
 						};
+
+						continue;
+					}
+					else if (key == LevelsName)
+					{
+						var arr = (JArray)pair.Value;
+						foreach(JObject levelObject in arr)
+						{
+							var levelCost = new LevelCost(
+								BaseLoader.EnsureInt(levelObject, s, "Level"),
+								BaseLoader.EnsureInt(levelObject, s, "Experience"),
+								BaseLoader.EnsureInt(levelObject, s, "Gold")
+							);
+
+							_module.LevelCosts[levelCost.Level] = levelCost;
+						}
 
 						continue;
 					}

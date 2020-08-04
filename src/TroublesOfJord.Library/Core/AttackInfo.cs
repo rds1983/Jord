@@ -104,5 +104,10 @@ namespace TroublesOfJord.Core
 		{
 			return string.Format("{0} is dead! R.I.P. Your blood freezes as you hear {0}'s death cry.", name);
 		}
+
+		public static string GetExpGoldMessage(int experience, int gold)
+		{
+			return string.Format("You had been awarded {0} experience and {1} gold.", experience, gold);
+		}
 	}
 }

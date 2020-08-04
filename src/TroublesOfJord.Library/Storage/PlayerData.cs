@@ -10,12 +10,15 @@ namespace TroublesOfJord.Storage
 	{
 		public string Name { get; set; }
 		public string ClassId { get; set; }
+		public int Level { get; set; }
+		public int Experience { get; set; }
 		public int Gold { get; set; }
 		public string StartingMapId { get; set; } = "BalHarbor";
 
 		public Dictionary<string, int> Inventory { get; } = new Dictionary<string, int>();
 
 		public Dictionary<EquipType, string> Equipment { get; } = new Dictionary<EquipType, string>();
+
 		public string[] LearnedAbilities;
 
 		public PlayerData()
@@ -26,6 +29,8 @@ namespace TroublesOfJord.Storage
 		{
 			Name = player.Name;
 			ClassId = player.Class.Id;
+			Level = player.Level;
+			Experience = player.Experience;
 			Gold = player.Gold;
 
 			foreach (var item in player.Inventory.Items)
@@ -53,6 +58,8 @@ namespace TroublesOfJord.Storage
 			{
 				Class = TJ.Module.Classes[ClassId],
 				Name = Name,
+				Level = Level,
+				Experience = Experience,
 				Gold = Gold
 			};
 

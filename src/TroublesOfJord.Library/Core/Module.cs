@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Core.Items;
 using TroublesOfJord.Generation;
@@ -17,12 +18,13 @@ namespace TroublesOfJord.Core
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
 		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
+		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
 
 		public TileSet CurrentTileSet;
 
 		public ModuleInfo ModuleInfo;
 
-		private static T Ensure<T>(Dictionary<string, T> data, string id)
+		private static T Ensure<T, T2>(Dictionary<T2, T> data, T2 id)
 		{
 			T result;
 			if (!data.TryGetValue(id, out result))
@@ -81,6 +83,16 @@ namespace TroublesOfJord.Core
 		public AbilityInfo EnsureAbility(string id)
 		{
 			return Ensure(Abilities, id);
+		}
+
+		public int GetMaximumLevel()
+		{
+			return (from v in LevelCosts.Values select v.Level).Max();
+		}
+
+		public LevelCost EnsureLevelCost(int level)
+		{
+			return Ensure(LevelCosts, level);
 		}
 	}
 }
