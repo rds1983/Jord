@@ -13,7 +13,7 @@ namespace TroublesOfJord.UI
 		private const int RepeatKeyDownStartInMs = 400;
 		private const int RepeatKeyDownInternalInMs = 40;
 
-		private DateTime?  _lastKeyDown;
+		private DateTime? _lastKeyDown;
 		private int _keyDownCount = 0;
 		private Keys[] _downKeys, _lastDownKeys;
 
@@ -108,17 +108,75 @@ namespace TroublesOfJord.UI
 			if (direction != null)
 			{
 				var delta = direction.Value.GetDelta();
-				var newPos = TJ.Player.Position + delta;
-				if (newPos.X >= 0 && newPos.X < TJ.Player.Map.Width && newPos.Y >= 0 && newPos.Y < TJ.Player.Map.Height)
+				var player = TJ.Player;
+				var newPos = player.Position + delta;
+				if (newPos.X >= 0 && newPos.X < player.Map.Width &&
+					newPos.Y >= 0 && newPos.Y < player.Map.Height)
 				{
-					var creature = (NonPlayer)TJ.Player.Map[newPos].Creature;
-					if (creature != null && creature.Info.CreatureType == CreatureType.Merchant)
+					var creature = (NonPlayer)player.Map[newPos].Creature;
+					var handled = true;
+					if (creature != null)
 					{
-						// Initiate trade
-						var dialog = new TradeDialog(TJ.Session.Player, creature);
-						dialog.ShowModal(Desktop);
+						switch (creature.Info.CreatureType)
+						{
+							case CreatureType.Merchant:
+								// Initiate trade
+								var dialog = new TradeDialog(player, creature);
+								dialog.ShowModal(Desktop);
+								break;
+							case CreatureType.Instructor:
+								Dialog messageBox;
+
+								if (player.Level < TJ.Module.MaximumLevel)
+								{
+									var nextLevel = TJ.Module.LevelCosts[player.Level + 1];
+									if (nextLevel.Experience <= player.Experience && nextLevel.Gold <= player.Gold)
+									{
+										var str = Strings.BuildNextLevelOffer(player.Experience, player.Gold,
+											nextLevel.Experience, nextLevel.Gold);
+
+										messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, str);
+										messageBox.Closed += (s, a) =>
+										{
+											if (!messageBox.Result)
+											{
+												return;
+											}
+
+											// Level up
+											player.Experience -= nextLevel.Experience;
+											player.Gold -= nextLevel.Gold;
+											player.Level++;
+
+											TJ.GameLog(Strings.BuildNextLevel(player.Level));
+										};
+									}
+									else
+									{
+										var str = Strings.BuildNextLevelRequirements(player.Experience, player.Gold,
+											nextLevel.Experience, nextLevel.Gold);
+
+										messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, str);
+										messageBox.ButtonCancel.Visible = false;
+									}
+								}
+								else
+								{
+									messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, Strings.ReachedMaximumLevel);
+									messageBox.ButtonCancel.Visible = false;
+								}
+
+								messageBox.IsDraggable = false;
+								messageBox.ShowModal(Desktop);
+
+								break;
+							default:
+								handled = false;
+								break;
+						}
 					}
-					else
+
+					if (creature == null || !handled)
 					{
 						var isRunning = _downKeys.Contains(Keys.LeftShift) || _downKeys.Contains(Keys.RightShift);
 						result = TJ.Session.MovePlayer(direction.Value, isRunning);

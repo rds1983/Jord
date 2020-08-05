@@ -24,6 +24,14 @@ namespace TroublesOfJord.Core
 
 		public ModuleInfo ModuleInfo;
 
+		public int MaximumLevel
+		{
+			get
+			{
+				return (from v in LevelCosts.Values select v.Level).Max();
+			}
+		}
+
 		private static T Ensure<T, T2>(Dictionary<T2, T> data, T2 id)
 		{
 			T result;
@@ -83,11 +91,6 @@ namespace TroublesOfJord.Core
 		public AbilityInfo EnsureAbility(string id)
 		{
 			return Ensure(Abilities, id);
-		}
-
-		public int GetMaximumLevel()
-		{
-			return (from v in LevelCosts.Values select v.Level).Max();
 		}
 
 		public LevelCost EnsureLevelCost(int level)

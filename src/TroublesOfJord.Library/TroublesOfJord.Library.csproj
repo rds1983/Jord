@@ -7,7 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
-    <PackageReference Include="Myra" Version="1.0.0.205" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Myra\src\Myra\Myra.MonoGame.csproj" />
   </ItemGroup>
 </Project>

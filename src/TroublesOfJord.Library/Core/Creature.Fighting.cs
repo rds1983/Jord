@@ -26,7 +26,7 @@ namespace TroublesOfJord.Core
 				if (attackRoll < target.Stats.Battle.ArmorClass || damage <= 0)
 				{
 					// Miss
-					var message = AttackInfo.GetMissMessage(attackRoll, Name, target.Name, attack.AttackType);
+					var message = Strings.GetMissMessage(attackRoll, Name, target.Name, attack.AttackType);
 					TJ.GameLog(message);
 				}
 				else
@@ -35,7 +35,7 @@ namespace TroublesOfJord.Core
 
 					if (target.Stats.Life.CurrentHP > 0)
 					{
-						var message = AttackInfo.GetAttackMessage(attackRoll, damage, Name, target.Name, attack.AttackType);
+						var message = Strings.GetAttackMessage(attackRoll, damage, Name, target.Name, attack.AttackType);
 						TJ.GameLog(message);
 					}
 					else

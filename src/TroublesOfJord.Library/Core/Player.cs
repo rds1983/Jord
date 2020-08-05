@@ -134,10 +134,10 @@ namespace TroublesOfJord.Core
 			Experience += nonPlayer.Info.Experience;
 			Gold += nonPlayer.Info.Gold;
 
-			var message = AttackInfo.GetNpcDeathMessage(target.Name);
+			var message = Strings.GetNpcDeathMessage(target.Name);
 			TJ.GameLog(message);
 
-			message = AttackInfo.GetExpGoldMessage(nonPlayer.Info.Experience, nonPlayer.Info.Gold);
+			message = Strings.GetExpGoldMessage(nonPlayer.Info.Experience, nonPlayer.Info.Gold);
 			TJ.GameLog(message);
 
 			target.Remove();
