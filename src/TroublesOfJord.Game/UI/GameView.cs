@@ -203,6 +203,11 @@ namespace TroublesOfJord.UI
 				var inventoryWindow = new InventoryWindow();
 				inventoryWindow.ShowModal(Desktop);
 			}
+			else if (key == Keys.C)
+			{
+				var characterWindow = new CharacterWIndow();
+				characterWindow.ShowModal(Desktop);
+			}
 			else if (key == Keys.E)
 			{
 				if (TJ.Session.Player.Enter())

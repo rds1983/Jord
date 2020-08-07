@@ -1,0 +1,36 @@
+<Project>
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="CharacterWIndow" OutputPath="C:/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
+  <Window Title="Character" IsDraggable="False" Left="436" Top="16" Width="300">
+    <VerticalStackPanel Spacing="8">
+      <HorizontalSeparator />
+      <Label Text="rds, Warrior, 10" />
+      <HorizontalSeparator />
+      <Label Text="You have 10 points left to distribute." />
+      <Grid ColumnSpacing="8" RowSpacing="8">
+        <Label Text="Warrior" />
+        <SpinButton Width="40" GridColumn="1" />
+        <Label Text="Thief" GridRow="1" />
+        <SpinButton Width="40" GridColumn="1" GridRow="1" />
+        <Label Text="Priest" GridRow="2" />
+        <SpinButton Width="40" GridColumn="1" GridRow="2" />
+        <Label Text="Mage" GridRow="3" />
+        <SpinButton Width="40" GridColumn="1" GridRow="3" />
+      </Grid>
+      <HorizontalStackPanel Spacing="8" HorizontalAlignment="Left">
+        <TextButton Text="Confirm" />
+        <TextButton Text="Reset" />
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <Grid ColumnSpacing="8" RowSpacing="8">
+        <Label Text="HP: 50/100" />
+        <Label Text="EN: 50/100" GridColumn="1" />
+        <Label Text="HP Regen: 10" GridRow="1" />
+        <Label Text="EN Regen: 5" GridColumn="1" GridRow="1" />
+        <Label Text="AC: 120" GridRow="2" />
+        <Label Text="Hit: 10" GridColumn="1" GridRow="2" />
+        <Label Text="Attacks: 3" GridRow="3" />
+        <Label Text="Dam: 10" GridColumn="1" GridRow="3" />
+      </Grid>
+    </VerticalStackPanel>
+  </Window>
+</Project>
