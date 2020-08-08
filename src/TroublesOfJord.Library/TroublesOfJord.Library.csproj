@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<TargetFramework>net45</TargetFramework>
+	<TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>TroublesOfJord.Library</AssemblyName>
     <RootNamespace>TroublesOfJord</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GoRogue\GoRogue\GoRogue.csproj" />
     <ProjectReference Include="..\..\..\Myra\src\Myra\Myra.MonoGame.csproj" />
   </ItemGroup>
 </Project>

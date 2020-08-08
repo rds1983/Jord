@@ -63,6 +63,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			if (map.Explored)
 			{
+
 				foreach(var tile in map.GetAllCells())
 				{
 					tile.IsExplored = true;

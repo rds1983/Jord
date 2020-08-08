@@ -5,7 +5,7 @@
     <StartupObject />
     <AssemblyName>TroublesOfJord.Game</AssemblyName>
     <RootNamespace>TroublesOfJord</RootNamespace>
-	<TargetFramework>net45</TargetFramework>
+	<TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using TroublesOfJord.Storage;
+﻿using GoRogue;
+using GoRogue.MapViews;
+using TroublesOfJord.Storage;
 using TroublesOfJord.UI;
 using TroublesOfJord.Utils;
 
@@ -60,16 +62,16 @@ namespace TroublesOfJord.Core
 			{
 				for(var y = 0; y < map.Height; ++y)
 				{
-					map.GetCell(x, y).IsInFov = false;
+					map[x, y].IsInFov = false;
 				}
 			}
 
-			map.ComputeFov(Player.Position.X, Player.Position.Y, 12, true);
+			map.FieldOfView.Calculate(Player.Position.X, Player.Position.Y, 12);
 
 			var mapDirty = false;
-			foreach(var index in map.FieldOfView.CellIndices)
+			foreach(var coord in map.FieldOfView.CurrentFOV)
 			{
-				var tile = map.CellFor(index);
+				var tile = map[coord];
 
 				tile.IsInFov = true;
 				if (!tile.IsExplored)
