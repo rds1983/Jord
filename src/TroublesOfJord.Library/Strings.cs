@@ -32,5 +32,10 @@
 		{
 			return string.Format("Welcome to the level {0}!", newLevel);
 		}
+
+		public static string ClassPointsToSpend(int points)
+		{
+			return string.Format("You have {0} class points.", points);
+		}
 	}
 }

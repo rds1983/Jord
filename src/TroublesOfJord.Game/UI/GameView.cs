@@ -205,7 +205,7 @@ namespace TroublesOfJord.UI
 			}
 			else if (key == Keys.C)
 			{
-				var characterWindow = new CharacterWIndow();
+				var characterWindow = new CharacterWindow(TJ.Player);
 				characterWindow.ShowModal(Desktop);
 			}
 			else if (key == Keys.E)
