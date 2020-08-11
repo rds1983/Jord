@@ -7,6 +7,8 @@
 		public const string InstructorCaption = "Instructor";
 		public const string ReachedMaximumLevel = "You had reached the maximum level.";
 
+		public const string Error = "Error";
+
 		public static string FormatNumber(int number)
 		{
 			return number.ToString();
@@ -31,11 +33,6 @@
 		public static string BuildNextLevel(int newLevel)
 		{
 			return string.Format("Welcome to the level {0}!", newLevel);
-		}
-
-		public static string ClassPointsToSpend(int points)
-		{
-			return string.Format("You have {0} points left to distribute.", points);
 		}
 	}
 }

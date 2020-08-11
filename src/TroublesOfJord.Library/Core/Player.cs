@@ -43,6 +43,14 @@ namespace TroublesOfJord.Core
 			}
 		}
 
+		public int PrimaryClassLevel
+		{
+			get
+			{
+				return GetClassLevel(Class.Id);
+			}
+		}
+
 		public Player()
 		{
 			Equipment.Changed += (s, a) => Invalidate();
