@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Core.Items;
 
@@ -6,6 +7,8 @@ namespace TroublesOfJord.Core
 {
 	public class Player : Creature
 	{
+		private Dictionary<string, int> _classLevels = new Dictionary<string, int>();
+
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
@@ -23,13 +26,20 @@ namespace TroublesOfJord.Core
 
 		public AbilityInfo[] Abilities { get; set; }
 
-
 		public override CreatureStats Stats
 		{
 			get
 			{
 				Update();
 				return _stats;
+			}
+		}
+
+		public int ClassPointsLeft
+		{
+			get
+			{
+				return Level - (from v in _classLevels.Values select v).Sum();
 			}
 		}
 
@@ -111,6 +121,18 @@ namespace TroublesOfJord.Core
 		public void Invalidate()
 		{
 			_dirty = true;
+		}
+
+		public int GetClassLevel(string classId)
+		{
+			int result = 0;
+			_classLevels.TryGetValue(classId, out result);
+			return result;
+		}
+
+		public void SetClassLevel(string classId, int level)
+		{
+			_classLevels[classId] = level;
 		}
 
 		public AbilityInfo[] BuildFreeAbilities()

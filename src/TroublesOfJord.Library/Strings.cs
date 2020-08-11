@@ -35,7 +35,7 @@
 
 		public static string ClassPointsToSpend(int points)
 		{
-			return string.Format("You have {0} class points.", points);
+			return string.Format("You have {0} points left to distribute.", points);
 		}
 	}
 }
