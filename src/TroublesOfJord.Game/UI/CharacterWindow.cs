@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.UI;
 using Myra.Utility;
+using System;
 using TroublesOfJord.Core;
 
 namespace TroublesOfJord.UI
@@ -15,6 +16,43 @@ namespace TroublesOfJord.UI
 			_labelDescription.Text = string.Format("{0}, {1}, {2}",
 				player.Name, player.Class.Name, player.Level);
 
+			_buttonConfirm.Click += _buttonConfirm_Click;
+			_buttonReset.Click += _buttonReset_Click;
+
+			ResetPoints();
+		}
+
+		private void _buttonConfirm_Click(object sender, System.EventArgs e)
+		{
+			var dialog = Dialog.CreateMessageBox(Strings.Confirm, Confirm);
+			dialog.Closed += (s, a) =>
+			{
+				if (!dialog.Result)
+				{
+					return;
+				}
+
+				var player = TJ.Player;
+				foreach (var widget in _gridClasses.Widgets)
+				{
+					var asSpinButton = widget as SpinButton;
+					if (asSpinButton == null)
+					{
+						continue;
+					}
+
+					var cls = (Class)asSpinButton.Tag;
+					player.SetClassLevel(cls.Id, (int)asSpinButton.Value);
+				}
+
+				UpdateEnabled();
+			};
+
+			dialog.ShowModal(Desktop);
+		}
+
+		private void _buttonReset_Click(object sender, System.EventArgs e)
+		{
 			ResetPoints();
 		}
 
@@ -50,6 +88,7 @@ namespace TroublesOfJord.UI
 					GridRow = cnt,
 					Width = 40,
 					Minimum = level,
+					Maximum = Config.MaximumClassLevel,
 					Integer = true,
 					Nullable = false,
 					Tag = pair.Value
@@ -66,13 +105,47 @@ namespace TroublesOfJord.UI
 				++cnt;
 			}
 
+			UpdatePointsLeft();
 			UpdateEnabled();
+		}
+
+		private void UpdateEnabled()
+		{
+			var enabled = false;
+
+			var player = TJ.Player;
+
+			foreach (var widget in _gridClasses.Widgets)
+			{
+				var asSpinButton = widget as SpinButton;
+				if (asSpinButton == null)
+				{
+					continue;
+				}
+
+				var cls = (Class)asSpinButton.Tag;
+				if (player.GetClassLevel(cls.Id) < (int)asSpinButton.Value)
+				{
+					enabled = true;
+					break;
+				}
+			}
+
+			_buttonReset.Enabled = enabled;
+			_buttonConfirm.Enabled = enabled;
+		}
+
+		private void UpdatePointsLeft()
+		{
+			_labelPointsLeft.Text = ClassPointsLeft(CalculatePointsLeft());
 		}
 
 		private void SpinButton_ValueChanged(object sender, ValueChangedEventArgs<float?> e)
 		{
+			UpdatePointsLeft();
 			UpdateEnabled();
 		}
+
 
 		private int CalculatePointsLeft()
 		{
@@ -90,12 +163,7 @@ namespace TroublesOfJord.UI
 				totalLevels += (int)asSpinButton.Value;
 			}
 
-			return player.Level - totalLevels;
-		}
-
-		private void UpdateEnabled()
-		{
-			_labelPointsLeft.Text = ClassPointsLeft(CalculatePointsLeft());
+			return Math.Max(0, player.Level - totalLevels);
 		}
 
 		private void SpinButton_ValueChanging(object sender, ValueChangingEventArgs<float?> e)

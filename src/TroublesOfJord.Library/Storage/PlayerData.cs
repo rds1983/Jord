@@ -11,6 +11,9 @@ namespace TroublesOfJord.Storage
 		public string Name { get; set; }
 		public string ClassId { get; set; }
 		public int Level { get; set; }
+
+		public Dictionary<string, int> ClassLevels { get; set; }
+
 		public int Experience { get; set; }
 		public int Gold { get; set; }
 		public string StartingMapId { get; set; } = "BalHarbor";
@@ -30,6 +33,7 @@ namespace TroublesOfJord.Storage
 			Name = player.Name;
 			ClassId = player.Class.Id;
 			Level = player.Level;
+			ClassLevels = player.ClassLevels;
 			Experience = player.Experience;
 			Gold = player.Gold;
 
@@ -62,6 +66,14 @@ namespace TroublesOfJord.Storage
 				Experience = Experience,
 				Gold = Gold
 			};
+
+			if (ClassLevels != null)
+			{
+				foreach(var pair in ClassLevels)
+				{
+					result.ClassLevels[pair.Key] = pair.Value;
+				}
+			}
 
 			foreach (var pair in Inventory)
 			{

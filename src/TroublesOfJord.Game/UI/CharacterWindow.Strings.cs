@@ -4,6 +4,7 @@
 	{
 		public const string NonPrimaryLevelHigher = "Non-primary class level can't be higher than primary.";
 		public const string PrimaryLevelLower = "Primary class level can't be lower than non-primary.";
+		public const string Confirm = "Do you confirm the distribution of points?";
 
 		public static string ClassPointsLeft(int points)
 		{

@@ -7,8 +7,6 @@ namespace TroublesOfJord.Core
 {
 	public class Player : Creature
 	{
-		private Dictionary<string, int> _classLevels = new Dictionary<string, int>();
-
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
@@ -16,6 +14,8 @@ namespace TroublesOfJord.Core
 		private bool _dirty = true;
 
 		public int Level { get; set; }
+		public Dictionary<string, int> ClassLevels { get; } = new Dictionary<string, int>();
+
 		public int Experience { get; set; }
 
 		public Class Class { get; set; }
@@ -39,7 +39,7 @@ namespace TroublesOfJord.Core
 		{
 			get
 			{
-				return Level - (from v in _classLevels.Values select v).Sum();
+				return Level - (from v in ClassLevels.Values select v).Sum();
 			}
 		}
 
@@ -134,13 +134,13 @@ namespace TroublesOfJord.Core
 		public int GetClassLevel(string classId)
 		{
 			int result = 0;
-			_classLevels.TryGetValue(classId, out result);
+			ClassLevels.TryGetValue(classId, out result);
 			return result;
 		}
 
 		public void SetClassLevel(string classId, int level)
 		{
-			_classLevels[classId] = level;
+			ClassLevels[classId] = level;
 		}
 
 		public AbilityInfo[] BuildFreeAbilities()

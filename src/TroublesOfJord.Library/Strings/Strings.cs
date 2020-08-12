@@ -7,6 +7,7 @@
 		public const string InstructorCaption = "Instructor";
 		public const string ReachedMaximumLevel = "You had reached the maximum level.";
 
+		public const string Confirm = "Confirm";
 		public const string Error = "Error";
 
 		public static string FormatNumber(int number)
