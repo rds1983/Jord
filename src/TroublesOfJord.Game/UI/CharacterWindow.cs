@@ -16,6 +16,20 @@ namespace TroublesOfJord.UI
 			_labelDescription.Text = string.Format("{0}, {1}, {2}",
 				player.Name, player.Class.Name, player.Level);
 
+			if (player.Level < TJ.Module.MaximumLevel)
+			{
+				var nextLevel = TJ.Module.LevelCosts[player.Level + 1];
+				_labelExperience.Text = Experience(string.Format("{0}/{1}", 
+					player.Experience.FormatNumber(), nextLevel.Experience.FormatNumber()));
+				_labelGold.Text = Gold(string.Format("{0}/{1}",
+					player.Gold.FormatNumber(), nextLevel.Gold.FormatNumber()));
+			}
+			else
+			{
+				_labelExperience.Text = Experience(player.Experience.FormatNumber());
+				_labelGold.Text = Gold(player.Gold.FormatNumber());
+			}
+
 			_buttonConfirm.Click += _buttonConfirm_Click;
 			_buttonReset.Click += _buttonReset_Click;
 

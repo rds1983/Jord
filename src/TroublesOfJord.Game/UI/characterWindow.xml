@@ -1,9 +1,11 @@
 <Project>
   <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="CharacterWindow" OutputPath="C:/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
-  <Window Title="Character" IsDraggable="False" Left="436" Top="31" Width="300">
+  <Window Title="Character" IsDraggable="False" Left="436" Top="2" Width="300">
     <VerticalStackPanel Spacing="8">
       <HorizontalSeparator />
       <Label Text="rds, Warrior, 10" Id="_labelDescription" />
+      <Label Text="Experience: 100k/150k" Id="_labelExperience" />
+      <Label Text="Gold: 5m/10k" Id="_labelGold" />
       <HorizontalSeparator />
       <Label Text="You have 10 points left to distribute." Id="_labelPointsLeft" />
       <Grid ColumnSpacing="8" RowSpacing="8" Id="_gridClasses">

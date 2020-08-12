@@ -10,7 +10,7 @@
 		public const string Confirm = "Confirm";
 		public const string Error = "Error";
 
-		public static string FormatNumber(int number)
+		public static string FormatNumber(this int number)
 		{
 			return number.ToString();
 		}
@@ -19,16 +19,16 @@
 			int nextLevelExperience, int nextLevelGold)
 		{
 			return string.Format("Your experience: {0}, your gold: {1}.\nYou need {2} experience and {3} gold for the next level.",
-				experience, gold,
-				nextLevelExperience, nextLevelGold);
+				FormatNumber(experience), FormatNumber(gold),
+				FormatNumber(nextLevelExperience), FormatNumber(nextLevelGold));
 		}
 
 		public static string BuildNextLevelOffer(int experience, int gold,
 			int nextLevelExperience, int nextLevelGold)
 		{
 			return string.Format("Your experience: {0}, your gold: {1}.\nWould you like to gain next level for {2} experience and {3} gold?",
-				experience, gold,
-				nextLevelExperience, nextLevelGold);
+				FormatNumber(experience), FormatNumber(gold),
+				FormatNumber(nextLevelExperience), FormatNumber(nextLevelGold));
 		}
 
 		public static string BuildNextLevel(int newLevel)

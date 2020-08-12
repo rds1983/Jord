@@ -10,5 +10,15 @@
 		{
 			return string.Format("You have \\c[green]{0} \\c[white]points left to distribute.", points);
 		}
+
+		public static string Experience(string value)
+		{
+			return "Experience: " + value;
+		}
+
+		public static string Gold(string value)
+		{
+			return "Gold: " + value;
+  		}
 	}
 }
