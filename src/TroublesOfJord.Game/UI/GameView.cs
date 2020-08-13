@@ -148,7 +148,7 @@ namespace TroublesOfJord.UI
 											player.Gold -= nextLevel.Gold;
 											player.Level++;
 
-											TJ.GameLog(Strings.BuildNextLevel(player.Level));
+											TJ.GameLog(Strings.BuildNextLevel(player.Level, player.ClassPointsLeft));
 										};
 									}
 									else

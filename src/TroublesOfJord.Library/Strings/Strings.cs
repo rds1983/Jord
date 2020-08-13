@@ -31,9 +31,9 @@
 				FormatNumber(nextLevelExperience), FormatNumber(nextLevelGold));
 		}
 
-		public static string BuildNextLevel(int newLevel)
+		public static string BuildNextLevel(int newLevel, int classPointsLeft)
 		{
-			return string.Format("Welcome to the level {0}!", newLevel);
+			return string.Format("Welcome to the level {0}! 1 class point had been awarded. Total class points: {1}.", newLevel, classPointsLeft);
 		}
 	}
 }
