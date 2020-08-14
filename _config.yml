@@ -26,7 +26,7 @@ twitter_username: AbarimGames
 github_username: rds1983
 
 # Build settings
-theme: jekyll-theme-slate
+theme: minima
 plugins:
   - jekyll-feed
 
