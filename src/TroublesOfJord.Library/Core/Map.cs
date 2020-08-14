@@ -59,6 +59,12 @@ namespace TroublesOfJord.Core
 			set => _tiles[pos.X, pos.Y] = value;
 		}
 
+		public Tile this[Point pos]
+		{
+			get => _tiles[pos.X, pos.Y];
+			set => _tiles[pos.X, pos.Y] = value;
+		}
+
 		public Tile this[int index1D]
 		{
 			get => _tiles[index1D];
