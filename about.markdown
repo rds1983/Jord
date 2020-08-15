@@ -2,6 +2,7 @@
 layout: page
 title: About
 permalink: /about/
+order: 1
 ---
 
 "Troubles of Jord" is action RPG game influenced by MMORPG [SlothMUD](https://www.slothmud.org).

@@ -1,0 +1,7 @@
+---
+layout: post
+title:  "Video: Leveling Up/Points Distribution System"
+date:   2020-08-13 20:02:58 +0700
+categories: jekyll update
+---
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dc7_gB_GYCc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
