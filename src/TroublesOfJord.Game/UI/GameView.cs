@@ -208,7 +208,11 @@ namespace TroublesOfJord.UI
 				var characterWindow = new CharacterWindow();
 				characterWindow.ShowModal(Desktop);
 			}
-			else if (key == Keys.E)
+			else if (key == Keys.A)
+			{
+				var abilitiesWindow = new AbilitiesWindow();
+				abilitiesWindow.ShowModal(Desktop);
+			} else if (key == Keys.E)
 			{
 				if (TJ.Session.Player.Enter())
 				{
