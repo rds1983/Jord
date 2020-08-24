@@ -5,12 +5,13 @@
     <StartupObject />
     <AssemblyName>TroublesOfJord.MapEditor</AssemblyName>
     <RootNamespace>TroublesOfJord</RootNamespace>
-	<TargetFramework>net45</TargetFramework>
+	<TargetFramework>net462</TargetFramework>
   </PropertyGroup>  
 
   <ItemGroup>
     <ProjectReference Include="..\TroublesOfJord.Library\TroublesOfJord.Library.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.7.1.189" />
   </ItemGroup>
