@@ -8,9 +8,16 @@ namespace TroublesOfJord.Core.Abilities
 		Attacks
 	}
 
+	public enum AbilityType
+	{
+		Automatic,
+		Instant
+	}
+
 	public class AbilityInfo: BaseObject
 	{
 		public string Name;
+		public AbilityType Type;
 		public AbilityRequirement[] Requirements;
 		public BaseItemInfo Manual;
 

@@ -15,7 +15,8 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 			var result = new AbilityInfo
 			{
-				Name = EnsureString(data, "Name")
+				Name = EnsureString(data, "Name"),
+				Type = EnsureEnum<AbilityType>(data, "Type")
 			};
 
 			var requirementsObject = EnsureJObject(data, "Requirements");

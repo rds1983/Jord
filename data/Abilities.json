@@ -2,6 +2,7 @@
 	"Abilities": {
 		"DoubleAttack": {
 			"Name": "Double Attack",
+			"Type": "Automatic",
 			"Requirements": {
 				"Warrior": 1
 			},

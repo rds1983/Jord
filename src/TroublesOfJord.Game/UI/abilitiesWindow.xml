@@ -1,23 +1,32 @@
 <Project>
-  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="AbilitiesWindow" OutputPath="C:/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
-  <Window Title="Abilities" Width="400" >
-    <HorizontalStackPanel >
-      <ListBox Id="_listAbilities" >
-        <ListItem Text="Double Attack" />
-        <ListItem Text="Parry" Color="Red" />
-        <ListItem Text="Spell 'Cure Light Wounds'" />
-        <ListItem Text="Spell 'Cure Minor Wounds'" />
-        <ListItem Text="Spell 'Cure Normal Wounds'" />
-        <ListItem Text="Spell 'Cure Serious Wounds'" />
-      </ListBox>
-      <VerticalSeparator/>
-      <VerticalStackPanel Spacing="4" >
-        <Label Text="0 Energy" Id="_labelEnergyCost" />
-        <HorizontalSeparator/>
-        <Label Text="On/Off" Id="_labelType" />
-        <HorizontalSeparator/>
-        <Label Text="Replaces first attack with parry, which is blocks first attack of enemy with almost 100% guarantee" Wrap="True" />
-      </VerticalStackPanel>
-    </HorizontalStackPanel>
+  <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="AbilitiesWindow" OutputPath="/home/rds/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
+  <Window Title="Abilities" IsDraggable="False" Left="223" Top="62" Width="500">
+    <VerticalStackPanel>
+      <HorizontalSeparator />
+      <HorizontalStackPanel>
+        <ListBox Width="250" Id="_listAbilities">
+          <ListItem Text="Double Attack" />
+          <ListItem Text="Parry" Color="#FF0000FF" />
+          <ListItem Text="Spell 'Cure Light Wounds'" />
+          <ListItem Text="Spell 'Cure Minor Wounds'" />
+          <ListItem Text="Spell 'Cure Normal Wounds'" />
+          <ListItem Text="Spell 'Cure Serious Wounds'" />
+        </ListBox>
+        <VerticalSeparator />
+        <VerticalStackPanel Spacing="4" Width="250">
+          <Label Text="0 Energy" Id="_labelEnergyCost" />
+          <HorizontalSeparator />
+          <Label Text="On/Off" Id="_labelType" />
+          <HorizontalSeparator />
+          <Label Text="Glowing green spellbook" Id="_labelManual" />
+          <HorizontalSeparator />
+          <Label Text="Replaces first attack with parry, which is blocks first attack of enemy with almost 100% guarantee." Wrap="True" />
+        </VerticalStackPanel>
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <HorizontalStackPanel>
+        <TextButton Text="Use" Width="100" Id="_buttonUse" />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
   </Window>
 </Project>

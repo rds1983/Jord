@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using TroublesOfJord.Core;
-using XNAssets;
 
 namespace TroublesOfJord
 {
