@@ -1,14 +1,15 @@
 ﻿{
-	"Abilities": {
-		"DoubleAttack": {
-			"Name": "Double Attack",
-			"Type": "Automatic",
-			"Requirements": {
-				"Warrior": 1
-			},
-			"Bonuses": {
-				"Attacks": 1
-			}
-		}
-	}
+    "Abilities": {
+        "DoubleAttack": {
+            "Name": "Double Attack",
+            "Type": "Automatic",
+            "Description": "Additional attack per turn.",
+            "Requirements": {
+                "Warrior": 1
+            },
+            "Bonuses": {
+                "Attacks": 1
+            }
+        }
+    }
 }

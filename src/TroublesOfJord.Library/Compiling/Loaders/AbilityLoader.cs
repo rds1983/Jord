@@ -16,7 +16,9 @@ namespace TroublesOfJord.Compiling.Loaders
 			var result = new AbilityInfo
 			{
 				Name = EnsureString(data, "Name"),
-				Type = EnsureEnum<AbilityType>(data, "Type")
+				Energy = OptionalInt(data, "Energy", 0),
+				Type = EnsureEnum<AbilityType>(data, "Type"),
+				Description = EnsureString(data, "Description")
 			};
 
 			var requirementsObject = EnsureJObject(data, "Requirements");

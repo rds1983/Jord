@@ -17,7 +17,10 @@ namespace TroublesOfJord.Core.Abilities
 	public class AbilityInfo: BaseObject
 	{
 		public string Name;
+		public int Energy;
 		public AbilityType Type;
+		public string Description;
+		
 		public AbilityRequirement[] Requirements;
 		public BaseItemInfo Manual;
 
