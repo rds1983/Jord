@@ -213,6 +213,8 @@ namespace TroublesOfJord.UI
 			var pointsLeft = player.Level - totalLevels;
 			if (pointsLeft < 0)
 			{
+				var error = Dialog.CreateMessageBox(Strings.Error, NoPointsLeft);
+				error.ShowModal(Desktop);		
 				e.Cancel = true;
 				return;
 			}
