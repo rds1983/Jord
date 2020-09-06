@@ -22,21 +22,9 @@ namespace TroublesOfJord.Storage
 			}
 		}
 
-		public string SaveFolder
-		{
-			get
-			{
-				return Path.Combine(SavesFolder, Index.ToString());
-			}
-		}
+		public string SaveFolder => BuildSaveFolder(Index);
 
-		private string PlayerFilePath
-		{
-			get
-			{
-				return Path.Combine(SaveFolder, "player.json");
-			}
-		}
+		private string PlayerFilePath => BuildPlayerFilePath(Index);
 
 		public PlayerData PlayerData { get; set; }
 
@@ -66,6 +54,21 @@ namespace TroublesOfJord.Storage
 
 			var s = PlayerData.ToJson();
 			File.WriteAllText(PlayerFilePath, s);
+		}
+
+		private static string BuildSaveFolder(int slotIndex)
+		{
+			return Path.Combine(SavesFolder, slotIndex.ToString());
+		}
+
+		private static string BuildPlayerFilePath(int slotIndex)
+		{
+			return Path.Combine(BuildSaveFolder(slotIndex), "player.json");
+		}
+
+		public static bool Exists(int slotIndex)
+		{
+			return Directory.Exists(BuildSaveFolder(slotIndex)) && File.Exists(BuildPlayerFilePath(slotIndex));
 		}
 	}
 }

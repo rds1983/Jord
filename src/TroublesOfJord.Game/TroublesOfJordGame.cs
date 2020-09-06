@@ -76,7 +76,15 @@ namespace TroublesOfJord
 				SwitchToMainMenu();
 			} else
 			{
-				Play(StartGameIndex.Value);
+				if (!Slot.Exists(StartGameIndex.Value))
+				{
+					TJ.LogInfo("Slot {0} isn't used", StartGameIndex.Value);
+					SwitchToMainMenu();
+				}
+				else
+				{
+					Play(StartGameIndex.Value);
+				}
 			}
 		}
 
