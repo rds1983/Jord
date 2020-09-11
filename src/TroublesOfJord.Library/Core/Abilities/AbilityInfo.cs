@@ -3,14 +3,9 @@ using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Core.Abilities
 {
-	public enum BonusType
-	{
-		Attacks
-	}
-
 	public enum AbilityType
 	{
-		Automatic,
+		Permanent,
 		Instant
 	}
 
@@ -22,6 +17,7 @@ namespace TroublesOfJord.Core.Abilities
 		public string Description;
 		
 		public AbilityRequirement[] Requirements;
+		public AbilityEffect[] Effects;
 		public BaseItemInfo Manual;
 
 		public Dictionary<BonusType, int> Bonuses { get; } = new Dictionary<BonusType, int>();

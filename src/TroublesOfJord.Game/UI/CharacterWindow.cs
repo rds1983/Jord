@@ -55,8 +55,11 @@ namespace TroublesOfJord.UI
 						continue;
 					}
 
+					var level = (int) asSpinButton.Value;
+					asSpinButton.Minimum = level;
+
 					var cls = (Class)asSpinButton.Tag;
-					player.SetClassLevel(cls.Id, (int)asSpinButton.Value);
+					player.SetClassLevel(cls.Id, level);
 				}
 
 				UpdateEnabled();
@@ -102,7 +105,7 @@ namespace TroublesOfJord.UI
 					GridRow = cnt,
 					Width = 40,
 					Minimum = level,
-					Maximum = Config.MaximumClassLevel,
+					Maximum = null,
 					Integer = true,
 					Nullable = false,
 					Tag = pair.Value

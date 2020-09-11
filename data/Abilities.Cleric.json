@@ -1,0 +1,19 @@
+﻿{
+    "Abilities": {
+        "CureLightWounds": {
+            "Name": "Cure Light Wounds",
+            "Type": "Instant",
+            "Description": "Heals some hit points.",
+            "Requirements": {
+                "Cleric": 1
+            },
+            "Effects": {
+                "HealSelf": {
+                    "Minimum": 3,
+                    "Maximum": 5,
+                    "Message": "You feel better({0})."
+                }
+            }
+        }
+    }
+}

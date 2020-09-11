@@ -4,7 +4,7 @@ namespace TroublesOfJord.UI
 {
     partial class AbilitiesWindow
     {
-        private const string ManualNone = "None";
+        private const string ManualNone = "No manual required.";
         
         private static string GetEnergyString(int value)
         {

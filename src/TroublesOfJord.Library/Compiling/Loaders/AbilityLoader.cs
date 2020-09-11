@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Abilities;
 
@@ -39,9 +40,51 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			result.Requirements = requirements.ToArray();
 
+			var effectsObject = OptionalJObject(data.Data, "Effects");
+			var effects = new List<AbilityEffect>();
+			if (effectsObject != null)
+			{
+				if (result.Type == AbilityType.Permanent)
+				{
+					RaiseError("Permanent ability can't have effects.");
+				}
+
+				foreach (var pair in effectsObject)
+				{
+					AbilityEffect effect = null;
+					
+					var obj = (JObject)pair.Value;
+					switch (pair.Key)
+					{
+						case "HealSelf":
+							var healSelf = new HealSelf
+							{
+								Minimum = EnsureInt(obj, data.Source, "Minimum"),
+								Maximum = EnsureInt(obj, data.Source, "Maximum"),
+								MessageActivated = EnsureString(obj, data.Source, "Message"),
+							};
+
+							effect = healSelf;
+							break;
+						default:
+							RaiseError("Unknown ability effect {0}", pair.Key);
+							break;
+					}
+					
+					effects.Add(effect);
+				}
+			}
+
+			result.Effects = effects.ToArray();
+
 			var bonusesObject = OptionalJObject(data.Data, "Bonuses");
 			if (bonusesObject != null)
 			{
+				if (result.Type != AbilityType.Permanent)
+				{
+					RaiseError("Non-permanent ability can't have bonuses");
+				}
+
 				foreach(var pair in bonusesObject)
 				{
 					var bonusType = (BonusType)Enum.Parse(typeof(BonusType), pair.Key);

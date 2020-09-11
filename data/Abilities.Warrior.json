@@ -2,7 +2,7 @@
     "Abilities": {
         "DoubleAttack": {
             "Name": "Double Attack",
-            "Type": "Automatic",
+            "Type": "Permanent",
             "Description": "Additional attack per turn.",
             "Requirements": {
                 "Warrior": 1

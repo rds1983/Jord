@@ -6,11 +6,11 @@
     "Mage": {
       "Name": "Mage",
     },
-    "Priest": {
-      "Name": "Priest",
+    "Cleric": {
+      "Name": "Cleric",
     },
-    "Rogue": {
-      "Name": "Rogue",
+    "Thief": {
+      "Name": "Thief",
     },
   }
 }
