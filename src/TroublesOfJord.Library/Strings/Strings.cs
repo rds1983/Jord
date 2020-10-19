@@ -6,6 +6,8 @@
 		public const string BackName = " --BACK-- ";
 		public const string InstructorCaption = "Instructor";
 		public const string ReachedMaximumLevel = "You had reached the maximum level.";
+		public const string MaximumHpAlready = "Your hitpoints are at maximum already.";
+		public const string NotEnoughEnergy = "Not enough energy.";
 
 		public const string Confirm = "Confirm";
 		public const string Error = "Error";

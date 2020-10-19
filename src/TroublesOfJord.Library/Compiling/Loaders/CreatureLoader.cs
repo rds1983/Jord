@@ -36,8 +36,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				result.ArmorClass = EnsureInt(data, "ArmorClass");
 				result.HitRoll = EnsureInt(data, "HitRoll");
 				result.MaxHp = EnsureInt(data, "MaxHp");
-				result.MaxMana = OptionalInt(data, "MaxMana");
-				result.MaxStamina = OptionalInt(data, "MaxStamina");
+				result.MaxEnergy = OptionalInt(data, "MaxEnergy");
 
 				var attacks = (JArray)data.Data["Attacks"];
 				foreach(JObject attackObj in attacks)

@@ -1,5 +1,4 @@
-﻿using GoRogue;
-using GoRogue.MapViews;
+﻿using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Storage;
 using TroublesOfJord.UI;
 using TroublesOfJord.Utils;
@@ -25,32 +24,76 @@ namespace TroublesOfJord.Core
 			Player.Stats.Life.Restore();
 		}
 
+		private void WorldAct()
+		{
+			// Let npcs act
+			var map = Player.Map;
+			for (var x = 0; x < map.Width; ++x)
+			{
+				for (var y = 0; y < map.Height; ++y)
+				{
+					var npc = map[x, y].Creature as NonPlayer;
+					if (npc == null)
+					{
+						continue;
+					}
+
+					npc.Act();
+				}
+			}
+
+			UpdateTilesVisibility();
+		}
+
 		public bool MovePlayer(MovementDirection direction, bool isRunning)
 		{
 			var result = Player.MoveTo(direction.GetDelta());
-
 			if (result)
 			{
-				// Let npcs act
-				var map = Player.Map;
-				for (var x = 0; x < map.Width; ++x)
-				{
-					for (var y = 0; y < map.Height; ++y)
-					{
-						var npc = map[x, y].Creature as NonPlayer;
-						if (npc == null)
-						{
-							continue;
-						}
-
-						npc.Act();
-					}
-				}
-
-				UpdateTilesVisibility();
+				WorldAct();
 			}
 
 			return result;
+		}
+
+		public void UseAbility(AbilityInfo ability)
+		{
+			if (Player.Stats.Life.CurrentEnergy < ability.Energy)
+			{
+				TJ.GameLog(Strings.NotEnoughEnergy);
+				return;
+			}
+
+			var success = true;
+
+			foreach(var effect in ability.Effects)
+			{
+				var asHealSelf = effect as HealSelf;
+				if (asHealSelf != null)
+				{
+					var amount = MathUtils.Random.Next(asHealSelf.Minimum, asHealSelf.Maximum + 1);
+					if (Player.Stats.Life.CurrentHP >= Player.Stats.Life.MaximumHP)
+					{
+						TJ.GameLog(Strings.MaximumHpAlready);
+						success = false;
+						continue;
+					} else if (Player.Stats.Life.CurrentHP + amount > Player.Stats.Life.MaximumHP)
+					{
+						amount = Player.Stats.Life.MaximumHP - Player.Stats.Life.CurrentHP;
+					}
+
+					Player.Stats.Life.CurrentHP += amount;
+
+					var message = string.Format(asHealSelf.MessageActivated, amount);
+					TJ.GameLog(message);
+				}
+			}
+
+			if (success)
+			{
+				Player.Stats.Life.CurrentEnergy -= ability.Energy;
+				WorldAct();
+			}
 		}
 
 		public void UpdateTilesVisibility()

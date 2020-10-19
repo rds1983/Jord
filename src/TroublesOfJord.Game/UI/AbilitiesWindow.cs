@@ -13,6 +13,15 @@ namespace TroublesOfJord.UI
 			BuildUI();
 			RebuildAbilities();
 			UpdateSelected();
+
+			_buttonUse.Click += _buttonUse_Click;
+		}
+
+		private void _buttonUse_Click(object sender, EventArgs e)
+		{
+			var ability = (AbilityInfo)_listAbilities.SelectedItem.Tag;
+			TJ.Session.UseAbility(ability);
+			Close();
 		}
 
 		private void RebuildAbilities()

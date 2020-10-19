@@ -28,7 +28,7 @@ namespace TroublesOfJord.Core
 
 		public int HitRoll;
 
-		public int MaxHp, MaxMana, MaxStamina;
+		public int MaxHp, MaxEnergy;
 
 		public CreatureInfo()
 		{
