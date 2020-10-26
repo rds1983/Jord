@@ -1,4 +1,4 @@
-﻿namespace Wanderers.Generator
+﻿namespace TroublesOfJord.Generation.World
 {
 	public class LocationConfig
 	{

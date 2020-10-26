@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using Wanderers.Core;
-using Wanderers.Utils;
 
-namespace Wanderers.Generator
+namespace TroublesOfJord.Generation.World
 {
-	public class LocationsGenerator: BaseGenerator
+/*	public class LocationsGenerator: BaseGenerator
 	{
 		private const int CityWidth = 65;
 		private const int CityHeight = 65;
@@ -84,7 +82,7 @@ namespace Wanderers.Generator
 
 			foreach (var step in steps)
 			{
-				_result.SetWorldMapTileType(step.Position, WorldMapTileType.Road);
+				_result.SetTileInfo(step.Position, TileInfo.Road);
 				AddToRoadTiles(step.Position);
 			}
 		}
@@ -193,7 +191,7 @@ namespace Wanderers.Generator
 						p = new Point(x + newArea.Left,
 							y + newArea.Top);
 
-						_result.SetWorldMapTileType(p, WorldMapTileType.Road);
+						_result.SetTileInfo(p, TileInfo.Road);
 					}
 				}
 
@@ -201,40 +199,40 @@ namespace Wanderers.Generator
 				for (var x = 0; x < newArea.Width; ++x)
 				{
 					p = new Point(x + newArea.Left, newArea.Top);
-					_result.SetWorldMapTileType(p, WorldMapTileType.Wall);
+					_result.SetTileInfo(p, TileInfo.Wall);
 
 					p = new Point(x + newArea.Left, newArea.Bottom - 1);
-					_result.SetWorldMapTileType(p, WorldMapTileType.Wall);
+					_result.SetTileInfo(p, TileInfo.Wall);
 				}
 
 				for (var y = 0; y < newArea.Height; ++y)
 				{
 					p = new Point(newArea.Left, newArea.Top + y);
-					_result.SetWorldMapTileType(p, WorldMapTileType.Wall);
+					_result.SetTileInfo(p, TileInfo.Wall);
 
 					p = new Point(newArea.Right - 1, newArea.Top + y);
-					_result.SetWorldMapTileType(p, WorldMapTileType.Wall);
+					_result.SetTileInfo(p, TileInfo.Wall);
 				}
 
 				// Add entrances
 				p = new Point(newArea.X + newArea.Width / 2,
 					newArea.Top);
-				_result.SetWorldMapTileType(p, WorldMapTileType.Road);
+				_result.SetTileInfo(p, TileInfo.Road);
 				location.EntranceLocations.Add(p);
 
 				p = new Point(newArea.X,
 					newArea.Y + newArea.Height / 2);
-				_result.SetWorldMapTileType(p, WorldMapTileType.Road);
+				_result.SetTileInfo(p, TileInfo.Road);
 				location.EntranceLocations.Add(p);
 
 				p = new Point(newArea.X + newArea.Width / 2,
 					newArea.Bottom - 1);
-				_result.SetWorldMapTileType(p, WorldMapTileType.Road);
+				_result.SetTileInfo(p, TileInfo.Road);
 				location.EntranceLocations.Add(p);
 
 				p = new Point(newArea.Right - 1,
 					newArea.Top + newArea.Height / 2);
-				_result.SetWorldMapTileType(p, WorldMapTileType.Road);
+				_result.SetTileInfo(p, TileInfo.Road);
 				location.EntranceLocations.Add(p);
 
 				_result.Locations.Add(location);
@@ -246,5 +244,5 @@ namespace Wanderers.Generator
 				Connect(i, i + 1);
 			}
 		}
-	}
+	}*/
 }

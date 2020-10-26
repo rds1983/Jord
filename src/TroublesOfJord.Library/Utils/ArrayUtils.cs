@@ -1,21 +1,7 @@
-﻿using System;
-using System.Reflection;
-
-namespace Wanderers.Generator
+﻿namespace TroublesOfJord.Utils
 {
-	internal static class Utils
+	public static class ArrayUtils
 	{
-		public static string Version
-		{
-			get
-			{
-				var assembly = typeof(Utils).Assembly;
-				var name = new AssemblyName(assembly.FullName);
-
-				return name.Version.ToString();
-			}
-		}
-
 		public static void Fill<T>(this T[] array, T value)
 		{
 			for (var i = 0; i < array.Length; ++i)

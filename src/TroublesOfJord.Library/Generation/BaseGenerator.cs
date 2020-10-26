@@ -14,5 +14,10 @@ namespace TroublesOfJord.Generation
 		}
 
 		public abstract Map Generate();
+
+		public void LogInfo(string message, params object[] args)
+		{
+			TJ.LogInfo(message, args);
+		}
 	}
 }

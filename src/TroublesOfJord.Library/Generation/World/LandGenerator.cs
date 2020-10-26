@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using TroublesOfJord.Core;
+using TroublesOfJord.Utils;
 
-namespace Wanderers.Generator
+namespace TroublesOfJord.Generation.World
 {
-	public class LandGenerator: BaseGenerator
+	public class LandGenerator : BaseGenerator
 	{
 		private const int MinimumIslandSize = 1000;
 		private const int MinimumLakeSize = 300;
-
-		private LandGeneratorConfig _config;
 
 		private static readonly Point[] _deltas = new Point[]{
 			new Point(0, -1),
@@ -35,6 +35,8 @@ namespace Wanderers.Generator
 			{0.1f, 0.1f, 0.1f}
 		};
 
+		private readonly LandGeneratorConfig _config;
+
 		private readonly Random _random = new Random();
 		private bool[,] _isSet;
 		private float[,] _data;
@@ -42,7 +44,7 @@ namespace Wanderers.Generator
 
 		private bool[,] _islandMask;
 
-		private GenerationResult _result;
+		private readonly Map _result;
 		private float _landMinimum;
 		private float _mountainMinimum;
 
@@ -54,8 +56,10 @@ namespace Wanderers.Generator
 			}
 		}
 
-		public LandGenerator(GenerationContext context) : base(context)
+		public LandGenerator(LandGeneratorConfig config) : base(config.WorldSize, config.WorldSize)
 		{
+			_config = config;
+
 		}
 
 		private List<Point> Build(int x, int y, Func<Point, bool> addCondition)
@@ -337,7 +341,58 @@ namespace Wanderers.Generator
 			LogInfo("Mountain minimum: {0:0.##}", _mountainMinimum);
 		}
 
-		private void RemoveTiles(string name, WorldMapTileType tileType, WorldMapTileType newValue)
+		public TileInfo GetTileInfo(int x, int y, TileInfo def)
+		{
+			return GetTileInfo(x, y, def);
+		}
+
+		public TileInfo GetTileInfo(Point p, TileInfo def)
+		{
+			return GetTileInfo(p, def);
+		}
+
+		public TileInfo GetTileInfo(int x, int y)
+		{
+			return GetTileInfo(x, y, _config.Water);
+		}
+
+		public TileInfo GetTileInfo(Point p)
+		{
+			return GetTileInfo(p.X, p.Y);
+		}
+
+		public void SetTileInfo(Point p, TileInfo info)
+		{
+			_result[p].Info = info;
+		}
+
+		public void SetTileInfo(int x, int y, TileInfo info)
+		{
+			_result[x, y].Info = info;
+		}
+
+		public bool IsNear(int x, int y, TileInfo info)
+		{
+			foreach (var d in _deltas)
+			{
+				var px = x + d.X;
+				var py = y + d.Y;
+
+				if (GetTileInfo(px, py) == info)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public bool IsNear(Point p, TileInfo info)
+		{
+			return IsNear(p.X, p.Y, info);
+		}
+
+		private void RemoveTiles(string name, TileInfo tileType, TileInfo newValue)
 		{
 			LogInfo("Removing {0}...", name);
 
@@ -350,16 +405,16 @@ namespace Wanderers.Generator
 			{
 				for (int x = 0; x < Size; ++x)
 				{
-					if (!_islandMask[y, x] && _result.GetWorldMapTileType(x, y) == tileType)
+					if (!_islandMask[y, x] && GetTileInfo(x, y) == tileType)
 					{
-						List<Point> island = Build(x, y, p => _result.GetWorldMapTileType(p) == tileType);
+						List<Point> island = Build(x, y, p => GetTileInfo(p) == tileType);
 
 						if (island.Count < MinimumIslandSize)
 						{
 							// Remove small island
 							foreach (var p in island)
 							{
-								_result.SetWorldMapTileType(p, newValue);
+								SetTileInfo(p, newValue);
 								++tilesReplaced;
 							}
 						}
@@ -370,7 +425,7 @@ namespace Wanderers.Generator
 			LogInfo("Tiles replaced: {0}", tilesReplaced);
 		}
 
-		private void RemoveNoise(string name, WorldMapTileType tileType)
+		private void RemoveNoise(string name, TileInfo tileType)
 		{
 			LogInfo("Removing {0}...", name);
 			var iterations = 0;
@@ -383,7 +438,7 @@ namespace Wanderers.Generator
 				{
 					for (int x = 0; x < Size; ++x)
 					{
-						if (_result.GetWorldMapTileType(x, y) == tileType)
+						if (GetTileInfo(x, y) == tileType)
 						{
 							continue;
 						}
@@ -394,11 +449,11 @@ namespace Wanderers.Generator
 							var p = new Point(x + d.X, y + d.Y);
 							var p2 = new Point(x - d.X, y - d.Y);
 
-							if (_result.GetWorldMapTileType(p, tileType) == tileType &&
-								_result.GetWorldMapTileType(p2, tileType) == tileType)
+							if (GetTileInfo(p, tileType) == tileType &&
+								GetTileInfo(p2, tileType) == tileType)
 							{
 								// Turn into new value
-								_result.SetWorldMapTileType(x, y, tileType);
+								SetTileInfo(x, y, tileType);
 								changed = true;
 								++tilesReplaced;
 								break;
@@ -438,7 +493,7 @@ namespace Wanderers.Generator
 						p.X = _random.Next(0, _result.Width);
 						p.Y = _random.Next(0, _result.Height);
 
-						if (_result.IsLand(p))
+						if (GetTileInfo(p) == _config.Land)
 						{
 							locations.Enqueue(p);
 							break;
@@ -451,14 +506,14 @@ namespace Wanderers.Generator
 				{
 					var p = locations.Dequeue();
 
-					if (!_result.IsLand(p) || 
-						_result.IsNear(p, WorldMapTileType.Water) || 
-						_result.IsNear(p, WorldMapTileType.Mountain))
+					if (GetTileInfo(p) != _config.Land ||
+						IsNear(p, _config.Water) ||
+						IsNear(p, _config.Mountain))
 					{
 						continue;
 					}
 
-					_result.SetWorldMapTileType(p, WorldMapTileType.Forest);
+					SetTileInfo(p, _config.Forest);
 					++c;
 
 					for (var i = 0; i < 30; ++i)
@@ -471,7 +526,7 @@ namespace Wanderers.Generator
 						var d = new Point(p.X + (int)(Math.Cos(radAngle) * dist),
 							p.Y + (int)(Math.Sin(radAngle) * dist));
 
-						if (_result.IsLand(d))
+						if (GetTileInfo(d) == _config.Land)
 						{
 							locations.Enqueue(d);
 						}
@@ -480,15 +535,8 @@ namespace Wanderers.Generator
 			}
 		}
 
-		public GenerationResult Generate(LandGeneratorConfig config)
+		public override Map Generate()
 		{
-			if (config == null)
-			{
-				throw new ArgumentNullException("config");
-			}
-
-			_config = config;
-
 			_islandMask = new bool[Size, Size];
 
 			_data = new float[Size, Size];
@@ -505,53 +553,49 @@ namespace Wanderers.Generator
 			Smooth();
 			CalculateMinimums();
 
-			var tiles = new WorldMapTileType[Size, Size];
-
 			for (int y = 0; y < Size; ++y)
 			{
 				for (int x = 0; x < Size; ++x)
 				{
 					var p = new Point(x, y);
 
-					var tileType = WorldMapTileType.Water;
+					var tileType = _config.Water;
 					if (IsLand(p))
 					{
 						var h = GetData(x, y);
 
 						if (!IsMountain(p))
 						{
-							tileType = WorldMapTileType.Land;
+							tileType = _config.Land;
 						}
 						else
 						{
-							tileType = WorldMapTileType.Mountain;
+							tileType = _config.Mountain;
 						}
 					}
 
-					tiles[y, x] = tileType;
+					_result[x, y].Info = tileType;
 				}
 			}
 
-			_result = new GenerationResult(tiles);
-
 			if (_config.RemoveSmallIslands)
 			{
-				RemoveTiles("small islands", WorldMapTileType.Land, WorldMapTileType.Water);
+				RemoveTiles("small islands", _config.Land, _config.Water);
 			}
 
 			if (_config.RemoveSmallLakes)
 			{
-				RemoveTiles("small lakes", WorldMapTileType.Water, WorldMapTileType.Land);
-				RemoveNoise("water noise", WorldMapTileType.Land);
+				RemoveTiles("small lakes", _config.Water, _config.Land);
+				RemoveNoise("water noise", _config.Land);
 			}
 
-			RemoveTiles("small mountains", WorldMapTileType.Mountain, WorldMapTileType.Land);
-			RemoveNoise("mountain noise", WorldMapTileType.Mountain);
+			RemoveTiles("small mountains", _config.Mountain, _config.Land);
+			RemoveNoise("mountain noise", _config.Mountain);
 
 			GenerateForests();
 
-			RemoveTiles("small forests", WorldMapTileType.Forest, WorldMapTileType.Land);
-			RemoveNoise("forest noise", WorldMapTileType.Forest);
+			RemoveTiles("small forests", _config.Forest, _config.Land);
+			RemoveNoise("forest noise", _config.Forest);
 
 			// Calculate amount of different tiles
 			int w = 0, l = 0, m = 0, f = 0;
@@ -559,21 +603,23 @@ namespace Wanderers.Generator
 			{
 				for (int x = 0; x < Size; ++x)
 				{
-					var tileType = _result.GetWorldMapTileType(x, y);
-					switch (tileType)
+					var tileType = GetTileInfo(x, y);
+
+					if (tileType == _config.Water)
 					{
-						case WorldMapTileType.Water:
-							++w;
-							break;
-						case WorldMapTileType.Land:
-							++l;
-							break;
-						case WorldMapTileType.Forest:
-							++f;
-							break;
-						case WorldMapTileType.Mountain:
-							++m;
-							break;
+						++w;
+					}
+					else if (tileType == _config.Land)
+					{
+						++l;
+					}
+					else if (tileType == _config.Forest)
+					{
+						++f;
+					}
+					else if (tileType == _config.Mountain)
+					{
+						++m;
 					}
 				}
 			}
@@ -586,7 +632,7 @@ namespace Wanderers.Generator
 					m * 100 / tilesCount,
 					f * 100 / tilesCount);
 
-			return new GenerationResult(tiles);
+			return _result;
 		}
 	}
 }

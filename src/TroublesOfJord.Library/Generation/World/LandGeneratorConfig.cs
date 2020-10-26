@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using TroublesOfJord.Core;
 
-namespace Wanderers.Generator
+namespace TroublesOfJord.Generation.World
 {
 	public class LandGeneratorConfig
 	{
@@ -14,6 +15,13 @@ namespace Wanderers.Generator
 		public bool Smooth { get; set; }
 		public bool RemoveSmallIslands { get; set; }
 		public bool RemoveSmallLakes { get; set; }
+
+		public TileInfo Water { get; set; }
+		public TileInfo Land { get; set; }
+		public TileInfo Mountain { get; set; }
+		public TileInfo Forest { get; set; }
+
+		public List<LocationConfig> Locations { get; } = new List<LocationConfig>();
 
 		public LandGeneratorConfig()
 		{

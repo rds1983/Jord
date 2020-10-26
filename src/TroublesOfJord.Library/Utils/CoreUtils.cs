@@ -20,5 +20,21 @@ namespace TroublesOfJord.Utils
 		{
 			return AllDirections[(int)dir];
 		}
+
+		public static TileInfo GetTileInfo(this Map map, int x, int y, TileInfo def)
+		{
+			if (x < 0 || x >= map.Width ||
+				y < 0 || y >= map.Height)
+			{
+				return def;
+			}
+
+			return map[x, y].Info;
+		}
+
+		public static TileInfo GetTileInfo(this Map map, Point p, TileInfo def)
+		{
+			return GetTileInfo(map, p.X, p.Y, def);
+		}
 	}
 }
