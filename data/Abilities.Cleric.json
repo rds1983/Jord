@@ -1,7 +1,7 @@
 ﻿{
     "Abilities": {
         "CureLightWounds": {
-            "Energy": 5,
+            "Mana": 5,
             "Name": "Cure Light Wounds",
             "Type": "Instant",
             "Description": "Heals some hit points.",

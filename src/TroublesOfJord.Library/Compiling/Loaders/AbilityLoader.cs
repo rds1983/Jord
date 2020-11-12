@@ -17,7 +17,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			var result = new AbilityInfo
 			{
 				Name = EnsureString(data, "Name"),
-				Energy = OptionalInt(data, "Energy", 0),
+				Mana = OptionalInt(data, "Mana", 0),
 				Type = EnsureEnum<AbilityType>(data, "Type"),
 				Description = EnsureString(data, "Description")
 			};

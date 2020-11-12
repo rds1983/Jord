@@ -7,7 +7,8 @@ namespace TroublesOfJord.Core
 		public class LifeStats
 		{
 			private int _currentHp, _maximumHp;
-			private int _currentEnergy, _maximumEnergy;
+			private int _currentMana, _maximumMana;
+			private int _currentStamina, _maximumStamina;
 
 			public int CurrentHP
 			{
@@ -47,40 +48,78 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			public int CurrentEnergy
+			public int CurrentMana
 			{
 				get
 				{
-					return _currentEnergy;
+					return _currentMana;
 				}
 
 				set
 				{
-					if (_currentEnergy == value)
+					if (_currentMana == value)
 					{
 						return;
 					}
 
-					_currentEnergy = value;
+					_currentMana = value;
 					Changed?.Invoke(this, EventArgs.Empty);
 				}
 			}
 
-			public int MaximumEnergy
+			public int MaximumMana
 			{
 				get
 				{
-					return _maximumEnergy;
+					return _maximumMana;
 				}
 
 				set
 				{
-					if (_maximumEnergy == value)
+					if (_maximumMana == value)
 					{
 						return;
 					}
 
-					_maximumEnergy = value;
+					_maximumMana = value;
+					Changed?.Invoke(this, EventArgs.Empty);
+				}
+			}
+
+			public int CurrentStamina
+			{
+				get
+				{
+					return _currentStamina;
+				}
+
+				set
+				{
+					if (_currentStamina == value)
+					{
+						return;
+					}
+
+					_currentStamina = value;
+					Changed?.Invoke(this, EventArgs.Empty);
+				}
+			}
+
+			public int MaximumStamina
+			{
+				get
+				{
+					return _maximumStamina;
+				}
+
+				set
+				{
+					if (_maximumStamina == value)
+					{
+						return;
+					}
+
+					_maximumStamina = value;
 					Changed?.Invoke(this, EventArgs.Empty);
 				}
 			}
@@ -90,7 +129,8 @@ namespace TroublesOfJord.Core
 			public void Restore()
 			{
 				CurrentHP = MaximumHP;
-				CurrentEnergy = MaximumEnergy;
+				CurrentMana = MaximumMana;
+				CurrentStamina = MaximumStamina;
 			}
 		}
 

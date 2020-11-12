@@ -56,7 +56,7 @@ namespace TroublesOfJord.UI
 			}
 
 			var ability = (AbilityInfo) _listAbilities.SelectedItem.Tag;
-			_labelEnergyCost.Text = GetEnergyString(ability.Energy);
+			_labelEnergyCost.Text = GetEnergyString(ability.Mana);
 			_labelType.Text = GetTypeString(ability.Type);
 
 			if (ability.Manual == null)

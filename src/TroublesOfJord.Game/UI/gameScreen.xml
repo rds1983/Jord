@@ -21,10 +21,14 @@
           <Proportion Type="Part" />
           <Proportion Type="Auto" />
           <Proportion Type="Part" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Part" />
         </HorizontalStackPanel.Proportions>
         <Label Text="HP: 50/100" HorizontalAlignment="Center" Id="_labelHp" />
         <VerticalSeparator />
-        <Label Text="EN: 50/100" HorizontalAlignment="Center" Id="_labelEnergy" />
+        <Label Text="MA: 50/100" HorizontalAlignment="Center" Id="_labelMana" />
+        <VerticalSeparator />
+        <Label Text="ST: 50/100" HorizontalAlignment="Center" Id="_labelStamina" />
       </HorizontalStackPanel>
       <HorizontalSeparator />
       <Panel Height="247" Id="_mapContainer" />

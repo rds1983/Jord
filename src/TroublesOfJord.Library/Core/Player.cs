@@ -59,7 +59,7 @@ namespace TroublesOfJord.Core
 		private void UpdateStats()
 		{
 			// Life
-			_stats.Life.MaximumHP = _stats.Life.MaximumEnergy = 50;
+			_stats.Life.MaximumHP = _stats.Life.MaximumMana = _stats.Life.MaximumStamina = 50;
 
 			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);

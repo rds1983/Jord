@@ -15,15 +15,8 @@ namespace TroublesOfJord
 	{
 		private const string DataPath = "data";
 		private readonly GraphicsDeviceManager _graphics;
-		private Desktop _desktop;
 
-		public Desktop Desktop
-		{
-			get
-			{
-				return _desktop;
-			}
-		}
+		public Desktop Desktop { get; private set; }
 
 		public static TroublesOfJordGame Instance { get; private set; }
 
@@ -45,7 +38,7 @@ namespace TroublesOfJord
 
 			TJ.GameLogHandler = message =>
 			{
-				var asGameView = _desktop.Widgets[0] as GameView;
+				var asGameView = Desktop.Widgets[0] as GameView;
 				if (asGameView == null)
 				{
 					return;
@@ -60,7 +53,7 @@ namespace TroublesOfJord
 			base.LoadContent();
 
 			MyraEnvironment.Game = this;
-			_desktop = new Desktop();
+			Desktop = new Desktop();
 
 /*			MyraEnvironment.DisableClipping = true;
 			MyraEnvironment.DrawFocusedWidgetFrame = true;
@@ -91,7 +84,7 @@ namespace TroublesOfJord
 		private T SwitchTo<T>() where T : Widget, new()
 		{
 			var widget = new T();
-			_desktop.Root = widget;
+			Desktop.Root = widget;
 
 			return widget;
 		}
@@ -114,8 +107,8 @@ namespace TroublesOfJord
 
 			SwitchTo<GameView>();
 
-			var gameView = (GameView)_desktop.Root;
-			_desktop.FocusedKeyboardWidget = gameView;
+			var gameView = (GameView)Desktop.Root;
+			Desktop.FocusedKeyboardWidget = gameView;
 
 			TJ.Session.MapNavigationBase = gameView.MapNavigation;
 			TJ.Session.UpdateTilesVisibility();
@@ -127,11 +120,12 @@ namespace TroublesOfJord
 
 		private void UpdateStats()
 		{
-			var gameView = (GameView)_desktop.Widgets[0];
+			var gameView = (GameView)Desktop.Widgets[0];
 
 			var life = TJ.Player.Stats.Life;
 			gameView._labelHp.Text = string.Format("H: {0}/{1}", life.CurrentHP, life.MaximumHP);
-			gameView._labelEnergy.Text = string.Format("E: {0}/{1}", life.CurrentEnergy, life.MaximumEnergy);
+			gameView._labelMana.Text = string.Format("M: {0}/{1}", life.CurrentMana, life.MaximumMana);
+			gameView._labelStamina.Text = string.Format("S: {0}/{1}", life.CurrentStamina, life.MaximumStamina);
 		}
 
 		private void Life_Changed(object sender, System.EventArgs e)
@@ -153,7 +147,7 @@ namespace TroublesOfJord
 
 			GraphicsDevice.Clear(Color.Black);
 
-			_desktop.Render();
+			Desktop.Render();
 		}
 
 		protected override void EndRun()

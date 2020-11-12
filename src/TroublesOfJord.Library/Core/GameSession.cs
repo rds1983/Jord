@@ -58,7 +58,7 @@ namespace TroublesOfJord.Core
 
 		public void UseAbility(AbilityInfo ability)
 		{
-			if (Player.Stats.Life.CurrentEnergy < ability.Energy)
+			if (Player.Stats.Life.CurrentMana < ability.Mana)
 			{
 				TJ.GameLog(Strings.NotEnoughEnergy);
 				return;
@@ -91,7 +91,7 @@ namespace TroublesOfJord.Core
 
 			if (success)
 			{
-				Player.Stats.Life.CurrentEnergy -= ability.Energy;
+				Player.Stats.Life.CurrentMana -= ability.Mana;
 				WorldAct();
 			}
 		}
