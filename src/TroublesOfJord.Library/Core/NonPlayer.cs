@@ -71,15 +71,8 @@ namespace TroublesOfJord.Core
 
 			if (AttackTarget == null)
 			{
-				// Check if player is visible
-				if (Map.FieldOfView.CurrentFOV.Contains(Position))
-				{
-					TJ.GameLog(Strings.BuildRushesToAttack(Info.Name));
-					AttackTarget = TJ.Player;
-				}
-			}
 
-			if (AttackTarget != null)
+			} else
 			{
 				var attacked = false;
 

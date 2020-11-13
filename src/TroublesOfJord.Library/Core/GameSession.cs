@@ -124,6 +124,16 @@ namespace TroublesOfJord.Core
 					mapDirty = true;
 					tile.IsExplored = true;
 				}
+
+				if (tile.Creature != null)
+				{
+					var asNpc = tile.Creature as NonPlayer;
+					if (asNpc != null && asNpc.Info.CreatureType == CreatureType.Enemy && asNpc.AttackTarget == null)
+					{
+						TJ.GameLog(Strings.BuildRushesToAttack(asNpc.Info.Name));
+						asNpc.AttackTarget = TJ.Player;
+					}
+				}
 			}
 
 			if (mapDirty)
