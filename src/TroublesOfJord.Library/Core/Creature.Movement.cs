@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
@@ -39,7 +38,7 @@ namespace TroublesOfJord.Core
 			if (creature != null)
 			{
 				var asNonPlayer = creature as NonPlayer;
-				if (asNonPlayer != null && asNonPlayer.Info.CreatureType.IsEnemy())
+				if (asNonPlayer != null && asNonPlayer.Info.CreatureType == CreatureType.Enemy)
 				{
 					Attack(creature);
 

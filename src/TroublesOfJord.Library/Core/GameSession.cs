@@ -28,21 +28,23 @@ namespace TroublesOfJord.Core
 		{
 			// Let npcs act
 			var map = Player.Map;
-			for (var x = 0; x < map.Width; ++x)
+			foreach (var creature in map.Creatures)
 			{
-				for (var y = 0; y < map.Height; ++y)
+				var npc = creature as NonPlayer;
+				if (npc == null)
 				{
-					var npc = map[x, y].Creature as NonPlayer;
-					if (npc == null)
-					{
-						continue;
-					}
-
-					npc.Act();
+					continue;
 				}
+
+				npc.Act();
 			}
 
 			UpdateTilesVisibility();
+		}
+
+		public void WaitPlayer()
+		{
+			WorldAct();
 		}
 
 		public bool MovePlayer(MovementDirection direction, bool isRunning)

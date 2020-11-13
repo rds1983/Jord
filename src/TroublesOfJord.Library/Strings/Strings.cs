@@ -37,5 +37,10 @@
 		{
 			return string.Format("Welcome to the level {0}! 1 class point had been awarded. Total class points: {1}.", newLevel, classPointsLeft);
 		}
+
+		public static string BuildRushesToAttack(string name)
+		{
+			return string.Format("{0} sees you and rushes to attack!", name);
+		}
 	}
 }

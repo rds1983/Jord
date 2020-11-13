@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
+using GoRogue.Pathing;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,11 @@ namespace TroublesOfJord.Core
 			}
 		}
 
-		private readonly FOV _fieldOfView;
-
 		private readonly ArrayMap2D<Tile> _tiles;
 
-		public FOV FieldOfView => _fieldOfView;
+		public FOV FieldOfView { get; }
+
+		public AStar PathFinder { get; }
 
 		public string Id { get; set; }
 
@@ -46,6 +47,8 @@ namespace TroublesOfJord.Core
 		public bool Explored { get; set; }
 
 		public bool Local { get; set; }
+
+		public List<Creature> Creatures { get; } = new List<Creature>();
 
 		public Tile this[int x, int y]
 		{
@@ -95,7 +98,9 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			_fieldOfView = new FOV(new MapFOVView(this));
+			var mapView = new MapFOVView(this);
+			FieldOfView = new FOV(mapView);
+			PathFinder = new AStar(mapView, Distance.EUCLIDEAN);
 			Local = true;
 		}
 

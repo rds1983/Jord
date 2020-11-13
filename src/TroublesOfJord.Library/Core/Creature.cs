@@ -1,12 +1,39 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
 	public abstract partial class Creature
 	{
-		public Map Map { get; set; }
+		private Map _map;
+
+		public Map Map
+		{
+			get
+			{
+				return _map;
+			}
+
+			set
+			{
+				if (_map == value)
+				{
+					return;
+				}
+
+				if (_map != null)
+				{
+					_map.Creatures.Remove(this);
+				}
+
+				_map = value;
+
+				if (_map != null)
+				{
+					_map.Creatures.Add(this);
+				}
+			}
+		}
 		public Point Position { get; set; }
 		public Vector2 DisplayPosition { get; set; }
 

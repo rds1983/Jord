@@ -69,6 +69,13 @@ namespace TroublesOfJord.UI
 
 		private bool ProcessMovement(Keys key)
 		{
+/*			if (key == Keys.None)
+			{
+				// Wait
+				TJ.Session.WaitPlayer();
+				return true;
+			}*/
+
 			MovementDirection? direction = null;
 
 			if (key == Keys.Left || key == Keys.NumPad4)

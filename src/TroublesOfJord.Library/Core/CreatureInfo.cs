@@ -5,7 +5,6 @@ namespace TroublesOfJord.Core
 	public enum CreatureType
 	{
 		Enemy,
-		NeutralEnemy,
 		Merchant,
 		Instructor
 	}

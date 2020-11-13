@@ -24,14 +24,14 @@ namespace TroublesOfJord.Compiling.Loaders
 				result.Gold = EnsureInt(data, "Gold");
 			}
 
-			if (result.CreatureType.IsEnemy())
+			if (result.CreatureType == CreatureType.Enemy)
 			{
 				result.Experience = EnsureInt(data, "Experience");
 			}
 
 			EnsureBaseMapObject(module, data, result);
 
-			if (result.CreatureType.IsEnemy())
+			if (result.CreatureType == CreatureType.Enemy)
 			{
 				result.ArmorClass = EnsureInt(data, "ArmorClass");
 				result.HitRoll = EnsureInt(data, "HitRoll");
