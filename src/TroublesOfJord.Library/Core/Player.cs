@@ -60,7 +60,7 @@ namespace TroublesOfJord.Core
 		{
 			// Life
 			_stats.Life.MaximumHP = _stats.Life.MaximumMana = _stats.Life.MaximumStamina = 50;
-			_stats.Life.HpRegen = Constants.BaseHpRegen;
+			_stats.Life.HpRegen = Constants.DefaultHpRegen;
 
 			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);
@@ -112,7 +112,7 @@ namespace TroublesOfJord.Core
 				battleStats.ArmorClass += info.ArmorClass;
 			}
 
-			battleStats.HitRoll = 2;
+			battleStats.HitRoll = 1;
 		}
 
 		private void Update()
