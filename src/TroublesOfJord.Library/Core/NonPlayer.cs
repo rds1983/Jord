@@ -92,8 +92,8 @@ namespace TroublesOfJord.Core
 							continue;
 						}
 
-						attacked = true;
 						Attack(player);
+						attacked = true;
 						goto finished;
 					}
 				}

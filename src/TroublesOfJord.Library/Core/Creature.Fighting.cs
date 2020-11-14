@@ -1,4 +1,5 @@
-﻿using TroublesOfJord.Utils;
+﻿using System.Diagnostics;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
@@ -20,25 +21,23 @@ namespace TroublesOfJord.Core
 
 			foreach (var attack in attacks)
 			{
-				var attackRoll = MathUtils.RollD20() + battleStats.HitRoll;
+				var armorClass = Constants.BaseArmorClass + target.Stats.Battle.ArmorClass;
+				var attackRoll = 100 + battleStats.HitRoll * 10 - armorClass;
+				Debug.WriteLine("{0} against {1}'s attack roll is {2}", Name, target.Name, attackRoll);
 				var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
-
-				if (attackRoll < target.Stats.Battle.ArmorClass || damage <= 0)
+				if (!MathUtils.RollPercentage(attackRoll) || damage <= 0)
 				{
 					// Miss
-					var message = Strings.GetMissMessage(attackRoll, Name, target.Name, attack.AttackType);
+					var message = Strings.GetMissMessage(Name, target.Name, attack.AttackType);
 					TJ.GameLog(message);
 				}
 				else
 				{
 					target.Stats.Life.CurrentHP -= damage;
+					var message = Strings.GetAttackMessage(damage, Name, target.Name, attack.AttackType);
+					TJ.GameLog(message);
 
-					if (target.Stats.Life.CurrentHP > 0)
-					{
-						var message = Strings.GetAttackMessage(attackRoll, damage, Name, target.Name, attack.AttackType);
-						TJ.GameLog(message);
-					}
-					else
+					if (target.Stats.Life.CurrentHP <= 0)
 					{
 						OnKilledTarget(target);
 						break;

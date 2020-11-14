@@ -12,6 +12,24 @@ namespace TroublesOfJord.Utils
 			return Random.Next(1, 21);
 		}
 
+		public static bool RollPercentage(int percentage)
+		{
+			if (percentage < 1)
+			{
+				// Fail
+				return false;
+			}
+
+			if (percentage >= 100)
+			{
+				// Win
+				return true;
+			}
+
+			var rnd = Random.Next(1, 101);
+			return rnd < percentage;
+		}
+
 		public static Vector2 ToVector2(this Point p)
 		{
 			return new Vector2(p.X, p.Y);

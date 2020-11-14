@@ -36,52 +36,52 @@ namespace TroublesOfJord
 			return _attackNames[(int)attackType].Verb;
 		}
 
-		public static string GetMissMessage(int attackRoll, string attackerName, string targetName, AttackType attackType)
+		public static string GetMissMessage(string attackerName, string targetName, AttackType attackType)
 		{
-			return string.Format("{0} misses {1} with {2}. Attack Roll={3}.",
-				attackerName, targetName, GetAttackNoun(attackType), attackRoll);
+			return string.Format("{0} misses {1} with {2}.",
+				attackerName, targetName, GetAttackNoun(attackType));
 		}
 
-		public static string GetAttackMessage(int attackRoll, int damage, string attackerName, string targetName, AttackType attackType)
+		public static string GetAttackMessage(int damage, string attackerName, string targetName, AttackType attackType)
 		{
 			if (damage < 5)
 			{
-				return string.Format("{0} barely {1} {2}. Attack Roll={3}, damage={4}.",
-					attackerName, GetAttackVerb(attackType), targetName, attackRoll, damage);
+				return string.Format("{0} barely {1} {2} ({3}).",
+					attackerName, GetAttackVerb(attackType), targetName, damage);
 			}
 			else if (damage < 10)
 			{
-				return string.Format("{0} {1} {2}. Attack Roll={3}, damage={4}.",
-					attackerName, GetAttackVerb(attackType), targetName, attackRoll, damage);
+				return string.Format("{0} {1} {2} ({3}).",
+					attackerName, GetAttackVerb(attackType), targetName, damage);
 			}
 			else if (damage < 15)
 			{
-				return string.Format("{0} {1} {2} hard. Attack Roll={3}, damage={4}.",
-					attackerName, GetAttackVerb(attackType), targetName, attackRoll, damage);
+				return string.Format("{0} {1} {2} hard ({3}).",
+					attackerName, GetAttackVerb(attackType), targetName, damage);
 			}
 			else if (damage < 20)
 			{
-				return string.Format("{0} {1} {2} very hard. Attack Roll={3}, damage={4}.",
-					attackerName, GetAttackVerb(attackType), targetName, attackRoll, damage);
+				return string.Format("{0} {1} {2} very hard ({3}).",
+					attackerName, GetAttackVerb(attackType), targetName, damage);
 			}
 			else if (damage < 25)
 			{
-				return string.Format("{0} {1} {2} extremelly hard. Attack Roll={3}, damage={4}.",
-					attackerName, GetAttackVerb(attackType), targetName, attackRoll, damage);
+				return string.Format("{0} {1} {2} extremelly hard ({3}).",
+					attackerName, GetAttackVerb(attackType), targetName, damage);
 			}
 			else if (damage < 30)
 			{
-				return string.Format("{0} massacres {1} to small fragments with {2}. Attack Roll={3}, damage={4}.",
-					attackerName, targetName, GetAttackNoun(attackType), attackRoll, damage);
+				return string.Format("{0} massacres {1} to small fragments with {2} ({3}).",
+					attackerName, targetName, GetAttackNoun(attackType), damage);
 			}
 			else if (damage < 50)
 			{
-				return string.Format("{0} brutally massacres {1} to small fragments with {2}. Attack Roll={3}, damage={4}.",
-					attackerName, targetName, GetAttackNoun(attackType), attackRoll, damage);
+				return string.Format("{0} brutally massacres {1} to small fragments with {2} ({3}).",
+					attackerName, targetName, GetAttackNoun(attackType), damage);
 			}
 
-			return string.Format("{0} viciously massacres {1} to small fragments with {2}. Attack Roll={3}, damage={4}.",
-				attackerName, targetName, GetAttackNoun(attackType), attackRoll, damage);
+			return string.Format("{0} viciously massacres {1} to small fragments with {2} ({3}).",
+				attackerName, targetName, GetAttackNoun(attackType), damage);
 		}
 
 		public static string GetNpcDeathMessage(string name)
