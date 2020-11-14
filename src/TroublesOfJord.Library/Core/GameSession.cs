@@ -26,16 +26,17 @@ namespace TroublesOfJord.Core
 
 		private void WorldAct()
 		{
-			// Let npcs act
 			var map = Player.Map;
 			foreach (var creature in map.Creatures)
 			{
+				creature.RegenTurn();
 				var npc = creature as NonPlayer;
 				if (npc == null)
 				{
 					continue;
 				}
 
+				// Let npcs act
 				npc.Act();
 			}
 

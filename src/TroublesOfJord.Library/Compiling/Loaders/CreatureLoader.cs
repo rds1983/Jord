@@ -36,6 +36,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				result.ArmorClass = EnsureInt(data, "ArmorClass");
 				result.HitRoll = EnsureInt(data, "HitRoll");
 				result.MaxHp = EnsureInt(data, "MaxHp");
+				result.HpRegen = OptionalInt(data, "HpRegen", Constants.BaseHpRegen);
 				result.MaxMana = OptionalInt(data, "MaxMana");
 				result.MaxStamina = OptionalInt(data, "MaxStamina");
 

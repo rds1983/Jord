@@ -94,7 +94,7 @@ namespace TroublesOfJord.UI
 			return result;
 		}
 
-		private void RenderNpc(RenderContext context, Point pos, NonPlayer npc)
+		private void RenderMarker(RenderContext context, Point pos, NonPlayer npc)
 		{
 			var tileSize = TileSize;
 
@@ -135,16 +135,25 @@ namespace TroublesOfJord.UI
 
 				context.Batch.DrawString(font, marker, new Vector2(x, y), markerColor * opacity);
 			}
+		}
 
-			if (npc.Stats.Life.MaximumHP != 0 &&
-				npc.Stats.Life.CurrentHP < npc.Stats.Life.MaximumHP)
+		private void RenderCreatureDecorations(RenderContext context, Point pos, Creature creature)
+		{
+			var npc = creature as NonPlayer;
+			if (npc != null)
 			{
-				var topLeft = GameToScreen(new Vector2(npc.DisplayPosition.X + 0.2f, npc.DisplayPosition.Y + 1.0f));
-				var bottomRight = GameToScreen(new Vector2(npc.DisplayPosition.X + 0.8f, npc.DisplayPosition.Y + 1.2f));
+				RenderMarker(context, pos, npc);
+			}
+
+			if (creature.Stats.Life.MaximumHP != 0 &&
+				creature.Stats.Life.CurrentHP < creature.Stats.Life.MaximumHP)
+			{
+				var topLeft = GameToScreen(new Vector2(creature.DisplayPosition.X + 0.2f, creature.DisplayPosition.Y + 1.0f));
+				var bottomRight = GameToScreen(new Vector2(creature.DisplayPosition.X + 0.8f, creature.DisplayPosition.Y + 1.2f));
 
 				var size = bottomRight - topLeft;
 
-				var hpWidth = npc.Stats.Life.CurrentHP * size.X / npc.Stats.Life.MaximumHP;
+				var hpWidth = creature.Stats.Life.CurrentHP * size.X / creature.Stats.Life.MaximumHP;
 
 				// Red background
 				context.FillRectangle(new Rectangle(topLeft.X, topLeft.Y, size.X, size.Y), Color.Red);
@@ -207,10 +216,9 @@ namespace TroublesOfJord.UI
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
 					appearance.Draw(context.Batch, rect, opacity);
 
-					var asNpc = tile.Creature as NonPlayer;
-					if (isInFov && asNpc != null)
+					if (isInFov && tile.Creature != null)
 					{
-						RenderNpc(context, pos, asNpc);
+						RenderCreatureDecorations(context, pos, tile.Creature);
 					}
 				}
 			}

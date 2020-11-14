@@ -53,6 +53,7 @@ namespace TroublesOfJord.Core
 			lifeStats.MaximumHP = Info.MaxHp;
 			lifeStats.MaximumMana = Info.MaxMana;
 			lifeStats.MaximumStamina = Info.MaxStamina;
+			lifeStats.HpRegen = Info.HpRegen;
 
 			var battleStats = _stats.Battle;
 			battleStats.Attacks = Info.Attacks.ToArray();

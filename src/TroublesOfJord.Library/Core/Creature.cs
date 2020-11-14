@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace TroublesOfJord.Core
@@ -107,6 +108,20 @@ namespace TroublesOfJord.Core
 			Map = null;
 
 			return true;
+		}
+
+		public void RegenTurn()
+		{
+			if (Stats.Life.CurrentHP < Stats.Life.MaximumHP)
+			{
+				var hpRegen = Stats.Life.HpRegen;
+				if (Stats.Life.CurrentHP + hpRegen > Stats.Life.MaximumHP)
+				{
+					hpRegen = Stats.Life.MaximumHP - Stats.Life.CurrentHP;
+				}
+				Stats.Life.CurrentHP += hpRegen;
+				Debug.WriteLine("{0} regenerated {1} hit points.", Name, hpRegen);
+			}
 		}
 	}
 }

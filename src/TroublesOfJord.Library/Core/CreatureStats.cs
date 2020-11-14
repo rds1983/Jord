@@ -9,6 +9,7 @@ namespace TroublesOfJord.Core
 			private int _currentHp, _maximumHp;
 			private int _currentMana, _maximumMana;
 			private int _currentStamina, _maximumStamina;
+			private int _hpRegen;
 
 			public int CurrentHP
 			{
@@ -44,6 +45,25 @@ namespace TroublesOfJord.Core
 					}
 
 					_maximumHp = value;
+					Changed?.Invoke(this, EventArgs.Empty);
+				}
+			}
+
+			public int HpRegen
+			{
+				get
+				{
+					return _hpRegen;
+				}
+
+				set
+				{
+					if (_hpRegen == value)
+					{
+						return;
+					}
+
+					_hpRegen = value;
 					Changed?.Invoke(this, EventArgs.Empty);
 				}
 			}
