@@ -90,13 +90,11 @@ namespace TroublesOfJord.Core
 			{
 				for (var y = 0; y < Height; ++y)
 				{
-					this[x, y] = new Tile
-					{
-						X = x,
-						Y = y
-					};
+					this[x, y] = new Tile();
 				}
 			}
+
+			UpdateTilesCoords();
 
 			var mapView = new MapFOVView(this);
 			FieldOfView = new FOV(mapView);
@@ -132,6 +130,25 @@ namespace TroublesOfJord.Core
 				for (var y = 0; y < Height; ++y)
 				{
 					yield return this[x, y];
+				}
+			}
+		}
+
+		public void UpdateTilesCoords()
+		{
+			for (var x = 0; x < Width; ++x)
+			{
+				for (var y = 0; y < Height; ++y)
+				{
+					var tile = this[x, y];
+					tile.X = x;
+					tile.Y = y;
+
+					if (tile.Creature != null)
+					{
+						tile.Creature.Position = new Point(x, y);
+						tile.Creature.DisplayPosition = new Vector2(x, y);
+					}
 				}
 			}
 		}

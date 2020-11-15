@@ -66,6 +66,7 @@ namespace TroublesOfJord.MapEditor
 				UpdateTitle();
 
 				UI._mapNavigation.OnMapChanged();
+				IsDirty = true;
 			}
 		}
 
@@ -446,11 +447,124 @@ namespace TroublesOfJord.MapEditor
 			Save(true);
 		}
 
+		private void ResizeMap(ChangeSizeAction action, ChangeSizeDirection direction, int amount, TileInfo filler)
+		{
+			Map newMap = null;
+			if (action == ChangeSizeAction.Expand)
+			{
+				var newSize = new Point(Map.Width, Map.Height);
+				if (direction == ChangeSizeDirection.Left || direction == ChangeSizeDirection.Right)
+				{
+					newSize.X += amount;
+				} else
+				{
+					newSize.Y += amount;
+				}
+
+				newMap = new Map(newSize);
+
+				var startPos = Point.Zero;
+				if (direction == ChangeSizeDirection.Left)
+				{
+					startPos.X = amount;
+				} else if (direction == ChangeSizeDirection.Top)
+				{
+					startPos.Y = amount;
+				}
+
+				// Copy old map
+				for(var y = 0; y < Map.Height; ++y)
+				{
+					for(var x = 0; x < Map.Width; ++x)
+					{
+						newMap[x + startPos.X, y + startPos.Y] = Map[x, y];
+					}
+				}
+
+				// Fill
+				switch (direction)
+				{
+					case ChangeSizeDirection.Left:
+						for (var y = 0; y < newMap.Height; ++y)
+						{
+							for (var x = 0; x < amount; ++x)
+							{
+								newMap[x, y].Info = filler;
+							}
+						}
+						break;
+					case ChangeSizeDirection.Top:
+						for (var y = 0; y < amount; ++y)
+						{
+							for (var x = 0; x < newMap.Width; ++x)
+							{
+								newMap[x, y].Info = filler;
+							}
+						}
+						break;
+					case ChangeSizeDirection.Right:
+						for (var y = 0; y < newMap.Height; ++y)
+						{
+							for (var x = Map.Width; x < Map.Width + amount; ++x)
+							{
+								newMap[x, y].Info = filler;
+							}
+						}
+						break;
+					case ChangeSizeDirection.Bottom:
+						for (var y = Map.Height; y < Map.Height + amount; ++y)
+						{
+							for (var x = 0; x < newMap.Width; ++x)
+							{
+								newMap[x, y].Info = filler;
+							}
+						}
+						break;
+				}
+			} else
+			{
+				var newSize = new Point(Map.Width, Map.Height);
+				if (direction == ChangeSizeDirection.Left || direction == ChangeSizeDirection.Right)
+				{
+					newSize.X -= amount;
+				}
+				else
+				{
+					newSize.Y -= amount;
+				}
+
+				newMap = new Map(newSize);
+
+				var startPos = Point.Zero;
+				if (direction == ChangeSizeDirection.Left)
+				{
+					startPos.X = amount;
+				}
+				else if (direction == ChangeSizeDirection.Top)
+				{
+					startPos.Y = amount;
+				}
+
+				// Copy old map
+				for (var y = 0; y < newMap.Height; ++y)
+				{
+					for (var x = 0; x < newMap.Width; ++x)
+					{
+						newMap[x, y] = Map[x + startPos.X, y + startPos.Y];
+					}
+				}
+			}
+
+			newMap.UpdateTilesCoords();
+			Map = newMap;
+		}
+
 		private void OnResizeMapSelected(object sender, EventArgs e)
 		{
-/*			var dlg = new ResizeMapDialog();
-			dlg._spinWidth.Value = Map.Width;
-			dlg._spinHeight.Value = Map.Height;
+			var dlg = new ChangeSizeDialog
+			{
+				Map = Map
+			};
 
 			dlg.Closed += (s, a) =>
 			{
@@ -459,33 +573,10 @@ namespace TroublesOfJord.MapEditor
 					return;
 				}
 
-				var oldSize = Map.Size;
-				var oldTiles = Map.Tiles;
-
-				// Resize
-				Map.Size = new Point((int)dlg._spinWidth.Value, (int)dlg._spinHeight.Value);
-
-				// Update tiles
-				for (var y = 0; y < Map.Height; ++y)
-				{
-					for (var x = 0; x < Map.Width; ++x)
-					{
-						var pos = new Point(x, y);
-						if (x < oldSize.X && y < oldSize.Y)
-						{
-							// Old tile
-							Map.SetTileAt(pos, Map.GetTileAt(oldTiles, x, y));
-						}
-						else
-						{
-							// Filler
-							Map.GetTileAt(pos).Info = (TileInfo)dlg._comboFiller.SelectedItem.Tag;
-						}
-					}
-				}
+				ResizeMap(dlg.Action, dlg.Direction, dlg.Amount, dlg.FillerTile);
 			};
 
-			dlg.ShowModal();*/
+			dlg.ShowModal(_desktop);
 		}
 
 		private void OnComboTypesIndexChanged(object sender, EventArgs e)
