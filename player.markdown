@@ -16,6 +16,7 @@ order: 3
 |**A**|Abilities|
 
 ## City Buildings
+
 |Symbol|Name|Description|
 |B|Smithy|Weapons and armor shop
 |G|Guild|Place where you can make a level
@@ -23,7 +24,7 @@ order: 3
 ## Fighting
 
 ## Leveling Up
+
 ### Overall Level
+
 ### Class Levels
-
-
