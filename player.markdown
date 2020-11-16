@@ -18,7 +18,7 @@ order: 3
 ## City Buildings
 
 |Symbol|Name|Description|
-|B|Smithy|Weapons and armor shop
+|S|Smithy|Weapons and armor shop
 |G|Guild|Place where you can level up
 
 ## Fighting
@@ -28,7 +28,7 @@ The percentage probability of landing a hit is calculated using the formula:
 
 `probability = 50 + HitRoll * 8 - ArmorClass`
 
-I.e. if the attacker's HitRoll is 4 and the target's ArmorClass is 30, then there's 52(50 + 4 * 8 - 30)% that the hit will land.
+I.e. if the attacker's HitRoll is 4 and the target's ArmorClass is 30, then there's 52% that the hit will land.
 
 ## Leveling Up
 
