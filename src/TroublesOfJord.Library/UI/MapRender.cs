@@ -22,11 +22,6 @@ namespace TroublesOfJord.UI
 			get; set;
 		}
 
-		public SpriteFont SmallFont
-		{
-			get; set;
-		}
-
 		public Vector2 TopLeft
 		{
 			get; set;
@@ -61,7 +56,6 @@ namespace TroublesOfJord.UI
 		public MapRender()
 		{
 			Font = DefaultAssets.Font;
-			SmallFont = DefaultAssets.FontSmall;
 
 			ClipToBounds = true;
 			// Background = SpriteBatch.White;
@@ -141,12 +135,6 @@ namespace TroublesOfJord.UI
 
 		private void RenderCreatureDecorations(RenderContext context, Point pos, Creature creature)
 		{
-			var npc = creature as NonPlayer;
-			if (npc != null)
-			{
-				RenderMarker(context, pos, npc);
-			}
-
 			if (creature.Stats.Life.MaximumHP != 0 &&
 				creature.Stats.Life.CurrentHP < creature.Stats.Life.MaximumHP)
 			{
@@ -176,7 +164,7 @@ namespace TroublesOfJord.UI
 
 			BeforeDraw(context);
 
-			if (Font == null || SmallFont == null || Map == null)
+			if (Map == null)
 			{
 				return;
 			}
@@ -197,7 +185,7 @@ namespace TroublesOfJord.UI
 					var pos = new Point(mapX, mapY);
 					var tile = Map[pos];
 
-					if (!IgnoreFov && !tile.IsExplored)
+					if (!IgnoreFov && !Map.Light && !tile.IsExplored)
 					{
 						continue;
 					}
@@ -207,7 +195,7 @@ namespace TroublesOfJord.UI
 					var screen = GameToScreen(pos);
 
 					var isInFov = IgnoreFov || tile.IsInFov;
-					var opacity = isInFov ? 1.0f : 0.5f;
+					var opacity = (Map.Light || isInFov) ? 1.0f : 0.5f;
 					var appearance = tile.Info.Image;
 					if (isInFov && tile.Creature != null)
 					{
@@ -223,7 +211,6 @@ namespace TroublesOfJord.UI
 					{
 						_tilesWithSigns.Add(tile);
 					}
-
 
 					if (isInFov && tile.Creature != null)
 					{

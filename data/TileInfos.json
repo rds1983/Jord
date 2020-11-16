@@ -45,6 +45,11 @@
       "Passable": "True",
       "Symbol": "."
     },
+    "TownRoad": {
+      "Image": "TileTownRoad",
+      "Passable": "True",
+      "Symbol": "."
+    },    
     "Wall": {
       "Image": "TileWall",
       "Passable": "False",

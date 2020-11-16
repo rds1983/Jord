@@ -45,6 +45,7 @@ namespace TroublesOfJord.Core
 		}
 
 		public bool Explored { get; set; }
+		public bool Light { get; set; }
 
 		public bool Local { get; set; }
 

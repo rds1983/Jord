@@ -128,7 +128,7 @@ namespace TroublesOfJord.MapEditor.UI
 
 		private void ProcessMouseDown()
 		{
-			if (Studio.Instance == null)
+			if (Studio.Instance == null || MarkPosition == null)
 			{
 				return;
 			}

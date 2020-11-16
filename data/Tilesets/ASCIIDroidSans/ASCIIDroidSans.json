@@ -19,6 +19,10 @@
 			  "Color": "Brown",
 			  "Symbol": "`"
 			},
+            "TileTownRoad": {
+			  "Color": "LightGray",
+			  "Symbol": "."
+			},
 			"TileFloor": {
 			  "Color": "Gray",
 			  "Symbol": "."
@@ -57,7 +61,7 @@
 			},
 			"TileSignSmithy": {
 			  "Color": "Gray",
-			  "Symbol": "B"
+			  "Symbol": "S"
 			},
 			"TileSignGuild": {
 			  "Color": "Gray",

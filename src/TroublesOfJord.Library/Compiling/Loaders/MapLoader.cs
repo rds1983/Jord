@@ -60,6 +60,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			};
 
 			map.Explored = OptionalBool(data, "Explored", false);
+			map.Light = OptionalBool(data, "Light", false);
 
 			if (map.Explored)
 			{
@@ -332,6 +333,7 @@ namespace TroublesOfJord.Compiling.Loaders
 					["Y"] = map.Height,
 				},
 				["Explored"] = map.Explored,
+				["Light"] = map.Light,
 				["Local"] = map.Local
 			};
 
