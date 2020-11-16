@@ -55,6 +55,14 @@
 			  "Color": "White",
 			  "Symbol": "<"
 			},
+			"TileSignSmithy": {
+			  "Color": "Gray",
+			  "Symbol": "B"
+			},
+			"TileSignGuild": {
+			  "Color": "Gray",
+			  "Symbol": "G"
+			},            
 			"Player": {
 			  "Color": "White",
 			  "Symbol": "@"

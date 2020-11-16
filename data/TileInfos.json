@@ -64,6 +64,16 @@
       "Image": "TileExitUp",
       "Passable": "True",
       "Symbol": "<"
-    }        
+    },
+    "SignSmithy": {
+      "Image": "TileSignSmithy",
+      "Passable": "False",
+      "Symbol": "B"
+    },
+    "SignGuild": {
+      "Image": "TileSignGuild",
+      "Passable": "False",
+      "Symbol": "G"
+    }
   }
 }

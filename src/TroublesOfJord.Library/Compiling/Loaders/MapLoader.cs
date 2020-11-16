@@ -17,7 +17,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		private const string TileInfoIdName = "TileInfoId";
 		private const string CreatureInfoIdName = "CreatureInfoId";
 		private const string DataName = "Data";
-		private const string ForbiddenLegendItems = "{}";
+		private const string ForbiddenLegendItems = "{}[]";
 
 		public MapLoader() : base("Maps")
 		{
@@ -178,7 +178,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 						if (!hasEnd)
 						{
-							RaiseError("Exit sequence lacks closing figure bracket. Source: '{0}'", data.Source);
+							RaiseError("Exit sequence lacks closing curly bracket. Source: '{0}'", data.Source);
 						}
 
 						if (lastTile == null)
@@ -187,6 +187,40 @@ namespace TroublesOfJord.Compiling.Loaders
 						}
 
 						lastTile.Exit = Exit.FromString(sb.ToString());
+
+						continue;
+					}
+
+					if (symbol == '[')
+					{
+						// Exit
+						var sb = new StringBuilder();
+						++j;
+
+						var hasEnd = false;
+						for (; j < line.Length; ++j)
+						{
+							symbol = line[j];
+							if (symbol == ']')
+							{
+								hasEnd = true;
+								break;
+							}
+
+							sb.Append(symbol);
+						}
+
+						if (!hasEnd)
+						{
+							RaiseError("Sign sequence lacks closing square bracket. Source: '{0}'", data.Source);
+						}
+
+						if (lastTile == null)
+						{
+							RaiseError("Last tile is null. Source: '{0}'", data.Source);
+						}
+
+						lastTile.Sign = sb.ToString();
 
 						continue;
 					}

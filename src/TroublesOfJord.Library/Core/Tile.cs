@@ -54,6 +54,8 @@ namespace TroublesOfJord.Core
 
 		public Exit Exit;
 
+		public string Sign;
+
 		public Tile()
 		{
 		}

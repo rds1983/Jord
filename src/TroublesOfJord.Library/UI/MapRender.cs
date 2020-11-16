@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using System;
+using System.Collections.Generic;
 
 namespace TroublesOfJord.UI
 {
@@ -11,6 +12,7 @@ namespace TroublesOfJord.UI
 	{
 		private const int SignPeriodInMs = 1000;
 		public static readonly Point TileSize = new Point(32, 32);
+		private readonly List<Tile> _tilesWithSigns = new List<Tile>();
 
 		private Map _map;
 		private DateTime? _lastStamp;
@@ -184,6 +186,7 @@ namespace TroublesOfJord.UI
 				gridSize.X + 1,
 				gridSize.Y + 1);
 
+			_tilesWithSigns.Clear();
 			for (var mapY = mapViewPort.Y; mapY < mapViewPort.Bottom; ++mapY)
 			{
 				for (var mapX = mapViewPort.X; mapX < mapViewPort.Right; ++mapX)
@@ -216,11 +219,27 @@ namespace TroublesOfJord.UI
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
 					appearance.Draw(context.Batch, rect, opacity);
 
+					if (!string.IsNullOrEmpty(tile.Sign))
+					{
+						_tilesWithSigns.Add(tile);
+					}
+
+
 					if (isInFov && tile.Creature != null)
 					{
 						RenderCreatureDecorations(context, pos, tile.Creature);
 					}
 				}
+			}
+
+			// Draw signs
+			foreach (var tile in _tilesWithSigns)
+			{
+				var screen = GameToScreen(new Vector2(tile.X, tile.Y));
+				var sz = Font.MeasureString(tile.Sign);
+				context.Batch.DrawString(Font, tile.Sign,
+					new Vector2((int)(screen.X + (tileSize.X - sz.X) / 2), (int)(screen.Y + (tileSize.Y - sz.Y) / 2)),
+					Color.White);
 			}
 		}
 
