@@ -15,7 +15,7 @@ order: 3
 |**E**|Use(i.e. pick items, descend a staircase, etc)|
 |**A**|Abilities|
 
-## City Building
+## City Buildings
 |Symbol|Name|Description|
 |B|Smithy|Weapons and armor shop
 |G|Guild|Place where you can make a level
