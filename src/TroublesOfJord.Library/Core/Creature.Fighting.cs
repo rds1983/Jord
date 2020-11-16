@@ -22,7 +22,7 @@ namespace TroublesOfJord.Core
 			foreach (var attack in attacks)
 			{
 				var armorClass = target.Stats.Battle.ArmorClass;
-				var attackRoll = 50 + battleStats.HitRoll * 10 - armorClass;
+				var attackRoll = 50 + battleStats.HitRoll * 8 - armorClass;
 				Debug.WriteLine("{0} against {1}'s attack roll is {2}", Name, target.Name, attackRoll);
 				var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
 				if (!MathUtils.RollPercentage(attackRoll) || damage <= 0)

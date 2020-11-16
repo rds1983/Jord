@@ -10,7 +10,7 @@
 			"Experience": 9000,
 			"Gold": 300,
 			"ArmorClass": 0,
-			"HitRoll": 0,
+			"HitRoll": 5,
 			"MaxHp": 200,
             "Attacks": [
                 {

@@ -1,6 +1,7 @@
 {
   "MapTemplates": {
     "Sewers1": {
+        "Name": "Sewers 1",
         "GeneratorId": "CommonRooms64x64",
         "Exits": [
             {

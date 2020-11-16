@@ -21,6 +21,8 @@ namespace TroublesOfJord.Compiling.Loaders
 				GeneratorId = EnsureString(data, "GeneratorId")
 			};
 
+			result.Name = EnsureString(data, "Name");
+
 			var exits = EnsureJArray(data.Data, data.Source, "Exits");
 			foreach(JObject exitObj in exits)
 			{

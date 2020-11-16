@@ -99,7 +99,16 @@ namespace TroublesOfJord.Core
 			}
 		}
 
-		public void UpdateTilesVisibility()
+		public void PlayerOperate()
+		{
+			if (Player.Enter())
+			{
+				TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name));
+				UpdateTilesVisibility(true);
+			}
+		}
+
+		public void UpdateTilesVisibility(bool refreshMap = false)
 		{
 			var map = Player.Map;
 
@@ -114,7 +123,6 @@ namespace TroublesOfJord.Core
 
 			map.FieldOfView.Calculate(Player.Position.X, Player.Position.Y, 12);
 
-			var mapDirty = false;
 			foreach(var coord in map.FieldOfView.CurrentFOV)
 			{
 				var tile = map[coord];
@@ -122,7 +130,7 @@ namespace TroublesOfJord.Core
 				tile.IsInFov = true;
 				if (!tile.IsExplored)
 				{
-					mapDirty = true;
+					refreshMap = true;
 					tile.IsExplored = true;
 				}
 
@@ -137,7 +145,7 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			if (mapDirty)
+			if (refreshMap)
 			{
 				MapNavigationBase.InvalidateImage();
 			}

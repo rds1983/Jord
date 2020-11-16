@@ -1,6 +1,7 @@
 {
   "Map": {
     "Id": "Arena",
+    "Name": "Arena",
     "Size": {
         "X": 48,
         "Y": 27

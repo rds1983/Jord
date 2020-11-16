@@ -221,10 +221,7 @@ namespace TroublesOfJord.UI
 				abilitiesWindow.ShowModal(Desktop);
 			} else if (key == Keys.E)
 			{
-				if (TJ.Session.Player.Enter())
-				{
-					TJ.Session.UpdateTilesVisibility();
-				}
+				TJ.Session.PlayerOperate();
 			}
 		}
 

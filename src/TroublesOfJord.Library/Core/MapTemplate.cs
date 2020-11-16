@@ -8,6 +8,8 @@ namespace TroublesOfJord.Core
 	{
 		public string GeneratorId;
 
+		public string Name;
+
 		public List<Exit> Exits { get; } = new List<Exit>();
 		public Dictionary<string, int> Creatures { get; } = new Dictionary<string, int>();
 
@@ -16,6 +18,7 @@ namespace TroublesOfJord.Core
 			var generator = TJ.Module.EnsureGenerator(GeneratorId);
 
 			var map = generator.Generate();
+			map.Name = Name;
 
 			var freeTiles = new List<Tile>();
 			for (var x = 0; x < map.Width; ++x)

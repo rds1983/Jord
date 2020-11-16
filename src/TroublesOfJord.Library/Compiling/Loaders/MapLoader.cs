@@ -59,6 +59,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				Local = EnsureBool(data, "Local")
 			};
 
+			map.Name = EnsureString(data, "Name");
 			map.Explored = OptionalBool(data, "Explored", false);
 			map.Light = OptionalBool(data, "Light", false);
 

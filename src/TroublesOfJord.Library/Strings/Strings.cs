@@ -42,5 +42,10 @@
 		{
 			return string.Format("{0} sees you and rushes to attack!", name);
 		}
+
+		public static string BuildEnteredMap(string name)
+		{
+			return string.Format("You've entered '{0}'.", name);
+		}
 	}
 }
