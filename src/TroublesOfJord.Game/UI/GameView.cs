@@ -27,6 +27,11 @@ namespace TroublesOfJord.UI
 
 			BuildUI();
 
+			_buttonUse.Click += (s, a) => TJ.Session.PlayerOperate();
+			_buttonAbilities.Click += (s, a) => ShowAbilities();
+			_buttonCharacter.Click += (s, a) => ShowCharacter();
+			_buttonInventory.Click += (s, a) => ShowInventory();
+
 			_mapViewContainer.Widgets.Add(MapView);
 
 			MapNavigation.MapEditor = MapView;
@@ -34,6 +39,8 @@ namespace TroublesOfJord.UI
 
 			LogView.ShowVerticalScrollBar = false;
 			_logContainer.Widgets.Add(LogView);
+
+			UpdateUseButton();
 		}
 
 		private void UpdateKeyboardInput()
@@ -207,22 +214,54 @@ namespace TroublesOfJord.UI
 			}
 			else if (key == Keys.I)
 			{
-				var inventoryWindow = new InventoryWindow();
-				inventoryWindow.ShowModal(Desktop);
+				ShowInventory();
 			}
 			else if (key == Keys.C)
 			{
-				var characterWindow = new CharacterWindow();
-				characterWindow.ShowModal(Desktop);
+				ShowCharacter();
 			}
 			else if (key == Keys.A)
 			{
-				var abilitiesWindow = new AbilitiesWindow();
-				abilitiesWindow.ShowModal(Desktop);
+				ShowAbilities();
 			} else if (key == Keys.E)
 			{
 				TJ.Session.PlayerOperate();
 			}
+
+			UpdateUseButton();
+		}
+
+		private void UpdateUseButton()
+		{
+			var type = TJ.Session.GetPlayerOperate();
+
+			if (type == null)
+			{
+				_buttonUse.Text = @"\c[green]E\c[white]|Use";
+				_buttonUse.Enabled = false;
+			} else
+			{
+				_buttonUse.Text = @"\c[green]E\c[white]|Enter";
+				_buttonUse.Enabled = true;
+			}
+		}
+
+		private void ShowInventory()
+		{
+			var inventoryWindow = new InventoryWindow();
+			inventoryWindow.ShowModal(Desktop);
+		}
+
+		private void ShowCharacter()
+		{
+			var characterWindow = new CharacterWindow();
+			characterWindow.ShowModal(Desktop);
+		}
+
+		private void ShowAbilities()
+		{
+			var abilitiesWindow = new AbilitiesWindow();
+			abilitiesWindow.ShowModal(Desktop);
 		}
 
 		public override void InternalRender(RenderContext batch)

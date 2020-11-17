@@ -6,7 +6,19 @@
       <Proportion Type="Auto" />
       <Proportion Type="Part" />
     </HorizontalStackPanel.Proportions>
-    <Panel Id="_mapViewContainer" />
+    <VerticalStackPanel>
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
+      <Panel Id="_mapViewContainer" />
+      <HorizontalSeparator />
+      <HorizontalStackPanel Spacing="8">
+        <TextButton Text="\c[green]E\c[white]|Use" Width="100" Id="_buttonUse" />
+        <TextButton Text="\c[green]C\c[white]haracter" Width="100" Id="_buttonCharacter" />
+        <TextButton Text="\c[green]I\c[white]nventory" Width="100" Id="_buttonInventory" />
+        <TextButton Text="\c[green]A\c[white]bilities" Width="100" Id="_buttonAbilities" />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
     <VerticalSeparator />
     <VerticalStackPanel>
       <VerticalStackPanel.Proportions>

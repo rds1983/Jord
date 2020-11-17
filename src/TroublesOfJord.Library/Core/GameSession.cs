@@ -5,6 +5,11 @@ using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
+	public enum OperateType
+	{
+		Enter
+	}
+
 	public class GameSession
 	{
 		public Slot Slot { get; }
@@ -97,6 +102,16 @@ namespace TroublesOfJord.Core
 				Player.Stats.Life.CurrentMana -= ability.Mana;
 				WorldAct();
 			}
+		}
+
+		public OperateType? GetPlayerOperate()
+		{
+			if (Player.CanEnter())
+			{
+				return OperateType.Enter;
+			}
+
+			return null;
 		}
 
 		public void PlayerOperate()

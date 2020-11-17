@@ -1,7 +1,7 @@
 {
   "MapTemplates": {
     "Sewers1": {
-        "Name": "Sewers 1",
+        "Name": "Sewers of Bal Harbor 1",
         "GeneratorId": "CommonRooms64x64",
         "Exits": [
             {

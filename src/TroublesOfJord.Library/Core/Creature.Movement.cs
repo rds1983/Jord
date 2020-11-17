@@ -56,6 +56,11 @@ namespace TroublesOfJord.Core
 			return true;
 		}
 
+		public bool CanEnter()
+		{
+			return Tile != null && Tile.Exit != null;
+		}
+
 		public bool Enter()
 		{
 			if (Tile == null || Tile.Exit == null)
