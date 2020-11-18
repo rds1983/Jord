@@ -1,6 +1,11 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
+layout: page
+title: About
+order: 1
 ---
+
+"Troubles of Jord" is WIP action RPG game influenced by MMORPG [SlothMUD](https://www.slothmud.org).
+
+The project is open source: <https://github.com/rds1983/TroublesOfJord>
+
+![](/images/screenshot.png)

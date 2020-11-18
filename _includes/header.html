@@ -18,7 +18,6 @@
         </label>
 
         <div class="trigger">
-          <a class="page-link" href="{{ "/" | relative_url }}">Blog</a>
           {%- for path in page_paths -%}
             {%- assign my_page = site.pages | where: "path", path | first -%}
             {%- if my_page.title -%}
