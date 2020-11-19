@@ -1,4 +1,5 @@
-﻿using TroublesOfJord.Core;
+﻿using Newtonsoft.Json.Linq;
+using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 
 namespace TroublesOfJord.Compiling.Loaders
@@ -11,9 +12,11 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override BaseItemInfo LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			BaseItemInfo result = null;
 
-			var type = EnsureString(data, "Type");
+			var type = dataObj.EnsureString("Type");
 			if (type == "Food")
 			{
 				var food = new FoodInfo
@@ -27,7 +30,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				var waterContainer = new WaterContainerInfo
 				{
-					Capacity = EnsureInt(data, "Capacity")
+					Capacity = dataObj.EnsureInt("Capacity")
 				};
 
 				result = waterContainer;
@@ -36,9 +39,9 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				var weapon = new WeaponInfo
 				{
-					MinDamage = EnsureInt(data, "MinDamage"),
-					MaxDamage = EnsureInt(data, "MaxDamage"),
-					AttackType = EnsureEnum<AttackType>(data, "AttackType")
+					MinDamage = dataObj.EnsureInt("MinDamage"),
+					MaxDamage = dataObj.EnsureInt("MaxDamage"),
+					AttackType = dataObj.EnsureEnum<AttackType>("AttackType")
 				};
 
 				result = weapon;
@@ -47,15 +50,15 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				var armor = new ArmorInfo
 				{
-					ArmorClass = EnsureInt(data, "ArmorClass"),
-					SubType = EnsureEnum<EquipType>(data, "SubType")
+					ArmorClass = dataObj.EnsureInt("ArmorClass"),
+					SubType = dataObj.EnsureEnum<EquipType>("SubType")
 				};
 
 				result = armor;
 			}
 
-			result.Name = EnsureString(data, Compiler.NameName);
-			result.Price = EnsureInt(data, "Price");
+			result.Name = dataObj.EnsureString(Compiler.NameName);
+			result.Price = dataObj.EnsureInt("Price");
 
 			return result;
 		}

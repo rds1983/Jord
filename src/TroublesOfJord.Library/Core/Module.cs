@@ -22,6 +22,9 @@ namespace TroublesOfJord.Core
 
 		public TileSet CurrentTileSet;
 
+		public Dictionary<string, Appearance> Appearances => CurrentTileSet.Appearances;
+
+
 		public ModuleInfo ModuleInfo;
 
 		public int MaximumLevel
@@ -31,8 +34,11 @@ namespace TroublesOfJord.Core
 				return (from v in LevelCosts.Values select v.Level).Max();
 			}
 		}
+	}
 
-		private static T Ensure<T, T2>(Dictionary<T2, T> data, T2 id)
+	public static class ModuleExtensions
+	{
+		public static T Ensure<T, T2>(this Dictionary<T2, T> data, T2 id)
 		{
 			T result;
 			if (!data.TryGetValue(id, out result))
@@ -41,61 +47,6 @@ namespace TroublesOfJord.Core
 			}
 
 			return result;
-		}
-
-		public Appearance EnsureAppearance(string id)
-		{
-			return Ensure(CurrentTileSet.Appearances, id);
-		}
-
-		public TileSet EnsureTileSet(string id)
-		{
-			return Ensure(TileSets, id);
-		}
-
-		public TileInfo EnsureTileInfo(string id)
-		{
-			return Ensure(TileInfos, id);
-		}
-
-		public Class EnsureClass(string id)
-		{
-			return Ensure(Classes, id);
-		}
-
-		public CreatureInfo EnsureCreatureInfo(string id)
-		{
-			return Ensure(CreatureInfos, id);
-		}
-
-		public BaseItemInfo EnsureItemInfo(string id)
-		{
-			return Ensure(ItemInfos, id);
-		}
-
-		public BaseGenerator EnsureGenerator(string id)
-		{
-			return Ensure(Generators, id);
-		}
-
-		public Map EnsureMap(string id)
-		{
-			return Ensure(Maps, id);
-		}
-
-		public MapTemplate EnsureMapTemplate(string id)
-		{
-			return Ensure(MapTemplates, id);
-		}
-
-		public AbilityInfo EnsureAbility(string id)
-		{
-			return Ensure(Abilities, id);
-		}
-
-		public LevelCost EnsureLevelCost(int level)
-		{
-			return Ensure(LevelCosts, level);
 		}
 	}
 }

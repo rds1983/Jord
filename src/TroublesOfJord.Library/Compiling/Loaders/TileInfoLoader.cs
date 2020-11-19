@@ -10,12 +10,14 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override TileInfo LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			var result = new TileInfo
 			{
-				Passable = EnsureBool(data, "Passable")
+				Passable = dataObj.EnsureBool("Passable")
 			};
 
-			EnsureBaseMapObject(module, data, result);
+			module.EnsureBaseMapObject(dataObj, result);
 
 			return result;
 		}

@@ -3,6 +3,7 @@ using Myra.Graphics2D.UI;
 using Myra.Utility;
 using System;
 using TroublesOfJord.Core;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.UI
 {
@@ -19,7 +20,7 @@ namespace TroublesOfJord.UI
 			if (player.Level < TJ.Module.MaximumLevel)
 			{
 				var nextLevel = TJ.Module.LevelCosts[player.Level + 1];
-				_labelExperience.Text = Experience(string.Format("{0}/{1}", 
+				_labelExperience.Text = Experience(string.Format("{0}/{1}",
 					player.Experience.FormatNumber(), nextLevel.Experience.FormatNumber()));
 				_labelGold.Text = Gold(string.Format("{0}/{1}",
 					player.Gold.FormatNumber(), nextLevel.Gold.FormatNumber()));
@@ -29,6 +30,21 @@ namespace TroublesOfJord.UI
 				_labelExperience.Text = Experience(player.Experience.FormatNumber());
 				_labelGold.Text = Gold(player.Gold.FormatNumber());
 			}
+
+			_labelHp.Text = string.Format("HP: {0}/{1} (+{2})",
+				(int)player.Stats.Life.CurrentHP,
+				player.Stats.Life.MaximumHP,
+				player.Stats.Life.HpRegen.Format());
+
+			_labelMana.Text = string.Format("MA: {0}/{1} (+{2})",
+				(int)player.Stats.Life.CurrentMana,
+				player.Stats.Life.MaximumMana,
+				player.Stats.Life.ManaRegen.Format());
+
+			_labelStamina.Text = string.Format("ST: {0}/{1} (+{2})",
+				(int)player.Stats.Life.CurrentStamina,
+				player.Stats.Life.MaximumStamina,
+				player.Stats.Life.StaminaRegen.Format());
 
 			_buttonConfirm.Click += _buttonConfirm_Click;
 			_buttonReset.Click += _buttonReset_Click;
@@ -55,7 +71,7 @@ namespace TroublesOfJord.UI
 						continue;
 					}
 
-					var level = (int) asSpinButton.Value;
+					var level = (int)asSpinButton.Value;
 					asSpinButton.Minimum = level;
 
 					var cls = (Class)asSpinButton.Tag;
@@ -202,7 +218,8 @@ namespace TroublesOfJord.UI
 				if (asSpinButton != spinButton)
 				{
 					totalLevels += (int)asSpinButton.Value;
-				} else
+				}
+				else
 				{
 					totalLevels += (int)e.NewValue;
 				}
@@ -217,7 +234,7 @@ namespace TroublesOfJord.UI
 			if (pointsLeft < 0)
 			{
 				var error = Dialog.CreateMessageBox(Strings.Error, NoPointsLeft);
-				error.ShowModal(Desktop);		
+				error.ShowModal(Desktop);
 				e.Cancel = true;
 				return;
 			}
@@ -234,7 +251,8 @@ namespace TroublesOfJord.UI
 					e.Cancel = true;
 					return;
 				}
-			} else
+			}
+			else
 			{
 				foreach (var widget in _gridClasses.Widgets)
 				{

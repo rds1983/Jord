@@ -1,4 +1,5 @@
 ﻿using System;
+using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
@@ -6,12 +7,11 @@ namespace TroublesOfJord.Core
 	{
 		public class LifeStats
 		{
-			private int _currentHp, _maximumHp;
-			private int _currentMana, _maximumMana;
-			private int _currentStamina, _maximumStamina;
-			private int _hpRegen;
+			private int _maximumHp, _maximumMana, _maximumStamina;
+			private float _currentHp, _currentMana, _currentStamina;
+			private float _hpRegen, _manaRegen, _staminaRegen;
 
-			public int CurrentHP
+			public float CurrentHP
 			{
 				get
 				{
@@ -20,7 +20,7 @@ namespace TroublesOfJord.Core
 
 				set
 				{
-					if (_currentHp == value)
+					if (_currentHp.EpsilonEquals(value))
 					{
 						return;
 					}
@@ -49,7 +49,7 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			public int HpRegen
+			public float HpRegen
 			{
 				get
 				{
@@ -58,7 +58,7 @@ namespace TroublesOfJord.Core
 
 				set
 				{
-					if (_hpRegen == value)
+					if (_hpRegen.EpsilonEquals(value))
 					{
 						return;
 					}
@@ -68,7 +68,7 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			public int CurrentMana
+			public float CurrentMana
 			{
 				get
 				{
@@ -77,7 +77,7 @@ namespace TroublesOfJord.Core
 
 				set
 				{
-					if (_currentMana == value)
+					if (_currentMana.EpsilonEquals(value))
 					{
 						return;
 					}
@@ -106,7 +106,26 @@ namespace TroublesOfJord.Core
 				}
 			}
 
-			public int CurrentStamina
+			public float ManaRegen
+			{
+				get
+				{
+					return _manaRegen;
+				}
+
+				set
+				{
+					if (_manaRegen.EpsilonEquals(value))
+					{
+						return;
+					}
+
+					_manaRegen = value;
+					Changed?.Invoke(this, EventArgs.Empty);
+				}
+			}
+
+			public float CurrentStamina
 			{
 				get
 				{
@@ -115,7 +134,7 @@ namespace TroublesOfJord.Core
 
 				set
 				{
-					if (_currentStamina == value)
+					if (_currentStamina.EpsilonEquals(value))
 					{
 						return;
 					}
@@ -140,6 +159,25 @@ namespace TroublesOfJord.Core
 					}
 
 					_maximumStamina = value;
+					Changed?.Invoke(this, EventArgs.Empty);
+				}
+			}
+
+			public float StaminaRegen
+			{
+				get
+				{
+					return _staminaRegen;
+				}
+
+				set
+				{
+					if (_staminaRegen.EpsilonEquals(value))
+					{
+						return;
+					}
+
+					_staminaRegen = value;
 					Changed?.Invoke(this, EventArgs.Empty);
 				}
 			}

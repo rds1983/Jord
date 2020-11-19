@@ -12,5 +12,12 @@ namespace TroublesOfJord.Core
 		public int Gold;
 
 		public readonly Equipment Equipment = new Equipment();
+
+		public int HpMultiplier;
+		public int ManaMultiplier;
+		public int StaminaMultiplier;
+		public float HpRegenMultiplier;
+		public float ManaRegenMultiplier;
+		public float StaminaRegenMultiplier;
 	}
 }

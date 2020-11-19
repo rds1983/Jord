@@ -3,6 +3,7 @@ using Myra;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TroublesOfJord.Core;
 using TroublesOfJord.Utils;
 
@@ -39,182 +40,172 @@ namespace TroublesOfJord.Compiling.Loaders
 			_sourceData[id] = od;
 		}
 
-		public static Color EnsureColor(JObject obj, string source, string fieldName)
+		protected static void RaiseError(string message, params object[] args)
 		{
-			var s = EnsureString(obj, source, fieldName);
+			LoaderExtensions.RaiseError(message, args);
+		}
+	}
+
+	internal static class LoaderExtensions
+	{
+		public static Color EnsureColor(this JObject obj, string fieldName)
+		{
+			var s = obj.EnsureString(fieldName);
 			var result = ColorStorage.FromName(s);
 			if (result == null)
 			{
-				RaiseError("Could not find color '{0}'. Source: {1}", s, source);
+				RaiseError("Could not find color '{0}'.", s);
 			}
 
 			return result.Value;
 		}
 
-		public static JToken EnsureJToken(JObject obj, string source, string fieldName)
+		public static JToken EnsureJToken(this JObject obj, string fieldName)
 		{
 			var token = obj[fieldName];
 			if (token == null)
 			{
-				RaiseError("Could not find mandatory '{0}' field. Source: {1}", fieldName, source);
+				RaiseError("Could not find mandatory '{0}' field.", fieldName);
 			}
 
 			return token;
 		}
 
-		public static T JConvertT<T>(JToken token, string source) where T: JToken
+		public static T JConvertT<T>(this JToken token) where T : JToken
 		{
 			var asT = token as T;
 			if (asT == null)
 			{
-				RaiseError("Could not cast '{0}' to '{1}'. Source: {2}", token.ToString(), typeof(T).Name, source);
+				RaiseError("Could not cast '{0}' to '{1}'.", token.ToString(), typeof(T).Name);
 			}
 
 			return asT;
 		}
 
-		public static T EnsureT<T>(JObject obj, string source, string fieldName) where T : JToken
+		public static T EnsureT<T>(this JObject obj, string fieldName) where T : JToken
 		{
-			var token = EnsureJToken(obj, source, fieldName);
-			return JConvertT<T>(token, source);
+			var token = obj.EnsureJToken(fieldName);
+			return JConvertT<T>(token);
 		}
 
-		public static JArray EnsureJArray(JObject obj, string source, string fieldName)
+		public static JArray EnsureJArray(this JObject obj, string fieldName)
 		{
-			return EnsureT<JArray>(obj, source, fieldName);
+			return EnsureT<JArray>(obj, fieldName);
 		}
 
-		public static JObject EnsureJObject(JObject obj, string source, string fieldName)
+		public static JObject EnsureJObject(this JObject obj, string fieldName)
 		{
-			return EnsureT<JObject>(obj, source, fieldName);
+			return EnsureT<JObject>(obj, fieldName);
 		}
 
-		public static JObject EnsureJObject(ObjectData obj, string fieldName)
+		public static string EnsureString(this JObject obj, string fieldName)
 		{
-			return EnsureT<JObject>(obj.Data, obj.Source, fieldName);
-		}
-
-		public static string EnsureString(JObject obj, string source, string fieldName)
-		{
-			var token = EnsureJToken(obj, source, fieldName);
+			var token = obj.EnsureJToken(fieldName);
 			return token.ToString();
 		}
 
-		public static string EnsureString(ObjectData data, string fieldName)
-		{
-			return EnsureString(data.Data, data.Source, fieldName);
-		}
-
-		public static int StringToInt(string value, string source)
+		public static int ToInt(this string value)
 		{
 			int result;
 			if (!int.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as int value. Source: {1}", value, source);
+				RaiseError("Can't parse '{0}' as int value.", value);
 			}
 
 			return result;
 		}
 
-		public static int EnsureInt(JObject obj, string source, string fieldName)
+		public static float ToFloat(this string value)
 		{
-			var value = EnsureString(obj, source, fieldName);
-			return StringToInt(value, source);
+			float result;
+			if (!float.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out result))
+			{
+				RaiseError("Can't parse '{0}' as float value.", value);
+			}
+
+			return result;
 		}
 
-		public static int EnsureInt(ObjectData data, string fieldName)
+		public static int EnsureInt(this JObject obj, string fieldName)
 		{
-			return EnsureInt(data.Data, data.Source, fieldName);
+			var value = obj.EnsureString(fieldName);
+			return ToInt(value);
 		}
 
-		public static bool EnsureBool(JObject obj, string source, string fieldName)
+		public static float EnsureFloat(this JObject obj, string fieldName)
 		{
-			var value = EnsureString(obj, source, fieldName);
+			var value = obj.EnsureString(fieldName);
+			return ToFloat(value);
+		}
+
+		public static bool EnsureBool(this JObject obj, string fieldName)
+		{
+			var value = obj.EnsureString(fieldName);
 			bool result;
 			if (!bool.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as bool value. Source: {1}", value, source);
+				RaiseError("Can't parse '{0}' as bool value.", value);
 			}
 
 			return result;
 		}
 
-		public static bool EnsureBool(ObjectData data, string fieldName)
+		public static Point EnsurePoint(this JObject obj, string fieldName)
 		{
-			return EnsureBool(data.Data, data.Source, fieldName);
+			var sizeObj = (JObject)obj.EnsureJToken(fieldName);
+
+			return new Point(sizeObj.EnsureInt("X"), sizeObj.EnsureInt("Y"));
 		}
 
-		public static Point EnsurePoint(JObject obj, string source, string fieldName)
+		public static Appearance EnsureAppearance(this Module module, JObject obj, string fieldName)
 		{
-			var sizeObj = (JObject)EnsureJToken(obj, source, fieldName);
+			var value = obj.EnsureString(fieldName);
 
-			return new Point(EnsureInt(sizeObj, source, "X"), EnsureInt(sizeObj, source, "Y"));
+			return module.Appearances.Ensure(value);
 		}
 
-		public static Appearance EnsureAppearance(Module module, JObject obj, string source, string fieldName)
+		public static void EnsureBaseMapObject(this Module module, JObject obj, BaseMapObject output)
 		{
-			var value = EnsureString(obj, source, fieldName);
-
-			return module.EnsureAppearance(value);
-		}
-
-		public static Appearance EnsureAppearance(Module module, ObjectData data, string fieldName)
-		{
-			return EnsureAppearance(module, data.Data, data.Source, fieldName);
-		}
-
-		public static void EnsureBaseMapObject(Module module, ObjectData data, BaseMapObject output)
-		{
-			output.Image = EnsureAppearance(module, data, Compiler.ImageName);
-			var symbolStr = EnsureString(data, "Symbol");
+			output.Image = EnsureAppearance(module, obj, Compiler.ImageName);
+			var symbolStr = obj.EnsureString("Symbol");
 			if (symbolStr.Length != 1)
 			{
-				RaiseError("Unable to read '{0}' as symbol. Source = {1}", symbolStr, data.Source);
+				RaiseError("Unable to read '{0}' as symbol.", symbolStr);
 			}
 
 			output.Symbol = symbolStr[0];
 		}
 
-		public static T EnsureEnum<T>(JObject obj, string source, string fieldName)
+		public static T EnsureEnum<T>(this JObject obj, string fieldName)
 		{
-			var value = EnsureString(obj, source, fieldName);
+			var value = obj.EnsureString(fieldName);
 
 			return (T)Enum.Parse(typeof(T), value);
 		}
 
-		public static T EnsureEnum<T>(ObjectData data, string fieldName)
+		public static AttackInfo ParseAttack(this JObject obj)
 		{
-			return EnsureEnum<T>(data.Data, data.Source, fieldName);
+			return new AttackInfo(EnsureEnum<AttackType>(obj, "AttackType"),
+				obj.EnsureInt("MinDamage"),
+				obj.EnsureInt("MaxDamage"));
 		}
 
-		public static AttackInfo ParseAttack(JObject obj, string source)
+		public static string EnsureId(this JObject obj)
 		{
-			return new AttackInfo(EnsureEnum<AttackType>(obj, source, "AttackType"),
-				EnsureInt(obj, source, "MinDamage"),
-				EnsureInt(obj, source, "MaxDamage"));
+			return obj.EnsureString(Compiler.IdName);
 		}
 
-		public static string EnsureId(JObject obj, string source)
-		{
-			return EnsureString(obj, source, Compiler.IdName);
-		}
-
-		public static string EnsureId(ObjectData data)
-		{
-			return EnsureId(data.Data, data.Source);
-		}
-
-		public static JToken Optional(JObject obj, string fieldName)
+		public static JToken Optional(this JObject obj, string fieldName)
 		{
 			return obj[fieldName];
 		}
 
-		public static JObject OptionalJObject(JObject obj, string fieldName)
+		public static JObject OptionalJObject(this JObject obj, string fieldName)
 		{
 			return (JObject)Optional(obj, fieldName);
 		}
 
-		public static string OptionalString(JObject obj, string fieldName)
+		public static string OptionalString(this JObject obj, string fieldName)
 		{
 			var token = Optional(obj, fieldName);
 			if (token == null)
@@ -224,7 +215,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			return token.ToString();
 		}
 
-		public static int OptionalInt(JObject obj, string source, string fieldName, int def = 0)
+		public static int OptionalInt(this JObject obj, string fieldName, int def = 0)
 		{
 			var value = OptionalString(obj, fieldName);
 			if (value == null)
@@ -232,21 +223,21 @@ namespace TroublesOfJord.Compiling.Loaders
 				return def;
 			}
 
-			int result;
-			if (!int.TryParse(value, out result))
+			return ToInt(value);
+		}
+
+		public static float OptionalFloat(this JObject obj, string fieldName, float def = 0)
+		{
+			var value = OptionalString(obj, fieldName);
+			if (value == null)
 			{
-				RaiseError("Can't parse '{0}' as int value. Source: {1}", value, source);
+				return def;
 			}
 
-			return result;
+			return ToFloat(value);
 		}
 
-		public static int OptionalInt(ObjectData data, string fieldName, int def = 0)
-		{
-			return OptionalInt(data.Data, data.Source, fieldName, def);
-		}
-
-		public static bool OptionalBool(JObject obj, string source, string fieldName, bool def)
+		public static bool OptionalBool(this JObject obj, string fieldName, bool def)
 		{
 			var value = OptionalString(obj, fieldName);
 			if (value == null)
@@ -257,18 +248,13 @@ namespace TroublesOfJord.Compiling.Loaders
 			bool result;
 			if (!bool.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as bool value. Source: {1}", value, source);
+				RaiseError("Can't parse '{0}' as bool value.", value);
 			}
 
 			return result;
 		}
 
-		public static bool OptionalBool(ObjectData data, string fieldName, bool def)
-		{
-			return OptionalBool(data.Data, data.Source, fieldName, def);
-		}
-
-		protected static void RaiseError(string message, params object[] args)
+		public static void RaiseError(string message, params object[] args)
 		{
 			throw new Exception(StringUtils.FormatMessage(message, args));
 		}
@@ -283,7 +269,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 		}
 
-		public abstract T LoadItem(Module module, string id, ObjectData data);
+		public abstract T LoadItem(Module module, string id, ObjectData od);
 
 		public void FillData(Module module, Dictionary<string, T> output)
 		{
@@ -304,7 +290,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				}
 				catch (Exception ex)
 				{
-					throw new Exception("Compilation Error. Message = '" + ex.Message + "', Id = '" + pair.Key + ", Source = '" + pair.Value.Source + "'", ex);
+					throw new Exception("Compilation Error. Message = '" + ex.Message + "', Id = '" + pair.Key + "', Source = '" + pair.Value.Source + "'", ex);
 				}
 			}
 		}

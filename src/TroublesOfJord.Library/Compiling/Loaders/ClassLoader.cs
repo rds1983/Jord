@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using TroublesOfJord.Core;
 using TroublesOfJord.Core.Items;
 
@@ -12,17 +13,24 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override Class LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
 			var result = new Class
 			{
-				Name = EnsureString(data, Compiler.NameName),
-				Gold = EnsureInt(data, "Gold")
+				Name = dataObj.EnsureString(Compiler.NameName),
+				Gold = dataObj.EnsureInt("Gold"),
+				HpMultiplier = dataObj.EnsureInt("HpMultiplier"),
+				ManaMultiplier = dataObj.EnsureInt("ManaMultiplier"),
+				StaminaMultiplier = dataObj.EnsureInt("StaminaMultiplier"),
+				HpRegenMultiplier = dataObj.EnsureFloat("HpRegenMultiplier"),
+				ManaRegenMultiplier = dataObj.EnsureFloat("ManaRegenMultiplier"),
+				StaminaRegenMultiplier = dataObj.EnsureFloat("StaminaRegenMultiplier"),
 			};
 
-			var equipmentData = EnsureJObject(data, "Equipment");
+			var equipmentData = dataObj.EnsureJObject("Equipment");
 			foreach(var pair in equipmentData)
 			{
 				var slot = (EquipType)Enum.Parse(typeof(EquipType), pair.Key);
-				var itemInfo = module.EnsureItemInfo(pair.Value.ToString());
+				var itemInfo = module.ItemInfos.Ensure(pair.Value.ToString());
 
 				var item = new Item(itemInfo);
 

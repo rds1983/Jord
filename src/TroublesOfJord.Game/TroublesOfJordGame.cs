@@ -123,9 +123,9 @@ namespace TroublesOfJord
 			var gameView = (GameView)Desktop.Widgets[0];
 
 			var life = TJ.Player.Stats.Life;
-			gameView._labelHp.Text = string.Format("H: {0}/{1}", life.CurrentHP, life.MaximumHP);
-			gameView._labelMana.Text = string.Format("M: {0}/{1}", life.CurrentMana, life.MaximumMana);
-			gameView._labelStamina.Text = string.Format("S: {0}/{1}", life.CurrentStamina, life.MaximumStamina);
+			gameView._labelHp.Text = string.Format("H: {0}/{1}", (int)life.CurrentHP, life.MaximumHP);
+			gameView._labelMana.Text = string.Format("M: {0}/{1}", (int)life.CurrentMana, life.MaximumMana);
+			gameView._labelStamina.Text = string.Format("S: {0}/{1}", (int)life.CurrentStamina, life.MaximumStamina);
 		}
 
 		private void Life_Changed(object sender, System.EventArgs e)

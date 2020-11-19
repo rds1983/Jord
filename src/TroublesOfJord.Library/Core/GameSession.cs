@@ -79,7 +79,7 @@ namespace TroublesOfJord.Core
 				var asHealSelf = effect as HealSelf;
 				if (asHealSelf != null)
 				{
-					var amount = MathUtils.Random.Next(asHealSelf.Minimum, asHealSelf.Maximum + 1);
+					var amount = (float)MathUtils.Random.Next(asHealSelf.Minimum, asHealSelf.Maximum + 1);
 					if (Player.Stats.Life.CurrentHP >= Player.Stats.Life.MaximumHP)
 					{
 						TJ.GameLog(Strings.MaximumHpAlready);

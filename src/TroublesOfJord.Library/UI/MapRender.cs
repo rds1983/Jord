@@ -149,7 +149,7 @@ namespace TroublesOfJord.UI
 				context.FillRectangle(new Rectangle(topLeft.X, topLeft.Y, size.X, size.Y), Color.Red);
 
 				// Green hps
-				context.FillRectangle(new Rectangle(topLeft.X, topLeft.Y, hpWidth, size.Y), Color.Green);
+				context.FillRectangle(new Rectangle(topLeft.X, topLeft.Y, (int)hpWidth, size.Y), Color.Green);
 			}
 		}
 

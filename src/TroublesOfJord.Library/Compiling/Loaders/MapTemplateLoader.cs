@@ -11,6 +11,8 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override MapTemplate LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			if (module.Maps.ContainsKey(id))
 			{
 				RaiseError("There's already Map with id '{0}'", id);
@@ -18,25 +20,25 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			var result = new MapTemplate
 			{
-				GeneratorId = EnsureString(data, "GeneratorId")
+				GeneratorId = dataObj.EnsureString("GeneratorId")
 			};
 
-			result.Name = EnsureString(data, "Name");
+			result.Name = dataObj.EnsureString("Name");
 
-			var exits = EnsureJArray(data.Data, data.Source, "Exits");
+			var exits = dataObj.EnsureJArray("Exits");
 			foreach(JObject exitObj in exits)
 			{
 				var exit = new Exit
 				{
-					MapId = EnsureString(exitObj, data.Source, "MapId"),
-					ExitMapId = EnsureString(exitObj, data.Source, "ExitMapId"),
-					TileInfoId = EnsureString(exitObj, data.Source, "TileInfoId"),
+					MapId = exitObj.EnsureString("MapId"),
+					ExitMapId = exitObj.EnsureString("ExitMapId"),
+					TileInfoId = exitObj.EnsureString("TileInfoId"),
 				};
 
 				result.Exits.Add(exit);
 			}
 
-			var creatures = EnsureJObject(data.Data, data.Source, "Creatures");
+			var creatures = dataObj.EnsureJObject("Creatures");
 			foreach(var pair in creatures)
 			{
 				result.Creatures[pair.Key] = int.Parse(pair.Value.ToString());

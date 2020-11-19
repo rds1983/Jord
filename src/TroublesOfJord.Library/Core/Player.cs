@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TroublesOfJord.Core.Abilities;
 using TroublesOfJord.Core.Items;
@@ -7,13 +8,33 @@ namespace TroublesOfJord.Core
 {
 	public class Player : Creature
 	{
+		private int _level;
+
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
 
 		private bool _dirty = true;
 
-		public int Level { get; set; }
+		public int Level
+		{
+			get
+			{
+				return _level;
+			}
+
+			set
+			{
+				if (_level == value)
+				{
+					return;
+				}
+
+				_level = value;
+				Invalidate();
+			}
+		}
+
 		public Dictionary<string, int> ClassLevels { get; } = new Dictionary<string, int>();
 
 		public int Experience { get; set; }
@@ -58,9 +79,17 @@ namespace TroublesOfJord.Core
 
 		private void UpdateStats()
 		{
+			var levelValue = (float)Math.Sqrt(Level);
+
 			// Life
-			_stats.Life.MaximumHP = _stats.Life.MaximumMana = _stats.Life.MaximumStamina = 50;
-			_stats.Life.HpRegen = Constants.DefaultHpRegen;
+			_stats.Life.MaximumHP = (int)(Class.HpMultiplier * levelValue);
+			_stats.Life.HpRegen = Class.HpRegenMultiplier * levelValue;
+
+			_stats.Life.MaximumMana = (int)(Class.ManaMultiplier * levelValue);
+			_stats.Life.ManaRegen = Class.ManaRegenMultiplier * levelValue;
+
+			_stats.Life.MaximumStamina = (int)(Class.StaminaMultiplier * levelValue);
+			_stats.Life.StaminaRegen = Class.StaminaRegenMultiplier * levelValue;
 
 			// Battle
 			var weapon = Equipment.GetItemByType(EquipType.Weapon);

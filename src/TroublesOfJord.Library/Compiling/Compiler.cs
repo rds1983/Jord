@@ -126,9 +126,9 @@ namespace TroublesOfJord.Compiling
 						foreach(JObject levelObject in arr)
 						{
 							var levelCost = new LevelCost(
-								BaseLoader.EnsureInt(levelObject, s, "Level"),
-								BaseLoader.EnsureInt(levelObject, s, "Experience"),
-								BaseLoader.EnsureInt(levelObject, s, "Gold")
+								levelObject.EnsureInt("Level"),
+								levelObject.EnsureInt("Experience"),
+								levelObject.EnsureInt("Gold")
 							);
 
 							_module.LevelCosts[levelCost.Level] = levelCost;
@@ -187,8 +187,8 @@ namespace TroublesOfJord.Compiling
 		{
 			return new ModuleInfo
 			{
-				Id = BaseLoader.EnsureId(od),
-				PlayerAppearance = BaseLoader.EnsureAppearance(module, od, "PlayerImage"),
+				Id = od.Data.EnsureId(),
+				PlayerAppearance = module.EnsureAppearance(od.Data, "PlayerImage"),
 				Source = od.Source
 			};
 		}

@@ -15,7 +15,7 @@ namespace TroublesOfJord.Core
 
 		public Map Generate()
 		{
-			var generator = TJ.Module.EnsureGenerator(GeneratorId);
+			var generator = TJ.Module.Generators.Ensure(GeneratorId);
 
 			var map = generator.Generate();
 			map.Name = Name;
@@ -45,14 +45,14 @@ namespace TroublesOfJord.Core
 				var exitTile = freeTiles[index];
 				freeTiles.RemoveAt(index);
 
-				exitTile.Info = TJ.Module.EnsureTileInfo(exit.TileInfoId);
+				exitTile.Info = TJ.Module.TileInfos.Ensure(exit.TileInfoId);
 				exitTile.Exit = exit;
 			}
 
 			// Add creatures
 			foreach(var pair in Creatures)
 			{
-				var creatureInfo = TJ.Module.EnsureCreatureInfo(pair.Key);
+				var creatureInfo = TJ.Module.CreatureInfos.Ensure(pair.Key);
 				for(var i = 0; i < pair.Value; ++i)
 				{
 					if (freeTiles.Count == 0)

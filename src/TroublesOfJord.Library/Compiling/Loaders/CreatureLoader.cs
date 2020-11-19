@@ -12,43 +12,44 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override CreatureInfo LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
 			var result = new CreatureInfo
 			{
-				Name = EnsureString(data, Compiler.NameName),
-				Image = EnsureAppearance(module, data, Compiler.ImageName),
-				CreatureType = EnsureEnum<CreatureType>(data.Data, data.Source, "Type")
+				Name = dataObj.EnsureString(Compiler.NameName),
+				Image = module.EnsureAppearance(dataObj, Compiler.ImageName),
+				CreatureType = dataObj.EnsureEnum<CreatureType>("Type")
 			};
 
 			if (result.CreatureType != CreatureType.Instructor)
 			{
-				result.Gold = EnsureInt(data, "Gold");
+				result.Gold = dataObj.EnsureInt("Gold");
 			}
 
 			if (result.CreatureType == CreatureType.Enemy)
 			{
-				result.Experience = EnsureInt(data, "Experience");
+				result.Experience = dataObj.EnsureInt("Experience");
 			}
 
-			EnsureBaseMapObject(module, data, result);
+			module.EnsureBaseMapObject(dataObj, result);
 
 			if (result.CreatureType == CreatureType.Enemy)
 			{
-				result.ArmorClass = EnsureInt(data, "ArmorClass");
-				result.HitRoll = EnsureInt(data, "HitRoll");
-				result.MaxHp = EnsureInt(data, "MaxHp");
-				result.HpRegen = OptionalInt(data, "HpRegen", Constants.DefaultHpRegen);
-				result.MaxMana = OptionalInt(data, "MaxMana");
-				result.MaxStamina = OptionalInt(data, "MaxStamina");
+				result.ArmorClass = dataObj.EnsureInt("ArmorClass");
+				result.HitRoll = dataObj.EnsureInt("HitRoll");
+				result.MaxHp = dataObj.EnsureInt("MaxHp");
+				result.HpRegen = dataObj.OptionalInt("HpRegen", Constants.DefaultHpRegen);
+				result.MaxMana = dataObj.OptionalInt("MaxMana");
+				result.MaxStamina = dataObj.OptionalInt("MaxStamina");
 
-				var attacks = (JArray)data.Data["Attacks"];
+				var attacks = (JArray)dataObj["Attacks"];
 				foreach(JObject attackObj in attacks)
 				{
-					result.Attacks.Add(ParseAttack(attackObj, data.Source));
+					result.Attacks.Add(attackObj.ParseAttack());
 				}
 			}
 
 			JToken t;
-			if (data.Data.TryGetValue("Inventory", out t))
+			if (dataObj.TryGetValue("Inventory", out t))
 			{
 				JObject obj = (JObject)t;
 
@@ -58,7 +59,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				{
 					inventory.Items.Add(new ItemPile
 					{
-						Item = new Item(module.EnsureItemInfo(pair.Key)),
+						Item = new Item(module.ItemInfos.Ensure(pair.Key)),
 						Quantity = (int)pair.Value
 					});
 				}

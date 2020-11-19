@@ -49,19 +49,21 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override Map LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			if (module.MapTemplates.ContainsKey(id))
 			{
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}
 
-			var map = new Map(EnsurePoint(data.Data, data.Source, "Size"))
+			var map = new Map(dataObj.EnsurePoint("Size"))
 			{
-				Local = EnsureBool(data, "Local")
+				Local = dataObj.EnsureBool("Local")
 			};
 
-			map.Name = EnsureString(data, "Name");
-			map.Explored = OptionalBool(data, "Explored", false);
-			map.Light = OptionalBool(data, "Light", false);
+			map.Name = dataObj.EnsureString("Name");
+			map.Explored = dataObj.OptionalBool("Explored", false);
+			map.Light = dataObj.OptionalBool("Light", false);
 
 			if (map.Explored)
 			{
@@ -73,26 +75,23 @@ namespace TroublesOfJord.Compiling.Loaders
 			}
 
 			var legend = new Dictionary<char, object>();
-			var legendObject = EnsureObject(data, LegendName);
+			var legendObject = dataObj.EnsureJObject(LegendName);
 			foreach (var pair in legendObject)
 			{
 				if (string.IsNullOrEmpty(pair.Key))
 				{
-					RaiseError("Map legend item id could not be empty, source = '{0}'",
-						data.Source);
+					RaiseError("Map legend item id could not be empty.");
 				}
 
 				if (pair.Key.Length != 1)
 				{
-					RaiseError("Map legend item id {0} could consist only from single symbol, source = '{1}'",
-						pair.Key,
-						data.Source);
+					RaiseError("Map legend item id {0} could consist only from single symbol.'", pair.Key);
 				}
 
 				var symbol = pair.Key[0];
 				if (ForbiddenLegendItems.IndexOf(symbol) != -1)
 				{
-					RaiseError("Symbol '{0}' can't be used in legend. Source = '{1}'", symbol, data.Source);
+					RaiseError("Symbol '{0}' can't be used in legend.", symbol);
 				}
 
 				object item = null;
@@ -113,9 +112,7 @@ namespace TroublesOfJord.Compiling.Loaders
 						TileInfo info;
 						if (!module.TileInfos.TryGetValue(token.ToString(), out info))
 						{
-							RaiseError("Could not find tileInfo with id '{0}', source = '{1}'",
-								token,
-								data.Source);
+							RaiseError("Could not find tileInfo with id '{0}'", token);
 						}
 
 						item = info;
@@ -126,9 +123,7 @@ namespace TroublesOfJord.Compiling.Loaders
 						CreatureInfo info;
 						if (!module.CreatureInfos.TryGetValue(token.ToString(), out info))
 						{
-							RaiseError("Could not find creatureInfo with id '{0}', source = '{1}'",
-								token,
-								data.Source);
+							RaiseError("Could not find creatureInfo with id '{0}'.", token);
 						}
 
 						item = info;
@@ -138,7 +133,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				legend[symbol] = item;
 			}
 
-			var dataObject = EnsureArray(data, DataName);
+			var dataObject = dataObj.EnsureJArray(DataName);
 
 			var pos = Point.Zero;
 			var entities = new List<Tuple<Creature, Point>>();
@@ -180,12 +175,12 @@ namespace TroublesOfJord.Compiling.Loaders
 
 						if (!hasEnd)
 						{
-							RaiseError("Exit sequence lacks closing curly bracket. Source: '{0}'", data.Source);
+							RaiseError("Exit sequence lacks closing curly bracket.");
 						}
 
 						if (lastTile == null)
 						{
-							RaiseError("Last tile is null. Source: '{0}'", data.Source);
+							RaiseError("Last tile is null.");
 						}
 
 						lastTile.Exit = Exit.FromString(sb.ToString());
@@ -214,12 +209,12 @@ namespace TroublesOfJord.Compiling.Loaders
 
 						if (!hasEnd)
 						{
-							RaiseError("Sign sequence lacks closing square bracket. Source: '{0}'", data.Source);
+							RaiseError("Sign sequence lacks closing square bracket.");
 						}
 
 						if (lastTile == null)
 						{
-							RaiseError("Last tile is null. Source: '{0}'", data.Source);
+							RaiseError("Last tile is null.");
 						}
 
 						lastTile.Sign = sb.ToString();
@@ -229,9 +224,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 					if (!legend.TryGetValue(symbol, out item))
 					{
-						RaiseError("Unknown symbol '{0}', source = '{1}'",
-							symbol,
-							data.Source);
+						RaiseError("Unknown symbol '{0}'.", symbol);
 					}
 
 					if (item is SpawnSpot)

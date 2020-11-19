@@ -14,20 +14,21 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override AbilityInfo LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
 			var result = new AbilityInfo
 			{
-				Name = EnsureString(data, "Name"),
-				Mana = OptionalInt(data, "Mana", 0),
-				Type = EnsureEnum<AbilityType>(data, "Type"),
-				Description = EnsureString(data, "Description")
+				Name = dataObj.EnsureString("Name"),
+				Mana = dataObj.OptionalInt("Mana", 0),
+				Type = dataObj.EnsureEnum<AbilityType>("Type"),
+				Description = dataObj.EnsureString("Description")
 			};
 
-			var requirementsObject = EnsureJObject(data, "Requirements");
+			var requirementsObject = dataObj.EnsureJObject("Requirements");
 			var requirements = new List<AbilityRequirement>();
 			foreach (var pair in requirementsObject)
 			{
-				var cls = module.EnsureClass(pair.Key);
-				var level = StringToInt(pair.Value.ToString(), data.Source);
+				var cls = module.Classes.Ensure(pair.Key);
+				var level = pair.Value.ToString().ToInt();
 
 				var requirement = new AbilityRequirement
 				{
@@ -40,7 +41,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			result.Requirements = requirements.ToArray();
 
-			var effectsObject = OptionalJObject(data.Data, "Effects");
+			var effectsObject = dataObj.OptionalJObject("Effects");
 			var effects = new List<AbilityEffect>();
 			if (effectsObject != null)
 			{
@@ -53,15 +54,15 @@ namespace TroublesOfJord.Compiling.Loaders
 				{
 					AbilityEffect effect = null;
 					
-					var obj = (JObject)pair.Value;
+					var effectObj = (JObject)pair.Value;
 					switch (pair.Key)
 					{
 						case "HealSelf":
 							var healSelf = new HealSelf
 							{
-								Minimum = EnsureInt(obj, data.Source, "Minimum"),
-								Maximum = EnsureInt(obj, data.Source, "Maximum"),
-								MessageActivated = EnsureString(obj, data.Source, "Message"),
+								Minimum = effectObj.EnsureInt("Minimum"),
+								Maximum = effectObj.EnsureInt("Maximum"),
+								MessageActivated = effectObj.EnsureString("Message"),
 							};
 
 							effect = healSelf;
@@ -77,7 +78,7 @@ namespace TroublesOfJord.Compiling.Loaders
 
 			result.Effects = effects.ToArray();
 
-			var bonusesObject = OptionalJObject(data.Data, "Bonuses");
+			var bonusesObject = dataObj.OptionalJObject("Bonuses");
 			if (bonusesObject != null)
 			{
 				if (result.Type != AbilityType.Permanent)
@@ -88,7 +89,7 @@ namespace TroublesOfJord.Compiling.Loaders
 				foreach(var pair in bonusesObject)
 				{
 					var bonusType = (BonusType)Enum.Parse(typeof(BonusType), pair.Key);
-					var value = StringToInt(pair.Value.ToString(), data.Source);
+					var value = pair.Value.ToString().ToInt();
 
 					result.Bonuses[bonusType] = value;
 				}

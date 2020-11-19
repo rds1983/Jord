@@ -1,6 +1,6 @@
 <Project>
   <Project.ExportOptions Namespace="TroublesOfJord.UI" Class="CharacterWindow" OutputPath="C:/Projects/TroublesOfJord/src/TroublesOfJord.Game/UI" />
-  <Window Title="Character" IsDraggable="False" Left="436" Top="2" Width="300">
+  <Window Title="Character" IsDraggable="False" Left="522" Top="47" Width="300">
     <VerticalStackPanel Spacing="8">
       <HorizontalSeparator />
       <Label Text="rds, Warrior, 10" Id="_labelDescription" />
@@ -25,11 +25,12 @@
       <HorizontalSeparator />
       <Grid ColumnSpacing="8" RowSpacing="8">
         <Label Text="HP: 50/100(+10)" Id="_labelHp" />
-        <Label Text="EN: 50/100(+5)" GridColumn="1" Id="_labelEnergy" />
-        <Label Text="AC: 120" GridRow="1" Id="_labelAc" />
-        <Label Text="Hit: 10" GridColumn="1" GridRow="1" Id="_labelHit" />
-        <Label Text="Attacks: 3" GridRow="2" />
-        <Label Text="Dam: 10" GridColumn="1" GridRow="2" />
+        <Label Text="MA: 50/100(+5)" GridColumn="1" Id="_labelMana" />
+        <Label Text="ST: 50/100(+10)" GridRow="1" Id="_labelStamina" />
+        <Label Text="AC: 120" GridRow="2" Id="_labelAc" />
+        <Label Text="Hit: 10" GridColumn="1" GridRow="2" Id="_labelHit" />
+        <Label Text="Attacks: 3" GridRow="3" />
+        <Label Text="Dam: 10" GridColumn="1" GridRow="3" />
       </Grid>
     </VerticalStackPanel>
   </Window>

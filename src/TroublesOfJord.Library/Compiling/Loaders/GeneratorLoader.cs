@@ -1,4 +1,5 @@
-﻿using TroublesOfJord.Core;
+﻿using Newtonsoft.Json.Linq;
+using TroublesOfJord.Core;
 using TroublesOfJord.Generation;
 
 namespace TroublesOfJord.Compiling.Loaders
@@ -11,25 +12,27 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override BaseGenerator LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			BaseGenerator generator = null;
 
-			var type = EnsureString(data, "Type");
+			var type = dataObj.EnsureString("Type");
 			if (type == "Rooms")
 			{
-				var space = module.EnsureTileInfo(EnsureString(data, "SpaceTileId"));
-				var wall = module.EnsureTileInfo(EnsureString(data, "FillerTileId"));
+				var space = module.TileInfos.Ensure(dataObj.EnsureString("SpaceTileId"));
+				var wall = module.TileInfos.Ensure(dataObj.EnsureString("FillerTileId"));
 
 
 				generator = new RoomsGenerator(space, wall,
-					EnsureInt(data, "Width"),
-					EnsureInt(data, "Height"),
-					EnsureInt(data, "MaximumRoomsCount"),
-					EnsureInt(data, "MinimumRoomWidth"),
-					EnsureInt(data, "MaximumRoomWidth"));
+					dataObj.EnsureInt("Width"),
+					dataObj.EnsureInt("Height"),
+					dataObj.EnsureInt("MaximumRoomsCount"),
+					dataObj.EnsureInt("MinimumRoomWidth"),
+					dataObj.EnsureInt("MaximumRoomWidth"));
 			}
 			else
 			{
-				RaiseError("Could not resolve type {0}. Source = {1}", type, data.Source);
+				RaiseError("Could not resolve type {0}.", type);
 			}
 
 			return generator;

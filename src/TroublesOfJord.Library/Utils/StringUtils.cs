@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Globalization;
 
 namespace TroublesOfJord.Utils
 {
-	internal static class StringUtils
+	public static class StringUtils
 	{
 		public static string FormatMessage(string message, params object[] args)
 		{
@@ -24,6 +25,11 @@ namespace TroublesOfJord.Utils
 			}
 
 			return str;
+		}
+
+		public static string Format(this float f)
+		{
+			return f.ToString("0.##", CultureInfo.InvariantCulture);
 		}
 	}
 }

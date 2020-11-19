@@ -73,7 +73,7 @@ namespace TroublesOfJord.Core
 
 			if (TJ.Module.MapTemplates.ContainsKey(Tile.Exit.MapId))
 			{
-				var mapTemplate = TJ.Module.EnsureMapTemplate(Tile.Exit.MapId);
+				var mapTemplate = TJ.Module.MapTemplates.Ensure(Tile.Exit.MapId);
 				map = mapTemplate.Generate();
 				for(var x = 0; x < map.Width; ++x)
 				{
@@ -96,7 +96,7 @@ namespace TroublesOfJord.Core
 				found:;
 			} else
 			{
-				map = TJ.Module.EnsureMap(Tile.Exit.MapId);
+				map = TJ.Module.Maps.Ensure(Tile.Exit.MapId);
 
 				if (Tile.Exit.Position != null)
 				{

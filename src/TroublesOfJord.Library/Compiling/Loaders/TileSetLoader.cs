@@ -1,7 +1,6 @@
 ﻿using Myra;
 using Myra.Graphics2D.TextureAtlases;
 using Newtonsoft.Json.Linq;
-using System.Drawing;
 using System.IO;
 using TroublesOfJord.Core;
 using XNAssets.Utility;
@@ -16,10 +15,12 @@ namespace TroublesOfJord.Compiling.Loaders
 
 		public override TileSet LoadItem(Module module, string id, ObjectData data)
 		{
+			var dataObj = data.Data;
+
 			var result = new TileSet();
 
 			var textureAtlasFolder = Path.GetDirectoryName(data.Source);
-			var textureAtlasFile = Path.Combine(textureAtlasFolder, EnsureString(data, "TextureAtlas"));
+			var textureAtlasFile = Path.Combine(textureAtlasFolder, dataObj.EnsureString("TextureAtlas"));
 
 			var textureAtlasData = File.ReadAllText(textureAtlasFile);
 			result.TextureAtlas = TextureRegionAtlas.FromXml(textureAtlasData,
@@ -30,21 +31,21 @@ namespace TroublesOfJord.Compiling.Loaders
 				}
 			);
 
-			var appearancesObj = EnsureJObject(data.Data, data.Source, "Images");
-			foreach(var pair in appearancesObj)
+			var appearancesObj = dataObj.EnsureJObject("Images");
+			foreach (var pair in appearancesObj)
 			{
-				var appearanceObj = JConvertT<JObject>(pair.Value, data.Source);
+				var appearanceObj = pair.Value.JConvertT<JObject>();
 
-				var regionId = EnsureString(appearanceObj, data.Source, "Symbol");
-				var color = EnsureColor(appearanceObj, data.Source, "Color");
+				var regionId = appearanceObj.EnsureString("Symbol");
+				var color = appearanceObj.EnsureColor("Color");
 
 				TextureRegion image;
 				if (!result.TextureAtlas.Regions.TryGetValue(regionId, out image))
 				{
-					RaiseError("Could not find TextureRegion with id '{0}'. Source = {1}", regionId, data.Source);
+					RaiseError("Could not find TextureRegion with id '{0}'.", regionId);
 				}
 
-				var appearance = new Core.Appearance(color, image);
+				var appearance = new Appearance(color, image);
 				result.Appearances[pair.Key] = appearance;
 			}
 

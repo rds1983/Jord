@@ -1,24 +1,36 @@
 ﻿{
   "Classes": {
-    "Warrior": {
-      "Name": "Warrior",
-      "Gold": 100,
-      "Equipment": {
-        "Weapon": "ShortSword",
-        "Body": "LeatherJacket",
-        "Legs": "LeatherPants",
-        "Shield": "SmallShield"
-      }
-    },
-    "Cleric": {
-      "Name": "Cleric",
-      "Gold": 100,
-      "Equipment": {
-        "Weapon": "Mace",
-        "Body": "LeatherJacket",
-        "Legs": "LeatherPants",
-        "Shield": "SmallShield"
-      }
-    }
+		"Warrior": {
+			"Name": "Warrior",
+			"Gold": 100,
+			"HpMultiplier": 75,
+			"ManaMultiplier": 45,
+			"StaminaMultiplier": 20,
+			"HpRegenMultiplier": 0.5,
+			"ManaRegenMultiplier": 0.5,
+			"StaminaRegenMultiplier": 0.25,
+			"Equipment": {
+				"Weapon": "ShortSword",
+				"Body": "LeatherJacket",
+				"Legs": "LeatherPants",
+				"Shield": "SmallShield"
+			}
+		},
+		"Cleric": {
+			"Name": "Cleric",
+			"Gold": 100,
+			"HpMultiplier": 50,
+			"ManaMultiplier": 75,
+			"StaminaMultiplier": 20,
+			"HpRegenMultiplier": 0.5,
+			"ManaRegenMultiplier": 0.75,
+			"StaminaRegenMultiplier": 0.25,
+			"Equipment": {
+				"Weapon": "Mace",
+				"Body": "LeatherJacket",
+				"Legs": "LeatherPants",
+				"Shield": "SmallShield"
+			}
+		}
   }
 }
