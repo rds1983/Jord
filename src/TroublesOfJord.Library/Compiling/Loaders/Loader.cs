@@ -289,15 +289,22 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 			foreach (var pair in _sourceData)
 			{
-				var item = LoadItem(module, pair.Key, pair.Value);
-
-				item.Id = pair.Key;
-				item.Source = pair.Value.Source;
-				output[item.Id] = item;
-
-				if (CompilerParams.Verbose)
+				try
 				{
-					TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
+					var item = LoadItem(module, pair.Key, pair.Value);
+
+					item.Id = pair.Key;
+					item.Source = pair.Value.Source;
+					output[item.Id] = item;
+
+					if (CompilerParams.Verbose)
+					{
+						TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new Exception("Compilation Error. Message = '" + ex.Message + "', Id = '" + pair.Key + ", Source = '" + pair.Value.Source + "'", ex);
 				}
 			}
 		}

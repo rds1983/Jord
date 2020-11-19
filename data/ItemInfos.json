@@ -1,50 +1,93 @@
 ﻿{
-  "ItemInfos": {
-    "IronRation": {
-      "Name": "iron ration",
-      "Type": "Food",
-      "Price": 10,
-    },
-    "Canteen": {
-      "Name": "canteen",
-      "Type": "WaterContainer",
-      "Price": 15,
-      "Capacity": 50
-    },
-    "Barrel": {
-      "Name": "barrel",
-      "Type": "WaterContainer",
-      "Price": 25,
-      "Capacity": 70
-    },
-    "ShortSword": {
-      "Name": "short sword",
-      "Type": "Weapon",
-      "Price": 50,
-      "MinDamage": 3,
-      "MaxDamage": 8,
-      "AttackType": "Slash"
-    },
-    "LeatherArmor": {
-        "Name": "leather armor",
-        "Type": "Armor",
-        "SubType": "Body",
-        "Price": 40,
-        "ArmorClass": 10
-    },
-    "LeatherLeggings": {
-        "Name": "leather leggings",
-        "Type": "Armor",
-        "SubType": "Legs",
-        "Price": 30,
-        "ArmorClass": 8
-    },
-    "SmallShield": {
-        "Name": "small shield",
-        "Type": "Armor",
-        "SubType": "Shield",
-        "Price": 25,
-        "ArmorClass": 5
-    }
-  }
+	"ItemInfos": {
+		"IronRation": {
+			"Name": "iron ration",
+			"Type": "Food",
+			"Price": 10
+		},
+		"Canteen": {
+			"Name": "canteen",
+			"Type": "WaterContainer",
+			"Price": 15,
+			"Capacity": 50
+		},
+		"Barrel": {
+			"Name": "barrel",
+			"Type": "WaterContainer",
+			"Price": 25,
+			"Capacity": 70
+		},
+		"ShortSword": {
+			"Name": "short sword",
+			"Type": "Weapon",
+			"Price": 50,
+			"MinDamage": 3,
+			"MaxDamage": 8,
+			"AttackType": "Slash"
+		},
+		"Mace": {
+			"Name": "a mace",
+			"Type": "Weapon",
+			"Price": 30,
+			"MinDamage": 1,
+			"MaxDamage": 5,
+			"AttackType": "Bash"
+		},
+		"StuddedLeatherJacket": {
+			"Name": "a studded leather jacket",
+			"Type": "Armor",
+			"SubType": "Body",
+			"Price": 100,
+			"ArmorClass": 9
+		},
+		"LeatherJacket": {
+			"Name": "a leather jacket",
+			"Type": "Armor",
+			"SubType": "Body",
+			"Price": 40,
+			"ArmorClass": 6
+		},
+		"LeatherPants": {
+			"Name": "a pair of leather pants",
+			"Type": "Armor",
+			"SubType": "Legs",
+			"Price": 30,
+			"ArmorClass": 4
+		},
+		"LeatherSleeves": {
+			"Name": "a pair of leather sleeves",
+			"Type": "Armor",
+			"SubType": "Arms",
+			"Price": 20,
+			"ArmorClass": 4
+		},
+		"LeatherCap": {
+			"Name": "a leather cap",
+			"Type": "Armor",
+			"SubType": "Head",
+			"Price": 20,
+			"ArmorClass": 4
+		},
+		"LeatherGloves": {
+			"Name": "a pair of leather gloves",
+			"Type": "Armor",
+			"SubType": "Hands",
+			"Price": 15,
+			"ArmorClass": 2
+		},
+		"LeatherBoots": {
+			"Name": "a pair of leather boots",
+			"Type": "Armor",
+			"SubType": "Feet",
+			"Price": 25,
+			"ArmorClass": 2
+		},
+		"SmallShield": {
+			"Name": "small shield",
+			"Type": "Armor",
+			"SubType": "Shield",
+			"Price": 25,
+			"ArmorClass": 5
+		}
+	}
 }

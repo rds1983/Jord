@@ -17,19 +17,16 @@
                     "AttackType": "Hit",
                     "MinDamage": 10,
                     "MaxDamage": 15,
-                    "Delay": 1000
                 },
                 {
                     "AttackType": "Slash",
                     "MinDamage": 10,
                     "MaxDamage": 15,
-                    "Delay": 1000
                 },
                 {
                     "AttackType": "Claw",
                     "MinDamage": 10,
                     "MaxDamage": 15,
-                    "Delay": 1000
                 },
             ]
 		}

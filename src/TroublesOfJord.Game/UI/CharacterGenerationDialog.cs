@@ -13,7 +13,7 @@ namespace TroublesOfJord.UI
 			_comboClass.Items.Clear();
 			foreach (var cls in TJ.Module.Classes)
 			{
-				_comboClass.Items.Add(new ListItem(cls.Value.Name, null, cls.Key));
+				_comboClass.Items.Add(new ListItem(cls.Value.Name, null, cls.Value));
 			}
 			_comboClass.SelectedIndex = 0;
 

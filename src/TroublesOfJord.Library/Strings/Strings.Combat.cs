@@ -23,7 +23,10 @@ namespace TroublesOfJord
 		{
 			_attackNames[(int)AttackType.Hit] = new AttackNames("hit", "hits");
 			_attackNames[(int)AttackType.Slash] = new AttackNames("slash", "slashes");
+			_attackNames[(int)AttackType.Bash] = new AttackNames("bash", "bashes");
 			_attackNames[(int)AttackType.Claw] = new AttackNames("claw", "claws");
+			_attackNames[(int)AttackType.Bite] = new AttackNames("bite", "bites");
+			_attackNames[(int)AttackType.Smash] = new AttackNames("smash", "smashes");
 		}
 
 		public static string GetAttackNoun(AttackType attackType)

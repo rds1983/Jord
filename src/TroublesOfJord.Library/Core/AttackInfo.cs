@@ -4,7 +4,10 @@
 	{
 		Hit,
 		Slash,
-		Claw
+		Bash,
+		Claw,
+		Bite,
+		Smash
 	}
 
 	public class AttackInfo

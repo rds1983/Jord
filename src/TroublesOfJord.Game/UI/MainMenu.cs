@@ -75,17 +75,26 @@ namespace TroublesOfJord.UI
 						return;
 					}
 
-					var classId = (string) dlg._comboClass.SelectedItem.Tag; 
+					var cls = (Class) dlg._comboClass.SelectedItem.Tag; 
 					var data = new PlayerData
 					{
 						Name = dlg._textName.Text,
 						Level = 1,
 						ClassLevels = new Dictionary<string, int>
 						{
-							[classId] = 1
+							[cls.Id] = 1
 						},
-						ClassId = classId
+						ClassId = cls.Id,
+						Gold = cls.Gold
 					};
+
+					foreach(var pair in cls.Equipment.Items)
+					{
+						if (pair.Item != null)
+						{
+							data.Equipment[pair.Slot] = pair.Item.Info.Id;
+						}
+					}
 
 					slot.PlayerData = data;
 					slot.Save();

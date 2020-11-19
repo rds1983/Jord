@@ -1,26 +1,25 @@
 {
-	"CreatureInfos": 
-	{
-		"BalHarborWeaponMerchant": 
-		{
+	"CreatureInfos": {
+		"BalHarborWeaponMerchant": {
 			"Name": "Weapon Merchant",
 			"Image": "CreatureWeaponMerchant",
 			"Symbol": "p",
 			"Type": "Merchant",
 			"Gold": 50000,
-			"Inventory": 
-			{
-				"IronRation": 100,
-				"Canteen": 1,
-				"Barrel": 1,
+			"Inventory": {
 				"ShortSword": 1,
-				"LeatherArmor": 1,
-				"LeatherLeggings": 1,
+				"Mace": 1,
+				"StuddedLeatherJacket": 1,
+				"LeatherJacket": 1,
+				"LeatherPants": 1,
+				"LeatherSleeves": 1,
+				"LeatherCap": 1,
+				"LeatherGloves": 1,
+				"LeatherBoots": 1,
 				"SmallShield": 1
 			}
 		},
-		"BalHarborInstructor": 
-		{
+		"BalHarborInstructor": {
 			"Name": "Instructor",
 			"Image": "CreatureInstructor",
 			"Symbol": "p",

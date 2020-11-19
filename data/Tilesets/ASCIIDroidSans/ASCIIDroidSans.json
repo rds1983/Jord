@@ -87,6 +87,10 @@
 			  "Color": "Gray",
 			  "Symbol": "r"
 			},
+            "CreatureHugeBlackDragon": {
+			  "Color": "Gray",
+			  "Symbol": "D"
+			},
 		}
 	}
 }

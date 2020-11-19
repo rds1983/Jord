@@ -2,15 +2,23 @@
   "Classes": {
     "Warrior": {
       "Name": "Warrior",
-    },
-    "Mage": {
-      "Name": "Mage",
+      "Gold": 100,
+      "Equipment": {
+        "Weapon": "ShortSword",
+        "Body": "LeatherJacket",
+        "Legs": "LeatherPants",
+        "Shield": "SmallShield"
+      }
     },
     "Cleric": {
       "Name": "Cleric",
-    },
-    "Thief": {
-      "Name": "Thief",
-    },
+      "Gold": 100,
+      "Equipment": {
+        "Weapon": "Mace",
+        "Body": "LeatherJacket",
+        "Legs": "LeatherPants",
+        "Shield": "SmallShield"
+      }
+    }
   }
 }
