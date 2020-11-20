@@ -32,6 +32,10 @@ I.e. if the attacker's HitRoll is 4 and the target's ArmorClass is 30, then ther
 
 ## Leveling Up
 
-### Overall Level
+In order to level up, collect required amount of experience/gold(you can view it at character window) and move on guildmaster(who is located in the building with 'G' sign at entrance).
 
-### Class Levels
+It'll raise your **overall level**, which affects attributes such as hitpoints, mana, stamina as well as their regen. Also it affects base hitroll.
+
+Raising an **overall level** grants you a class level point, which can be used to raise **class levels**(which also is performed at the character window).
+
+Raising **class levels** allows to learn new abilities, to wear better equipment. Also it opens up new forge recipes.
