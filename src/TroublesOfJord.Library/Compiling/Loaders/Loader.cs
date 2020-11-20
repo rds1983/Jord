@@ -22,7 +22,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			JsonArrayName = jsonArrayName;
 		}
 
-		public void SafelyAddObject(string id, string source, JObject obj)
+		public void SafelyAddObject(string id, string source, JObject obj, Dictionary<string, string> properties = null)
 		{
 			ObjectData od;
 			if (_sourceData.TryGetValue(id, out od))
@@ -34,7 +34,8 @@ namespace TroublesOfJord.Compiling.Loaders
 			od = new ObjectData
 			{
 				Source = source,
-				Data = obj
+				Data = obj,
+				Properties = properties
 			};
 
 			_sourceData[id] = od;
@@ -213,6 +214,17 @@ namespace TroublesOfJord.Compiling.Loaders
 				return null;
 			}
 			return token.ToString();
+		}
+
+		public static int? OptionalNullableInt(this JObject obj, string fieldName, int? def = 0)
+		{
+			var value = OptionalString(obj, fieldName);
+			if (value == null)
+			{
+				return def;
+			}
+
+			return ToInt(value);
 		}
 
 		public static int OptionalInt(this JObject obj, string fieldName, int def = 0)

@@ -6,6 +6,8 @@ namespace TroublesOfJord.Compiling.Loaders
 {
 	class CreatureLoader: Loader<CreatureInfo>
 	{
+		private const string DungeonFilterName = "DungeonFilter";
+
 		public CreatureLoader(): base("CreatureInfos")
 		{
 		}
@@ -17,12 +19,19 @@ namespace TroublesOfJord.Compiling.Loaders
 			{
 				Name = dataObj.EnsureString(Compiler.NameName),
 				Image = module.EnsureAppearance(dataObj, Compiler.ImageName),
-				CreatureType = dataObj.EnsureEnum<CreatureType>("Type")
+				CreatureType = dataObj.EnsureEnum<CreatureType>("Type"),
+				MinimumLevel = dataObj.OptionalNullableInt("MinimumLevel")
 			};
+
+			string dungeonFilter;
+			if (data.Properties != null && data.Properties.TryGetValue(DungeonFilterName, out dungeonFilter))
+			{
+				result.DungeonFilter = dungeonFilter;
+			}
 
 			if (result.CreatureType != CreatureType.Instructor)
 			{
-				result.Gold = dataObj.EnsureInt("Gold");
+				result.Gold = dataObj.OptionalInt("Gold");
 			}
 
 			if (result.CreatureType == CreatureType.Enemy)

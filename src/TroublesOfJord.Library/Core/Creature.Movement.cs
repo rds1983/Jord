@@ -68,16 +68,16 @@ namespace TroublesOfJord.Core
 				return false;
 			}
 
-			Map map = null;
 			Tile exitTile = null;
-
-			if (TJ.Module.MapTemplates.ContainsKey(Tile.Exit.MapId))
+			Map map;
+			
+			if (TJ.Module.Dungeons.ContainsKey(Tile.Exit.MapId))
 			{
-				var mapTemplate = TJ.Module.MapTemplates.Ensure(Tile.Exit.MapId);
+				var mapTemplate = TJ.Module.Dungeons.Ensure(Tile.Exit.MapId);
 				map = mapTemplate.Generate();
-				for(var x = 0; x < map.Width; ++x)
+				for (var x = 0; x < map.Width; ++x)
 				{
-					for(var y = 0; y < map.Height; ++y)
+					for (var y = 0; y < map.Height; ++y)
 					{
 						var tile = map[x, y];
 						if (tile.Exit == null)
@@ -93,17 +93,21 @@ namespace TroublesOfJord.Core
 						}
 					}
 				}
-				found:;
-			} else
+			found:;
+			}
+			else
 			{
 				map = TJ.Module.Maps.Ensure(Tile.Exit.MapId);
 
 				if (Tile.Exit.Position != null)
 				{
 					exitTile = map[Tile.Exit.Position.Value];
-				} else
+				}
+				else
 				{
-					exitTile = map.EnsureExitTileById(Tile.Exit.ExitMapId);
+					// If position isnt set explicitly
+					// Then we search for a tile that has exit to the current creature map
+					exitTile = map.EnsureExitTileById(Map.Id);
 				}
 			}
 

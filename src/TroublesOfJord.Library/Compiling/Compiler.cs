@@ -21,6 +21,7 @@ namespace TroublesOfJord.Compiling
 		public const string TileSetName = "TileSet";
 		public const string ModuleInfoName = "ModuleInfo";
 		public const string LevelsName = "Levels";
+		private const string PropertiesName = "Properties";
 
 		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
@@ -30,7 +31,7 @@ namespace TroublesOfJord.Compiling
 		{
 			_loaders[typeof(TileSet)] = new TileSetLoader();
 			_loaders[typeof(Map)] = new MapLoader();
-			_loaders[typeof(MapTemplate)] = new MapTemplateLoader();
+			_loaders[typeof(Dungeon)] = new DungeonLoader();
 			_loaders[typeof(TileInfo)] = new TileInfoLoader();
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
@@ -69,6 +70,7 @@ namespace TroublesOfJord.Compiling
 				foreach (var pair in json)
 				{
 					var key = pair.Key;
+
 					if (key == TileSetName)
 					{
 						if (json.Count > 1)
@@ -152,9 +154,26 @@ namespace TroublesOfJord.Compiling
 						throw new Exception(string.Format("Unknown object type '{0}', source: '{1}", key, s));
 					}
 
+					var properties = new Dictionary<string, string>();
+
+					JToken token;
+					if (((JObject)pair.Value).TryGetValue(PropertiesName, out token))
+					{
+						foreach (var pair2 in (JObject)token)
+						{
+							properties[pair2.Key] = pair2.Value.ToString();
+						}
+					}
+
 					foreach (var pair2 in (JObject)pair.Value)
 					{
-						loader.SafelyAddObject(pair2.Key, s, (JObject)pair2.Value);
+						if (pair2.Key == PropertiesName)
+						{
+
+							continue;
+						}
+
+						loader.SafelyAddObject(pair2.Key, s, (JObject)pair2.Value, properties);
 					}
 				}
 			}
@@ -238,7 +257,7 @@ namespace TroublesOfJord.Compiling
 			FillData(_module.Maps);
 
 			// Map templates
-			FillData(_module.MapTemplates);
+			FillData(_module.Dungeons);
 
 			// Abilities
 			FillData(_module.Abilities);

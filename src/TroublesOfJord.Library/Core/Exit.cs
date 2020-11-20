@@ -5,7 +5,6 @@ namespace TroublesOfJord.Core
 	public class Exit
 	{
 		public string MapId;
-		public string ExitMapId;
 		public string TileInfoId;
 
 		public Point? Position;

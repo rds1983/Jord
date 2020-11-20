@@ -1,5 +1,26 @@
 {
   "CreatureInfos": {
+    "Properties": {
+      "DungeonFilter": "SewersOfBalHarbor",
+    },
+    "Hedgehog": {
+      "Name": "a hedgehog",
+      "Image": "CreatureHedgehog",
+      "Symbol": "r",
+      "Type": "Enemy",
+      "Experience": 150,
+      "Attacks": [
+        {
+          "AttackType": "Bite",
+          "MinDamage": 5,
+          "MaxDamage": 10
+        }
+      ],
+      "ArmorClass": 5,
+      "HitRoll": 1,
+      "MaxHp": 50,
+      "MinimumLevel": 1
+    },
     "SewersRat": {
       "Name": "a sewer rat",
       "Image": "CreatureRat",
@@ -16,7 +37,8 @@
       ],
       "ArmorClass": 5,
       "HitRoll": 1,
-      "MaxHp": 50
+      "MaxHp": 50,
+      "MinimumLevel": 2
     },
     "HugeBlackDragon": {
       "Name": "Ancient Black Dragon",
@@ -49,7 +71,8 @@
       ],
       "ArmorClass": 100,
       "HitRoll": 15,
-      "MaxHp": 20000
+      "MaxHp": 20000,
+      "MinimumLevel": 15
     }
   }
 }

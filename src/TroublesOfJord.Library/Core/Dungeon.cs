@@ -4,20 +4,22 @@ using TroublesOfJord.Utils;
 
 namespace TroublesOfJord.Core
 {
-	public class MapTemplate: BaseObject
+	public class Dungeon: BaseObject
 	{
 		public string GeneratorId;
 
 		public string Name;
 
+		public int Levels;
+
 		public List<Exit> Exits { get; } = new List<Exit>();
-		public Dictionary<string, int> Creatures { get; } = new Dictionary<string, int>();
 
 		public Map Generate()
 		{
 			var generator = TJ.Module.Generators.Ensure(GeneratorId);
 
 			var map = generator.Generate();
+			map.Id = Id;
 			map.Name = Name;
 
 			var freeTiles = new List<Tile>();
@@ -50,15 +52,27 @@ namespace TroublesOfJord.Core
 			}
 
 			// Add creatures
-			foreach(var pair in Creatures)
+			var creaturesAmount = map.Width * map.Height / 256;
+
+			var possibleCreatures = new List<CreatureInfo>();
+			foreach(var pair in TJ.Module.CreatureInfos)
 			{
-				var creatureInfo = TJ.Module.CreatureInfos.Ensure(pair.Key);
-				for(var i = 0; i < pair.Value; ++i)
+				if (pair.Value.DungeonFilter == Id)
+				{
+					possibleCreatures.Add(pair.Value);
+				}
+			}
+
+			if (possibleCreatures.Count > 0)
+			{
+				for (var i = 0; i < creaturesAmount; ++i)
 				{
 					if (freeTiles.Count == 0)
 					{
 						break;
 					}
+
+					var creatureInfo = possibleCreatures[MathUtils.Random.Next(0, possibleCreatures.Count)];
 
 					var npc = new NonPlayer(creatureInfo);
 

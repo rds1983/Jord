@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
@@ -6,5 +7,6 @@ namespace TroublesOfJord.Compiling.Loaders
 	{
 		public string Source;
 		public JObject Data;
+		public Dictionary<string, string> Properties;
 	}
 }

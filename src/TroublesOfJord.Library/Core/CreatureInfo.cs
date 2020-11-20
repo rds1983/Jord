@@ -11,17 +11,17 @@ namespace TroublesOfJord.Core
 
 	public class CreatureInfo : BaseMapObject
 	{
-		private readonly List<AttackInfo> _attacks = new List<AttackInfo>();
-
 		public string Name { get; set; }
 		public int Experience { get; set; }
 		public int Gold { get; set; }
+
+		public int? MinimumLevel { get; set; }
 
 		public CreatureType CreatureType;
 
 		public Inventory Inventory { get; set; }
 
-		public List<AttackInfo> Attacks => _attacks;
+		public List<AttackInfo> Attacks { get; } = new List<AttackInfo>();
 
 		public int ArmorClass;
 
@@ -29,6 +29,8 @@ namespace TroublesOfJord.Core
 
 		public int MaxHp, MaxMana, MaxStamina;
 		public int HpRegen;
+
+		public string DungeonFilter;
 
 		public CreatureInfo()
 		{

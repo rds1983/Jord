@@ -3,13 +3,13 @@ using TroublesOfJord.Core;
 
 namespace TroublesOfJord.Compiling.Loaders
 {
-	class MapTemplateLoader : Loader<MapTemplate>
+	class DungeonLoader : Loader<Dungeon>
 	{
-		public MapTemplateLoader() : base("MapTemplates")
+		public DungeonLoader() : base("Dungeons")
 		{
 		}
 
-		public override MapTemplate LoadItem(Module module, string id, ObjectData data)
+		public override Dungeon LoadItem(Module module, string id, ObjectData data)
 		{
 			var dataObj = data.Data;
 
@@ -18,12 +18,12 @@ namespace TroublesOfJord.Compiling.Loaders
 				RaiseError("There's already Map with id '{0}'", id);
 			}
 
-			var result = new MapTemplate
+			var result = new Dungeon
 			{
-				GeneratorId = dataObj.EnsureString("GeneratorId")
+				GeneratorId = dataObj.EnsureString("GeneratorId"),
+				Name = dataObj.EnsureString("Name"),
+				Levels = dataObj.EnsureInt("Levels")
 			};
-
-			result.Name = dataObj.EnsureString("Name");
 
 			var exits = dataObj.EnsureJArray("Exits");
 			foreach(JObject exitObj in exits)
@@ -31,17 +31,10 @@ namespace TroublesOfJord.Compiling.Loaders
 				var exit = new Exit
 				{
 					MapId = exitObj.EnsureString("MapId"),
-					ExitMapId = exitObj.EnsureString("ExitMapId"),
 					TileInfoId = exitObj.EnsureString("TileInfoId"),
 				};
 
 				result.Exits.Add(exit);
-			}
-
-			var creatures = dataObj.EnsureJObject("Creatures");
-			foreach(var pair in creatures)
-			{
-				result.Creatures[pair.Key] = int.Parse(pair.Value.ToString());
 			}
 
 			return result;

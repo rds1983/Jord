@@ -51,7 +51,7 @@ namespace TroublesOfJord.Compiling.Loaders
 		{
 			var dataObj = data.Data;
 
-			if (module.MapTemplates.ContainsKey(id))
+			if (module.Dungeons.ContainsKey(id))
 			{
 				RaiseError("There's already MapTemplate with id '{0}'", id);
 			}

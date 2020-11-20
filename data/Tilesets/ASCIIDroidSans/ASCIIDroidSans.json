@@ -4,92 +4,96 @@
 		"TextureAtlas": "ASCIIDroidSans.xml",
 		"Images": {
 			"TileGrass": {
-			  "Color": "DarkGreen",
-			  "Symbol": "."
+				"Color": "DarkGreen",
+				"Symbol": "."
 			},
 			"TileHighGrass": {
-			  "Color": "Green",
-			  "Symbol": "."
+				"Color": "Green",
+				"Symbol": "."
 			},
 			"TileGround": {
-			  "Color": "Brown",
-			  "Symbol": "."
+				"Color": "Brown",
+				"Symbol": "."
 			},
 			"TileOpenDoor": {
-			  "Color": "Brown",
-			  "Symbol": "`"
+				"Color": "Brown",
+				"Symbol": "`"
 			},
-            "TileTownRoad": {
-			  "Color": "LightGray",
-			  "Symbol": "."
+			"TileTownRoad": {
+				"Color": "LightGray",
+				"Symbol": "."
 			},
 			"TileFloor": {
-			  "Color": "Gray",
-			  "Symbol": "."
+				"Color": "Gray",
+				"Symbol": "."
 			},
 			"TileTree": {
-			  "Color": "Green",
-			  "Symbol": "T"
+				"Color": "Green",
+				"Symbol": "T"
 			},
 			"TileMountain": {
-			  "Color": "White",
-			  "Symbol": "^"
+				"Color": "White",
+				"Symbol": "^"
 			},
 			"TileWater": {
-			  "Color": "Blue",
-			  "Symbol": "~"
+				"Color": "Blue",
+				"Symbol": "~"
 			},
 			"TileRoad": {
-			  "Color": "Brown",
-			  "Symbol": "."
+				"Color": "Brown",
+				"Symbol": "."
 			},
 			"TileWall": {
-			  "Color": "Gray",
-			  "Symbol": "#"
+				"Color": "Gray",
+				"Symbol": "#"
 			},
 			"TilePlato": {
-			  "Color": "White",
-			  "Symbol": "."
+				"Color": "White",
+				"Symbol": "."
 			},
 			"TileExitDown": {
-			  "Color": "White",
-			  "Symbol": ">"
+				"Color": "White",
+				"Symbol": ">"
 			},
 			"TileExitUp": {
-			  "Color": "White",
-			  "Symbol": "<"
+				"Color": "White",
+				"Symbol": "<"
 			},
 			"TileSignSmithy": {
-			  "Color": "Gray",
-			  "Symbol": "S"
+				"Color": "Gray",
+				"Symbol": "S"
 			},
 			"TileSignGuild": {
-			  "Color": "Gray",
-			  "Symbol": "G"
-			},            
+				"Color": "Gray",
+				"Symbol": "G"
+			},
 			"Player": {
-			  "Color": "White",
-			  "Symbol": "@"
+				"Color": "White",
+				"Symbol": "@"
 			},
 			"CreatureOrc": {
-			  "Color": "Green",
-			  "Symbol": "o"
+				"Color": "Green",
+				"Symbol": "o"
 			},
 			"CreatureWeaponMerchant": {
-			  "Color": "Blue",
-			  "Symbol": "p"
+				"Color": "Blue",
+				"Symbol": "p"
 			},
 			"CreatureInstructor": {
-			  "Color": "Green",
-			  "Symbol": "p"
-			},			
-			"CreatureRat": {
-			  "Color": "Gray",
-			  "Symbol": "r"
+				"Color": "Green",
+				"Symbol": "p"
 			},
-            "CreatureHugeBlackDragon": {
-			  "Color": "Gray",
-			  "Symbol": "D"
+			"CreatureHedgehog": {
+				"Color": "Brown",
+				"Symbol": "r"
+			},
+			"CreatureRat": {
+				"Color": "Gray",
+				"Symbol": "r"
+			},
+			"CreatureHugeBlackDragon": {
+				"Color": "Gray",
+				"Symbol": "D"
 			},
 		}
 	}

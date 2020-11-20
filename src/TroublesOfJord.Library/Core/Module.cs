@@ -16,7 +16,7 @@ namespace TroublesOfJord.Core
 		public Dictionary<string, BaseItemInfo> ItemInfos { get; } = new Dictionary<string, BaseItemInfo>();
 		public Dictionary<string, BaseGenerator> Generators { get; } = new Dictionary<string, BaseGenerator>();
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
-		public Dictionary<string, MapTemplate> MapTemplates { get; } = new Dictionary<string, MapTemplate>();
+		public Dictionary<string, Dungeon> Dungeons { get; } = new Dictionary<string, Dungeon>();
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
 

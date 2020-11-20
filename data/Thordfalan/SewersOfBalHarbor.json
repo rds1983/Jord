@@ -1,0 +1,15 @@
+{
+  "Dungeons": {
+    "SewersOfBalHarbor": {
+        "Name": "Sewers of Bal Harbor",
+        "GeneratorId": "CommonRooms64x64",
+        "Levels": 10,
+        "Exits": [
+            {
+                "MapId": "BalHarbor",
+                "TileInfoId": "ExitUp"
+            }
+        ]
+    }
+  }
+}
