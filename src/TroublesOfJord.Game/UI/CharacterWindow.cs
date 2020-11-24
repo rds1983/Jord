@@ -14,8 +14,7 @@ namespace TroublesOfJord.UI
 			BuildUI();
 
 			var player = TJ.Player;
-			_labelDescription.Text = string.Format("{0}, {1}, {2}",
-				player.Name, player.Class.Name, player.Level);
+			_labelDescription.Text = string.Format("{0}, {1}", player.Name, player.Level);
 
 			if (player.Level < TJ.Module.MaximumLevel)
 			{

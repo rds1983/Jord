@@ -25,16 +25,16 @@ namespace TroublesOfJord.Compiling.Loaders
 				Levels = dataObj.EnsureInt("Levels")
 			};
 
-			var exits = dataObj.EnsureJArray("Exits");
-			foreach(JObject exitObj in exits)
+			var exitObj = dataObj.EnsureJObject("Exit");
+			result.Exit = new Exit
 			{
-				var exit = new Exit
-				{
-					MapId = exitObj.EnsureString("MapId"),
-					TileInfoId = exitObj.EnsureString("TileInfoId"),
-				};
+				MapId = exitObj.EnsureString("MapId"),
+				TileInfoId = exitObj.EnsureString("TileInfoId"),
+			};
 
-				result.Exits.Add(exit);
+			if(result.Levels > 1)
+			{
+				result.ExitDownTileInfoId = dataObj.EnsureString("ExitDownTileInfoId");
 			}
 
 			return result;

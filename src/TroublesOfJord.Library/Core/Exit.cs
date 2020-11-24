@@ -8,6 +8,7 @@ namespace TroublesOfJord.Core
 		public string TileInfoId;
 
 		public Point? Position;
+		public int? DungeonLevel;
 
 		public override string ToString()
 		{

@@ -69,12 +69,17 @@ namespace TroublesOfJord.Core
 			}
 
 			Tile exitTile = null;
+
+			var previousMap = Map;
+			
 			Map map;
 			
 			if (TJ.Module.Dungeons.ContainsKey(Tile.Exit.MapId))
 			{
-				var mapTemplate = TJ.Module.Dungeons.Ensure(Tile.Exit.MapId);
-				map = mapTemplate.Generate();
+				var dungeon = TJ.Module.Dungeons.Ensure(Tile.Exit.MapId);
+
+				var dungeonLevel = Tile.Exit.DungeonLevel == null ? 1 : Tile.Exit.DungeonLevel.Value;
+				map = dungeon.Generate(dungeonLevel);
 				for (var x = 0; x < map.Width; ++x)
 				{
 					for (var y = 0; y < map.Height; ++y)
@@ -85,7 +90,7 @@ namespace TroublesOfJord.Core
 							continue;
 						}
 
-						if (tile.Exit.MapId == Map.Id)
+						if (tile.Exit.MapId == previousMap.Id && tile.Exit.DungeonLevel == previousMap.DungeonLevel)
 						{
 							// Found backwards exit
 							exitTile = tile;
@@ -107,7 +112,7 @@ namespace TroublesOfJord.Core
 				{
 					// If position isnt set explicitly
 					// Then we search for a tile that has exit to the current creature map
-					exitTile = map.EnsureExitTileById(Map.Id);
+					exitTile = map.EnsureExitTileById(previousMap.Id);
 				}
 			}
 

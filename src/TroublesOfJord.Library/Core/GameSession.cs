@@ -118,7 +118,13 @@ namespace TroublesOfJord.Core
 		{
 			if (Player.Enter())
 			{
-				TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name));
+				if (Player.Map.DungeonLevel == null)
+				{
+					TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name));
+				} else
+				{
+					TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name + ", " + Player.Map.DungeonLevel.Value));
+				}
 				UpdateTilesVisibility(true);
 			}
 		}

@@ -47,9 +47,12 @@ namespace TroublesOfJord.Core
 		}
 
 		public bool Explored { get; set; }
+		
 		public bool Light { get; set; }
 
 		public bool Local { get; set; }
+
+		public int? DungeonLevel { get; set; }
 
 		public List<Creature> Creatures { get; } = new List<Creature>();
 
