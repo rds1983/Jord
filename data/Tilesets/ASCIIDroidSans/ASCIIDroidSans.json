@@ -1,7 +1,7 @@
 {
 	"TileSet": {
 		"Id": "ASCIIDroidSans",
-		"TextureAtlas": "ASCIIDroidSans.xml",
+		"TextureAtlas": "ASCIIDroidSans.atlas",
 		"Images": {
 			"TileGrass": {
 				"Color": "DarkGreen",

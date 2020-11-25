@@ -23,7 +23,7 @@ namespace TroublesOfJord.Compiling.Loaders
 			var textureAtlasFile = Path.Combine(textureAtlasFolder, dataObj.EnsureString("TextureAtlas"));
 
 			var textureAtlasData = File.ReadAllText(textureAtlasFile);
-			result.TextureAtlas = TextureRegionAtlas.FromXml(textureAtlasData,
+			result.TextureAtlas = TextureRegionAtlas.Load(textureAtlasData,
 				n =>
 				{
 					using (var stream = File.OpenRead(Path.Combine(textureAtlasFolder, n)))

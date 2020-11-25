@@ -1,13 +1,13 @@
 ﻿using Cyotek.Drawing.BitmapFont;
+using StbImageSharp;
 using System;
+using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace TroublesOfJord.FontToTextureAtlas
 {
 	static class Program
 	{
-
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -16,8 +16,8 @@ namespace TroublesOfJord.FontToTextureAtlas
 		{
 			if (args.Length < 2)
 			{
-				Console.WriteLine("TroublesOfJord.FontToTextureAtlas converts BMFont to Myra TextureAtlas.");
-				Console.WriteLine("Usage: ToMyraStylesheetConverter <input.fnt> <output.xml>");
+				Console.WriteLine("TroublesOfJord.FontToTextureAtlas converts BMFont to LibGDX TextureAtlas.");
+				Console.WriteLine("Usage: ToMyraStylesheetConverter <input.fnt> <output.atlas>");
 
 				return;
 			}
@@ -27,35 +27,44 @@ namespace TroublesOfJord.FontToTextureAtlas
 				var data = new BitmapFont();
 				data.Load(args[0]);
 
-				var xDoc = new XDocument();
-
-				var root = new XElement("TextureAtlas");
-				root.Add(new XAttribute("Image", data.Pages[0].FileName));
-
-				var characters = data.Characters.Values.OrderBy(c => c.Char);
-				foreach (var character in characters)
+				ImageResult imageResult = null;
+				using (var stream = File.OpenRead(data.Pages[0].FileName))
 				{
-					if (character.Char <= 32 || character.Char >= 128)
-					{
-						continue;
-					}
-
-					var bounds = character.Bounds;
-
-					var element = new XElement("TextureRegion");
-
-					element.Add(new XAttribute("Id", character.Char.ToString()));
-					element.Add(new XAttribute("Left", bounds.Left));
-					element.Add(new XAttribute("Top", bounds.Top));
-					element.Add(new XAttribute("Width", bounds.Width));
-					element.Add(new XAttribute("Height", bounds.Height));
-
-					root.Add(element);
+					imageResult = ImageResult.FromStream(stream);
 				}
 
-				xDoc.Add(root);
+				using(var stream = File.OpenWrite(args[1]))
+				using(var writer = new StreamWriter(stream))
+				{
+					var page = data.Pages[0];
+					writer.WriteLine();
+					writer.WriteLine(page.FileName);
+					writer.WriteLine("size: {0},{1}", imageResult.Width, imageResult.Height);
+					writer.WriteLine("format: RGBA8888");
+					writer.WriteLine("filter: Nearest,Nearest");
+					writer.WriteLine("repeat: none");
 
-				xDoc.Save(args[1]);
+					var characters = data.Characters.Values.OrderBy(c => c.Char);
+					foreach (var character in characters)
+					{
+						if (character.Char <= 32 || character.Char >= 128)
+						{
+							continue;
+						}
+
+						var bounds = character.Bounds;
+
+						writer.WriteLine(character.Char.ToString());
+						writer.WriteLine("  rotate: false");
+						writer.WriteLine("  xy: {0},{1}", bounds.X, bounds.Y);
+						writer.WriteLine("  size: {0},{1}", bounds.Width, bounds.Height);
+						writer.WriteLine("  orig: {0},{1}", bounds.Width, bounds.Height);
+						writer.WriteLine("  offset: 0, 0");
+						writer.WriteLine("  index: -1");
+					}
+
+					writer.WriteLine();
+				}
 			}
 			catch (Exception ex)
 			{
