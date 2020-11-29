@@ -1,0 +1,21 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.UI" Class="CharacterGenerationDialog" OutputPath="C:/Projects/Jord/src/Jord.Game/UI" />
+  <Dialog Title="Create Character" IsDraggable="False" Left="490" Top="156" Width="200">
+    <Grid ColumnSpacing="8" RowSpacing="4">
+      <Grid.DefaultRowProportion Type="Auto" />
+      <Grid.ColumnsProportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </Grid.ColumnsProportions>
+      <Label Text="Name:" />
+      <TextBox GridColumn="1" Id="_textName" />
+      <Label Text="Class:" GridRow="2" />
+      <ComboBox HorizontalAlignment="Stretch" GridColumn="1" GridRow="2" Id="_comboClass">
+        <ListItem Text="Warrior" />
+        <ListItem Text="Rogue" />
+        <ListItem Text="Priest" />
+        <ListItem Text="Mage" />
+      </ComboBox>
+    </Grid>
+  </Dialog>
+</Project>

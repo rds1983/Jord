@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ApplicationIcon />
+    <StartupObject />
+    <AssemblyName>Jord.Game</AssemblyName>
+    <RootNamespace>Jord</RootNamespace>
+	<TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Myra.Extended\src\Myra.Extended.FNA.Core.csproj" />
+    <ProjectReference Include="..\Jord.Library\Jord.Library.FNA.Core.csproj" />
+  </ItemGroup>  
+  
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\data\**\*.*" LinkBase="data">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>  
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup> 
+</Project>

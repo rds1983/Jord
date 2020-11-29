@@ -1,0 +1,30 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="ChangeSizeDialog" OutputPath="C:/Projects/Jord/src/Jord.MapEditor/UI" />
+  <Dialog Title="Change Size" Left="547" Top="160" Width="250" Height="220">
+    <Grid ColumnSpacing="8" RowSpacing="8">
+      <Grid.DefaultRowProportion Type="Auto" />
+      <Grid.ColumnsProportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </Grid.ColumnsProportions>
+      <Label Text="Current Size:" />
+      <Label Text="64x64" GridColumn="1" Id="_labelCurrentSize" />
+      <Label Text="Action:" GridRow="1" />
+      <ComboBox HorizontalAlignment="Stretch" GridColumn="1" GridRow="1" Id="_comboAction">
+        <ListItem Text="Expand" />
+        <ListItem Text="Cut" />
+      </ComboBox>
+      <Label Text="Direction:" GridRow="2" />
+      <ComboBox HorizontalAlignment="Stretch" GridColumn="1" GridRow="2" Id="_comboDirection">
+        <ListItem Text="Left" />
+        <ListItem Text="Top" />
+        <ListItem Text="Right" />
+        <ListItem Text="Bottom" />
+      </ComboBox>
+      <Label Text="Amount:" GridRow="3" />
+      <SpinButton Minimum="1" HorizontalAlignment="Stretch" Value="4" Integer="True" GridColumn="1" GridRow="3" Id="_numericAmount" />
+      <Label Text="Fill:" GridRow="4" Id="_labelFill" />
+      <ComboBox HorizontalAlignment="Stretch" GridColumn="1" GridRow="4" Id="_comboFill" />
+    </Grid>
+  </Dialog>
+</Project>

@@ -1,0 +1,37 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.UI" Class="CharacterWindow" OutputPath="C:/Projects/Jord/src/Jord.Game/UI" />
+  <Window Title="Character" IsDraggable="False" Left="522" Top="47" Width="300">
+    <VerticalStackPanel Spacing="8">
+      <HorizontalSeparator />
+      <Label Text="rds, Warrior, 10" Id="_labelDescription" />
+      <Label Text="Experience: 100k/150k" Id="_labelExperience" />
+      <Label Text="Gold: 5m/10k" Id="_labelGold" />
+      <HorizontalSeparator />
+      <Label Text="You have 10 points left to distribute." Id="_labelPointsLeft" />
+      <Grid ColumnSpacing="8" RowSpacing="8" Id="_gridClasses">
+        <Label Text="Warrior" />
+        <SpinButton Width="40" GridColumn="1" />
+        <Label Text="Thief" GridRow="1" />
+        <SpinButton Width="40" GridColumn="1" GridRow="1" />
+        <Label Text="Priest" GridRow="2" />
+        <SpinButton Width="40" GridColumn="1" GridRow="2" />
+        <Label Text="Mage" GridRow="3" />
+        <SpinButton Width="40" GridColumn="1" GridRow="3" />
+      </Grid>
+      <HorizontalStackPanel Spacing="8" HorizontalAlignment="Left">
+        <TextButton Text="Confirm" Id="_buttonConfirm" />
+        <TextButton Text="Reset" Id="_buttonReset" />
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <Grid ColumnSpacing="8" RowSpacing="8">
+        <Label Text="HP: 50/100(+10)" Id="_labelHp" />
+        <Label Text="MA: 50/100(+5)" GridColumn="1" Id="_labelMana" />
+        <Label Text="ST: 50/100(+10)" GridRow="1" Id="_labelStamina" />
+        <Label Text="AC: 120" GridRow="2" Id="_labelAc" />
+        <Label Text="Hit: 10" GridColumn="1" GridRow="2" Id="_labelHit" />
+        <Label Text="Attacks: 3" GridRow="3" />
+        <Label Text="Dam: 10" GridColumn="1" GridRow="3" />
+      </Grid>
+    </VerticalStackPanel>
+  </Window>
+</Project>
