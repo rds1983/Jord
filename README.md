@@ -1,4 +1,4 @@
-# Troubles of Jord
+# Tales of Jord
 
 # Credits
 * [SlothMUD](http://www.slothmud.org/)
