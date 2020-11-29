@@ -18,9 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Troubles Of Jord
+title: Tales Of Jord
 description: >- # this means to ignore newlines until "baseurl:"
-  "Troubles of Jord" is WIP action RPG game influenced by MMORPG SlothMUD.
+  "Tales of Jord" is WIP action RPG game influenced by MMORPG SlothMUD.
 
 # Build settings
 theme: minima
