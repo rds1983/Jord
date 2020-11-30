@@ -1,78 +1,76 @@
 {
-  "CreatureInfos": {
-    "Properties": {
-      "DungeonFilter": "SewersOfBalHarbor",
-    },
-    "Hedgehog": {
-      "Name": "a hedgehog",
-      "Image": "CreatureHedgehog",
-      "Symbol": "r",
-      "Type": "Enemy",
-      "Experience": 150,
-      "Attacks": [
-        {
-          "AttackType": "Bite",
-          "MinDamage": 5,
-          "MaxDamage": 10
-        }
-      ],
-      "ArmorClass": 5,
-      "HitRoll": 1,
-      "MaxHp": 50,
-      "MinimumLevel": 1
-    },
-    "SewersRat": {
-      "Name": "a sewer rat",
-      "Image": "CreatureRat",
-      "Symbol": "r",
-      "Type": "Enemy",
-      "Experience": 300,
-      "Gold": 10,
-      "Attacks": [
-        {
-          "AttackType": "Claw",
-          "MinDamage": 5,
-          "MaxDamage": 10
-        }
-      ],
-      "ArmorClass": 5,
-      "HitRoll": 1,
-      "MaxHp": 50,
-      "MinimumLevel": 2
-    },
-    "HugeBlackDragon": {
-      "Name": "Ancient Black Dragon",
-      "Image": "CreatureHugeBlackDragon",
-      "Symbol": "D",
-      "Type": "Enemy",
-      "Experience": 5000000,
-      "Gold": 120000,
-      "Attacks": [
-        {
-          "AttackType": "Claw",
-          "MinDamage": 50,
-          "MaxDamage": 120
-        },
-        {
-          "AttackType": "Claw",
-          "MinDamage": 50,
-          "MaxDamage": 120
-        },
-        {
-          "AttackType": "Bite",
-          "MinDamage": 80,
-          "MaxDamage": 150
-        },
-        {
-          "AttackType": "Smash",
-          "MinDamage": 70,
-          "MaxDamage": 140
-        }
-      ],
-      "ArmorClass": 100,
-      "HitRoll": 15,
-      "MaxHp": 20000,
-      "MinimumLevel": 15
-    }
-  }
+	"CreatureInfos": {
+		"Properties": {
+			"DungeonFilter": "SewersOfBalHarbor"
+		},
+		"Hedgehog": {
+			"Name": "a hedgehog",
+			"Symbol": "r",
+			"Type": "Enemy",
+			"Experience": 150,
+			"Attacks": [
+				{
+					"AttackType": "Bite",
+					"MinDamage": 5,
+					"MaxDamage": 10
+				}
+			],
+			"ArmorClass": 5,
+			"HitRoll": 1,
+			"MaxHp": 50,
+			"MinimumLevel": 1
+		},
+		"SewersRat": {
+			"Name": "a sewer rat",
+			"Image": "CreatureRat",
+			"Symbol": "r",
+			"Type": "Enemy",
+			"Experience": 300,
+			"Gold": 10,
+			"Attacks": [
+				{
+					"AttackType": "Claw",
+					"MinDamage": 5,
+					"MaxDamage": 10
+				}
+			],
+			"ArmorClass": 5,
+			"HitRoll": 1,
+			"MaxHp": 50,
+			"MinimumLevel": 2
+		},
+		"HugeBlackDragon": {
+			"Name": "Ancient Black Dragon",
+			"Symbol": "D",
+			"Type": "Enemy",
+			"Experience": 5000000,
+			"Gold": 120000,
+			"Attacks": [
+				{
+					"AttackType": "Claw",
+					"MinDamage": 50,
+					"MaxDamage": 120
+				},
+				{
+					"AttackType": "Claw",
+					"MinDamage": 50,
+					"MaxDamage": 120
+				},
+				{
+					"AttackType": "Bite",
+					"MinDamage": 80,
+					"MaxDamage": 150
+				},
+				{
+					"AttackType": "Smash",
+					"MinDamage": 70,
+					"MaxDamage": 140
+				}
+			],
+			"ArmorClass": 100,
+			"HitRoll": 15,
+			"MaxHp": 20000,
+			"MinimumLevel": 15
+		}
+	}
 }

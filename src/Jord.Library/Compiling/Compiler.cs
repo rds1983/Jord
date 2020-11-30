@@ -204,10 +204,12 @@ namespace Jord.Compiling
 
 		private static ModuleInfo LoadModuleInfo(Module module, ObjectData od)
 		{
+			var playerImage = od.Data.EnsureString("PlayerImage");
+
 			return new ModuleInfo
 			{
 				Id = od.Data.EnsureId(),
-				PlayerAppearance = module.EnsureAppearance(od.Data, "PlayerImage"),
+				PlayerAppearance = module.Appearances.Ensure(playerImage),
 				Source = od.Source
 			};
 		}

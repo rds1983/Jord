@@ -95,6 +95,42 @@
 				"Color": "Gray",
 				"Symbol": "D"
 			},
+			"ItemSword": {
+				"Color": "Gray",
+				"Symbol": "|"
+			},
+			"ItemMace": {
+				"Color": "Gray",
+				"Symbol": "\\"
+			},
+			"ItemLeatherJacket": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemLeatherPants": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemLeatherSleeves": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemLeatherCap": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemLeatherGloves": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemLeatherBoots": {
+				"Color": "Brown",
+				"Symbol": "("
+			},
+			"ItemShield": {
+				"Color": "Brown",
+				"Symbol": ")"
+			}
 		}
 	}
 }

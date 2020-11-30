@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Jord.Core.Items;
 
 namespace Jord.Core.Abilities
 {
@@ -18,7 +17,6 @@ namespace Jord.Core.Abilities
 		
 		public AbilityRequirement[] Requirements;
 		public AbilityEffect[] Effects;
-		public BaseItemInfo Manual;
 
 		public Dictionary<BonusType, int> Bonuses { get; } = new Dictionary<BonusType, int>();
 	}

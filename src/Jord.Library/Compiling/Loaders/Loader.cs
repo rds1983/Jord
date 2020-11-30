@@ -158,16 +158,10 @@ namespace Jord.Compiling.Loaders
 			return new Point(sizeObj.EnsureInt("X"), sizeObj.EnsureInt("Y"));
 		}
 
-		public static Appearance EnsureAppearance(this Module module, JObject obj, string fieldName)
+		public static void EnsureBaseMapObject(this Module module, JObject obj, BaseMapObject output, string defaultImageName)
 		{
-			var value = obj.EnsureString(fieldName);
-
-			return module.Appearances.Ensure(value);
-		}
-
-		public static void EnsureBaseMapObject(this Module module, JObject obj, BaseMapObject output)
-		{
-			output.Image = EnsureAppearance(module, obj, Compiler.ImageName);
+			var imageName = obj.OptionalString(Compiler.ImageName, defaultImageName);
+			output.Image = module.Appearances.Ensure(imageName);
 			var symbolStr = obj.EnsureString("Symbol");
 			if (symbolStr.Length != 1)
 			{
@@ -206,12 +200,12 @@ namespace Jord.Compiling.Loaders
 			return (JObject)Optional(obj, fieldName);
 		}
 
-		public static string OptionalString(this JObject obj, string fieldName)
+		public static string OptionalString(this JObject obj, string fieldName, string def = null)
 		{
 			var token = Optional(obj, fieldName);
 			if (token == null)
 			{
-				return null;
+				return def;
 			}
 			return token.ToString();
 		}

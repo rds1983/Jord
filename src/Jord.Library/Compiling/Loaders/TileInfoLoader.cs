@@ -17,7 +17,7 @@ namespace Jord.Compiling.Loaders
 				Passable = dataObj.EnsureBool("Passable")
 			};
 
-			module.EnsureBaseMapObject(dataObj, result);
+			module.EnsureBaseMapObject(dataObj, result, "Tile" + id);
 
 			return result;
 		}

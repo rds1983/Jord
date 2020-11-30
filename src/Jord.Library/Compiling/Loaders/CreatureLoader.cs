@@ -18,7 +18,6 @@ namespace Jord.Compiling.Loaders
 			var result = new CreatureInfo
 			{
 				Name = dataObj.EnsureString(Compiler.NameName),
-				Image = module.EnsureAppearance(dataObj, Compiler.ImageName),
 				CreatureType = dataObj.EnsureEnum<CreatureType>("Type"),
 				MinimumLevel = dataObj.OptionalNullableInt("MinimumLevel")
 			};
@@ -39,7 +38,7 @@ namespace Jord.Compiling.Loaders
 				result.Experience = dataObj.EnsureInt("Experience");
 			}
 
-			module.EnsureBaseMapObject(dataObj, result);
+			module.EnsureBaseMapObject(dataObj, result, "Creature" + id);
 
 			if (result.CreatureType == CreatureType.Enemy)
 			{

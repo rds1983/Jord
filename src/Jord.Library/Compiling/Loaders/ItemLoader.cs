@@ -57,6 +57,7 @@ namespace Jord.Compiling.Loaders
 				result = armor;
 			}
 
+			module.EnsureBaseMapObject(dataObj, result, "Item" + id);
 			result.Name = dataObj.EnsureString(Compiler.NameName);
 			result.Price = dataObj.EnsureInt("Price");
 

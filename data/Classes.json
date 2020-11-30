@@ -10,10 +10,10 @@
 			"ManaRegenMultiplier": 0.5,
 			"StaminaRegenMultiplier": 0.25,
 			"Equipment": {
-				"Weapon": "ShortSword",
+				"Weapon": "Sword",
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",
-				"Shield": "SmallShield"
+				"Shield": "Shield"
 			}
 		},
 		"Cleric": {
@@ -29,7 +29,7 @@
 				"Weapon": "Mace",
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",
-				"Shield": "SmallShield"
+				"Shield": "Shield"
 			}
 		}
   }

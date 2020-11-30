@@ -7,23 +7,22 @@
 			"Type": "Merchant",
 			"Gold": 50000,
 			"Inventory": {
-				"ShortSword": 1,
+				"Sword": 1,
 				"Mace": 1,
-				"StuddedLeatherJacket": 1,
 				"LeatherJacket": 1,
 				"LeatherPants": 1,
 				"LeatherSleeves": 1,
 				"LeatherCap": 1,
 				"LeatherGloves": 1,
 				"LeatherBoots": 1,
-				"SmallShield": 1
+				"Shield": 1
 			}
 		},
 		"BalHarborInstructor": {
 			"Name": "Instructor",
 			"Image": "CreatureInstructor",
 			"Symbol": "p",
-			"Type": "Instructor",
+			"Type": "Instructor"
 		}
 	}
 }

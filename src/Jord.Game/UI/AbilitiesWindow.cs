@@ -48,7 +48,6 @@ namespace Jord.UI
 			if (_listAbilities.SelectedItem == null)
 			{
 				_labelEnergyCost.Text = string.Empty;
-				_labelManual.Text = string.Empty;
 				_labelType.Text = string.Empty;
 				_labelDescription.Text = string.Empty;
 				_buttonUse.Enabled = false;
@@ -58,16 +57,6 @@ namespace Jord.UI
 			var ability = (AbilityInfo) _listAbilities.SelectedItem.Tag;
 			_labelEnergyCost.Text = GetEnergyString(ability.Mana);
 			_labelType.Text = GetTypeString(ability.Type);
-
-			if (ability.Manual == null)
-			{
-				_labelManual.Text = ManualNone;
-			}
-			else
-			{
-				_labelManual.Text = ability.Manual.Name;
-			}
-
 			_labelDescription.Text = ability.Description;
 			_buttonUse.Enabled = ability.Type == AbilityType.Instant;
 		}

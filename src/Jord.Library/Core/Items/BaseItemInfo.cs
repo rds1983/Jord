@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Jord.Core.Items
 {
-	public class BaseItemInfo : BaseObject
+	public class BaseItemInfo : BaseMapObject
 	{
 		private static readonly Dictionary<Type, string> _typeDisplayNames = new Dictionary<Type, string>();
 

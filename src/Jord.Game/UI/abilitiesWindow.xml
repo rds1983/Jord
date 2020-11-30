@@ -1,6 +1,6 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.UI" Class="AbilitiesWindow" OutputPath="/home/rds/Projects/Jord/src/Jord.Game/UI" />
-  <Window Title="Abilities" IsDraggable="False" Left="223" Top="62" Width="500">
+  <Project.ExportOptions Namespace="Jord.UI" Class="AbilitiesWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
+  <Window Title="Abilities" IsDraggable="False" Left="422" Top="108" Width="500">
     <VerticalStackPanel>
       <HorizontalSeparator />
       <HorizontalStackPanel>
@@ -18,9 +18,7 @@
           <HorizontalSeparator />
           <Label Text="On/Off" Id="_labelType" />
           <HorizontalSeparator />
-          <Label Text="Glowing green spellbook" Id="_labelManual" />
-          <HorizontalSeparator />
-          <Label Text="Replaces first attack with parry, which is blocks first attack of enemy with almost 100% guarantee." Wrap="True" />
+          <Label Text="Replaces first attack with parry, which is blocks first attack of enemy with almost 100% guarantee." Wrap="True" Height="200" Id="_labelDescription" />
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <HorizontalSeparator />
