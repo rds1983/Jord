@@ -5,6 +5,7 @@ using System.Text;
 using Jord.Core;
 using Jord.Core.Items;
 using Jord.Utils;
+using Microsoft.Xna.Framework.Input;
 
 namespace Jord.UI
 {
@@ -18,9 +19,29 @@ namespace Jord.UI
 			}
 		}
 
+		private Item SelectedItem
+		{
+			get
+			{
+				Item item = null;
+				if (_gridEquipment.SelectedRowIndex != null)
+				{
+					item = Player.Equipment.Items[_gridEquipment.SelectedRowIndex.Value].Item;
+				}
+				else if (_gridInventory.SelectedRowIndex != null)
+				{
+					item = Player.Inventory.Items[_gridInventory.SelectedRowIndex.Value].Item;
+				}
+
+				return item;
+			}
+		}
+
 		public InventoryWindow()
 		{
 			BuildUI();
+
+			AcceptsKeyboardFocus = true;
 
 			_gridEquipment.SetGridStyle();
 			_gridInventory.SetGridStyle();
@@ -33,7 +54,68 @@ namespace Jord.UI
 
 			_textDescription.Text = string.Empty;
 
+			_buttonEquip.Click += _buttonEquip_Click;
+
 			Rebuild();
+		}
+
+		private void Equip()
+		{
+
+		}
+
+		private void _buttonEquip_Click(object sender, EventArgs e)
+		{
+			var item = SelectedItem;
+
+			if (_gridEquipment.SelectedRowIndex != null)
+			{
+				// Remove from equipment
+				Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
+
+				// Add to inventory
+				Player.Inventory.Add(item, 1);
+			}
+			else if (_gridInventory.SelectedRowIndex != null)
+			{
+				// Wear
+				Player.Equipment.Equip(item);
+
+				// Remove from inventory
+				Player.Inventory.Add(item, -1);
+			}
+
+			Rebuild();
+		}
+
+		private void UpdateButtons()
+		{
+			_buttonDrop.Enabled = false;
+			_buttonEquip.Enabled = false;
+			_buttonUse.Enabled = false;
+
+			var item = SelectedItem;
+			if (item == null)
+			{
+				return;
+			}
+
+			var asEquip = item.Info as EquipInfo;
+			if (asEquip != null)
+			{
+				if (_gridEquipment.SelectedRowIndex != null)
+				{
+					_buttonEquip.Text = string.Format(@"Un\c[green]e\c[white]quip");
+				}
+				else
+				{
+					_buttonEquip.Text = string.Format(@"\c[green]E\c[white]quip");
+				}
+
+				_buttonEquip.Enabled = true;
+			}
+
+			_buttonDrop.Enabled = true;
 		}
 
 		private void UpdateStats()
@@ -112,6 +194,7 @@ namespace Jord.UI
 			}
 
 			UpdateStats();
+			UpdateButtons();
 		}
 
 		private void OnHoverIndexChanged(Grid grid, Item item)
@@ -153,23 +236,9 @@ namespace Jord.UI
 				return;
 			}
 
-			var index = _gridInventory.SelectedRowIndex.Value;
-			_gridInventory.SelectedRowIndex = null;
+			_gridEquipment.SelectedRowIndex = null;
 
-			var item = Player.Inventory.Items[index].Item;
-			var asEquip = item.Info as EquipInfo;
-			if (asEquip == null)
-			{
-				return;
-			}
-
-			// Wear
-			Player.Equipment.Equip(item);
-
-			// Remove from inventory
-			Player.Inventory.Add(item, -1);
-
-			Rebuild();
+			UpdateButtons();
 		}
 
 		private void OnEquipmentSelectedIndexChanged(object sender, EventArgs e)
@@ -179,22 +248,24 @@ namespace Jord.UI
 				return;
 			}
 
-			var index = _gridEquipment.SelectedRowIndex.Value;
-			_gridEquipment.SelectedRowIndex = null;
+			_gridInventory.SelectedRowIndex = null;
 
-			var item = Player.Equipment.Items[index].Item;
-			if (item == null)
+			UpdateButtons();
+		}
+
+		public override void OnKeyDown(Keys k)
+		{
+			base.OnKeyDown(k);
+
+			switch(k)
 			{
-				return;
+				case Keys.E:
+					if (_buttonEquip.Enabled)
+					{
+						_buttonEquip.DoClick();
+					}
+					break;
 			}
-
-			// Remove from equipment
-			Player.Equipment.Remove(index);
-
-			// Add to inventory
-			Player.Inventory.Add(item, 1);
-
-			Rebuild();
 		}
 	}
 }

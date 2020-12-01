@@ -1,6 +1,6 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="InventoryWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Items" IsDraggable="False" Left="90">
+  <Window Title="Items" IsDraggable="False" Left="172">
     <VerticalStackPanel Width="1000" Padding="0, 16">
       <VerticalStackPanel.Proportions>
         <Proportion Type="Fill" />
@@ -16,7 +16,7 @@
           <Label Text="Equipment" />
           <HorizontalSeparator />
           <ScrollViewer>
-            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Top="-51" GridRow="1" Id="_gridEquipment">
+            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" GridRow="1" Id="_gridEquipment">
               <Grid.DefaultColumnProportion Type="Auto" />
               <Grid.DefaultRowProportion Type="Auto" />
               <Label Text="&lt;light&gt;" />
@@ -81,6 +81,12 @@
             </Grid>
           </ScrollViewer>
         </VerticalStackPanel>
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <HorizontalStackPanel Spacing="8" HorizontalAlignment="Right">
+        <TextButton Text="\c[green]E\c[white]quip" Width="100" Id="_buttonEquip" />
+        <TextButton Text="\c[green]U\c[white]se" Width="100" Id="_buttonUse" />
+        <TextButton Text="\c[green]D\c[white]rop" Width="100" Id="_buttonDrop" />
       </HorizontalStackPanel>
       <HorizontalSeparator />
       <Label Text="short sword - weapon, damage: 3-8" Id="_textDescription" />
