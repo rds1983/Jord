@@ -55,13 +55,30 @@ namespace Jord.UI
 			_textDescription.Text = string.Empty;
 
 			_buttonEquip.Click += _buttonEquip_Click;
+			_buttonDrop.Click += _buttonDrop_Click;
 
 			Rebuild();
 		}
 
-		private void Equip()
+		private void _buttonDrop_Click(object sender, EventArgs e)
 		{
+			var item = SelectedItem;
 
+			if (_gridEquipment.SelectedRowIndex != null)
+			{
+				// Remove from equipment
+				Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
+			}
+			else if (_gridInventory.SelectedRowIndex != null)
+			{
+				// Remove from inventory
+				Player.Inventory.Add(item, -1);
+			}
+
+			// Drop on tile
+			Player.Tile.Inventory.Add(item, 1);
+
+			Rebuild();
 		}
 
 		private void _buttonEquip_Click(object sender, EventArgs e)
@@ -263,6 +280,12 @@ namespace Jord.UI
 					if (_buttonEquip.Enabled)
 					{
 						_buttonEquip.DoClick();
+					}
+					break;
+				case Keys.D:
+					if (_buttonDrop.Enabled)
+					{
+						_buttonDrop.DoClick();
 					}
 					break;
 			}

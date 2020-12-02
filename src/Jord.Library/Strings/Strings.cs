@@ -8,6 +8,7 @@
 		public const string ReachedMaximumLevel = "You had reached the maximum level.";
 		public const string MaximumHpAlready = "Your hitpoints are at maximum already.";
 		public const string NotEnoughEnergy = "Not enough energy.";
+		public const string SomeItemsAreLying = "Some items are lying on the floor.";
 
 		public const string Confirm = "Confirm";
 		public const string Error = "Error";
@@ -46,6 +47,11 @@
 		public static string BuildEnteredMap(string name)
 		{
 			return string.Format("You've entered '{0}'.", name);
+		}
+
+		public static string BuildItemLyingOnTheFloor(string name)
+		{
+			return string.Format("{0} is lying on the floor.", name);
 		}
 	}
 }

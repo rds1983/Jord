@@ -202,5 +202,23 @@ namespace Jord.Core
 
 			target.Remove();
 		}
+
+		protected override void OnPositionChanged()
+		{
+			base.OnPositionChanged();
+
+			if (Tile == null || Tile.Inventory.Items.Count == 0)
+			{
+				return;
+			}
+
+			if (Tile.Inventory.Items.Count == 1)
+			{
+				TJ.GameLog(Strings.BuildItemLyingOnTheFloor(Tile.Inventory.Items[0].Item.Info.Name));
+			} else
+			{
+				TJ.GameLog(Strings.SomeItemsAreLying);
+			}
+		}
 	}
 }

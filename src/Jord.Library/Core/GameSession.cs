@@ -7,7 +7,8 @@ namespace Jord.Core
 {
 	public enum OperateType
 	{
-		Enter
+		Enter,
+		Take
 	}
 
 	public class GameSession
@@ -106,6 +107,11 @@ namespace Jord.Core
 
 		public OperateType? GetPlayerOperate()
 		{
+			if (Player.Tile != null && Player.Tile.Inventory.Items.Count > 0)
+			{
+				return OperateType.Take;
+			}
+
 			if (Player.CanEnter())
 			{
 				return OperateType.Enter;
@@ -116,16 +122,27 @@ namespace Jord.Core
 
 		public void PlayerOperate()
 		{
-			if (Player.Enter())
+			var operateType = GetPlayerOperate();
+			if (operateType == null)
 			{
-				if (Player.Map.DungeonLevel == null)
-				{
-					TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name));
-				} else
-				{
-					TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name + ", " + Player.Map.DungeonLevel.Value));
-				}
-				UpdateTilesVisibility(true);
+				return;
+			}
+
+			switch (operateType.Value)
+			{
+				case OperateType.Enter:
+					if (Player.Map.DungeonLevel == null)
+					{
+						TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name));
+					}
+					else
+					{
+						TJ.GameLog(Strings.BuildEnteredMap(Player.Map.Name + ", " + Player.Map.DungeonLevel.Value));
+					}
+					UpdateTilesVisibility(true);
+					break;
+				case OperateType.Take:
+					break;
 			}
 		}
 

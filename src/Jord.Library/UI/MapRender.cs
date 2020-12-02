@@ -197,11 +197,20 @@ namespace Jord.UI
 					var isInFov = IgnoreFov || tile.IsInFov;
 					var opacity = (Map.Light || isInFov) ? 1.0f : 0.5f;
 					var appearance = tile.Info.Image;
-					if (isInFov && tile.Creature != null)
+
+					if (isInFov)
 					{
-						screen = GameToScreen(tile.Creature.DisplayPosition);
-						appearance = tile.Creature.Image;
-						opacity = tile.Creature.Opacity;
+						if (tile.Inventory.Items.Count > 0)
+						{
+							appearance = tile.Inventory.Items[0].Item.Info.Image;
+						}
+
+						if (tile.Creature != null)
+						{
+							screen = GameToScreen(tile.Creature.DisplayPosition);
+							appearance = tile.Creature.Image;
+							opacity = tile.Creature.Opacity;
+						}
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);

@@ -56,6 +56,8 @@ namespace Jord.Core
 
 		public string Sign;
 
+		public readonly Inventory Inventory = new Inventory();
+
 		public Tile()
 		{
 		}

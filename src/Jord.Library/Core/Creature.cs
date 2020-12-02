@@ -7,6 +7,7 @@ namespace Jord.Core
 	public abstract partial class Creature
 	{
 		private Map _map;
+		private Point _position;
 
 		public Map Map
 		{
@@ -35,7 +36,21 @@ namespace Jord.Core
 				}
 			}
 		}
-		public Point Position { get; set; }
+		public Point Position
+		{
+			get => _position;
+			set
+			{
+				if (value == _position)
+				{
+					return;
+				}
+
+				_position = value;
+				OnPositionChanged();
+			}
+		}
+
 		public Vector2 DisplayPosition { get; set; }
 
 		public Tile Tile
@@ -108,6 +123,10 @@ namespace Jord.Core
 			Map = null;
 
 			return true;
+		}
+
+		protected virtual void OnPositionChanged()
+		{
 		}
 
 		public void RegenTurn()

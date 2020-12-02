@@ -241,7 +241,16 @@ namespace Jord.UI
 				_buttonUse.Enabled = false;
 			} else
 			{
-				_buttonUse.Text = @"\c[green]E\c[white]|Enter";
+				switch (type.Value)
+				{
+					case OperateType.Enter:
+						_buttonUse.Text = @"\c[green]E\c[white]|Enter";
+						break;
+					case OperateType.Take:
+						_buttonUse.Text = @"\c[green]E\c[white]|Take";
+						break;
+				}
+
 				_buttonUse.Enabled = true;
 			}
 		}
