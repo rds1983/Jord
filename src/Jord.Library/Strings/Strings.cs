@@ -53,5 +53,15 @@
 		{
 			return string.Format("{0} is lying on the floor.", name);
 		}
+
+		public static string BuildPickedUp(string name, int amount)
+		{
+			if (amount == 1)
+			{
+				return string.Format("You picked {0} from the floor.", name);
+			}
+
+			return string.Format("You picked {0} ({1}) from the floor.", name, amount);
+		}
 	}
 }

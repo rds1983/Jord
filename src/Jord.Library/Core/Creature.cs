@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Jord.Core.Items;
 using Microsoft.Xna.Framework;
 
 namespace Jord.Core
@@ -163,6 +164,20 @@ namespace Jord.Core
 				Stats.Life.CurrentStamina += staminaRegen;
 				Debug.WriteLine("{0} regenerated {1} stamina.", Name, staminaRegen);
 			}
+		}
+
+		public void TakeLyingItem(int index, int count)
+		{
+			var item = Tile.Inventory.Items[index];
+
+			Inventory.Add(item.Item, count);
+			Tile.Inventory.Add(item.Item, -count);
+
+			OnItemTaken(item.Item, count);
+		}
+
+		protected virtual void OnItemTaken(Item item, int count)
+		{
 		}
 	}
 }

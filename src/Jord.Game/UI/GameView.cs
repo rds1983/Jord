@@ -27,7 +27,7 @@ namespace Jord.UI
 
 			BuildUI();
 
-			_buttonUse.Click += (s, a) => TJ.Session.PlayerOperate();
+			_buttonUse.Click += _buttonUse_Click;
 			_buttonAbilities.Click += (s, a) => ShowAbilities();
 			_buttonCharacter.Click += (s, a) => ShowCharacter();
 			_buttonInventory.Click += (s, a) => ShowInventory();
@@ -41,6 +41,44 @@ namespace Jord.UI
 			_logContainer.Widgets.Add(LogView);
 
 			UpdateUseButton();
+		}
+
+		private void UpdateUseButton()
+		{
+			var player = TJ.Player;
+			var enabled = true;
+
+			string text;
+			if (player.Tile != null && player.Tile.Inventory.Items.Count > 0)
+			{
+				text = @"\c[green]E\c[white]|Take";
+			}
+			else if (player.CanEnter())
+			{
+				text = @"\c[green]E\c[white]|Enter";
+			}
+			else
+			{
+				text = @"\c[green]E\c[white]|Use";
+				enabled = false;
+			}
+
+			_buttonUse.Text = text;
+			_buttonUse.Enabled = enabled;
+		}
+
+		private void _buttonUse_Click(object sender, EventArgs e)
+		{
+			var player = TJ.Player;
+
+			if (player.Tile != null && player.Tile.Inventory.Items.Count > 0)
+			{
+				player.TakeLyingItem(0, 1);
+			}
+			else if (player.CanEnter())
+			{
+				TJ.Session.PlayerEnter();
+			}
 		}
 
 		private void UpdateKeyboardInput()
@@ -223,36 +261,12 @@ namespace Jord.UI
 			else if (key == Keys.A)
 			{
 				ShowAbilities();
-			} else if (key == Keys.E)
+			} else if (key == Keys.E && _buttonUse.Enabled)
 			{
-				TJ.Session.PlayerOperate();
+				_buttonUse.DoClick();
 			}
 
 			UpdateUseButton();
-		}
-
-		private void UpdateUseButton()
-		{
-			var type = TJ.Session.GetPlayerOperate();
-
-			if (type == null)
-			{
-				_buttonUse.Text = @"\c[green]E\c[white]|Use";
-				_buttonUse.Enabled = false;
-			} else
-			{
-				switch (type.Value)
-				{
-					case OperateType.Enter:
-						_buttonUse.Text = @"\c[green]E\c[white]|Enter";
-						break;
-					case OperateType.Take:
-						_buttonUse.Text = @"\c[green]E\c[white]|Take";
-						break;
-				}
-
-				_buttonUse.Enabled = true;
-			}
 		}
 
 		private void ShowInventory()

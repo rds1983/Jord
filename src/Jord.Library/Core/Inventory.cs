@@ -5,15 +5,9 @@ namespace Jord.Core
 {
 	public class Inventory
 	{
-		private readonly List<ItemPile> _items = new List<ItemPile>();
+		public List<ItemPile> Items { get; } = new List<ItemPile>();
 
-		public List<ItemPile> Items
-		{
-			get
-			{
-				return _items;
-			}
-		}
+		public int Count => Items.Count;
 
 		public void Add(Item item, int quantity)
 		{
@@ -23,7 +17,7 @@ namespace Jord.Core
 			}
 
 			ItemPile position = null;
-			foreach (var p in _items)
+			foreach (var p in Items)
 			{
 				if (item == p.Item)
 				{
@@ -39,7 +33,7 @@ namespace Jord.Core
 					return;
 				}
 
-				_items.Add(new ItemPile
+				Items.Add(new ItemPile
 				{
 					Item = item,
 					Quantity = quantity
@@ -50,7 +44,7 @@ namespace Jord.Core
 				position.Quantity += quantity;
 				if (position.Quantity <= 0)
 				{
-					_items.Remove(position);
+					Items.Remove(position);
 				}
 			}
 		}

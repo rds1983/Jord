@@ -119,7 +119,13 @@ namespace Jord.Core
 			Remove();
 			Place(map, exitTile.Position);
 
+			OnEntered();
+
 			return true;
+		}
+
+		protected virtual void OnEntered()
+		{
 		}
 	}
 }

@@ -220,5 +220,26 @@ namespace Jord.Core
 				TJ.GameLog(Strings.SomeItemsAreLying);
 			}
 		}
+
+		protected override void OnEntered()
+		{
+			base.OnEntered();
+
+			if (Map.DungeonLevel == null)
+			{
+				TJ.GameLog(Strings.BuildEnteredMap(Map.Name));
+			}
+			else
+			{
+				TJ.GameLog(Strings.BuildEnteredMap(Map.Name + ", " + Map.DungeonLevel.Value));
+			}
+		}
+
+		protected override void OnItemTaken(Item item, int count)
+		{
+			base.OnItemTaken(item, count);
+
+			TJ.GameLog(Strings.BuildPickedUp(item.Info.Name, count));
+		}
 	}
 }
