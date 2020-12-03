@@ -4,15 +4,7 @@ namespace Jord.Core.Items
 {
 	public class Item
 	{
-		private readonly BaseItemInfo _info;
-
-		public BaseItemInfo Info
-		{
-			get
-			{
-				return _info;
-			}
-		}
+		public BaseItemInfo Info { get; }
 
 		public Item(BaseItemInfo info)
 		{
@@ -21,12 +13,48 @@ namespace Jord.Core.Items
 				throw new ArgumentNullException(nameof(info));
 			}
 
-			_info = info;
+			Info = info;
 		}
 
 		public string BuildDescription()
 		{
-			return _info.BuildDescription();
+			return Info.BuildDescription();
+		}
+
+		public override bool Equals(object obj)
+		{
+			var asItem = obj as Item;
+			if (ReferenceEquals(asItem, null))
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, asItem))
+			{
+				return true;
+			}
+
+			return Info == asItem.Info;
+		}
+
+		public static bool operator ==(Item a, Item b)
+		{
+			if (ReferenceEquals(a, b))
+			{
+				return true;
+			}
+
+			if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+			{
+				return false;
+			}
+
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(Item a, Item b)
+		{
+			return !(a == b);
 		}
 	}
 }

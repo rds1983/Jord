@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Jord.Core.Abilities;
 using Jord.Core.Items;
+using Jord.Utils;
 
 namespace Jord.Core
 {
@@ -189,16 +190,31 @@ namespace Jord.Core
 		{
 			base.OnKilledTarget(target);
 
+			// Death message
 			var nonPlayer = (NonPlayer)target;
-
-			Experience += nonPlayer.Info.Experience;
-			Gold += nonPlayer.Info.Gold;
 
 			var message = Strings.GetNpcDeathMessage(target.Name);
 			TJ.GameLog(message);
 
-			message = Strings.GetExpGoldMessage(nonPlayer.Info.Experience, nonPlayer.Info.Gold);
+			// Experience award
+			Experience += nonPlayer.Info.Experience;
+			message = Strings.GetExpMessage(nonPlayer.Info.Experience);
 			TJ.GameLog(message);
+
+			// Generate loot
+			var loot = nonPlayer.Info.Loot;
+			if (loot != null && loot.Count > 0)
+			{
+				foreach(var lootEntry in loot)
+				{
+					var success = MathUtils.RollPercentage(lootEntry.Rate);
+					if (success)
+					{
+						var item = new Item(lootEntry.ItemInfo);
+						target.Tile.Inventory.Add(item, 1);
+					}
+				}
+			}
 
 			target.Remove();
 		}

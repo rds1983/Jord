@@ -200,6 +200,11 @@ namespace Jord.Compiling.Loaders
 			return (JObject)Optional(obj, fieldName);
 		}
 
+		public static JArray OptionalJArray(this JObject obj, string fieldName)
+		{
+			return (JArray)Optional(obj, fieldName);
+		}
+
 		public static string OptionalString(this JObject obj, string fieldName, string def = null)
 		{
 			var token = Optional(obj, fieldName);

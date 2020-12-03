@@ -5,131 +5,135 @@
 		"Images": {
 			"TileGrass": {
 				"Color": "DarkGreen",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileHighGrass": {
 				"Color": "Green",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileGround": {
 				"Color": "Brown",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileOpenDoor": {
 				"Color": "Brown",
-				"Symbol": "`"
+				"TextureKey": "`"
 			},
 			"TileTownRoad": {
 				"Color": "LightGray",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileFloor": {
 				"Color": "Gray",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileTree": {
 				"Color": "Green",
-				"Symbol": "T"
+				"TextureKey": "T"
 			},
 			"TileMountain": {
 				"Color": "White",
-				"Symbol": "^"
+				"TextureKey": "^"
 			},
 			"TileWater": {
 				"Color": "Blue",
-				"Symbol": "~"
+				"TextureKey": "~"
 			},
 			"TileRoad": {
 				"Color": "Brown",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileWall": {
 				"Color": "Gray",
-				"Symbol": "#"
+				"TextureKey": "#"
 			},
 			"TilePlato": {
 				"Color": "White",
-				"Symbol": "."
+				"TextureKey": "."
 			},
 			"TileExitDown": {
 				"Color": "White",
-				"Symbol": ">"
+				"TextureKey": ">"
 			},
 			"TileExitUp": {
 				"Color": "White",
-				"Symbol": "<"
+				"TextureKey": "<"
 			},
 			"TileSignSmithy": {
 				"Color": "Gray",
-				"Symbol": "S"
+				"TextureKey": "S"
 			},
 			"TileSignGuild": {
 				"Color": "Gray",
-				"Symbol": "G"
+				"TextureKey": "G"
 			},
 			"Player": {
 				"Color": "White",
-				"Symbol": "@"
+				"TextureKey": "@"
 			},
 			"CreatureOrc": {
 				"Color": "Green",
-				"Symbol": "o"
+				"TextureKey": "o"
 			},
 			"CreatureWeaponMerchant": {
 				"Color": "Blue",
-				"Symbol": "p"
+				"TextureKey": "p"
 			},
 			"CreatureInstructor": {
 				"Color": "Green",
-				"Symbol": "p"
+				"TextureKey": "p"
 			},
 			"CreatureHedgehog": {
 				"Color": "Brown",
-				"Symbol": "r"
+				"TextureKey": "r"
 			},
 			"CreatureRat": {
 				"Color": "Gray",
-				"Symbol": "r"
+				"TextureKey": "r"
 			},
 			"CreatureHugeBlackDragon": {
 				"Color": "Gray",
-				"Symbol": "D"
+				"TextureKey": "D"
 			},
 			"ItemSword": {
 				"Color": "Gray",
-				"Symbol": "|"
+				"TextureKey": "|"
 			},
 			"ItemMace": {
 				"Color": "Gray",
-				"Symbol": "\\"
+				"TextureKey": "\\"
 			},
 			"ItemLeatherJacket": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemLeatherPants": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemLeatherSleeves": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemLeatherCap": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemLeatherGloves": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemLeatherBoots": {
 				"Color": "Brown",
-				"Symbol": "("
+				"TextureKey": "("
 			},
 			"ItemShield": {
 				"Color": "Brown",
-				"Symbol": ")"
+				"TextureKey": ")"
+			},
+			"ItemRatSkin": {
+				"Color": "Gray",
+				"TextureKey": ","
 			}
 		}
 	}

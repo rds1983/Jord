@@ -32,7 +32,7 @@ namespace Jord.Utils
 			}
 
 			var rnd = Random.Next(1, 101);
-			return rnd < percentage;
+			return rnd <= percentage;
 		}
 
 		public static Vector2 ToVector2(this Point p)

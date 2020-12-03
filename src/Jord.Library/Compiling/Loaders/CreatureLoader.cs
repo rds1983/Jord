@@ -56,14 +56,12 @@ namespace Jord.Compiling.Loaders
 				}
 			}
 
-			JToken t;
-			if (dataObj.TryGetValue("Inventory", out t))
+			var inventoryObj = dataObj.OptionalJObject("Inventory");
+			if (inventoryObj != null)
 			{
-				JObject obj = (JObject)t;
-
 				var inventory = new Inventory();
 
-				foreach (var pair in obj)
+				foreach (var pair in inventoryObj)
 				{
 					inventory.Items.Add(new ItemPile
 					{
@@ -73,6 +71,19 @@ namespace Jord.Compiling.Loaders
 				}
 
 				result.Inventory = inventory;
+			}
+
+			var lootArray = dataObj.OptionalJArray("Loot");
+			if (lootArray != null)
+			{
+				foreach(JObject lootObj in lootArray)
+				{
+					result.Loot.Add(new LootInfo
+					{
+						ItemInfo = module.ItemInfos.Ensure(lootObj.EnsureId()),
+						Rate = lootObj.EnsureInt("Rate")
+					});
+				}
 			}
 
 			return result;

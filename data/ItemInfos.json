@@ -18,6 +18,11 @@
 			"MaxDamage": 5,
 			"AttackType": "Bash"
 		},
+		"RatSkin": {
+			"Name": "Rat Skin",
+			"Symbol": ",",
+			"Price": 15
+		},
 		"LeatherJacket": {
 			"Name": "Leather Jacket",
 			"Symbol": "(",

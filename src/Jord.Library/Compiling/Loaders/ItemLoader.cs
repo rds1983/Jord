@@ -16,7 +16,7 @@ namespace Jord.Compiling.Loaders
 
 			BaseItemInfo result = null;
 
-			var type = dataObj.EnsureString("Type");
+			var type = dataObj.OptionalString("Type");
 			if (type == "Food")
 			{
 				var food = new FoodInfo
@@ -55,6 +55,10 @@ namespace Jord.Compiling.Loaders
 				};
 
 				result = armor;
+			} else
+			{
+				// Misc
+				result = new BaseItemInfo();
 			}
 
 			module.EnsureBaseMapObject(dataObj, result, "Item" + id);

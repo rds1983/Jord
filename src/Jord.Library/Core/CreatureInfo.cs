@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Jord.Core.Items;
+using System.Collections.Generic;
 
 namespace Jord.Core
 {
@@ -7,6 +8,12 @@ namespace Jord.Core
 		Enemy,
 		Merchant,
 		Instructor
+	}
+
+	public class LootInfo
+	{
+		public BaseItemInfo ItemInfo { get; set; }
+		public int Rate { get; set; }
 	}
 
 	public class CreatureInfo : BaseMapObject
@@ -23,14 +30,21 @@ namespace Jord.Core
 
 		public List<AttackInfo> Attacks { get; } = new List<AttackInfo>();
 
-		public int ArmorClass;
+		public int ArmorClass { get; set; }
 
-		public int HitRoll;
+		public int HitRoll { get; set; }
 
-		public int MaxHp, MaxMana, MaxStamina;
-		public int HpRegen;
+		public int MaxHp { get; set; }
 
-		public string DungeonFilter;
+		public int MaxMana { get; set; }
+		
+		public int MaxStamina { get; set; }
+
+		public int HpRegen { get; set; }
+
+		public List<LootInfo> Loot { get; } = new List<LootInfo>();
+
+		public string DungeonFilter { get; set; }
 
 		public CreatureInfo()
 		{

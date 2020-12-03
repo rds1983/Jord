@@ -36,7 +36,7 @@ namespace Jord.Compiling.Loaders
 			{
 				var appearanceObj = pair.Value.JConvertT<JObject>();
 
-				var regionId = appearanceObj.EnsureString("Symbol");
+				var regionId = appearanceObj.EnsureString("TextureKey");
 				var color = appearanceObj.EnsureColor("Color");
 
 				TextureRegion image;
