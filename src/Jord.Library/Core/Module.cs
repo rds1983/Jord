@@ -11,6 +11,7 @@ namespace Jord.Core
 	{
 		public Dictionary<string, TileSet> TileSets { get; } = new Dictionary<string, TileSet>();
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
+		public Dictionary<string, TileObject> TileObjects { get; } = new Dictionary<string, TileObject>();
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();
 		public Dictionary<string, CreatureInfo> CreatureInfos { get; } = new Dictionary<string, CreatureInfo>();
 		public Dictionary<string, BaseItemInfo> ItemInfos { get; } = new Dictionary<string, BaseItemInfo>();

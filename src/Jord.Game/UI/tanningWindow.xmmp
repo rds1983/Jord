@@ -1,0 +1,25 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.UI" Class="TanningWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
+  <Window Title="Leather Tanning Bench" Left="364" Top="143">
+    <VerticalStackPanel>
+      <HorizontalStackPanel Spacing="8">
+        <ListBox Width="200" Height="200" Id="_listBoxItems">
+          <ListItem Text="Rat Skin (5)" />
+          <ListItem Text="Leather Armor (2)" />
+          <ListItem Text="Wolf Skin" />
+        </ListBox>
+        <VerticalStackPanel VerticalAlignment="Center" Width="200">
+          <Label Text="Leather(2)" HorizontalAlignment="Center" Id="_labelResult" />
+          <Panel Id="_panelArrow" />
+        </VerticalStackPanel>
+        <ListBox Enabled="False" Width="200" Height="200" Id="_listBoxComponents">
+          <ListItem Text="Leather(2)" />
+        </ListBox>
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <HorizontalStackPanel HorizontalAlignment="Right">
+        <TextButton Text="\c[green]T\c[white]an" Width="120" Id="_buttonTan" />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
+  </Window>
+</Project>

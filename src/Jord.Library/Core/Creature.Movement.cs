@@ -46,7 +46,7 @@ namespace Jord.Core
 				}
 			}
 
-			if (!newTile.Info.Passable)
+			if (!newTile.Info.Passable || newTile.Object != null)
 			{
 				return false;
 			}

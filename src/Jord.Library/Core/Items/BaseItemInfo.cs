@@ -4,19 +4,24 @@ using System.Text;
 
 namespace Jord.Core.Items
 {
+	public enum ItemType
+	{
+		Custom,
+		Equipment,
+		Component
+	}
+
 	public class BaseItemInfo : BaseMapObject
 	{
 		private static readonly Dictionary<Type, string> _typeDisplayNames = new Dictionary<Type, string>();
 
-		public string Name
-		{
-			get; set;
-		}
+		public string Name { get; set; }
 
-		public int Price
-		{
-			get; set;
-		}
+		public int Price { get; set; }
+
+		public Inventory TanningResult { get; set; }
+
+		public ItemType Type { get; set; }
 
 		public string TypeDisplayName
 		{

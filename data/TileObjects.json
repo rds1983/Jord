@@ -1,0 +1,12 @@
+﻿{
+	"TileObjects": {
+		"TanningBench": {
+			"Symbol": "&",
+			"Type": "TanningBench"
+		},
+		"CraftingBench": {
+			"Symbol": "&",
+			"Type": "CraftingBench"
+		}
+	}
+}

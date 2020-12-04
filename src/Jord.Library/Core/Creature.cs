@@ -87,7 +87,7 @@ namespace Jord.Core
 			}
 
 			var tile = map[pos];
-			if (tile.Creature != null || tile.Info == null || !tile.Info.Passable)
+			if (tile.Object == null || tile.Creature != null || tile.Info == null || !tile.Info.Passable)
 			{
 				return false;
 			}

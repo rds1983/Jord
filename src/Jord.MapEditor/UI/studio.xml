@@ -1,48 +1,49 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="StudioWidget" OutputPath="D:/Projects/Jord/src/Jord.MapEditor/UI" />
+  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="StudioWidget" OutputPath="C:/Projects/Jord/src/Jord.MapEditor/UI" />
   <Grid Id="Root">
     <Grid.RowsProportions>
       <Proportion Type="Auto" />
       <Proportion Type="Fill" />
     </Grid.RowsProportions>
     <HorizontalMenu VerticalAlignment="Stretch" Id="_mainMenu">
-      <MenuItem Id="" Text="&amp;File">
-        <MenuItem Id="_openModuleMenuItem" Text="&amp;Open Module..." ShortcutText="Ctrl+O" />
-        <MenuItem Id="_reloadModuleMenuItem" Text="&amp;Reload Module" ShortcutText="Ctrl+R" />
+      <MenuItem Text="&amp;File">
+        <MenuItem Text="&amp;Open Module..." ShortcutText="Ctrl+O" Id="_openModuleMenuItem" />
+        <MenuItem Text="&amp;Reload Module" ShortcutText="Ctrl+R" Id="_reloadModuleMenuItem" />
         <MenuSeparator />
-        <MenuItem Id="_switchMapMenuItem" Text="S&amp;witch Map..." ShortcutText="Ctrl+W" />
-        <MenuItem Id="_newMapMenuItem" Text="&amp;New Map..." ShortcutText="Ctrl+N" />
-        <MenuItem Id="_saveMapMenuItem" Text="&amp;Save Map" ShortcutText="Ctrl+S" />
-        <MenuItem Id="_saveMapAsMenuItem" Text="Save Map &amp;As" />
-        <MenuItem Id="_resizeMapMenuItem" Text="Resize &amp;Map" />
+        <MenuItem Text="S&amp;witch Map..." ShortcutText="Ctrl+W" Id="_switchMapMenuItem" />
+        <MenuItem Text="&amp;New Map..." ShortcutText="Ctrl+N" Id="_newMapMenuItem" />
+        <MenuItem Text="&amp;Save Map" ShortcutText="Ctrl+S" Id="_saveMapMenuItem" />
+        <MenuItem Text="Save Map &amp;As" Id="_saveMapAsMenuItem" />
+        <MenuItem Text="Resize &amp;Map" Id="_resizeMapMenuItem" />
         <MenuSeparator />
-        <MenuItem Id="_debugOptionsMenuItem" Text="&amp;UI Debug Options" />
+        <MenuItem Text="&amp;UI Debug Options" Id="_debugOptionsMenuItem" />
         <MenuSeparator />
-        <MenuItem Id="_quitMenuItem" Text="&amp;Quit" ShortcutText="Ctrl+Q" />
+        <MenuItem Text="&amp;Quit" ShortcutText="Ctrl+Q" Id="_quitMenuItem" />
       </MenuItem>
-      <MenuItem Id="" Text="&amp;Help">
-        <MenuItem Id="_aboutMenuItem" Text="&amp;About" />
+      <MenuItem Text="&amp;Help">
+        <MenuItem Text="&amp;About" Id="_aboutMenuItem" />
       </MenuItem>
     </HorizontalMenu>
-    <HorizontalSplitPane Id="_topSplitPane" GridRow="1">
+    <HorizontalSplitPane GridRow="1" Id="_topSplitPane">
       <Grid Id="_leftContainer">
         <Grid.RowsProportions>
           <Proportion Type="Fill" />
           <Proportion Type="Auto" />
         </Grid.RowsProportions>
-        <Label Text="" Id="_textPosition" GridRow="1" />
+        <Label GridRow="1" Id="_textPosition" />
       </Grid>
       <VerticalSplitPane>
         <Panel Id="_mapViewerContainer" />
         <Grid>
           <Grid.DefaultRowProportion Type="Auto" />
           <ComboBox Id="_comboItemTypes">
-            <ListItem Id="_tilesItem" Text="Tiles" />
-            <ListItem Id="_creaturesItem" Text="Creatures" />
+            <ListItem Text="Tiles" Id="_tilesItem" />
+            <ListItem Text="Tile Objects" Id="_tileObjectsItem" />
+            <ListItem Text="Creatures" Id="_creaturesItem" />
           </ComboBox>
-          <ListBox Id="_listBoxItems" GridRow="1">
-            <ListItem Id="" Text="testTile1" />
-            <ListItem Id="" Text="testTile2" />
+          <ListBox GridRow="1" Id="_listBoxItems">
+            <ListItem Text="testTile1" />
+            <ListItem Text="testTile2" />
           </ListBox>
         </Grid>
       </VerticalSplitPane>

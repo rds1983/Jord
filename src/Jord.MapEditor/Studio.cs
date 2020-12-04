@@ -789,29 +789,57 @@ namespace Jord.MapEditor
 					}
 					break;
 				case 1:
-					// Eraser
-					var erase = new ListItem
 					{
-						Text = "erase",
-						Tag = null
-					};
-
-					UI._listBoxItems.Items.Add(erase);
-
-					foreach (var info in TJ.Module.CreatureInfos)
-					{
-						var item = new ListItem
+						// Eraser
+						var erase = new ListItem
 						{
-							Text = info.Key,
-							Tag = info.Value
+							Text = "erase",
+							Tag = null
 						};
 
-						item.Image = new AppearanceRenderable(info.Value.Image);
-						item.ImageTextSpacing = 8;
+						UI._listBoxItems.Items.Add(erase);
 
-						UI._listBoxItems.Items.Add(item);
+						foreach (var info in TJ.Module.TileObjects)
+						{
+							var item = new ListItem
+							{
+								Text = info.Key,
+								Tag = info.Value
+							};
+
+							item.Image = new AppearanceRenderable(info.Value.Image);
+							item.ImageTextSpacing = 8;
+
+							UI._listBoxItems.Items.Add(item);
+						}
+						break;
 					}
-					break;
+				case 2:
+					{
+						// Eraser
+						var erase = new ListItem
+						{
+							Text = "erase",
+							Tag = null
+						};
+
+						UI._listBoxItems.Items.Add(erase);
+
+						foreach (var info in TJ.Module.CreatureInfos)
+						{
+							var item = new ListItem
+							{
+								Text = info.Key,
+								Tag = info.Value
+							};
+
+							item.Image = new AppearanceRenderable(info.Value.Image);
+							item.ImageTextSpacing = 8;
+
+							UI._listBoxItems.Items.Add(item);
+						}
+						break;
+					}
 			}
 		}
 

@@ -33,6 +33,7 @@ namespace Jord.Compiling
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(Dungeon)] = new DungeonLoader();
 			_loaders[typeof(TileInfo)] = new TileInfoLoader();
+			_loaders[typeof(TileObject)] = new TileObjectLoader();
 			_loaders[typeof(CreatureInfo)] = new CreatureLoader();
 			_loaders[typeof(BaseItemInfo)] = new ItemLoader();
 			_loaders[typeof(Class)] = new ClassLoader();
@@ -242,6 +243,9 @@ namespace Jord.Compiling
 
 			// Tile Infos
 			FillData(_module.TileInfos);
+
+			// Tile Objects
+			FillData(_module.TileObjects);
 
 			// Item Infos
 			FillData(_module.ItemInfos);

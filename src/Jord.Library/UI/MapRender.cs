@@ -200,6 +200,11 @@ namespace Jord.UI
 
 					if (isInFov)
 					{
+						if (tile.Object != null)
+						{
+							appearance = tile.Object.Image;
+						}
+
 						if (tile.Inventory.Items.Count > 0)
 						{
 							appearance = tile.Inventory.Items[0].Item.Info.Image;

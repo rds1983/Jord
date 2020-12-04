@@ -134,6 +134,18 @@
 			"ItemRatSkin": {
 				"Color": "Gray",
 				"TextureKey": ","
+			},
+			"ItemLeather": {
+				"Color": "Red",
+				"TextureKey": ","
+			},
+			"TileObjectTanningBench": {
+				"Color": "Brown",
+				"TextureKey": "&"
+			},
+			"TileObjectCraftingBench": {
+				"Color": "Blue",
+				"TextureKey": "&"
 			}
 		}
 	}

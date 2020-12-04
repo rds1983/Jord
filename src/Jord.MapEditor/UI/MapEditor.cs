@@ -31,11 +31,7 @@ namespace Jord.MapEditor.UI
 
 				_markPosition = value;
 
-				var ev = MarkPositionChanged;
-				if (ev != null)
-				{
-					ev(this, EventArgs.Empty);
-				}
+				MarkPositionChanged?.Invoke(this, EventArgs.Empty);
 			}
 		}
 
@@ -146,6 +142,26 @@ namespace Jord.MapEditor.UI
 					}
 					break;
 				case 1:
+					if (Studio.Instance.UI._listBoxItems.SelectedIndex >= 0)
+					{
+						var tile = Map[MarkPosition.Value];
+						if (tile.Object != null)
+						{
+							// Remove existing
+							tile.Object = null;
+						}
+
+						var tag = Studio.Instance.UI._listBoxItems.SelectedItem.Tag;
+						if (tag == null)
+						{
+							// Eraser
+							break;
+						}
+
+						tile.Object = (TileObject)tag;
+					}
+					break;
+				case 2:
 					if (Studio.Instance.UI._listBoxItems.SelectedIndex >= 0)
 					{
 						var tile = Map[MarkPosition.Value];

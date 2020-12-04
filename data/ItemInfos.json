@@ -21,7 +21,10 @@
 		"RatSkin": {
 			"Name": "Rat Skin",
 			"Symbol": ",",
-			"Price": 15
+			"Price": 15,
+			"Tanning": {
+				"Leather": 1
+			}
 		},
 		"LeatherJacket": {
 			"Name": "Leather Jacket",
@@ -29,7 +32,10 @@
 			"Type": "Armor",
 			"SubType": "Body",
 			"Price": 40,
-			"ArmorClass": 6
+			"ArmorClass": 6,
+			"Tanning": {
+				"Leather": 2
+			}
 		},
 		"LeatherPants": {
 			"Name": "Leather Pants",
@@ -37,7 +43,10 @@
 			"Type": "Armor",
 			"SubType": "Legs",
 			"Price": 30,
-			"ArmorClass": 4
+			"ArmorClass": 4,
+			"Tanning": {
+				"Leather": 2
+			}
 		},
 		"LeatherSleeves": {
 			"Name": "Leather Sleeves",
@@ -45,7 +54,10 @@
 			"Type": "Armor",
 			"SubType": "Arms",
 			"Price": 20,
-			"ArmorClass": 4
+			"ArmorClass": 4,
+			"Tanning": {
+				"Leather": 1
+			}
 		},
 		"LeatherCap": {
 			"Name": "Leather Cap",
@@ -53,7 +65,10 @@
 			"Type": "Armor",
 			"SubType": "Head",
 			"Price": 20,
-			"ArmorClass": 4
+			"ArmorClass": 4,
+			"Tanning": {
+				"Leather": 1
+			}
 		},
 		"LeatherGloves": {
 			"Name": "Leather Gloves",
@@ -61,7 +76,10 @@
 			"Type": "Armor",
 			"SubType": "Hands",
 			"Price": 15,
-			"ArmorClass": 2
+			"ArmorClass": 2,
+			"Tanning": {
+				"Leather": 1
+			}
 		},
 		"LeatherBoots": {
 			"Name": "Leather Boots",
@@ -69,7 +87,10 @@
 			"Type": "Armor",
 			"SubType": "Feet",
 			"Price": 25,
-			"ArmorClass": 2
+			"ArmorClass": 2,
+			"Tanning": {
+				"Leather": 1
+			}
 		},
 		"Shield": {
 			"Name": "Shield",

@@ -31,7 +31,7 @@ namespace Jord.Core
 				for (var y = 0; y < map.Height; ++y)
 				{
 					var tile = map[x, y];
-					if (tile.Info.Passable && tile.Creature == null)
+					if (tile.Info.Passable && tile.Object == null && tile.Creature == null)
 					{
 						freeTiles.Add(tile);
 					}

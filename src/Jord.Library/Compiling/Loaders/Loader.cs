@@ -105,6 +105,16 @@ namespace Jord.Compiling.Loaders
 			return token.ToString();
 		}
 
+		public static T ToEnum<T>(this string value)
+		{
+			return (T)Enum.Parse(typeof(T), value);
+		}
+
+		public static int ToInt(this JToken value)
+		{
+			return value.ToString().ToInt();
+		}
+
 		public static int ToInt(this string value)
 		{
 			int result;
@@ -175,7 +185,7 @@ namespace Jord.Compiling.Loaders
 		{
 			var value = obj.EnsureString(fieldName);
 
-			return (T)Enum.Parse(typeof(T), value);
+			return value.ToEnum<T>();
 		}
 
 		public static AttackInfo ParseAttack(this JObject obj)

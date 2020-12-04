@@ -1,68 +1,68 @@
 ﻿{
-  "TileInfos": {
-    "Grass": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "HighGrass": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "Ground": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "OpenDoor": {
-      "Passable": "True",
-      "Symbol": "`"
-    },
-    "Floor": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "Tree": {
-      "Passable": "False",
-      "Symbol": "T"
-    },
-    "Mountain": {
-      "Passable": "False",
-      "Symbol": "^"
-    },
-    "Water": {
-      "Passable": "False",
-      "Symbol": "~"
-    },
-    "Road": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "TownRoad": {
-      "Passable": "True",
-      "Symbol": "."
-    },    
-    "Wall": {
-      "Passable": "False",
-      "Symbol": "#"
-    },
-    "Plato": {
-      "Passable": "True",
-      "Symbol": "."
-    },
-    "ExitDown": {
-      "Passable": "True",
-      "Symbol": ">"
-    },
-    "ExitUp": {
-      "Passable": "True",
-      "Symbol": "<"
-    },
-    "SignSmithy": {
-      "Passable": "False",
-      "Symbol": "B"
-    },
-    "SignGuild": {
-      "Passable": "False",
-      "Symbol": "G"
-    }
-  }
+	"TileInfos": {
+		"Grass": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"HighGrass": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"Ground": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"OpenDoor": {
+			"Passable": "True",
+			"Symbol": "`"
+		},
+		"Floor": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"Tree": {
+			"Passable": "False",
+			"Symbol": "T"
+		},
+		"Mountain": {
+			"Passable": "False",
+			"Symbol": "^"
+		},
+		"Water": {
+			"Passable": "False",
+			"Symbol": "~"
+		},
+		"Road": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"TownRoad": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"Wall": {
+			"Passable": "False",
+			"Symbol": "#"
+		},
+		"Plato": {
+			"Passable": "True",
+			"Symbol": "."
+		},
+		"ExitDown": {
+			"Passable": "True",
+			"Symbol": ">"
+		},
+		"ExitUp": {
+			"Passable": "True",
+			"Symbol": "<"
+		},
+		"SignSmithy": {
+			"Passable": "False",
+			"Symbol": "B"
+		},
+		"SignGuild": {
+			"Passable": "False",
+			"Symbol": "G"
+		}
+	}
 }

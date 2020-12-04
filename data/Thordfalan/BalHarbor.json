@@ -19,8 +19,17 @@
       "/": {
         "TileInfoId": "Ground"
       },
+      ">": {
+        "TileInfoId": "ExitDown"
+      },
       "0": {
         "TileInfoId": "Floor"
+      },
+      "&": {
+        "TileObjectId": "TanningBench"
+      },
+      "'": {
+        "TileObjectId": "CraftingBench"
       },
       "p": {
         "CreatureInfoId": "BalHarborWeaponMerchant"
@@ -40,9 +49,6 @@
       "q": {
         "CreatureInfoId": "BalHarborInstructor"
       },
-      ">": {
-        "TileInfoId": "ExitDown"
-      },
       "*": "Spawn"
     },
     "Data": [
@@ -55,7 +61,7 @@
       "#///////////////...///////////////#",
       "#//////>{SewersOfBalHarbor}////////...///////////////#",
       "#///////////////...///#########///#",
-      "#///////////////...///#0000000#///#",
+      "#///////////////...///#0&000'000#///#",
       "#///////////////...///#0000000#///#",
       "#///////*////////...///#0000p000#///#",
       "#///////////////...///#0000000#///#",

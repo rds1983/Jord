@@ -15,36 +15,13 @@ namespace Jord.Compiling.Loaders
 
 		private const string LegendName = "Legend";
 		private const string TileInfoIdName = "TileInfoId";
+		private const string TileObjectIdName = "TileObjectId";
 		private const string CreatureInfoIdName = "CreatureInfoId";
 		private const string DataName = "Data";
 		private const string ForbiddenLegendItems = "{}[]";
 
 		public MapLoader() : base("Maps")
 		{
-		}
-
-		private JObject EnsureObject(ObjectData root, string name)
-		{
-			JToken token;
-			if (!root.Data.TryGetValue(name, out token))
-			{
-				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[Compiler.IdName], root.Source);
-			}
-
-			return (JObject)token;
-		}
-
-		private JArray EnsureArray(ObjectData root, string name)
-		{
-			JToken token;
-			if (!root.Data.TryGetValue(name, out token))
-			{
-				RaiseError("Could not find mandatory node {0} for {1}, id '{2}', source = '{3}'",
-					name, JsonArrayName, root.Data[Compiler.IdName], root.Source);
-			}
-
-			return (JArray)token;
 		}
 
 		public override Map LoadItem(Module module, string id, ObjectData data)
@@ -106,28 +83,31 @@ namespace Jord.Compiling.Loaders
 				{
 					var obj = (JObject)pair.Value;
 
-					JToken token;
-					if (obj.TryGetValue(TileInfoIdName, out token))
+					do
 					{
-						TileInfo info;
-						if (!module.TileInfos.TryGetValue(token.ToString(), out info))
+
+						var tileInfoId = obj.OptionalString(TileInfoIdName);
+						if (!string.IsNullOrEmpty(tileInfoId))
 						{
-							RaiseError("Could not find tileInfo with id '{0}'", token);
+							item = module.TileInfos.Ensure(tileInfoId);
+							break;
 						}
 
-						item = info;
-					}
-
-					if (obj.TryGetValue(CreatureInfoIdName, out token))
-					{
-						CreatureInfo info;
-						if (!module.CreatureInfos.TryGetValue(token.ToString(), out info))
+						var tileObjectId = obj.OptionalString(TileObjectIdName);
+						if (!string.IsNullOrEmpty(tileObjectId))
 						{
-							RaiseError("Could not find creatureInfo with id '{0}'.", token);
+							item = module.TileObjects.Ensure(tileObjectId);
+							break;
 						}
 
-						item = info;
+						var creatureInfoId = obj.OptionalString(CreatureInfoIdName);
+						if (!string.IsNullOrEmpty(creatureInfoId))
+						{
+							item = module.CreatureInfos.Ensure(creatureInfoId);
+							break;
+						}
 					}
+					while (false);
 				}
 
 				legend[symbol] = item;
@@ -136,7 +116,7 @@ namespace Jord.Compiling.Loaders
 			var dataObject = dataObj.EnsureJArray(DataName);
 
 			var pos = Point.Zero;
-			var entities = new List<Tuple<Creature, Point>>();
+			var entities = new List<Tuple<object, Point>>();
 			for (var i = 0; i < dataObject.Count; ++i)
 			{
 				var lineToken = dataObject[i];
@@ -237,7 +217,14 @@ namespace Jord.Compiling.Loaders
 					if (asCreatureInfo != null)
 					{
 						var npc = new NonPlayer(asCreatureInfo);
-						entities.Add(new Tuple<Creature, Point>(npc, lastTile.Position));
+						entities.Add(new Tuple<object, Point>(npc, lastTile.Position));
+						continue;
+					}
+
+					var asObjectInfo = item as TileObject;
+					if (asObjectInfo != null)
+					{
+						entities.Add(new Tuple<object, Point>(asObjectInfo, lastTile.Position));
 						continue;
 					}
 
@@ -256,7 +243,19 @@ namespace Jord.Compiling.Loaders
 			// Place entities
 			foreach (var entity in entities)
 			{
-				entity.Item1.Place(map, entity.Item2);
+				var asObjectInfo = entity.Item1 as TileObject;
+				if (asObjectInfo != null)
+				{
+					map[entity.Item2].Object = asObjectInfo;
+					continue;
+				}
+
+				var asCreature = entity.Item1 as Creature;
+				if (asCreature != null)
+				{
+					asCreature.Place(map, entity.Item2);
+					continue;
+				}
 			}
 
 			return map;
@@ -285,6 +284,7 @@ namespace Jord.Compiling.Loaders
 			// First run - build legend
 			var legend = new Dictionary<char, object>();
 			var tileInfos = new Dictionary<string, char>();
+			var tileObjects = new Dictionary<string, char>();
 			var creatureInfos = new Dictionary<string, char>();
 			for (var y = 0; y < map.Height; ++y)
 			{
@@ -295,6 +295,14 @@ namespace Jord.Compiling.Loaders
 					if (!tileInfos.ContainsKey(tile.Info.Id))
 					{
 						tileInfos[tile.Info.Id] = AddToLegend(tile.Info.Symbol, tile.Info, legend);
+					}
+
+					if (tile.Object != null)
+					{
+						if (!tileObjects.ContainsKey(tile.Object.Id))
+						{
+							tileObjects[tile.Object.Id] = AddToLegend(tile.Object.Symbol, tile.Object, legend);
+						}
 					}
 
 					if (tile.Creature != null)
@@ -321,6 +329,7 @@ namespace Jord.Compiling.Loaders
 			var mapObject = new JObject
 			{
 				[Compiler.IdName] = map.Id,
+				[Compiler.NameName] = map.Name,
 				["Size"] = new JObject
 				{ 
 					["X"] = map.Width,
@@ -344,6 +353,15 @@ namespace Jord.Compiling.Loaders
 					legendItemNode = new JObject
 					{
 						[TileInfoIdName] = asTileInfo.Id
+					};
+				}
+
+				var asTileObject = pair.Value as TileObject;
+				if (asTileObject != null)
+				{
+					legendItemNode = new JObject
+					{
+						[TileObjectIdName] = asTileObject.Id
 					};
 				}
 
@@ -383,6 +401,11 @@ namespace Jord.Compiling.Loaders
 						sb.Append('{');
 						sb.Append(tile.Exit.ToString());
 						sb.Append('}');
+					}
+
+					if (tile.Object != null)
+					{
+						sb.Append(tileObjects[tile.Object.Id]);
 					}
 
 					if (tile.Creature != null)

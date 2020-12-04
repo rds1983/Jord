@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Jord.Core;
+﻿using Jord.Core;
 using Jord.Core.Items;
 
 namespace Jord.Compiling.Loaders
@@ -13,10 +12,9 @@ namespace Jord.Compiling.Loaders
 		public override BaseItemInfo LoadItem(Module module, string id, ObjectData data)
 		{
 			var dataObj = data.Data;
-
-			BaseItemInfo result = null;
-
 			var type = dataObj.OptionalString("Type");
+
+			BaseItemInfo result;
 			if (type == "Food")
 			{
 				var food = new FoodInfo
@@ -55,7 +53,8 @@ namespace Jord.Compiling.Loaders
 				};
 
 				result = armor;
-			} else
+			}
+			else
 			{
 				// Misc
 				result = new BaseItemInfo();
@@ -64,6 +63,25 @@ namespace Jord.Compiling.Loaders
 			module.EnsureBaseMapObject(dataObj, result, "Item" + id);
 			result.Name = dataObj.EnsureString(Compiler.NameName);
 			result.Price = dataObj.EnsureInt("Price");
+
+			var tanningObj = dataObj.OptionalJObject("Tanning");
+			if (tanningObj != null)
+			{
+				result.TanningResult = new Inventory();
+				foreach(var pair in tanningObj)
+				{
+					var componentInfo = module.ItemInfos.Ensure(pair.Key);
+					var quantity = pair.Value.ToInt();
+
+					result.TanningResult.Add(new Item(componentInfo), quantity);
+				}
+			}
+
+			string typeName;
+			if (data.Properties != null && data.Properties.TryGetValue("Type", out typeName))
+			{
+				result.Type = typeName.ToEnum<ItemType>();
+			}
 
 			return result;
 		}

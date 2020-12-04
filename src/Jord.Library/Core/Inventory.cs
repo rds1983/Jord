@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Jord.Core.Items;
 
 namespace Jord.Core
@@ -47,6 +48,11 @@ namespace Jord.Core
 					Items.Remove(position);
 				}
 			}
+		}
+
+		public override string ToString()
+		{
+			return string.Join(", ", from s in Items select s.ToString());
 		}
 	}
 }
