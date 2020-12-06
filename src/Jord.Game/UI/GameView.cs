@@ -129,6 +129,8 @@ namespace Jord.UI
 					tanningWindow.ShowModal(Desktop);
 					break;
 				case TileObjectType.CraftingBench:
+					var craftingWindow = new CraftingWindow();
+					craftingWindow.ShowModal(Desktop);
 					break;
 			}
 

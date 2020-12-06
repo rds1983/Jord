@@ -1,0 +1,37 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.UI" Class="CraftingWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
+  <Window Title="Crafting Bench" Left="471" Top="20" Height="500">
+    <VerticalStackPanel>
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
+      <HorizontalSeparator />
+      <HorizontalStackPanel>
+        <ListBox Width="200" VerticalAlignment="Stretch" Id="_listBoxRecipes">
+          <ListItem Text="leather jacket" Color="#8C8C8CFF" />
+          <ListItem Text="leather pants" Color="#8C8C8CFF" />
+          <ListItem Text="leather sleeves" />
+          <ListItem Text="leather cap" />
+          <ListItem Text="leather gloves" />
+          <ListItem Text="leather boots" />
+        </ListBox>
+        <VerticalSeparator />
+        <VerticalStackPanel>
+          <VerticalStackPanel.Proportions>
+            <Proportion Type="Part" />
+            <Proportion Type="Auto" />
+            <Proportion Type="Part" />
+          </VerticalStackPanel.Proportions>
+          <Label Text="armor, ac: 4" Wrap="True" Width="200" Id="_labelDescription" />
+          <HorizontalSeparator />
+          <Label Text="2 Leather (3), Iron Ingot (2), 3 Steel Ingot (4)" Wrap="True" Width="200" Id="_labelRequires" />
+        </VerticalStackPanel>
+      </HorizontalStackPanel>
+      <HorizontalSeparator />
+      <HorizontalStackPanel HorizontalAlignment="Right">
+        <TextButton Text="\c[green]C\c[white]reate" Width="120" Id="_buttonCreate" />
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
+  </Window>
+</Project>
