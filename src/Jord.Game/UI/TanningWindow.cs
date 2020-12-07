@@ -36,7 +36,7 @@ namespace Jord.UI
 			player.Inventory.Add(itemPile.Item, -1);
 
 			// Add tanning result
-			foreach(var item in itemPile.Item.Info.TanningResult.Items)
+			foreach(var item in itemPile.Item.Info.Tanning.Items)
 			{
 				player.Inventory.Add(item.Item, item.Quantity);
 			}
@@ -59,7 +59,7 @@ namespace Jord.UI
 			}
 
 			var itemPile = (ItemPile)_listBoxItems.SelectedItem.Tag;
-			_labelResult.Text = itemPile.Item.Info.TanningResult.ToString();
+			_labelResult.Text = itemPile.Item.Info.Tanning.ToString();
 			UpdateButtons();
 		}
 
@@ -71,7 +71,7 @@ namespace Jord.UI
 			var inventory = TJ.Player.Inventory;
 			foreach(var item in inventory.Items)
 			{
-				var tanning = item.Item.Info.TanningResult;
+				var tanning = item.Item.Info.Tanning;
 				if (tanning != null && tanning.Count > 0)
 				{
 					_listBoxItems.Items.Add(new ListItem

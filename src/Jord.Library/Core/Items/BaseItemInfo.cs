@@ -19,7 +19,9 @@ namespace Jord.Core.Items
 
 		public int Price { get; set; }
 
-		public Inventory TanningResult { get; set; }
+		public Inventory Tanning { get; set; }
+
+		public Inventory Crafting { get; set; }
 
 		public ItemType Type { get; set; }
 

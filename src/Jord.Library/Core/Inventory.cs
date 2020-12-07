@@ -50,6 +50,29 @@ namespace Jord.Core
 			}
 		}
 
+		public bool Contains(Inventory other)
+		{
+			foreach(var otherItem in other.Items)
+			{
+				var found = false;
+				foreach(var item in Items)
+				{
+					if (otherItem.Item == item.Item && otherItem.Quantity <= item.Quantity)
+					{
+						found = true;
+						break;
+					}
+				}
+
+				if (!found)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
 		public override string ToString()
 		{
 			return string.Join(", ", from s in Items select s.ToString());

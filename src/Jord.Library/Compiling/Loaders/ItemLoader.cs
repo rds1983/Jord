@@ -67,13 +67,26 @@ namespace Jord.Compiling.Loaders
 			var tanningObj = dataObj.OptionalJObject("Tanning");
 			if (tanningObj != null)
 			{
-				result.TanningResult = new Inventory();
+				result.Tanning = new Inventory();
 				foreach(var pair in tanningObj)
 				{
 					var componentInfo = module.ItemInfos.Ensure(pair.Key);
 					var quantity = pair.Value.ToInt();
 
-					result.TanningResult.Add(new Item(componentInfo), quantity);
+					result.Tanning.Add(new Item(componentInfo), quantity);
+				}
+			}
+
+			var craftingObj = dataObj.OptionalJObject("Crafting");
+			if (craftingObj != null)
+			{
+				result.Crafting = new Inventory();
+				foreach (var pair in craftingObj)
+				{
+					var componentInfo = module.ItemInfos.Ensure(pair.Key);
+					var quantity = pair.Value.ToInt();
+
+					result.Crafting.Add(new Item(componentInfo), quantity);
 				}
 			}
 

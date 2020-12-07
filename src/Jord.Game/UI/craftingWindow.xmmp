@@ -23,9 +23,9 @@
             <Proportion Type="Auto" />
             <Proportion Type="Part" />
           </VerticalStackPanel.Proportions>
-          <Label Text="armor, ac: 4" Wrap="True" Width="200" Id="_labelDescription" />
+          <Label Text="armor, ac: 4" Wrap="True" Width="300" Id="_labelDescription" />
           <HorizontalSeparator />
-          <Label Text="2 Leather (3), Iron Ingot (2), 3 Steel Ingot (4)" Wrap="True" Width="200" Id="_labelRequires" />
+          <Label Text="2 Leather (3), Iron Ingot (2), 3 Steel Ingot (4), 4 Mithril Ingot (5)" Wrap="True" Width="300" Id="_labelRequires" />
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <HorizontalSeparator />
