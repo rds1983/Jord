@@ -6,6 +6,7 @@ using System.Linq;
 using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
+using Myra.Graphics2D;
 
 namespace Jord.UI
 {
@@ -196,7 +197,7 @@ namespace Jord.UI
 						messageBox.ButtonCancel.Visible = false;
 					}
 
-					messageBox.IsDraggable = false;
+					messageBox.DragDirection = DragDirection.None;
 					messageBox.ShowModal(Desktop);
 
 					break;

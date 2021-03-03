@@ -1,11 +1,11 @@
 ﻿using Jord.Core;
 using Microsoft.Xna.Framework;
-using Myra;
 using Myra.Graphics2D.UI;
 using System;
 using Jord.UI;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using Myra.Graphics2D;
 
 namespace Jord.MapEditor.UI
 {
@@ -56,7 +56,7 @@ namespace Jord.MapEditor.UI
 				var screen = GameToScreen(Map.SpawnSpot.Value);
 
 				var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
-				context.Batch.FillRectangle(rect, Color.LightGreen);
+				context.FillRectangle(rect, Color.LightGreen);
 			}
 
 			if (MarkPosition != null)
@@ -64,7 +64,7 @@ namespace Jord.MapEditor.UI
 				var screen = GameToScreen(MarkPosition.Value);
 
 				var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
-				context.Batch.FillRectangle(rect, Color.Blue);
+				context.FillRectangle(rect, Color.Blue);
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace Jord.MapEditor.UI
 			var screen = GameToScreen(tile.Position);
 
 			var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
-			context.Batch.FillRectangle(rect, Color.Blue);
+			context.FillRectangle(rect, Color.Blue);
 		}
 
 		public override void OnMouseMoved()

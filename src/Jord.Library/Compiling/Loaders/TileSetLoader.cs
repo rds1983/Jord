@@ -3,7 +3,7 @@ using Myra.Graphics2D.TextureAtlases;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using Jord.Core;
-using XNAssets.Utility;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Jord.Compiling.Loaders
 {
@@ -27,7 +27,7 @@ namespace Jord.Compiling.Loaders
 				n =>
 				{
 					using (var stream = File.OpenRead(Path.Combine(textureAtlasFolder, n)))
-						return Texture2DExtensions.FromStream(MyraEnvironment.GraphicsDevice, stream, false);
+						return Texture2D.FromStream(MyraEnvironment.GraphicsDevice, stream);
 				}
 			);
 

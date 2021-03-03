@@ -269,7 +269,7 @@ namespace Jord.UI
 
 			
 			Title = "Trade";
-			IsDraggable = false;
+			DragDirection = DragDirection.None;
 			Left = 190;
 			Content = verticalStackPanel3;
 		}

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using System;
 
@@ -25,14 +25,14 @@ namespace Jord.Core
 			TextureRegion = image;
 		}
 
-		public void Draw(SpriteBatch batch, Rectangle rect, float opacity = 1.0f)
+		public void Draw(RenderContext context, Rectangle rect, float opacity = 1.0f)
 		{
 			var r = new Rectangle(rect.X + (rect.Width - TextureRegion.Size.X) / 2,
 				rect.Y + (rect.Height - TextureRegion.Size.Y) / 2,
 				TextureRegion.Size.X,
 				TextureRegion.Size.Y);
 
-			TextureRegion.Draw(batch, r, Color * opacity);
+			TextureRegion.Draw(context, r, Color * opacity);
 		}
 	}
 }

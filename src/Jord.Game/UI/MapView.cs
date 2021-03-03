@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Myra;
-using Myra.Graphics2D.UI;
 using Jord.Core;
+using Myra.Graphics2D;
 
 namespace Jord.UI
 {
@@ -48,7 +47,7 @@ namespace Jord.UI
 				var screen = GameToScreen(tile.Position);
 
 				var rect = new Rectangle(screen.X, screen.Y, TileSize.X, TileSize.Y);
-				context.Batch.FillRectangle(rect, Color.LightGreen);
+				context.FillRectangle(rect, Color.LightGreen);
 			}
 		}
 	}

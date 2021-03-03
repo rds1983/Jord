@@ -72,7 +72,7 @@ namespace Jord.UI
 
 			
 			Title = "Create Character";
-			IsDraggable = false;
+			DragDirection = DragDirection.None;
 			Left = 490;
 			Top = 156;
 			Width = 200;

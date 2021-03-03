@@ -162,25 +162,25 @@ namespace Jord.MapEditor
 					return;
 				}
 
-				if (_desktop.DownKeys.Contains(Keys.LeftControl) || _desktop.DownKeys.Contains(Keys.RightControl))
+				if (_desktop.IsKeyDown(Keys.LeftControl) || _desktop.IsKeyDown(Keys.RightControl))
 				{
-					if (_desktop.DownKeys.Contains(Keys.O))
+					if (_desktop.IsKeyDown(Keys.O))
 					{
 						OpenProjectItemOnClicked(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.W))
+					else if (_desktop.IsKeyDown(Keys.W))
 					{
 						OnSwitchMapMenuItemSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.N))
+					else if (_desktop.IsKeyDown(Keys.N))
 					{
 						OnNewMapSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.S))
+					else if (_desktop.IsKeyDown(Keys.S))
 					{
 						SaveMapSelected(this, EventArgs.Empty);
 					}
-					else if (_desktop.DownKeys.Contains(Keys.Q))
+					else if (_desktop.IsKeyDown(Keys.Q))
 					{
 						Exit();
 					}
@@ -226,14 +226,14 @@ namespace Jord.MapEditor
 			_gcMemoryLabel = new Label
 			{
 				Text = "GC Memory: ",
-				Font = DefaultAssets.FontSmall
+				Font = UIUtility.DefaultFont
 			};
 			_statisticsGrid.Widgets.Add(_gcMemoryLabel);
 
 			_fpsLabel = new Label
 			{
 				Text = "FPS: ",
-				Font = DefaultAssets.FontSmall,
+				Font = UIUtility.DefaultFont,
 				GridRow = 1
 			};
 			_statisticsGrid.Widgets.Add(_fpsLabel);
@@ -241,7 +241,7 @@ namespace Jord.MapEditor
 			_widgetsCountLabel = new Label
 			{
 				Text = "Total Widgets: ",
-				Font = DefaultAssets.FontSmall,
+				Font = UIUtility.DefaultFont,
 				GridRow = 2
 			};
 			_statisticsGrid.Widgets.Add(_widgetsCountLabel);

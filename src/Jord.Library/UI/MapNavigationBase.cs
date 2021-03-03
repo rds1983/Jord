@@ -6,6 +6,7 @@ using Myra.Graphics2D.UI;
 using Myra;
 using System;
 using Jord.Utils;
+using Myra.Graphics2D;
 
 namespace Jord.UI
 {
@@ -126,7 +127,8 @@ namespace Jord.UI
 			var bounds = ActualBounds;
 			bounds.X = x;
 			bounds.Width = width;
-			context.Draw(_image, bounds);
+
+			_image.Draw(context, bounds);
 
 			var topLeft = GameToScreen(TopLeft);
 			var size = GameToScreen(TopLeft + GridSize.ToVector2()) - topLeft;

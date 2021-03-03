@@ -102,7 +102,7 @@ namespace Jord.UI
 
 			
 			Title = "Abilities";
-			IsDraggable = false;
+			DragDirection = DragDirection.None;
 			Left = 422;
 			Top = 108;
 			Width = 500;

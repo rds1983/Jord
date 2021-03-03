@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Myra.Graphics2D;
 using System;
 using Jord.Core;
@@ -28,9 +27,9 @@ namespace Jord.Utils
 			_appearance = appearance;
 		}
 
-		public void Draw(SpriteBatch batch, Rectangle dest, Color color)
+		public void Draw(RenderContext context, Rectangle dest, Color color)
 		{
-			_appearance.Draw(batch, dest);
+			_appearance.Draw(context, dest);
 		}
 	}
 }

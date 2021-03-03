@@ -417,7 +417,7 @@ namespace Jord.UI
 
 			
 			Title = "Items";
-			IsDraggable = false;
+			DragDirection = DragDirection.None;
 			Left = 172;
 			Content = verticalStackPanel3;
 		}

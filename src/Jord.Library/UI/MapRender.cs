@@ -1,7 +1,8 @@
-﻿using Jord.Core;
+﻿using FontStashSharp;
+using Jord.Core;
+using Jord.Utils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Myra;
+using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Jord.UI
 		private Map _map;
 		private DateTime? _lastStamp;
 
-		public SpriteFont Font
+		public SpriteFontBase Font
 		{
 			get; set;
 		}
@@ -55,7 +56,7 @@ namespace Jord.UI
 
 		public MapRender()
 		{
-			Font = DefaultAssets.Font;
+			Font = UIUtility.DefaultFont;
 
 			ClipToBounds = true;
 			// Background = SpriteBatch.White;
@@ -129,7 +130,7 @@ namespace Jord.UI
 				var x = screen.X + (tileSize.X - measureSize.X) / 2;
 				var y = screen.Y + (tileSize.Y - measureSize.Y) / 2 - 8;
 
-				context.Batch.DrawString(font, marker, new Vector2(x, y), markerColor * opacity);
+				context.DrawString(font, marker, new Vector2(x, y), markerColor * opacity);
 			}
 		}
 
@@ -219,7 +220,7 @@ namespace Jord.UI
 					}
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
-					appearance.Draw(context.Batch, rect, opacity);
+					appearance.Draw(context, rect, opacity);
 
 					if (!string.IsNullOrEmpty(tile.Sign))
 					{
@@ -238,7 +239,7 @@ namespace Jord.UI
 			{
 				var screen = GameToScreen(new Vector2(tile.X, tile.Y));
 				var sz = Font.MeasureString(tile.Sign);
-				context.Batch.DrawString(Font, tile.Sign,
+				context.DrawString(Font, tile.Sign,
 					new Vector2((int)(screen.X + (tileSize.X - sz.X) / 2), (int)(screen.Y + (tileSize.Y - sz.Y) / 2)),
 					Color.White);
 			}

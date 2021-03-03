@@ -161,7 +161,7 @@ namespace Jord.UI
 
 			
 			Title = "Character";
-			IsDraggable = false;
+			DragDirection = DragDirection.None;
 			Left = 522;
 			Top = 47;
 			Width = 300;
