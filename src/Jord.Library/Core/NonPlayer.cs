@@ -1,6 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using Jord.Utils;
+using System;
 
 namespace Jord.Core
 {
@@ -101,10 +100,10 @@ namespace Jord.Core
 			finished:;
 				if (!attacked)
 				{
-					var path = Map.PathFinder.ShortestPath(Position, AttackTarget.Position);
+					var path = Map.PathFinder.ShortestPath(Position.ToCoord(), AttackTarget.Position.ToCoord());
 					if (path.Length > 0)
 					{
-						var delta = path.GetStep(0) - Position;
+						var delta = path.GetStep(0).ToPoint() - Position;
 						MoveTo(delta);
 					}
 				}

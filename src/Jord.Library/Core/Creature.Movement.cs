@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Jord.Utils;
+using Microsoft.Xna.Framework;
 
 namespace Jord.Core
 {
