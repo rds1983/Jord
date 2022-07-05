@@ -159,7 +159,7 @@ namespace Jord.UI
 
 		public Vector2 ScreenToGame(Point position)
 		{
-			position -= ActualBounds.Location;
+			position = ToLocal(position);
 
 			var tilePosition = new Vector2
 			{

@@ -11,13 +11,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Myra\src\Myra\Myra.FNA.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="FNA3D.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SDL2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

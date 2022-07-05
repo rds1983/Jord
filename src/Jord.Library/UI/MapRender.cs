@@ -159,8 +159,8 @@ namespace Jord.UI
 			base.InternalRender(context);
 
 			var tileSize = TileSize;
-			var gridSize = new Point(context.View.Width / tileSize.X,
-									 context.View.Height / tileSize.Y);
+			var gridSize = new Point(ActualBounds.Width / tileSize.X,
+									 ActualBounds.Height / tileSize.Y);
 			GridSize = gridSize;
 
 			BeforeDraw(context);
