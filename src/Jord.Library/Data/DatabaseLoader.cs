@@ -6,19 +6,18 @@ using Jord.Core;
 using Newtonsoft.Json.Linq;
 using Module = Jord.Core.Module;
 using Jord.Core.Items;
-using Jord.Serialization.Loaders;
+using Jord.Data.Loaders;
 using Jord.Generation;
 using Jord.Core.Abilities;
 using FontStashSharp;
 
-namespace Jord.Serialization
+namespace Jord.Data
 {
-	public class Serializer
+	public class DatabaseLoader
 	{
 		public const string IdName = "Id";
 		public const string NameName = "Name";
 		public const string MapName = "Map";
-		public const string TileSetName = "TileSet";
 		public const string ModuleInfoName = "ModuleInfo";
 		public const string LevelsName = "Levels";
 
@@ -29,7 +28,7 @@ namespace Jord.Serialization
 		private string _path;
 		private ObjectData _moduleInfo;
 
-		public Serializer()
+		public DatabaseLoader()
 		{
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(Dungeon)] = new DungeonLoader();
@@ -186,7 +185,7 @@ namespace Jord.Serialization
 
 		private string BuildFullPath(string relativePath) => Path.Combine(_path, relativePath);
 
-		private ModuleInfo LoadModuleInfo(Module module, ObjectData od)
+		private ModuleInfo LoadModuleInfo(ObjectData od)
 		{
 			var fontSystem = new FontSystem();
 			var path = BuildFullPath(od.Data.EnsureString("Font"));
@@ -229,7 +228,7 @@ namespace Jord.Serialization
 				throw new Exception("Couldn't find mandatory 'ModuleInfo' node");
 			}
 
-			_module.ModuleInfo = LoadModuleInfo(_module, _moduleInfo);
+			_module.ModuleInfo = LoadModuleInfo(_moduleInfo);
 
 			// Tile Infos
 			FillData(_module.TileInfos);

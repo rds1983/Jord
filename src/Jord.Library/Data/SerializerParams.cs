@@ -1,4 +1,4 @@
-﻿namespace Jord.Serialization
+﻿namespace Jord.Data
 {
 	public static class SerializerParams
 	{

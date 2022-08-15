@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Jord.Core;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	class DungeonLoader : Loader<Dungeon>
 	{

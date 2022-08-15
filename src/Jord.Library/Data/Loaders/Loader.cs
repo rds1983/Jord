@@ -7,7 +7,7 @@ using System.Globalization;
 using Jord.Core;
 using Jord.Utils;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	public abstract class BaseLoader
 	{
@@ -198,7 +198,7 @@ namespace Jord.Serialization.Loaders
 
 		public static string EnsureId(this JObject obj)
 		{
-			return obj.EnsureString(Serializer.IdName);
+			return obj.EnsureString(DatabaseLoader.IdName);
 		}
 
 		public static JToken Optional(this JObject obj, string fieldName)

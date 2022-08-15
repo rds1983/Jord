@@ -1,6 +1,6 @@
 ﻿using Jord.Core;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	class TileInfoLoader: Loader<TileInfo>
 	{

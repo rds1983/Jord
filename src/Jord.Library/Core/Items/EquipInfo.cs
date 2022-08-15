@@ -1,4 +1,4 @@
-﻿using Jord.Serialization;
+﻿using Jord.Data;
 
 namespace Jord.Core.Items
 {

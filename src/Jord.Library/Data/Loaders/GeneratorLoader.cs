@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using Jord.Core;
+﻿using Jord.Core;
 using Jord.Generation;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	class GeneratorLoader : Loader<BaseGenerator>
 	{
@@ -21,7 +20,6 @@ namespace Jord.Serialization.Loaders
 			{
 				var space = module.TileInfos.Ensure(dataObj.EnsureString("SpaceTileId"));
 				var wall = module.TileInfos.Ensure(dataObj.EnsureString("FillerTileId"));
-
 
 				generator = new RoomsGenerator(space, wall,
 					dataObj.EnsureInt("Width"),

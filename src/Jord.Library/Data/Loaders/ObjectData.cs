@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	public class ObjectData
 	{

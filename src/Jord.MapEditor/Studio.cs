@@ -4,11 +4,11 @@ using Myra.Graphics2D.UI;
 using Jord.Core;
 using Jord.MapEditor.UI;
 using Microsoft.Xna.Framework;
-using Jord.Serialization;
+using Jord.Data;
 using Myra.Graphics2D.UI.File;
 using Jord.Utils;
 using System.IO;
-using Jord.Serialization.Loaders;
+using Jord.Data.Loaders;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using Jord.Generation;
@@ -26,7 +26,7 @@ namespace Jord.MapEditor
 		private string _modulePath;
 		private bool _isDirty;
 		private readonly int[] _customColors;
-		private Serializer _compiler;
+		private DatabaseLoader _compiler;
 		private string _lastFolder;
 		private Desktop _desktop;
 
@@ -739,7 +739,7 @@ namespace Jord.MapEditor
 			try
 			{
 				SerializerParams.Verbose = true;
-				_compiler = new Serializer();
+				_compiler = new DatabaseLoader();
 
 				// Load module
 				Module newDocument = _compiler.Process(modulePath);

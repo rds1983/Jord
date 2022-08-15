@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Jord.Serialization;
+using Jord.Data;
 using Jord.Storage;
 using Jord.UI;
 using Jord.Utils;
@@ -61,7 +61,7 @@ namespace Jord
 
 			SerializerParams.Verbose = true;
 
-			var compiler = new Serializer();
+			var compiler = new DatabaseLoader();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 
 			if (StartGameIndex == null)

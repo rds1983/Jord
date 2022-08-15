@@ -1,7 +1,7 @@
 ﻿using Jord.Core;
 using Jord.Core.Items;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	class ItemLoader : Loader<BaseItemInfo>
 	{
@@ -61,7 +61,7 @@ namespace Jord.Serialization.Loaders
 			}
 
 			module.EnsureBaseMapObject(dataObj, result, "Item" + id);
-			result.Name = dataObj.EnsureString(Serializer.NameName);
+			result.Name = dataObj.EnsureString(DatabaseLoader.NameName);
 			result.Price = dataObj.EnsureInt("Price");
 
 			var tanningObj = dataObj.OptionalJObject("Tanning");

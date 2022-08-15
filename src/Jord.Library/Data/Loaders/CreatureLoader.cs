@@ -2,7 +2,7 @@
 using Jord.Core;
 using Jord.Core.Items;
 
-namespace Jord.Serialization.Loaders
+namespace Jord.Data.Loaders
 {
 	class CreatureLoader: Loader<CreatureInfo>
 	{
@@ -17,7 +17,7 @@ namespace Jord.Serialization.Loaders
 			var dataObj = data.Data;
 			var result = new CreatureInfo
 			{
-				Name = dataObj.EnsureString(Serializer.NameName),
+				Name = dataObj.EnsureString(DatabaseLoader.NameName),
 				CreatureType = dataObj.EnsureEnum<CreatureType>("Type"),
 				MinimumLevel = dataObj.OptionalNullableInt("MinimumLevel")
 			};
