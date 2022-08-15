@@ -3,7 +3,7 @@ using System;
 using Jord.Core;
 using Jord.Core.Items;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	class ClassLoader: Loader<Class>
 	{
@@ -16,7 +16,7 @@ namespace Jord.Compiling.Loaders
 			var dataObj = data.Data;
 			var result = new Class
 			{
-				Name = dataObj.EnsureString(Compiler.NameName),
+				Name = dataObj.EnsureString(Serializer.NameName),
 				Gold = dataObj.EnsureInt("Gold"),
 				HpMultiplier = dataObj.EnsureInt("HpMultiplier"),
 				ManaMultiplier = dataObj.EnsureInt("ManaMultiplier"),

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jord.Core;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	public class MapLoader: Loader<Map>
 	{
@@ -328,8 +328,8 @@ namespace Jord.Compiling.Loaders
 
 			var mapObject = new JObject
 			{
-				[Compiler.IdName] = map.Id,
-				[Compiler.NameName] = map.Name,
+				[Serializer.IdName] = map.Id,
+				[Serializer.NameName] = map.Name,
 				["Size"] = new JObject
 				{ 
 					["X"] = map.Width,
@@ -340,7 +340,7 @@ namespace Jord.Compiling.Loaders
 				["Local"] = map.Local
 			};
 
-			root[Compiler.MapName] = mapObject;
+			root[Serializer.MapName] = mapObject;
 
 			var legendNode = new JObject();
 			foreach (var pair in legend)

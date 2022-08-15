@@ -7,7 +7,7 @@ using System.Globalization;
 using Jord.Core;
 using Jord.Utils;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	public abstract class BaseLoader
 	{
@@ -198,7 +198,7 @@ namespace Jord.Compiling.Loaders
 
 		public static string EnsureId(this JObject obj)
 		{
-			return obj.EnsureString(Compiler.IdName);
+			return obj.EnsureString(Serializer.IdName);
 		}
 
 		public static JToken Optional(this JObject obj, string fieldName)
@@ -305,7 +305,7 @@ namespace Jord.Compiling.Loaders
 					item.Source = pair.Value.Source;
 					output[item.Id] = item;
 
-					if (CompilerParams.Verbose)
+					if (SerializerParams.Verbose)
 					{
 						TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
 					}

@@ -1,6 +1,6 @@
 ﻿using Jord.Core;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	class TileObjectLoader: Loader<TileObject>
 	{

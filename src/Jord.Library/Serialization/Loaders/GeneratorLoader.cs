@@ -2,7 +2,7 @@
 using Jord.Core;
 using Jord.Generation;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	class GeneratorLoader : Loader<BaseGenerator>
 	{

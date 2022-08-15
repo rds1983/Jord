@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Jord.Compiling;
+using Jord.Serialization;
 using Jord.Storage;
 using Jord.UI;
 using Jord.Utils;
@@ -59,9 +59,9 @@ namespace Jord
 			MyraEnvironment.DrawFocusedWidgetFrame = true;
 			MyraEnvironment.DrawWidgetsFrames = true;*/
 
-			CompilerParams.Verbose = true;
+			SerializerParams.Verbose = true;
 
-			var compiler = new Compiler();
+			var compiler = new Serializer();
 			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 
 			if (StartGameIndex == null)

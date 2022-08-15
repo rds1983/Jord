@@ -6,14 +6,14 @@ using Jord.Core;
 using Newtonsoft.Json.Linq;
 using Module = Jord.Core.Module;
 using Jord.Core.Items;
-using Jord.Compiling.Loaders;
+using Jord.Serialization.Loaders;
 using Jord.Generation;
 using Jord.Core.Abilities;
 using FontStashSharp;
 
-namespace Jord.Compiling
+namespace Jord.Serialization
 {
-	public class Compiler
+	public class Serializer
 	{
 		public const string IdName = "Id";
 		public const string NameName = "Name";
@@ -29,7 +29,7 @@ namespace Jord.Compiling
 		private string _path;
 		private ObjectData _moduleInfo;
 
-		public Compiler()
+		public Serializer()
 		{
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(Dungeon)] = new DungeonLoader();
@@ -44,7 +44,7 @@ namespace Jord.Compiling
 
 		private void FirstRun(IEnumerable<string> sources)
 		{
-			if (CompilerParams.Verbose)
+			if (SerializerParams.Verbose)
 			{
 				TJ.LogInfo("{0} source files found", sources.Count());
 			}
@@ -52,7 +52,7 @@ namespace Jord.Compiling
 			// First run - parse json and build object maps
 			foreach (var s in sources)
 			{
-				if (CompilerParams.Verbose)
+				if (SerializerParams.Verbose)
 				{
 					TJ.LogInfo("Processing {0}", s);
 				}

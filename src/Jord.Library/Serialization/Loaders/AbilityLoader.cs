@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using Jord.Core;
 using Jord.Core.Abilities;
 
-namespace Jord.Compiling.Loaders
+namespace Jord.Serialization.Loaders
 {
 	internal class AbilityLoader : Loader<AbilityInfo>
 	{
