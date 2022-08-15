@@ -2,33 +2,35 @@
 	"ItemInfos": {
 		"Sword": {
 			"Name": "Sword",
-			"Symbol": "|",
 			"Type": "Weapon",
 			"Price": 50,
 			"MinDamage": 3,
 			"MaxDamage": 8,
-			"AttackType": "Slash"
+			"AttackType": "Slash",
+			"Symbol": "|",
+			"Color": "Gray"
 		},
 		"Mace": {
 			"Name": "Mace",
-			"Symbol": "/",
 			"Type": "Weapon",
 			"Price": 30,
 			"MinDamage": 1,
 			"MaxDamage": 5,
-			"AttackType": "Bash"
+			"AttackType": "Bash",
+			"Symbol": "/",
+			"Color": "Gray"
 		},
 		"RatSkin": {
 			"Name": "Rat Skin",
-			"Symbol": ",",
 			"Price": 15,
 			"Tanning": {
 				"Leather": 1
-			}
+			},
+			"Symbol": ",",
+			"Color": "Gray",
 		},
 		"LeatherJacket": {
 			"Name": "Leather Jacket",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Body",
 			"Price": 40,
@@ -38,11 +40,12 @@
 			},
 			"Crafting": {
 				"Leather": 4
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"LeatherPants": {
 			"Name": "Leather Pants",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Legs",
 			"Price": 30,
@@ -52,11 +55,12 @@
 			},
 			"Crafting": {
 				"Leather": 4
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"LeatherSleeves": {
 			"Name": "Leather Sleeves",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Arms",
 			"Price": 20,
@@ -66,11 +70,12 @@
 			},
 			"Crafting": {
 				"Leather": 2
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"LeatherCap": {
 			"Name": "Leather Cap",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Head",
 			"Price": 20,
@@ -80,11 +85,12 @@
 			},
 			"Crafting": {
 				"Leather": 2
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"LeatherGloves": {
 			"Name": "Leather Gloves",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Hands",
 			"Price": 15,
@@ -94,11 +100,12 @@
 			},
 			"Crafting": {
 				"Leather": 2
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"LeatherBoots": {
 			"Name": "Leather Boots",
-			"Symbol": "(",
 			"Type": "Armor",
 			"SubType": "Feet",
 			"Price": 25,
@@ -108,15 +115,18 @@
 			},
 			"Crafting": {
 				"Leather": 2
-			}
+			},
+			"Symbol": "(",
+			"Color": "Brown"
 		},
 		"Shield": {
 			"Name": "Shield",
-			"Symbol": ")",
 			"Type": "Armor",
 			"SubType": "Shield",
 			"Price": 25,
-			"ArmorClass": 5
+			"ArmorClass": 5,
+			"Symbol": ")",
+			"Color": "Brown"
 		}
 	}
 }

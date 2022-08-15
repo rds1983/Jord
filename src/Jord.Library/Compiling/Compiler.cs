@@ -9,6 +9,7 @@ using Jord.Core.Items;
 using Jord.Compiling.Loaders;
 using Jord.Generation;
 using Jord.Core.Abilities;
+using FontStashSharp;
 
 namespace Jord.Compiling
 {
@@ -16,20 +17,20 @@ namespace Jord.Compiling
 	{
 		public const string IdName = "Id";
 		public const string NameName = "Name";
-		public const string ImageName = "Image";
 		public const string MapName = "Map";
 		public const string TileSetName = "TileSet";
 		public const string ModuleInfoName = "ModuleInfo";
 		public const string LevelsName = "Levels";
+
 		private const string PropertiesName = "Properties";
 
 		private readonly Module _module = new Module();
 		private readonly Dictionary<Type, BaseLoader> _loaders = new Dictionary<Type, BaseLoader>();
+		private string _path;
 		private ObjectData _moduleInfo;
 
 		public Compiler()
 		{
-			_loaders[typeof(TileSet)] = new TileSetLoader();
 			_loaders[typeof(Map)] = new MapLoader();
 			_loaders[typeof(Dungeon)] = new DungeonLoader();
 			_loaders[typeof(TileInfo)] = new TileInfoLoader();
@@ -72,27 +73,7 @@ namespace Jord.Compiling
 				{
 					var key = pair.Key;
 
-					if (key == TileSetName)
-					{
-						if (json.Count > 1)
-						{
-							throw new Exception(string.Format("Tileset file can have only one tileset entry. Source: '{0}'", s));
-						}
-
-						var obj = (JObject)pair.Value;
-						JToken idToken;
-						if (!obj.TryGetValue(IdName, out idToken))
-						{
-							throw new Exception(string.Format("Tileset object lacks id. Source: '{0}'", s));
-						}
-
-						var id = idToken.ToString();
-
-						_loaders[typeof(TileSet)].SafelyAddObject(id, s, (JObject)pair.Value);
-
-						continue;
-					}
-					else if (key == MapName)
+					if (key == MapName)
 					{
 						if (json.Count > 1)
 						{
@@ -203,20 +184,37 @@ namespace Jord.Compiling
 			}
 		}
 
-		private static ModuleInfo LoadModuleInfo(Module module, ObjectData od)
+		private string BuildFullPath(string relativePath) => Path.Combine(_path, relativePath);
+
+		private ModuleInfo LoadModuleInfo(Module module, ObjectData od)
 		{
-			var playerImage = od.Data.EnsureString("PlayerImage");
+			var fontSystem = new FontSystem();
+			var path = BuildFullPath(od.Data.EnsureString("Font"));
+			fontSystem.AddFont(File.ReadAllBytes(path));
+			var font = fontSystem.GetFont(od.Data.EnsureInt("FontSize"));
+
+			var symbolStr = od.Data.EnsureString("PlayerSymbol");
+			if (symbolStr.Length != 1)
+			{
+				throw new Exception($"Unable to read '{symbolStr}' as symbol.");
+			}
+
+			var color = od.Data.EnsureColor("PlayerColor");
+			var playerAppearance = new Appearance(symbolStr, color, null);
 
 			return new ModuleInfo
 			{
 				Id = od.Data.EnsureId(),
-				PlayerAppearance = module.Appearances.Ensure(playerImage),
+				PlayerAppearance = playerAppearance,
+				Font = font,
 				Source = od.Source
 			};
 		}
 
 		public Module Process(string path)
 		{
+			_path = path;
+
 			// First run - parse json and build object maps
 			var sources = new List<string>();
 			FindSources(path, true, sources);
@@ -224,14 +222,6 @@ namespace Jord.Compiling
 			FirstRun(sources);
 
 			// Second run - build module
-
-			// Tile Sets
-			FillData(_module.TileSets);
-
-			if (_module.TileSets.Count > 0)
-			{
-				_module.CurrentTileSet = _module.TileSets.First().Value;
-			}
 
 			// Module Info
 			if (_moduleInfo == null)

@@ -5,8 +5,9 @@
 		},
 		"Leather": {
 			"Name": "Leather",
+			"Price": 20,
 			"Symbol": ",",
-			"Price": 20
+			"Color": "Gray"
 		}
 	}
 }

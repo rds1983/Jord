@@ -170,14 +170,15 @@ namespace Jord.Compiling.Loaders
 
 		public static void EnsureBaseMapObject(this Module module, JObject obj, BaseMapObject output, string defaultImageName)
 		{
-			var imageName = obj.OptionalString(Compiler.ImageName, defaultImageName);
-			output.Image = module.Appearances.Ensure(imageName);
 			var symbolStr = obj.EnsureString("Symbol");
 			if (symbolStr.Length != 1)
 			{
 				RaiseError("Unable to read '{0}' as symbol.", symbolStr);
 			}
 
+			var color = obj.EnsureColor("Color");
+
+			output.Image = new Appearance(symbolStr, color, null);
 			output.Symbol = symbolStr[0];
 		}
 

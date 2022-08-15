@@ -9,7 +9,6 @@ namespace Jord.Core
 {
 	public class Module
 	{
-		public Dictionary<string, TileSet> TileSets { get; } = new Dictionary<string, TileSet>();
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, TileObject> TileObjects { get; } = new Dictionary<string, TileObject>();
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();
@@ -20,11 +19,6 @@ namespace Jord.Core
 		public Dictionary<string, Dungeon> Dungeons { get; } = new Dictionary<string, Dungeon>();
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
-
-		public TileSet CurrentTileSet;
-
-		public Dictionary<string, Appearance> Appearances => CurrentTileSet.Appearances;
-
 
 		public ModuleInfo ModuleInfo;
 

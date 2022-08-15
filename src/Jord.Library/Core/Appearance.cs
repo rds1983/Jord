@@ -1,38 +1,54 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FontStashSharp;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using System;
+using System.IO;
 
 namespace Jord.Core
 {
 	public class Appearance
 	{
-		public Color Color
-		{
-			get; private set;
-		}
+		public string Symbol { get; private set; }
 
-		public TextureRegion TextureRegion;
+		public Color Color { get; private set; }
 
-		public Appearance(Color color, TextureRegion image)
+		public TextureRegion TextureRegion { get; private set; }
+
+		public Appearance(string symbol, Color color, TextureRegion image)
 		{
-			if (image == null)
+			if (string.IsNullOrEmpty(symbol))
 			{
-				throw new ArgumentNullException(nameof(image));
+				throw new ArgumentNullException(nameof(symbol));
 			}
 
+			Symbol = symbol;
 			Color = color;
 			TextureRegion = image;
 		}
 
 		public void Draw(RenderContext context, Rectangle rect, float opacity = 1.0f)
 		{
-			var r = new Rectangle(rect.X + (rect.Width - TextureRegion.Size.X) / 2,
-				rect.Y + (rect.Height - TextureRegion.Size.Y) / 2,
-				TextureRegion.Size.X,
-				TextureRegion.Size.Y);
+			if (TextureRegion != null)
+			{
+				var r = new Rectangle(rect.X + (rect.Width - TextureRegion.Size.X) / 2,
+					rect.Y + (rect.Height - TextureRegion.Size.Y) / 2,
+					TextureRegion.Size.X,
+					TextureRegion.Size.Y);
 
-			TextureRegion.Draw(context, r, Color * opacity);
+				TextureRegion.Draw(context, r, Color.White * opacity);
+			}
+			else
+			{
+				var font = TJ.Module.ModuleInfo.Font;
+				var sz = font.MeasureString(Symbol);
+
+				var pos = new Vector2((int)(rect.X + (rect.Width - sz.X) / 2),
+					(int)(rect.Y + (rect.Height - sz.Y) / 2));
+
+				context.DrawString(font, Symbol, pos, Color * opacity);
+			}
 		}
 	}
 }

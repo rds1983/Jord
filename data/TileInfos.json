@@ -2,67 +2,83 @@
 	"TileInfos": {
 		"Grass": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "DarkGreen"
 		},
 		"HighGrass": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "Green",
 		},
 		"Ground": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "Brown"
 		},
 		"OpenDoor": {
 			"Passable": "True",
-			"Symbol": "`"
+			"Symbol": "`",
+			"Color": "Brown"
 		},
 		"Floor": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "Gray"
 		},
 		"Tree": {
 			"Passable": "False",
-			"Symbol": "T"
+			"Symbol": "T",
+			"Color": "Green",
 		},
 		"Mountain": {
 			"Passable": "False",
-			"Symbol": "^"
+			"Symbol": "^",
+			"Color": "White"
 		},
 		"Water": {
 			"Passable": "False",
-			"Symbol": "~"
+			"Symbol": "~",
+			"Color": "Blue"
 		},
 		"Road": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "Brown"
 		},
 		"TownRoad": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "LightGray"
 		},
 		"Wall": {
 			"Passable": "False",
-			"Symbol": "#"
+			"Symbol": "#",
+			"Color": "Gray"
 		},
 		"Plato": {
 			"Passable": "True",
-			"Symbol": "."
+			"Symbol": ".",
+			"Color": "White"
 		},
 		"ExitDown": {
 			"Passable": "True",
-			"Symbol": ">"
+			"Symbol": ">",
+			"Color": "White"
 		},
 		"ExitUp": {
 			"Passable": "True",
-			"Symbol": "<"
+			"Symbol": "<",
+			"Color": "White"
 		},
 		"SignSmithy": {
 			"Passable": "False",
-			"Symbol": "B"
+			"Symbol": "B",
+			"Color": "Gray"
 		},
 		"SignGuild": {
 			"Passable": "False",
-			"Symbol": "G"
+			"Symbol": "G",
+			"Color": "Gray"
 		}
 	}
 }

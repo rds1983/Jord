@@ -3,7 +3,6 @@
 		"BalHarborWeaponMerchant": {
 			"Name": "Weapon Merchant",
 			"Image": "CreatureWeaponMerchant",
-			"Symbol": "p",
 			"Type": "Merchant",
 			"Gold": 50000,
 			"Inventory": {
@@ -16,13 +15,16 @@
 				"LeatherGloves": 1,
 				"LeatherBoots": 1,
 				"Shield": 1
-			}
+			},
+			"Symbol": "p",
+			"Color": "Blue",
 		},
 		"BalHarborInstructor": {
 			"Name": "Instructor",
 			"Image": "CreatureInstructor",
+			"Type": "Instructor",
 			"Symbol": "p",
-			"Type": "Instructor"
+			"Color": "Green",
 		}
 	}
 }

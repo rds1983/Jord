@@ -6,7 +6,6 @@
 		"SewersRat": {
 			"Name": "a sewer rat",
 			"Image": "CreatureRat",
-			"Symbol": "r",
 			"Type": "Enemy",
 			"Experience": 300,
 			"Attacks": [
@@ -25,11 +24,12 @@
 					"Id": "RatSkin",
 					"Rate": 30
 				}
-			]
+			],
+			"Symbol": "r",
+			"Color": "Gray"
 		},
 		"HugeBlackDragon": {
 			"Name": "Ancient Black Dragon",
-			"Symbol": "D",
 			"Type": "Enemy",
 			"Experience": 5000000,
 			"Gold": 120000,
@@ -58,7 +58,9 @@
 			"ArmorClass": 100,
 			"HitRoll": 15,
 			"MaxHp": 20000,
-			"MinimumLevel": 15
+			"MinimumLevel": 15,
+			"Symbol": "D",
+			"Color": "Gray"
 		}
 	}
 }

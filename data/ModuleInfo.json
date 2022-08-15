@@ -1,6 +1,9 @@
 {
 	"ModuleInfo": {
 		"Id": "Main",
-		"PlayerImage": "Player"
+		"PlayerSymbol": "@",
+		"PlayerColor": "White",
+		"Font": "Fonts/DroidSans.ttf",
+		"FontSize": 32
 	}
 }
