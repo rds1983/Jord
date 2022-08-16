@@ -11,7 +11,7 @@ namespace Jord.UI
 			BuildUI();
 
 			_comboClass.Items.Clear();
-			foreach (var cls in TJ.Module.Classes)
+			foreach (var cls in TJ.Database.Classes)
 			{
 				_comboClass.Items.Add(new ListItem(cls.Value.Name, null, cls.Value));
 			}

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Jord.Data;
+using Jord.Loading;
 using Jord.Storage;
 using Jord.UI;
 using Jord.Utils;
@@ -59,10 +59,10 @@ namespace Jord
 			MyraEnvironment.DrawFocusedWidgetFrame = true;
 			MyraEnvironment.DrawWidgetsFrames = true;*/
 
-			SerializerParams.Verbose = true;
+			LoadSettings.Verbose = true;
 
 			var compiler = new DatabaseLoader();
-			TJ.Module = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
+			TJ.Database = compiler.Process(Path.Combine(Files.ExecutableFolder, DataPath));
 
 			if (StartGameIndex == null)
 			{

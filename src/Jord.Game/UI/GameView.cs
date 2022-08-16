@@ -158,9 +158,9 @@ namespace Jord.UI
 				case CreatureType.Instructor:
 					Dialog messageBox;
 
-					if (player.Level < TJ.Module.MaximumLevel)
+					if (player.Level < TJ.Database.MaximumLevel)
 					{
-						var nextLevel = TJ.Module.LevelCosts[player.Level + 1];
+						var nextLevel = TJ.Database.LevelCosts[player.Level + 1];
 						if (nextLevel.Experience <= player.Experience && nextLevel.Gold <= player.Gold)
 						{
 							var str = Strings.BuildNextLevelOffer(player.Experience, player.Gold,

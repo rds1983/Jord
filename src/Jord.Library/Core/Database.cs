@@ -7,7 +7,7 @@ using Jord.Generation;
 
 namespace Jord.Core
 {
-	public class Module
+	public class Database
 	{
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, TileObject> TileObjects { get; } = new Dictionary<string, TileObject>();
@@ -20,7 +20,7 @@ namespace Jord.Core
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
 
-		public ModuleInfo ModuleInfo;
+		public Settings ModuleInfo;
 
 		public int MaximumLevel
 		{
@@ -31,7 +31,7 @@ namespace Jord.Core
 		}
 	}
 
-	public static class ModuleExtensions
+	public static class DatabaseExtensions
 	{
 		public static T Ensure<T, T2>(this Dictionary<T2, T> data, T2 id)
 		{

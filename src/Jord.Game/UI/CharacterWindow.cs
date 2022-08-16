@@ -16,9 +16,9 @@ namespace Jord.UI
 			var player = TJ.Player;
 			_labelDescription.Text = string.Format("{0}, {1}", player.Name, player.Level);
 
-			if (player.Level < TJ.Module.MaximumLevel)
+			if (player.Level < TJ.Database.MaximumLevel)
 			{
-				var nextLevel = TJ.Module.LevelCosts[player.Level + 1];
+				var nextLevel = TJ.Database.LevelCosts[player.Level + 1];
 				_labelExperience.Text = Experience(string.Format("{0}/{1}",
 					player.Experience.FormatNumber(), nextLevel.Experience.FormatNumber()));
 				_labelGold.Text = Gold(string.Format("{0}/{1}",
@@ -96,7 +96,7 @@ namespace Jord.UI
 
 			var totalLevels = 0;
 			var cnt = 0;
-			foreach (var pair in TJ.Module.Classes)
+			foreach (var pair in TJ.Database.Classes)
 			{
 				var level = player.GetClassLevel(pair.Key);
 

@@ -3,7 +3,7 @@ using System.Reflection;
 using Jord.Core;
 using Jord.Storage;
 using Jord.Utils;
-using Module = Jord.Core.Module;
+using Database = Jord.Core.Database;
 
 namespace Jord
 {
@@ -14,14 +14,11 @@ namespace Jord
 		public static Action<string> ErrorLogHandler = Console.WriteLine;
 		public static Action<string> GameLogHandler = Console.WriteLine;
 
-		public static Module Module { get; set; }
+		public static Database Database { get; set; }
 
 		public static StorageService StorageService { get; } = new StorageService();
 
-		public static GameSession Session
-		{
-			get; set;
-		}
+		public static GameSession Session { get; set; }
 
 		public static Player Player
 		{

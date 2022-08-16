@@ -105,7 +105,7 @@ namespace Jord.UI
 			_labelRequires.Text = string.Empty;
 
 			var inventory = TJ.Player.Inventory;
-			foreach (var pair in TJ.Module.ItemInfos)
+			foreach (var pair in TJ.Database.ItemInfos)
 			{
 				var crafting = pair.Value.Crafting;
 				if (crafting != null && crafting.Count > 0)

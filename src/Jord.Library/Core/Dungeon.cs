@@ -18,7 +18,7 @@ namespace Jord.Core
 
 		public Map Generate(int level)
 		{
-			var generator = TJ.Module.Generators.Ensure(GeneratorId);
+			var generator = TJ.Database.Generators.Ensure(GeneratorId);
 
 			var map = generator.Generate();
 			map.Id = Id;
@@ -58,7 +58,7 @@ namespace Jord.Core
 				var exitTile = freeTiles[index];
 				freeTiles.RemoveAt(index);
 
-				exitTile.Info = TJ.Module.TileInfos.Ensure(exit.TileInfoId);
+				exitTile.Info = TJ.Database.TileInfos.Ensure(exit.TileInfoId);
 				exitTile.Exit = exit;
 			}
 
@@ -78,7 +78,7 @@ namespace Jord.Core
 					var exitTile = freeTiles[index];
 					freeTiles.RemoveAt(index);
 
-					exitTile.Info = TJ.Module.TileInfos.Ensure(exit.TileInfoId);
+					exitTile.Info = TJ.Database.TileInfos.Ensure(exit.TileInfoId);
 					exitTile.Exit = exit;
 				}
 			}
@@ -87,7 +87,7 @@ namespace Jord.Core
 			var creaturesAmount = map.Width * map.Height / 256;
 
 			var possibleCreatures = new List<CreatureInfo>();
-			foreach(var pair in TJ.Module.CreatureInfos)
+			foreach(var pair in TJ.Database.CreatureInfos)
 			{
 				if (pair.Value.DungeonFilter == Id && pair.Value.MinimumLevel <= level)
 				{

@@ -19,7 +19,7 @@ namespace Jord.Core
 			Player = Slot.PlayerData.CreateCharacter();
 
 			// Spawn player
-			var map = TJ.Module.Maps[Slot.PlayerData.StartingMapId];
+			var map = TJ.Database.Maps[Slot.PlayerData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
 		}

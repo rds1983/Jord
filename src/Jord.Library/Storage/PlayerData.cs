@@ -60,7 +60,7 @@ namespace Jord.Storage
 		{
 			var result = new Player
 			{
-				Class = TJ.Module.Classes[ClassId],
+				Class = TJ.Database.Classes[ClassId],
 				Name = Name,
 				Level = Level,
 				Experience = Experience,
@@ -77,12 +77,12 @@ namespace Jord.Storage
 
 			foreach (var pair in Inventory)
 			{
-				result.Inventory.Add(new Item(TJ.Module.ItemInfos[pair.Key]), pair.Value);
+				result.Inventory.Add(new Item(TJ.Database.ItemInfos[pair.Key]), pair.Value);
 			}
 
 			foreach(var pair in Equipment)
 			{
-				result.Equipment.Equip(new Item(TJ.Module.ItemInfos[pair.Value]));
+				result.Equipment.Equip(new Item(TJ.Database.ItemInfos[pair.Value]));
 			}
 
 			result.Abilities = result.BuildFreeAbilities();

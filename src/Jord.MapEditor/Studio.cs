@@ -4,12 +4,10 @@ using Myra.Graphics2D.UI;
 using Jord.Core;
 using Jord.MapEditor.UI;
 using Microsoft.Xna.Framework;
-using Jord.Data;
+using Jord.Loading;
 using Myra.Graphics2D.UI.File;
 using Jord.Utils;
 using System.IO;
-using Jord.Data.Loaders;
-using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using Jord.Generation;
 
@@ -738,12 +736,12 @@ namespace Jord.MapEditor
 		{
 			try
 			{
-				SerializerParams.Verbose = true;
+				LoadSettings.Verbose = true;
 				_compiler = new DatabaseLoader();
 
 				// Load module
-				Module newDocument = _compiler.Process(modulePath);
-				TJ.Module = newDocument;
+				Database newDocument = _compiler.Process(modulePath);
+				TJ.Database = newDocument;
 				ModulePath = modulePath;
 
 				Map = null;
@@ -759,7 +757,7 @@ namespace Jord.MapEditor
 		{
 			try
 			{
-				Map = TJ.Module.Maps[mapId];
+				Map = TJ.Database.Maps[mapId];
 			}
 			catch (Exception ex)
 			{
@@ -774,7 +772,7 @@ namespace Jord.MapEditor
 			switch (UI._comboItemTypes.SelectedIndex)
 			{
 				case 0:
-					foreach (var info in TJ.Module.TileInfos)
+					foreach (var info in TJ.Database.TileInfos)
 					{
 						var item = new ListItem
 						{
@@ -799,7 +797,7 @@ namespace Jord.MapEditor
 
 						UI._listBoxItems.Items.Add(erase);
 
-						foreach (var info in TJ.Module.TileObjects)
+						foreach (var info in TJ.Database.TileObjects)
 						{
 							var item = new ListItem
 							{
@@ -825,7 +823,7 @@ namespace Jord.MapEditor
 
 						UI._listBoxItems.Items.Add(erase);
 
-						foreach (var info in TJ.Module.CreatureInfos)
+						foreach (var info in TJ.Database.CreatureInfos)
 						{
 							var item = new ListItem
 							{

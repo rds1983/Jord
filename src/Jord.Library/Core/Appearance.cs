@@ -41,7 +41,7 @@ namespace Jord.Core
 			}
 			else
 			{
-				var font = TJ.Module.ModuleInfo.Font;
+				var font = TJ.Database.ModuleInfo.Font;
 				var sz = font.MeasureString(Symbol);
 
 				var pos = new Vector2((int)(rect.X + (rect.Width - sz.X) / 2),

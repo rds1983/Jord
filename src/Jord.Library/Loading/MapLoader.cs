@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Text;
 using Jord.Core;
 
-namespace Jord.Data.Loaders
+namespace Jord.Loading
 {
-	public class MapLoader: Loader<Map>
+	public class MapLoader: BaseObjectLoader<Map>
 	{
+		public static readonly MapLoader Instance = new MapLoader();
+
 		private class SpawnSpot
 		{
 		}
@@ -20,39 +22,40 @@ namespace Jord.Data.Loaders
 		private const string DataName = "Data";
 		private const string ForbiddenLegendItems = "{}[]";
 
-		public MapLoader() : base("Maps")
+		protected override Map CreateObject(string source, JObject data, out Action<Database> secondRunAction)
 		{
-		}
-
-		public override Map LoadItem(Module module, string id, ObjectData data)
-		{
-			var dataObj = data.Data;
-
-			if (module.Dungeons.ContainsKey(id))
+			var map = new Map(data.EnsurePoint("Size"))
 			{
-				RaiseError("There's already MapTemplate with id '{0}'", id);
-			}
-
-			var map = new Map(dataObj.EnsurePoint("Size"))
-			{
-				Local = dataObj.EnsureBool("Local")
+				Local = data.EnsureBool("Local")
 			};
 
-			map.Name = dataObj.EnsureString("Name");
-			map.Explored = dataObj.OptionalBool("Explored", false);
-			map.Light = dataObj.OptionalBool("Light", false);
+			map.Id = data.EnsureId();
+			map.Name = data.EnsureString("Name");
+			map.Explored = data.OptionalBool("Explored", false);
+			map.Light = data.OptionalBool("Light", false);
 
 			if (map.Explored)
 			{
-
 				foreach(var tile in map.GetAllCells())
 				{
 					tile.IsExplored = true;
 				}
 			}
 
+			secondRunAction = db => SecondRun(map, data, db);
+
+			return map;
+		}
+
+		private void SecondRun(Map result, JObject data, Database database)
+		{
+			if (database.Dungeons.ContainsKey(result.Id))
+			{
+				RaiseError($"There's already MapTemplate with id '{result.Id}'");
+			}
+
 			var legend = new Dictionary<char, object>();
-			var legendObject = dataObj.EnsureJObject(LegendName);
+			var legendObject = data.EnsureJObject(LegendName);
 			foreach (var pair in legendObject)
 			{
 				if (string.IsNullOrEmpty(pair.Key))
@@ -62,13 +65,13 @@ namespace Jord.Data.Loaders
 
 				if (pair.Key.Length != 1)
 				{
-					RaiseError("Map legend item id {0} could consist only from single symbol.'", pair.Key);
+					RaiseError($"Map legend item id {pair.Key} could consist only from single symbol.'");
 				}
 
 				var symbol = pair.Key[0];
 				if (ForbiddenLegendItems.IndexOf(symbol) != -1)
 				{
-					RaiseError("Symbol '{0}' can't be used in legend.", symbol);
+					RaiseError($"Symbol '{symbol}' can't be used in legend.");
 				}
 
 				object item = null;
@@ -89,21 +92,21 @@ namespace Jord.Data.Loaders
 						var tileInfoId = obj.OptionalString(TileInfoIdName);
 						if (!string.IsNullOrEmpty(tileInfoId))
 						{
-							item = module.TileInfos.Ensure(tileInfoId);
+							item = database.TileInfos.Ensure(tileInfoId);
 							break;
 						}
 
 						var tileObjectId = obj.OptionalString(TileObjectIdName);
 						if (!string.IsNullOrEmpty(tileObjectId))
 						{
-							item = module.TileObjects.Ensure(tileObjectId);
+							item = database.TileObjects.Ensure(tileObjectId);
 							break;
 						}
 
 						var creatureInfoId = obj.OptionalString(CreatureInfoIdName);
 						if (!string.IsNullOrEmpty(creatureInfoId))
 						{
-							item = module.CreatureInfos.Ensure(creatureInfoId);
+							item = database.CreatureInfos.Ensure(creatureInfoId);
 							break;
 						}
 					}
@@ -113,7 +116,7 @@ namespace Jord.Data.Loaders
 				legend[symbol] = item;
 			}
 
-			var dataObject = dataObj.EnsureJArray(DataName);
+			var dataObject = data.EnsureJArray(DataName);
 
 			var pos = Point.Zero;
 			var entities = new List<Tuple<object, Point>>();
@@ -123,12 +126,12 @@ namespace Jord.Data.Loaders
 				var line = lineToken.ToString();
 
 				pos.X = 0;
-				for(var j = 0; j < line.Length; ++j)
+				for (var j = 0; j < line.Length; ++j)
 				{
 					Tile lastTile = null;
 					if (pos.X > 0)
 					{
-						lastTile = map[pos.X - 1, pos.Y];
+						lastTile = result[pos.X - 1, pos.Y];
 					}
 
 					var symbol = line[j];
@@ -141,7 +144,7 @@ namespace Jord.Data.Loaders
 						++j;
 
 						var hasEnd = false;
-						for(; j < line.Length; ++j)
+						for (; j < line.Length; ++j)
 						{
 							symbol = line[j];
 							if (symbol == '}')
@@ -204,12 +207,12 @@ namespace Jord.Data.Loaders
 
 					if (!legend.TryGetValue(symbol, out item))
 					{
-						RaiseError("Unknown symbol '{0}'.", symbol);
+						RaiseError($"Unknown symbol '{symbol}'.");
 					}
 
 					if (item is SpawnSpot)
 					{
-						map.SpawnSpot = lastTile.Position;
+						result.SpawnSpot = lastTile.Position;
 						continue;
 					}
 
@@ -231,7 +234,7 @@ namespace Jord.Data.Loaders
 					var asTileInfo = item as TileInfo;
 					if (asTileInfo != null)
 					{
-						map[pos].Info = asTileInfo;
+						result[pos].Info = asTileInfo;
 					}
 
 					++pos.X;
@@ -246,19 +249,17 @@ namespace Jord.Data.Loaders
 				var asObjectInfo = entity.Item1 as TileObject;
 				if (asObjectInfo != null)
 				{
-					map[entity.Item2].Object = asObjectInfo;
+					result[entity.Item2].Object = asObjectInfo;
 					continue;
 				}
 
 				var asCreature = entity.Item1 as Creature;
 				if (asCreature != null)
 				{
-					asCreature.Place(map, entity.Item2);
+					asCreature.Place(result, entity.Item2);
 					continue;
 				}
 			}
-
-			return map;
 		}
 
 		private static char GenerateCode(Dictionary<char, object> legend, char code)
@@ -328,8 +329,8 @@ namespace Jord.Data.Loaders
 
 			var mapObject = new JObject
 			{
-				[DatabaseLoader.IdName] = map.Id,
-				[DatabaseLoader.NameName] = map.Name,
+				["Id"] = map.Id,
+				["Name"] = map.Name,
 				["Size"] = new JObject
 				{ 
 					["X"] = map.Width,
@@ -340,7 +341,7 @@ namespace Jord.Data.Loaders
 				["Local"] = map.Local
 			};
 
-			root[DatabaseLoader.MapName] = mapObject;
+			root["Map"] = mapObject;
 
 			var legendNode = new JObject();
 			foreach (var pair in legend)

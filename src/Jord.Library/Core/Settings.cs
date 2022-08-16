@@ -2,7 +2,7 @@
 
 namespace Jord.Core
 {
-	public class ModuleInfo: BaseObject
+	public class Settings: BaseObject
 	{
 		public Appearance PlayerAppearance;
 		public SpriteFontBase Font;

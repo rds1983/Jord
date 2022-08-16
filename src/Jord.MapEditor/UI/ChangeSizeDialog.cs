@@ -70,7 +70,7 @@ namespace Jord.MapEditor.UI
 		{
 			BuildUI();
 
-			foreach (var tileInfo in TJ.Module.TileInfos)
+			foreach (var tileInfo in TJ.Database.TileInfos)
 			{
 				var text = tileInfo.Key;
 				_comboFill.Items.Add(new ListItem(text, null, tileInfo.Value));

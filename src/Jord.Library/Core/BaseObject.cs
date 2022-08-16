@@ -1,12 +1,6 @@
 ﻿namespace Jord.Core
 {
-	public interface IBaseObject
-	{
-		string Id { get; set; }
-		string Source { get; set; }
-	}
-
-	public class BaseObject : IBaseObject
+	public class BaseObject
 	{
 		public string Id { get; set; }
 

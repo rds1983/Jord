@@ -75,9 +75,9 @@ namespace Jord.Core
 			
 			Map map;
 			
-			if (TJ.Module.Dungeons.ContainsKey(Tile.Exit.MapId))
+			if (TJ.Database.Dungeons.ContainsKey(Tile.Exit.MapId))
 			{
-				var dungeon = TJ.Module.Dungeons.Ensure(Tile.Exit.MapId);
+				var dungeon = TJ.Database.Dungeons.Ensure(Tile.Exit.MapId);
 
 				var dungeonLevel = Tile.Exit.DungeonLevel == null ? 1 : Tile.Exit.DungeonLevel.Value;
 				map = dungeon.Generate(dungeonLevel);
@@ -103,7 +103,7 @@ namespace Jord.Core
 			}
 			else
 			{
-				map = TJ.Module.Maps.Ensure(Tile.Exit.MapId);
+				map = TJ.Database.Maps.Ensure(Tile.Exit.MapId);
 
 				if (Tile.Exit.Position != null)
 				{

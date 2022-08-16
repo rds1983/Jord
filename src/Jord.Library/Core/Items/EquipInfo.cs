@@ -1,4 +1,4 @@
-﻿using Jord.Data;
+﻿using Jord.Loading;
 
 namespace Jord.Core.Items
 {

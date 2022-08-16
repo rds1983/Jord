@@ -48,20 +48,17 @@ namespace Jord.Generation
 			}
 		}
 
-		public TileInfo Space { get; }
-		public TileInfo Wall { get; }
+		public TileInfo Space { get; set; }
+		public TileInfo Wall { get; set; }
 
 		public int MaximumRoomsCount { get; }
 		public int MinimumRoomWidth { get; }
 		public int MaximumRoomWidth { get; }
 
-		public RoomsGenerator(TileInfo space, TileInfo wall,
-			int width, int height,
+		public RoomsGenerator(int width, int height,
 			int maximumRoomsCount, 
 			int minimumRoomWidth, int maximumRoomWidth): base(width, height)
 		{
-			Space = space;
-			Wall = wall;
 			MaximumRoomsCount = maximumRoomsCount;
 			MinimumRoomWidth = minimumRoomWidth;
 			MaximumRoomWidth = maximumRoomWidth;

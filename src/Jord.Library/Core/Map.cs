@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Jord.Core
 {
-	public class Map : IBaseObject
+	public class Map : BaseObject
 	{
 		private class MapFOVView : IMapView<bool>
 		{
@@ -35,11 +35,7 @@ namespace Jord.Core
 
 		public AStar PathFinder { get; }
 
-		public string Id { get; set; }
-
 		public string Name { get; set; }
-
-		public string Source { get; set; }
 
 		public Point? SpawnSpot
 		{

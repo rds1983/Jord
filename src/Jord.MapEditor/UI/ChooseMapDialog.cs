@@ -11,7 +11,7 @@ namespace Jord.MapEditor.UI
 
 			_listMaps.SelectedIndexChanged += (s, a) => UpdateEnabled();
 
-			var maps = (from c in TJ.Module.Maps.Values orderby c.Id select c).ToArray();
+			var maps = (from c in TJ.Database.Maps.Values orderby c.Id select c).ToArray();
 
 			int? selectedIndex = null;
 			for(var i = 0; i < maps.Length; ++i)

@@ -1,52 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Jord.Core;
+using Microsoft.Xna.Framework;
 using Myra;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using Jord.Core;
-using Jord.Utils;
 
-namespace Jord.Data.Loaders
+namespace Jord.Loading
 {
-	public abstract class BaseLoader
-	{
-		protected readonly Dictionary<string, ObjectData> _sourceData = new Dictionary<string, ObjectData>();
-
-		public abstract string TypeName { get; }
-		public string JsonArrayName { get; private set; }
-		public abstract Type Type { get; }
-
-		public BaseLoader(string jsonArrayName)
-		{
-			JsonArrayName = jsonArrayName;
-		}
-
-		public void SafelyAddObject(string id, string source, JObject obj, Dictionary<string, string> properties = null)
-		{
-			ObjectData od;
-			if (_sourceData.TryGetValue(id, out od))
-			{
-				RaiseError("Two {0} with same id '{1}' had been declared. Conflicting source: '{2}' and '{3}'",
-					TypeName, id, source, od.Source);
-			}
-
-			od = new ObjectData
-			{
-				Source = source,
-				Data = obj,
-				Properties = properties
-			};
-
-			_sourceData[id] = od;
-		}
-
-		protected static void RaiseError(string message, params object[] args)
-		{
-			LoaderExtensions.RaiseError(message, args);
-		}
-	}
-
 	internal static class LoaderExtensions
 	{
 		public static Color EnsureColor(this JObject obj, string fieldName)
@@ -55,7 +15,7 @@ namespace Jord.Data.Loaders
 			var result = ColorStorage.FromName(s);
 			if (result == null)
 			{
-				RaiseError("Could not find color '{0}'.", s);
+				RaiseError($"Could not find color '{s}'.");
 			}
 
 			return result.Value;
@@ -66,7 +26,7 @@ namespace Jord.Data.Loaders
 			var token = obj[fieldName];
 			if (token == null)
 			{
-				RaiseError("Could not find mandatory '{0}' field.", fieldName);
+				RaiseError($"Could not find mandatory '{fieldName}' field.");
 			}
 
 			return token;
@@ -77,7 +37,7 @@ namespace Jord.Data.Loaders
 			var asT = token as T;
 			if (asT == null)
 			{
-				RaiseError("Could not cast '{0}' to '{1}'.", token.ToString(), typeof(T).Name);
+				RaiseError($"Could not cast '{token}' to '{typeof(T).Name}'.");
 			}
 
 			return asT;
@@ -120,7 +80,7 @@ namespace Jord.Data.Loaders
 			int result;
 			if (!int.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as int value.", value);
+				RaiseError($"Can't parse '{value}' as int value.");
 			}
 
 			return result;
@@ -131,7 +91,7 @@ namespace Jord.Data.Loaders
 			float result;
 			if (!float.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out result))
 			{
-				RaiseError("Can't parse '{0}' as float value.", value);
+				RaiseError($"Can't parse '{value}' as float value.");
 			}
 
 			return result;
@@ -155,7 +115,7 @@ namespace Jord.Data.Loaders
 			bool result;
 			if (!bool.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as bool value.", value);
+				RaiseError($"Can't parse '{value}' as bool value.");
 			}
 
 			return result;
@@ -166,20 +126,6 @@ namespace Jord.Data.Loaders
 			var sizeObj = (JObject)obj.EnsureJToken(fieldName);
 
 			return new Point(sizeObj.EnsureInt("X"), sizeObj.EnsureInt("Y"));
-		}
-
-		public static void EnsureBaseMapObject(this Module module, JObject obj, BaseMapObject output, string defaultImageName)
-		{
-			var symbolStr = obj.EnsureString("Symbol");
-			if (symbolStr.Length != 1)
-			{
-				RaiseError("Unable to read '{0}' as symbol.", symbolStr);
-			}
-
-			var color = obj.EnsureColor("Color");
-
-			output.Image = new Appearance(symbolStr, color, null);
-			output.Symbol = symbolStr[0];
 		}
 
 		public static T EnsureEnum<T>(this JObject obj, string fieldName)
@@ -198,7 +144,7 @@ namespace Jord.Data.Loaders
 
 		public static string EnsureId(this JObject obj)
 		{
-			return obj.EnsureString(DatabaseLoader.IdName);
+			return obj.EnsureString("Id");
 		}
 
 		public static JToken Optional(this JObject obj, string fieldName)
@@ -270,51 +216,15 @@ namespace Jord.Data.Loaders
 			bool result;
 			if (!bool.TryParse(value, out result))
 			{
-				RaiseError("Can't parse '{0}' as bool value.", value);
+				RaiseError($"Can't parse '{value}' as bool value.");
 			}
 
 			return result;
 		}
 
-		public static void RaiseError(string message, params object[] args)
+		public static void RaiseError(string message)
 		{
-			throw new Exception(StringUtils.FormatMessage(message, args));
-		}
-	}
-
-	public abstract class Loader<T> : BaseLoader where T : IBaseObject
-	{
-		public override string TypeName => typeof(T).Name;
-		public override Type Type => typeof(T);
-
-		public Loader(string jsonArrayName) : base(jsonArrayName)
-		{
-		}
-
-		public abstract T LoadItem(Module module, string id, ObjectData od);
-
-		public void FillData(Module module, Dictionary<string, T> output)
-		{
-			foreach (var pair in _sourceData)
-			{
-				try
-				{
-					var item = LoadItem(module, pair.Key, pair.Value);
-
-					item.Id = pair.Key;
-					item.Source = pair.Value.Source;
-					output[item.Id] = item;
-
-					if (SerializerParams.Verbose)
-					{
-						TJ.LogInfo("Added to {0}, id: '{1}', value: '{2}'", JsonArrayName, item.Id, item.ToString());
-					}
-				}
-				catch (Exception ex)
-				{
-					throw new Exception("Compilation Error. Message = '" + ex.Message + "', Id = '" + pair.Key + "', Source = '" + pair.Value.Source + "'", ex);
-				}
-			}
+			throw new Exception(message);
 		}
 	}
 }

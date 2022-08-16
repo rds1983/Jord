@@ -42,7 +42,7 @@ namespace Jord.Core
 
 		public Class Class { get; set; }
 
-		public override Appearance Image => TJ.Module.ModuleInfo.PlayerAppearance;
+		public override Appearance Image => TJ.Database.ModuleInfo.PlayerAppearance;
 
 		public Equipment Equipment { get; } = new Equipment();
 
@@ -177,7 +177,7 @@ namespace Jord.Core
 		public AbilityInfo[] BuildFreeAbilities()
 		{
 			// TODO:
-			return TJ.Module.Abilities.Values.ToArray();
+			return TJ.Database.Abilities.Values.ToArray();
 		}
 
 		public AbilityInfo[] BuildLearnedAbilities()
