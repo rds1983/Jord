@@ -34,10 +34,10 @@ namespace Jord.Loading
 			}
 		}
 
-		private T FirstRunLoadObject<T>(string source, JObject value, BaseObjectLoader<T> loader) where T : BaseObject
+		private T FirstRunLoadObject<T>(string source, JObject value, Dictionary<string, string> properties, BaseObjectLoader<T> loader) where T : BaseObject
 		{
 			Action<Database> secondRunAction;
-			var item = loader.LoadObject(source, value, out secondRunAction);
+			var item = loader.LoadObject(source, value, properties, out secondRunAction);
 
 			if (secondRunAction != null)
 			{
@@ -61,7 +61,7 @@ namespace Jord.Loading
 					continue;
 				}
 
-				var item = FirstRunLoadObject(source, value, loader);
+				var item = FirstRunLoadObject(source, value, properties, loader);
 
 				item.Id = id;
 				dbDict[id] = item;
@@ -142,7 +142,7 @@ namespace Jord.Loading
 							LoadLevels((JArray)pair.Value);
 							break;
 						case "Settings":
-							_database.ModuleInfo = FirstRunLoadObject(s, (JObject)pair.Value, SettingsLoader.Instance);
+							_database.ModuleInfo = FirstRunLoadObject(s, (JObject)pair.Value, null, SettingsLoader.Instance);
 							break;
 						case "Map":
 							if (json.Count > 1)
@@ -150,7 +150,7 @@ namespace Jord.Loading
 								RaiseError($"Map file can have only one map entry. Source: '{s}'");
 							}
 
-							var map = FirstRunLoadObject(s, (JObject)pair.Value, MapLoader.Instance);
+							var map = FirstRunLoadObject(s, (JObject)pair.Value, null, MapLoader.Instance);
 							_database.Maps[map.Id] = map;
 							break;
 						default:

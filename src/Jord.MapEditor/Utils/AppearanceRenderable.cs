@@ -13,7 +13,12 @@ namespace Jord.Utils
 		{
 			get
 			{
-				return _appearance.TextureRegion.Size;
+				if (_appearance.TextureRegion == null)
+				{
+					return new Point(0, 0);
+				}
+
+				return  _appearance.TextureRegion.Size;
 			}
 		}
 

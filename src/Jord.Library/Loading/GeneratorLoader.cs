@@ -2,6 +2,7 @@
 using Jord.Generation;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace Jord.Loading
 {
@@ -9,7 +10,7 @@ namespace Jord.Loading
 	{
 		public static readonly GeneratorLoader Instance = new GeneratorLoader();
 
-		protected override BaseGenerator CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override BaseGenerator CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			BaseGenerator generator = null;
 

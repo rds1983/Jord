@@ -2,6 +2,7 @@
 using Jord.Core;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Jord.Loading
@@ -10,7 +11,7 @@ namespace Jord.Loading
 	{
 		public static readonly SettingsLoader Instance = new SettingsLoader();
 
-		protected override Settings CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override Settings CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var fontSystem = new FontSystem();
 			var path = Path.Combine(Path.GetDirectoryName(source), data.EnsureString("Font"));

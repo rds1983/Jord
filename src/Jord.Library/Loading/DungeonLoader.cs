@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Jord.Core;
 using System;
+using System.Collections.Generic;
 
 namespace Jord.Loading
 {
@@ -8,7 +9,7 @@ namespace Jord.Loading
 	{
 		public static readonly DungeonLoader Instance = new DungeonLoader();
 
-		protected override Dungeon CreateObject(string source, JObject dataObj, out Action<Database> secondRunAction)
+		protected override Dungeon CreateObject(string source, JObject dataObj, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var result = new Dungeon
 			{

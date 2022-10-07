@@ -53,15 +53,15 @@ namespace Jord.UI
 			string text;
 			if (player.Tile != null && player.Tile.Inventory.Items.Count > 0)
 			{
-				text = @"\c[green]E\c[white]|Take";
+				text = @"/c[green]E/c[white]|Take";
 			}
 			else if (player.CanEnter())
 			{
-				text = @"\c[green]E\c[white]|Enter";
+				text = @"/c[green]E/c[white]|Enter";
 			}
 			else
 			{
-				text = @"\c[green]E\c[white]|Use";
+				text = @"/c[green]E/c[white]|Use";
 				enabled = false;
 			}
 

@@ -1,6 +1,6 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.UI" Class="CraftingWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Crafting Bench" Left="471" Top="20" Height="500">
+  <Project.ExportOptions Namespace="Jord.UI" Class="CraftingWindow" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
+  <Window Title="Crafting Bench" Left="279" Top="78" Height="500">
     <VerticalStackPanel>
       <VerticalStackPanel.Proportions>
         <Proportion Type="Auto" />
@@ -30,7 +30,7 @@
       </HorizontalStackPanel>
       <HorizontalSeparator />
       <HorizontalStackPanel HorizontalAlignment="Right">
-        <TextButton Text="\c[green]C\c[white]reate" Width="120" Id="_buttonCreate" />
+        <TextButton Text="/c[green]C/c[white]reate" Width="120" Id="_buttonCreate" />
       </HorizontalStackPanel>
     </VerticalStackPanel>
   </Window>

@@ -22,7 +22,7 @@ namespace Jord.Loading
 		private const string DataName = "Data";
 		private const string ForbiddenLegendItems = "{}[]";
 
-		protected override Map CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override Map CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var map = new Map(data.EnsurePoint("Size"))
 			{

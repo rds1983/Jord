@@ -9,7 +9,7 @@
 
 		private static string ClassPointsLeft(int points)
 		{
-			return string.Format("You have \\c[green]{0} \\c[white]points left to distribute.", points);
+			return string.Format("You have /c[green]{0} /c[white]points left to distribute.", points);
 		}
 
 		private static string Experience(string value)

@@ -1,6 +1,7 @@
 ﻿using Jord.Core;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace Jord.Loading
 {
@@ -8,7 +9,7 @@ namespace Jord.Loading
 	{
 		public static readonly TileObjectLoader Instance = new TileObjectLoader();
 
-		protected override TileObject CreateObject(string source, JObject obj, out Action<Database> secondRunAction)
+		protected override TileObject CreateObject(string source, JObject obj, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var result = new TileObject
 			{

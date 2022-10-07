@@ -2,6 +2,7 @@
 using Jord.Core.Items;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace Jord.Loading
 {
@@ -9,7 +10,7 @@ namespace Jord.Loading
 	{
 		public static readonly ItemLoader Instance = new ItemLoader();
 
-		protected override BaseItemInfo CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override BaseItemInfo CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var type = data.OptionalString("Type");
 
@@ -62,11 +63,11 @@ namespace Jord.Loading
 			result.Name = data.EnsureString("Name");
 			result.Price = data.EnsureInt("Price");
 
-			/*			string typeName;
-						if (data.Properties != null && data.Properties.TryGetValue("Type", out typeName))
-						{
-							result.Type = typeName.ToEnum<ItemType>();
-						}*/
+			string typeName;
+			if (properties != null && properties.TryGetValue("Type", out typeName))
+			{
+				result.Type = typeName.ToEnum<ItemType>();
+			}
 
 			secondRunAction = db => SecondRun(result, data, db);
 

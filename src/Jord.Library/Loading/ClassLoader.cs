@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Jord.Core;
 using Jord.Core.Items;
 using Newtonsoft.Json.Linq;
@@ -9,7 +10,7 @@ namespace Jord.Loading
 	{
 		public static readonly ClassLoader Instance = new ClassLoader();
 
-		protected override Class CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override Class CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var result = new Class
 			{

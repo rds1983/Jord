@@ -10,7 +10,7 @@ namespace Jord.Loading
 	{
 		public static readonly AbilityLoader Instance = new AbilityLoader();
 
-		protected override AbilityInfo CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override AbilityInfo CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var result = new AbilityInfo
 			{

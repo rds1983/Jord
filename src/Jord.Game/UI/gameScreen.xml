@@ -1,5 +1,5 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.UI" Class="GameView" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
+  <Project.ExportOptions Namespace="Jord.UI" Class="GameView" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
   <HorizontalStackPanel>
     <HorizontalStackPanel.Proportions>
       <Proportion Type="Part" Value="2" />
@@ -13,10 +13,10 @@
       <Panel Id="_mapViewContainer" />
       <HorizontalSeparator />
       <HorizontalStackPanel Spacing="8">
-        <TextButton Text="\c[green]E\c[white]|Use" Width="100" Id="_buttonUse" />
-        <TextButton Text="\c[green]C\c[white]haracter" Width="100" Id="_buttonCharacter" />
-        <TextButton Text="\c[green]I\c[white]nventory" Width="100" Id="_buttonInventory" />
-        <TextButton Text="\c[green]A\c[white]bilities" Width="100" Id="_buttonAbilities" />
+        <TextButton Text="/c[green]E/c[white]|Use" Width="100" Id="_buttonUse" />
+        <TextButton Text="/c[green]C/c[white]haracter" Width="100" Id="_buttonCharacter" />
+        <TextButton Text="/c[green]I/c[white]nventory" Width="100" Id="_buttonInventory" />
+        <TextButton Text="/c[green]A/c[white]bilities" Width="100" Id="_buttonAbilities" />
       </HorizontalStackPanel>
     </VerticalStackPanel>
     <VerticalSeparator />

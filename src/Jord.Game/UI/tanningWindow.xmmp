@@ -1,6 +1,6 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.UI" Class="TanningWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Leather Tanning Bench" Left="369" Top="141">
+  <Project.ExportOptions Namespace="Jord.UI" Class="TanningWindow" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
+  <Window Title="Leather Tanning Bench" Left="227" Top="199">
     <VerticalStackPanel>
       <HorizontalSeparator />
       <HorizontalStackPanel>
@@ -21,7 +21,7 @@
       </HorizontalStackPanel>
       <HorizontalSeparator />
       <HorizontalStackPanel HorizontalAlignment="Right">
-        <TextButton Text="\c[green]T\c[white]an" Width="120" Id="_buttonTan" />
+        <TextButton Text="/c[green]T/c[white]an" Width="120" Id="_buttonTan" />
       </HorizontalStackPanel>
     </VerticalStackPanel>
   </Window>

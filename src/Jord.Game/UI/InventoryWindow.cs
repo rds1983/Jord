@@ -122,11 +122,11 @@ namespace Jord.UI
 			{
 				if (_gridEquipment.SelectedRowIndex != null)
 				{
-					_buttonEquip.Text = string.Format(@"Un\c[green]e\c[white]quip");
+					_buttonEquip.Text = string.Format(@"Un/c[green]e/c[white]quip");
 				}
 				else
 				{
-					_buttonEquip.Text = string.Format(@"\c[green]E\c[white]quip");
+					_buttonEquip.Text = string.Format(@"/c[green]E/c[white]quip");
 				}
 
 				_buttonEquip.Enabled = true;

@@ -1,6 +1,6 @@
-﻿using Jord.Core;
+﻿using FontStashSharp.RichText;
+using Jord.Core;
 using Microsoft.Xna.Framework;
-using Myra;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;

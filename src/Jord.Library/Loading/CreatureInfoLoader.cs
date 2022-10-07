@@ -2,6 +2,7 @@
 using Jord.Core;
 using Jord.Core.Items;
 using System;
+using System.Collections.Generic;
 
 namespace Jord.Loading
 {
@@ -9,7 +10,7 @@ namespace Jord.Loading
 	{
 		public static readonly CreatureInfoLoader Instance = new CreatureInfoLoader();
 
-		protected override CreatureInfo CreateObject(string source, JObject data, out Action<Database> secondRunAction)
+		protected override CreatureInfo CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var result = new CreatureInfo
 			{
@@ -18,11 +19,11 @@ namespace Jord.Loading
 				MinimumLevel = data.OptionalNullableInt("MinimumLevel")
 			};
 
-/*			string dungeonFilter;
-			if (data.Properties != null && data.Properties.TryGetValue(DungeonFilterName, out dungeonFilter))
+			string dungeonFilter;
+			if (properties != null && properties.TryGetValue("DungeonFilter", out dungeonFilter))
 			{
 				result.DungeonFilter = dungeonFilter;
-			}*/
+			}
 
 			if (result.CreatureType != CreatureType.Instructor)
 			{
