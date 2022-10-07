@@ -1,0 +1,12 @@
+{
+	"Tileset": {
+		"Id": "DCSS",
+		"Width": 32,
+		"Height": 32,
+		"TileImages":
+		{
+			"Grass": "grass0",
+			"Ground": "dirt0"
+		}
+	}
+}

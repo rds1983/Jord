@@ -4,11 +4,11 @@ namespace Jord.Core
 {
 	public class Exit
 	{
-		public string MapId;
-		public string TileInfoId;
+		public string MapId { get; set; }
+		public string TileInfoId { get; set; }
 
-		public Point? Position;
-		public int? DungeonLevel;
+		public Point? Position { get; set; }
+		public int? DungeonLevel { get; set; }
 
 		public override string ToString()
 		{

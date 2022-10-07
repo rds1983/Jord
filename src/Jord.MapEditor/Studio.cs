@@ -133,6 +133,7 @@ namespace Jord.MapEditor
 			base.LoadContent();
 
 			MyraEnvironment.Game = this;
+			TJ.GraphicsDevice = GraphicsDevice;
 
 			BuildUI();
 

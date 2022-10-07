@@ -12,11 +12,12 @@ namespace Jord.UI
 	public class MapRender : Widget
 	{
 		private const int SignPeriodInMs = 1000;
-		public static readonly Point TileSize = new Point(32, 32);
 		private readonly List<Tile> _tilesWithSigns = new List<Tile>();
 
 		private Map _map;
 		private DateTime? _lastStamp;
+
+		public static Point TileSize => new Point(TJ.Tileset.Width, TJ.Tileset.Height);
 
 		public SpriteFontBase Font
 		{
@@ -261,9 +262,7 @@ namespace Jord.UI
 
 		public Vector2 ScreenToGame(Point position)
 		{
-			var bounds = ActualBounds;
-
-			position -= bounds.Location;
+			position = ToLocal(position);
 			var tileSize = TileSize;
 			var tilePosition = new Vector2
 			{

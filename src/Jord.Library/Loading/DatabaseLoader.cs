@@ -142,7 +142,7 @@ namespace Jord.Loading
 							LoadLevels((JArray)pair.Value);
 							break;
 						case "Settings":
-							_database.ModuleInfo = FirstRunLoadObject(s, (JObject)pair.Value, null, SettingsLoader.Instance);
+							_database.Settings = FirstRunLoadObject(s, (JObject)pair.Value, null, SettingsLoader.Instance);
 							break;
 						case "Map":
 							if (json.Count > 1)
@@ -152,6 +152,15 @@ namespace Jord.Loading
 
 							var map = FirstRunLoadObject(s, (JObject)pair.Value, null, MapLoader.Instance);
 							_database.Maps[map.Id] = map;
+							break;
+						case "Tileset":
+							if (json.Count > 1)
+							{
+								RaiseError($"Tileset file can have only one map entry. Source: '{s}'");
+							}
+
+							var tileset = FirstRunLoadObject(s, (JObject)pair.Value, null, TilesetLoader.Instance);
+							_database.Tilesets[tileset.Id] = tileset;
 							break;
 						default:
 							RaiseError($"Unknown object type '{key}', source '{s}'.");
@@ -192,7 +201,7 @@ namespace Jord.Loading
 			FirstRun(sources);
 
 			// Second run - resolve references
-			foreach(var action in _secondRunActions)
+			foreach (var action in _secondRunActions)
 			{
 				action(_database);
 			}

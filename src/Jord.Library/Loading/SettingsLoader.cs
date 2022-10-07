@@ -27,14 +27,23 @@ namespace Jord.Loading
 			var color = data.EnsureColor("PlayerColor");
 			var playerAppearance = new Appearance(symbolStr, color, null);
 
-			secondRunAction = null;
-
-			return new Settings
+			var result = new Settings
 			{
 				Id = data.EnsureId(),
 				PlayerAppearance = playerAppearance,
 				Font = font
 			};
+
+			secondRunAction = db => SecondRun(result, data, db);
+
+			return result;
+		}
+
+		private void SecondRun(Settings result, JObject data, Database db)
+		{
+			var tilesetId = data.EnsureString("Tileset");
+
+			result.Tileset = db.Tilesets[tilesetId];
 		}
 	}
 }

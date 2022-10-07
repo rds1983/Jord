@@ -10,7 +10,7 @@ namespace Jord.Core
 		public Slot Slot { get; }
 		public Player Player { get; }
 
-		public MapNavigationBase MapNavigationBase;
+		public MapNavigationBase MapNavigationBase { get; set; }
 
 		public GameSession(int slotIndex)
 		{

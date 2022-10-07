@@ -2,7 +2,7 @@
 
 namespace Jord.Core.Items
 {
-	public abstract class EquipInfo: BaseItemInfo
+	public abstract class EquipInfo : BaseItemInfo
 	{
 		public int ArmorClass
 		{

@@ -74,7 +74,7 @@ namespace Jord.Core
 		public string Name { get; set; }
 		public int Gold { get; set; }
 
-		public float Opacity = 1.0f;
+		public float Opacity { get; set; } = 1.0f;
 
 		public Inventory Inventory { get; } = new Inventory();
 

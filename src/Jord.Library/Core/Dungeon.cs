@@ -6,15 +6,15 @@ namespace Jord.Core
 {
 	public class Dungeon: BaseObject
 	{
-		public string GeneratorId;
+		public string GeneratorId { get; set; }
 
-		public string Name;
+		public string Name { get; set; }
 
-		public int Levels;
+		public int Levels { get; set; }
 
-		public Exit Exit;
+		public Exit Exit { get; set; }
 
-		public string ExitDownTileInfoId;
+		public string ExitDownTileInfoId { get; set; }
 
 		public Map Generate(int level)
 		{

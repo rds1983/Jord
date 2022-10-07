@@ -3,18 +3,42 @@ using System.Reflection;
 using Jord.Core;
 using Jord.Storage;
 using Jord.Utils;
+using Microsoft.Xna.Framework.Graphics;
 using Database = Jord.Core.Database;
 
 namespace Jord
 {
 	public static class TJ
 	{
+		private static Database _database;
+		private static Tileset _tileset;
+
 		public static Action<string> InfoLogHandler = Console.WriteLine;
 		public static Action<string> WarnLogHandler = Console.WriteLine;
 		public static Action<string> ErrorLogHandler = Console.WriteLine;
 		public static Action<string> GameLogHandler = Console.WriteLine;
 
-		public static Database Database { get; set; }
+		public static GraphicsDevice GraphicsDevice { get; set; }
+
+		public static Database Database
+		{
+			get => _database;
+			set
+			{
+				_database = value;
+				Tileset = _database.Settings.Tileset;
+			}
+		}
+
+		public static Tileset Tileset
+		{
+			get => _tileset;
+			set
+			{
+				_tileset = value;
+				_database.UpdateAppearances(value);
+			}
+		}
 
 		public static StorageService StorageService { get; } = new StorageService();
 

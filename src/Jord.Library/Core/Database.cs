@@ -19,14 +19,22 @@ namespace Jord.Core
 		public Dictionary<string, Dungeon> Dungeons { get; } = new Dictionary<string, Dungeon>();
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
-
-		public Settings ModuleInfo;
+		public Dictionary<string, Tileset> Tilesets { get; } = new Dictionary<string, Tileset>();
+		public Settings Settings { get; set; }
 
 		public int MaximumLevel
 		{
 			get
 			{
 				return (from v in LevelCosts.Values select v.Level).Max();
+			}
+		}
+
+		public void UpdateAppearances(Tileset tileset)
+		{
+			foreach (var pair in TileInfos)
+			{
+				pair.Value.UpdateAppearance(tileset);
 			}
 		}
 	}

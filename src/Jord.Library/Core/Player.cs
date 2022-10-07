@@ -42,7 +42,7 @@ namespace Jord.Core
 
 		public Class Class { get; set; }
 
-		public override Appearance Image => TJ.Database.ModuleInfo.PlayerAppearance;
+		public override Appearance Image => TJ.Database.Settings.PlayerAppearance;
 
 		public Equipment Equipment { get; } = new Equipment();
 

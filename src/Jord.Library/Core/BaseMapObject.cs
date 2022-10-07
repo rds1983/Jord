@@ -2,7 +2,11 @@
 {
 	public class BaseMapObject: BaseObject
 	{
-		public char Symbol;
+		public char Symbol { get; set; }
 		public Appearance Image { get; set; }
+
+		public virtual void UpdateAppearance(Tileset tileset)
+		{
+		}
 	}
 }

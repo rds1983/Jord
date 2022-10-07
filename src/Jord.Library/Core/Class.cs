@@ -9,15 +9,15 @@ namespace Jord.Core
 			get; set;
 		}
 
-		public int Gold;
+		public int Gold { get; set; }
 
 		public readonly Equipment Equipment = new Equipment();
 
-		public int HpMultiplier;
-		public int ManaMultiplier;
-		public int StaminaMultiplier;
-		public float HpRegenMultiplier;
-		public float ManaRegenMultiplier;
-		public float StaminaRegenMultiplier;
+		public int HpMultiplier { get; set; }
+		public int ManaMultiplier { get; set; }
+		public int StaminaMultiplier { get; set; }
+		public float HpRegenMultiplier { get; set; }
+		public float ManaRegenMultiplier { get; set; }
+		public float StaminaRegenMultiplier { get; set; }
 	}
 }

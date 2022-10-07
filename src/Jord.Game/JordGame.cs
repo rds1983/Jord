@@ -53,6 +53,7 @@ namespace Jord
 			base.LoadContent();
 
 			MyraEnvironment.Game = this;
+			TJ.GraphicsDevice = GraphicsDevice;
 			Desktop = new Desktop();
 
 /*			MyraEnvironment.DisableClipping = true;

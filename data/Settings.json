@@ -3,6 +3,7 @@
 		"Id": "Main",
 		"PlayerSymbol": "@",
 		"PlayerColor": "White",
+		"Tileset": "DCSS",
 		"Font": "Fonts/DroidSans.ttf",
 		"FontSize": 32
 	}

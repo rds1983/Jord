@@ -2,7 +2,7 @@
 {
 	public class AbilityRequirement
 	{
-		public Class Class;
-		public int Level;
+		public Class Class { get; set; }
+		public int Level { get; set; }
 	}
 }

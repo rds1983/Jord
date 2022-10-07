@@ -2,8 +2,8 @@
 {
 	public class HealSelf: AbilityEffect
 	{
-		public int Minimum;
-		public int Maximum;
-		public string MessageActivated;
+		public int Minimum { get; set; }
+		public int Maximum { get; set; }
+		public string MessageActivated { get; set; }
 	}
 }

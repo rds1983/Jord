@@ -194,9 +194,9 @@ namespace Jord.Core
 
 		public class BattleStats
 		{
-			public int ArmorClass;
-			public int HitRoll;
-			public AttackInfo[] Attacks;
+			public int ArmorClass { get; set; }
+			public int HitRoll { get; set; }
+			public AttackInfo[] Attacks { get; set; }
 		}
 
 		public LifeStats Life { get; } = new LifeStats();

@@ -14,7 +14,7 @@ namespace Jord.Core
 
 		public Color Color { get; private set; }
 
-		public TextureRegion TextureRegion { get; private set; }
+		public TextureRegion TextureRegion { get; set; }
 
 		public Appearance(string symbol, Color color, TextureRegion image)
 		{
@@ -41,7 +41,7 @@ namespace Jord.Core
 			}
 			else
 			{
-				var font = TJ.Database.ModuleInfo.Font;
+				var font = TJ.Database.Settings.Font;
 				var sz = font.MeasureString(Symbol);
 
 				var pos = new Vector2((int)(rect.X + (rect.Width - sz.X) / 2),
