@@ -1,0 +1,9 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="GenerateWorldDialog" OutputPath="D:\Projects\Jord\src\Jord.MapEditor\UI" />
+  <Dialog Title="Generate World..." Left="280" Top="285" Width="500">
+    <VerticalStackPanel Spacing="8">
+      <PropertyGrid Id="_properties" />
+      <Label Text="Status String" Id="_labelStatus" />
+    </VerticalStackPanel>
+  </Dialog>
+</Project>

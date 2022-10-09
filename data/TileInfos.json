@@ -30,6 +30,11 @@
 			"Symbol": "T",
 			"Color": "Green",
 		},
+		"Rock": {
+			"Passable": "False",
+			"Symbol": "^",
+			"Color": "Gray"
+		},
 		"Mountain": {
 			"Passable": "False",
 			"Symbol": "^",

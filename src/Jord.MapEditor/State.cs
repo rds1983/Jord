@@ -1,7 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
+using Myra.Utility;
 
 namespace Jord.MapEditor
 {
@@ -13,7 +15,7 @@ namespace Jord.MapEditor
 		{
 			get
 			{
-				var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), StateFileName);
+				var result = Path.Combine(PathUtils.ExecutingAssemblyDirectory, StateFileName);
 				return result;
 			}
 		}
@@ -34,12 +36,18 @@ namespace Jord.MapEditor
 			get; set;
 		}
 
+		public GenerationSettings GenerationSettings { get; set; }
+
 		public void Save()
 		{
-			using (var stream = new StreamWriter(StateFilePath, false))
+			using (var fileStream = File.Create(StateFilePath))
 			{
-				var serializer = new XmlSerializer(typeof (State));
-				serializer.Serialize(stream, this);
+				var xmlWriter = new XmlTextWriter(fileStream, Encoding.UTF8)
+				{
+					Formatting = Formatting.Indented
+				};
+				var serializer = new XmlSerializer(typeof(State));
+				serializer.Serialize(xmlWriter, this);
 			}
 		}
 
@@ -53,8 +61,8 @@ namespace Jord.MapEditor
 			State state;
 			using (var stream = new StreamReader(StateFilePath))
 			{
-				var serializer = new XmlSerializer(typeof (State));
-				state = (State) serializer.Deserialize(stream);
+				var serializer = new XmlSerializer(typeof(State));
+				state = (State)serializer.Deserialize(stream);
 			}
 
 			return state;
@@ -63,9 +71,9 @@ namespace Jord.MapEditor
 		public override string ToString()
 		{
 			return string.Format("Size = {0}\n" +
-			                     "TopSplitter = {1:0.##}\n" +
-			                     "RightSplitter= {2:0.##}\n" +
-			                     "ModulePath = {3}\n" +
+								 "TopSplitter = {1:0.##}\n" +
+								 "RightSplitter= {2:0.##}\n" +
+								 "ModulePath = {3}\n" +
 								 "MapId = {4}\n" +
 								 "CustomColors = {5}\n" +
 								 "LastFolder = {6}\n" +

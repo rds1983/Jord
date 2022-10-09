@@ -121,13 +121,7 @@ namespace Jord.UI
 
 			UpdateImage();
 
-			int x, width;
-			GetScreenHorizontal(out x, out width);
-
-			var bounds = ActualBounds;
-			bounds.X = x;
-			bounds.Width = width;
-
+			var bounds = GetMapBounds();
 			_image.Draw(context, bounds);
 
 			var topLeft = GameToScreen(TopLeft);
@@ -140,31 +134,47 @@ namespace Jord.UI
 			context.FillRectangle(rect, color);
 		}
 
-		private void GetScreenHorizontal(out int x, out int width)
+		private Rectangle GetMapBounds()
 		{
 			var bounds = ActualBounds;
 
-			width = (int)(bounds.Height * MapSizeRatio);
-			x = bounds.X + (bounds.Width - width) / 2;
+			// Keep the map size ratio
+			if (bounds.Width < bounds.Height)
+			{
+				var newHeight = bounds.Width * Map.Height / Map.Width;
+				var newY = bounds.Y + (bounds.Height - newHeight) / 2;
+				bounds.Y = newY;
+				bounds.Height = newHeight;
+			}
+			else
+			{
+				var newWidth = bounds.Height * Map.Width / Map.Height;
+				var newX = bounds.X + (bounds.Width - newWidth) / 2;
+				bounds.X = newX;
+				bounds.Width = newWidth;
+			}
+
+			return bounds;
 		}
 
 		public Point GameToScreen(Vector2 gamePosition)
 		{
-			int x, width;
-			GetScreenHorizontal(out x, out width);
+			var bounds = GetMapBounds();
 
-			return new Point(x + (int)(gamePosition.X * width / Map.Width),
-				ActualBounds.Y + (int)(gamePosition.Y * ActualBounds.Height / Map.Height));
+			return new Point(bounds.X + (int)(gamePosition.X * bounds.Width / Map.Width),
+				bounds.Y + (int)(gamePosition.Y * bounds.Height / Map.Height));
 		}
 
 		public Vector2 ScreenToGame(Point position)
 		{
 			position = ToLocal(position);
 
+			var bounds = GetMapBounds();
+
 			var tilePosition = new Vector2
 			{
-				X = position.X * Map.Width / ActualBounds.Width,
-				Y = position.Y * Map.Height / ActualBounds.Height,
+				X = (position.X - bounds.X) * Map.Width / bounds.Width,
+				Y = (position.Y - bounds.Y) * Map.Height / bounds.Height,
 			};
 
 			if (tilePosition.X < 0)

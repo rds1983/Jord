@@ -41,9 +41,12 @@ namespace Jord.Loading
 
 		private void SecondRun(Settings result, JObject data, Database db)
 		{
-			var tilesetId = data.EnsureString("Tileset");
+			var tilesetId = data.OptionalString("Tileset");
 
-			result.Tileset = db.Tilesets[tilesetId];
+			if (!string.IsNullOrEmpty(tilesetId))
+			{
+				result.Tileset = db.Tilesets[tilesetId];
+			}
 		}
 	}
 }

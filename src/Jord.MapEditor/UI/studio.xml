@@ -8,7 +8,8 @@
     <HorizontalMenu VerticalAlignment="Stretch" Id="_mainMenu">
       <MenuItem Text="&amp;File">
         <MenuItem Text="&amp;Open Module..." ShortcutText="Ctrl+O" Id="_openModuleMenuItem" />
-        <MenuItem Text="&amp;Reload Module" ShortcutText="Ctrl+R" Id="_reloadModuleMenuItem" />
+        <MenuItem Text="&amp;Reload Module" ShortcutText="Ctrl+R" Id="_reloadModuleMenuItem" />                
+        <MenuItem Text="&amp;Generate World..." ShortcutText="Ctrl+G" Id="_generateWorldMenuItem" />                
         <MenuSeparator />
         <MenuItem Text="S&amp;witch Map..." ShortcutText="Ctrl+W" Id="_switchMapMenuItem" />
         <MenuItem Text="&amp;New Map..." ShortcutText="Ctrl+N" Id="_newMapMenuItem" />

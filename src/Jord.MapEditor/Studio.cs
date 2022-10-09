@@ -24,6 +24,7 @@ namespace Jord.MapEditor
 		private string _modulePath;
 		private bool _isDirty;
 		private readonly int[] _customColors;
+		private readonly GenerationSettings _generationSettings = new GenerationSettings();
 		private DatabaseLoader _compiler;
 		private string _lastFolder;
 		private Desktop _desktop;
@@ -120,6 +121,7 @@ namespace Jord.MapEditor
 				_customColors = _state.CustomColors;
 
 				_lastFolder = _state.LastFolder;
+				_generationSettings = _state.GenerationSettings;
 			}
 			else
 			{
@@ -189,6 +191,7 @@ namespace Jord.MapEditor
 			UI = new StudioWidget();
 
 			UI._openModuleMenuItem.Selected += OpenProjectItemOnClicked;
+			UI._generateWorldMenuItem.Selected += OnGenerateWorldMenuItemSelected;
 
 			UI._switchMapMenuItem.Selected += OnSwitchMapMenuItemSelected;
 			UI._newMapMenuItem.Selected += OnNewMapSelected;
@@ -252,6 +255,14 @@ namespace Jord.MapEditor
 			_desktop.Widgets.Add(_statisticsGrid);
 
 			UpdateMenuFile();
+		}
+
+		private void OnGenerateWorldMenuItemSelected(object sender, EventArgs e)
+		{
+			var dialog = new GenerateWorldDialog();
+
+			dialog.GenerationSettings = _generationSettings;
+			dialog.ShowModal(_desktop);
 		}
 
 		private void SetNewMap(Map map)
@@ -323,7 +334,7 @@ namespace Jord.MapEditor
 						_state.LastNewMapType = 1;
 					}
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					ReportError(ex.Message);
 				}
@@ -339,107 +350,107 @@ namespace Jord.MapEditor
 			Label.Text = newText;
 		}
 
-/*		private void GenerateGlobalMap()
-		{
-			var dlg = Dialog.CreateMessageBox("Generation...", string.Empty);
-
-			dlg.ButtonOk.Enabled = false;
-			dlg.Width = 400;
-
-			Map map = null;
-
-			Task.Run(() =>
-			{
-				try
+		/*		private void GenerateGlobalMap()
 				{
-					var context = new GenerationContext
+					var dlg = Dialog.CreateMessageBox("Generation...", string.Empty);
+
+					dlg.ButtonOk.Enabled = false;
+					dlg.Width = 400;
+
+					Map map = null;
+
+					Task.Run(() =>
 					{
-						InfoHandler = (s) => SetMessageBoxText(dlg, s)
-					};
-
-					// Generate land
-					var landGenerator = new LandGenerator(context);
-					var landGeneratorConfig = new LandGeneratorConfig();
-					var generationResult = landGenerator.Generate(landGeneratorConfig);
-
-					// Generate locations
-					var locationGenerator = new LocationsGenerator(context);
-					var locationsGeneratorConfig = new LocationsGeneratorConfig();
-					locationGenerator.Generate(locationsGeneratorConfig, generationResult);
-
-					map = new Map
-					{
-						Size = new Point(landGeneratorConfig.WorldSize, landGeneratorConfig.WorldSize)
-					};
-
-					for (var i = 0; i < generationResult.Height; ++i)
-					{
-						for (var j = 0; j < generationResult.Width; ++j)
+						try
 						{
-							var tileType = generationResult.GetWorldMapTileType(j, i);
-							TileInfo tileInfo = null;
-							switch (tileType)
+							var context = new GenerationContext
 							{
-								case WorldMapTileType.Water:
-									tileInfo = TJ.Module.TileInfos["Water"];
-									break;
-								case WorldMapTileType.Mountain:
-									tileInfo = TJ.Module.TileInfos["Mountain"];
-									break;
-								case WorldMapTileType.Forest:
-									tileInfo = TJ.Module.TileInfos["Tree"];
-									break;
-								case WorldMapTileType.Road:
-									tileInfo = TJ.Module.TileInfos["Road"];
-									break;
-								case WorldMapTileType.Wall:
-									tileInfo = TJ.Module.TileInfos["Wall"];
-									break;
-								default:
-									tileInfo = TJ.Module.TileInfos["Grass"];
-									break;
+								InfoHandler = (s) => SetMessageBoxText(dlg, s)
+							};
+
+							// Generate land
+							var landGenerator = new LandGenerator(context);
+							var landGeneratorConfig = new LandGeneratorConfig();
+							var generationResult = landGenerator.Generate(landGeneratorConfig);
+
+							// Generate locations
+							var locationGenerator = new LocationsGenerator(context);
+							var locationsGeneratorConfig = new LocationsGeneratorConfig();
+							locationGenerator.Generate(locationsGeneratorConfig, generationResult);
+
+							map = new Map
+							{
+								Size = new Point(landGeneratorConfig.WorldSize, landGeneratorConfig.WorldSize)
+							};
+
+							for (var i = 0; i < generationResult.Height; ++i)
+							{
+								for (var j = 0; j < generationResult.Width; ++j)
+								{
+									var tileType = generationResult.GetWorldMapTileType(j, i);
+									TileInfo tileInfo = null;
+									switch (tileType)
+									{
+										case WorldMapTileType.Water:
+											tileInfo = TJ.Module.TileInfos["Water"];
+											break;
+										case WorldMapTileType.Mountain:
+											tileInfo = TJ.Module.TileInfos["Mountain"];
+											break;
+										case WorldMapTileType.Forest:
+											tileInfo = TJ.Module.TileInfos["Tree"];
+											break;
+										case WorldMapTileType.Road:
+											tileInfo = TJ.Module.TileInfos["Road"];
+											break;
+										case WorldMapTileType.Wall:
+											tileInfo = TJ.Module.TileInfos["Wall"];
+											break;
+										default:
+											tileInfo = TJ.Module.TileInfos["Grass"];
+											break;
+									}
+
+									var tile = new Tile();
+									tile.Info = tileInfo;
+									map.SetTileAt(new Point(j, i), tile);
+								}
 							}
 
-							var tile = new Tile();
-							tile.Info = tileInfo;
-							map.SetTileAt(new Point(j, i), tile);
+							SetMessageBoxText(dlg, "Done.");
 						}
-					}
+						catch (Exception ex)
+						{
+							SetMessageBoxText(dlg, "Error: " + ex.Message);
+						}
+						finally
+						{
+							dlg.ButtonOk.Enabled = true;
+						}
+					});
 
-					SetMessageBoxText(dlg, "Done.");
-				}
-				catch (Exception ex)
-				{
-					SetMessageBoxText(dlg, "Error: " + ex.Message);
-				}
-				finally
-				{
-					dlg.ButtonOk.Enabled = true;
-				}
-			});
-
-			dlg.Closed += (s, a) =>
-			{
-				if (!dlg.Result || map == null)
-				{
-					if (!dlg.ButtonOk.Enabled)
+					dlg.Closed += (s, a) =>
 					{
-						// Generation is still running
-						// Abort it
+						if (!dlg.Result || map == null)
+						{
+							if (!dlg.ButtonOk.Enabled)
+							{
+								// Generation is still running
+								// Abort it
 
-					}
+							}
 
-					return;
-				}
+							return;
+						}
 
-				Map = map;
+						Map = map;
 
-				FilePath = string.Empty;
-				IsDirty = false;
-			};
+						FilePath = string.Empty;
+						IsDirty = false;
+					};
 
-			dlg.ShowModal();
-		}*/
+					dlg.ShowModal();
+				}*/
 
 		private void SaveMapAsSelected(object sender, EventArgs e)
 		{
@@ -455,7 +466,8 @@ namespace Jord.MapEditor
 				if (direction == ChangeSizeDirection.Left || direction == ChangeSizeDirection.Right)
 				{
 					newSize.X += amount;
-				} else
+				}
+				else
 				{
 					newSize.Y += amount;
 				}
@@ -466,15 +478,16 @@ namespace Jord.MapEditor
 				if (direction == ChangeSizeDirection.Left)
 				{
 					startPos.X = amount;
-				} else if (direction == ChangeSizeDirection.Top)
+				}
+				else if (direction == ChangeSizeDirection.Top)
 				{
 					startPos.Y = amount;
 				}
 
 				// Copy old map
-				for(var y = 0; y < Map.Height; ++y)
+				for (var y = 0; y < Map.Height; ++y)
 				{
-					for(var x = 0; x < Map.Width; ++x)
+					for (var x = 0; x < Map.Width; ++x)
 					{
 						newMap[x + startPos.X, y + startPos.Y] = Map[x, y];
 					}
@@ -520,7 +533,8 @@ namespace Jord.MapEditor
 						}
 						break;
 				}
-			} else
+			}
+			else
 			{
 				var newSize = new Point(Map.Width, Map.Height);
 				if (direction == ChangeSizeDirection.Left || direction == ChangeSizeDirection.Right)
@@ -666,14 +680,14 @@ namespace Jord.MapEditor
 			base.Draw(gameTime);
 
 			_gcMemoryLabel.Text = string.Format("GC Memory: {0} kb", GC.GetTotalMemory(false) / 1024);
-//			_fpsLabel.Text = string.Format("FPS: {0:0.##}", _fpsCounter.FramesPerSecond);
+			//			_fpsLabel.Text = string.Format("FPS: {0:0.##}", _fpsCounter.FramesPerSecond);
 			_widgetsCountLabel.Text = string.Format("Total Widgets: {0}", _desktop.CalculateTotalWidgets(true));
 
 			GraphicsDevice.Clear(Color.Black);
 
 			_desktop.Render();
 
-//			_fpsCounter.Draw(gameTime);
+			//			_fpsCounter.Draw(gameTime);
 		}
 
 		protected override void EndRun()
@@ -686,9 +700,10 @@ namespace Jord.MapEditor
 					GraphicsDevice.PresentationParameters.BackBufferHeight),
 				TopSplitterPosition = UI._topSplitPane.GetSplitterPosition(0),
 				ModulePath = _modulePath,
-				MapId = Map != null?Map.Id:string.Empty,
+				MapId = Map != null ? Map.Id : string.Empty,
 				LastFolder = _lastFolder,
 				CustomColors = _customColors,
+				GenerationSettings = _generationSettings,
 			};
 
 			state.Save();
@@ -851,7 +866,7 @@ namespace Jord.MapEditor
 		private void UpdateTitle()
 		{
 			var title = "Jord Map Editor";
-			
+
 			if (!string.IsNullOrEmpty(_modulePath))
 			{
 				title = _modulePath;
@@ -875,6 +890,7 @@ namespace Jord.MapEditor
 
 			UI._newMapMenuItem.Enabled = moduleLoaded;
 			UI._switchMapMenuItem.Enabled = moduleLoaded;
+			UI._generateWorldMenuItem.Enabled = moduleLoaded;
 			UI._saveMapMenuItem.Enabled = moduleLoaded && Map != null;
 			UI._saveMapAsMenuItem.Enabled = moduleLoaded && Map != null;
 			UI._resizeMapMenuItem.Enabled = moduleLoaded && Map != null;

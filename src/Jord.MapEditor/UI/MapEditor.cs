@@ -137,8 +137,6 @@ namespace Jord.MapEditor.UI
 						var info = (TileInfo)Studio.Instance.UI._listBoxItems.SelectedItem.Tag;
 
 						Map[MarkPosition.Value].Info = info;
-
-						Studio.Instance.UI._mapNavigation.OnMapChanged();
 					}
 					break;
 				case 1:

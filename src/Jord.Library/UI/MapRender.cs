@@ -17,7 +17,19 @@ namespace Jord.UI
 		private Map _map;
 		private DateTime? _lastStamp;
 
-		public static Point TileSize => new Point(TJ.Tileset.Width, TJ.Tileset.Height);
+		public static Point TileSize
+		{
+			get
+			{
+				var result = new Point(32, 32);
+				if (TJ.Tileset != null)
+				{
+					result = new Point(TJ.Tileset.Width, TJ.Tileset.Height);
+				}
+
+				return result;
+			}
+		}
 
 		public SpriteFontBase Font
 		{
