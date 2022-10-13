@@ -3,6 +3,7 @@ using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
+using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using System;
 using System.Collections.Generic;
@@ -210,30 +211,68 @@ namespace Jord.UI
 
 					var isInFov = IgnoreFov || tile.IsInFov;
 					var opacity = (Map.Light || isInFov) ? 1.0f : 0.5f;
-					var appearance = tile.Info.Image;
 
-					if (isInFov)
+					TextureRegion appearance = null;
+
+					var tileAppearance = tile.Info.TileAppearance;
+					if (tileAppearance != null)
 					{
-						if (tile.Object != null)
-						{
-							appearance = tile.Object.Image;
-						}
+						appearance = tileAppearance.Default;
 
-						if (tile.Inventory.Items.Count > 0)
+						if (mapX > 0 && mapY > 0 && mapX < Map.Width - 1 && mapY < Map.Height - 1)
 						{
-							appearance = tile.Inventory.Items[0].Item.Info.Image;
-						}
+							foreach (var choice in tileAppearance.Choices)
+							{
+								var fits = true;
+								foreach (var condition in choice.Conditions)
+								{
+									var delta = condition.Direction.GetDelta();
+									var nx = mapX + delta.X;
+									var ny = mapY + delta.Y;
 
-						if (tile.Creature != null)
-						{
-							screen = GameToScreen(tile.Creature.DisplayPosition);
-							appearance = tile.Creature.Image;
-							opacity = tile.Creature.Opacity;
+									if ((condition.Is && Map[nx, ny].Info.Id != condition.TileInfoId) ||
+										(!condition.Is && Map[nx, ny].Info.Id == condition.TileInfoId))
+									{
+										fits = false;
+										break;
+									}
+								}
+
+								if (fits)
+								{
+									appearance = choice.Image;
+									break;
+								}
+							}
 						}
 					}
 
+					/*					if (isInFov)
+										{
+											if (tile.Object != null)
+											{
+												appearance = tile.Object.Image;
+											}
+
+											if (tile.Inventory.Items.Count > 0)
+											{
+												appearance = tile.Inventory.Items[0].Item.Info.Image;
+											}
+
+											if (tile.Creature != null)
+											{
+												screen = GameToScreen(tile.Creature.DisplayPosition);
+												appearance = tile.Creature.Image;
+												opacity = tile.Creature.Opacity;
+											}
+										}*/
+
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
-					appearance.Draw(context, rect, opacity);
+
+					if (appearance != null)
+					{
+						appearance.Draw(context, rect, Color.White * opacity);
+					}
 
 					if (!string.IsNullOrEmpty(tile.Sign))
 					{

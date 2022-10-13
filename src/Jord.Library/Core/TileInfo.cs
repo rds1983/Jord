@@ -1,6 +1,4 @@
-﻿using Myra.Graphics2D.TextureAtlases;
-
-namespace Jord.Core
+﻿namespace Jord.Core
 {
 	public class TileInfo : BaseMapObject
 	{
@@ -10,16 +8,18 @@ namespace Jord.Core
 
 		public bool IsWalkable => Passable;
 
+		public TilesetTileInfo TileAppearance { get; set; }
+
 		public override void UpdateAppearance(Tileset tileset)
 		{
 			base.UpdateAppearance(tileset);
 
 			if (tileset != null)
 			{
-				TextureRegion image;
+				TilesetTileInfo image;
 				if (tileset.TileImages.TryGetValue(Id, out image))
 				{
-					Image.TextureRegion = image;
+					TileAppearance = image;
 				}
 				else
 				{
