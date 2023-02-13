@@ -32,6 +32,7 @@ namespace Jord
 		public static Tileset Tileset => _database.Tileset;
 
 		public static StorageService StorageService { get; } = new StorageService();
+		public static ActivityService ActivityService { get; } = new ActivityService();
 
 		public static GameSession Session { get; set; }
 

@@ -38,6 +38,7 @@ namespace Jord.Core
 				}
 			}
 		}
+
 		public Point Position
 		{
 			get => _position;

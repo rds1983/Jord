@@ -5,6 +5,8 @@ namespace Jord.Core
 {
 	partial class Creature
 	{
+		private const int MovementDurationInMs = 100;
+
 		public void SetPosition(Point position)
 		{
 			var currentTile = Map[Position];
@@ -16,8 +18,16 @@ namespace Jord.Core
 				currentTile.Creature = null;
 			}
 
+			var oldPosition = Position.ToVector2();
 			Position = position;
-			DisplayPosition = position.ToVector2();
+
+			TJ.ActivityService.AddActivity(passed =>
+			{
+				var part = (float)passed / MovementDurationInMs;
+				DisplayPosition = oldPosition + (Position.ToVector2() - oldPosition) * part;
+			},
+			() => DisplayPosition = Position.ToVector2(),
+			MovementDurationInMs);
 		}
 
 		public bool MoveTo(Point delta)
@@ -72,9 +82,9 @@ namespace Jord.Core
 			Tile exitTile = null;
 
 			var previousMap = Map;
-			
+
 			Map map;
-			
+
 			if (TJ.Database.Dungeons.ContainsKey(Tile.Exit.MapId))
 			{
 				var dungeon = TJ.Database.Dungeons.Ensure(Tile.Exit.MapId);

@@ -134,6 +134,13 @@ namespace Jord
 			UpdateStats();
 		}
 
+		protected override void Update(GameTime gameTime)
+		{
+			base.Update(gameTime);
+
+			TJ.ActivityService.Update();
+		}
+
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);

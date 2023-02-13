@@ -85,6 +85,11 @@ namespace Jord.UI
 
 		private void UpdateKeyboardInput()
 		{
+			if (TJ.ActivityService.IsBusy)
+			{
+				return;
+			}
+
 			_downKeys = Keyboard.GetState().GetPressedKeys();
 
 			if (_downKeys != null && _lastDownKeys != null)
