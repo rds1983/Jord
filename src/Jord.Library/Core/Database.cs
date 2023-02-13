@@ -35,11 +35,6 @@ namespace Jord.Core
 				{
 					pair.Value.UpdateAppearance(value);
 				}
-
-				foreach(var pair in Maps)
-				{
-					pair.Value.UpdateTilesAppearances();
-				}
 			}
 		}
 

@@ -116,8 +116,6 @@ namespace Jord.Core
 				}
 			}
 
-			map.UpdateTilesAppearances();
-
 			return map;
 		}
 	}
