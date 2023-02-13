@@ -212,66 +212,33 @@ namespace Jord.UI
 					var isInFov = IgnoreFov || tile.IsInFov;
 					var opacity = (Map.Light || isInFov) ? 1.0f : 0.5f;
 
-					TextureRegion appearance = null;
+					var appearance = tile.Appearance;
 
-					var tileAppearance = tile.Info.TileAppearance;
-					if (tileAppearance != null)
+					if (isInFov)
 					{
-						appearance = tileAppearance.Default;
-
-						if (mapX > 0 && mapY > 0 && mapX < Map.Width - 1 && mapY < Map.Height - 1)
+						if (tile.Object != null)
 						{
-							foreach (var choice in tileAppearance.Choices)
-							{
-								var fits = true;
-								foreach (var condition in choice.Conditions)
-								{
-									var delta = condition.Direction.GetDelta();
-									var nx = mapX + delta.X;
-									var ny = mapY + delta.Y;
+							appearance = tile.Object.Image;
+						}
 
-									if ((condition.Is && Map[nx, ny].Info.Id != condition.TileInfoId) ||
-										(!condition.Is && Map[nx, ny].Info.Id == condition.TileInfoId))
-									{
-										fits = false;
-										break;
-									}
-								}
+						if (tile.Inventory.Items.Count > 0)
+						{
+							appearance = tile.Inventory.Items[0].Item.Info.Image;
+						}
 
-								if (fits)
-								{
-									appearance = choice.Image;
-									break;
-								}
-							}
+						if (tile.Creature != null)
+						{
+							screen = GameToScreen(tile.Creature.DisplayPosition);
+							appearance = tile.Creature.Image;
+							opacity = tile.Creature.Opacity;
 						}
 					}
-
-					/*					if (isInFov)
-										{
-											if (tile.Object != null)
-											{
-												appearance = tile.Object.Image;
-											}
-
-											if (tile.Inventory.Items.Count > 0)
-											{
-												appearance = tile.Inventory.Items[0].Item.Info.Image;
-											}
-
-											if (tile.Creature != null)
-											{
-												screen = GameToScreen(tile.Creature.DisplayPosition);
-												appearance = tile.Creature.Image;
-												opacity = tile.Creature.Opacity;
-											}
-										}*/
 
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
 
 					if (appearance != null)
 					{
-						appearance.Draw(context, rect, Color.White * opacity);
+						appearance.Draw(context, rect, opacity);
 					}
 
 					if (!string.IsNullOrEmpty(tile.Sign))

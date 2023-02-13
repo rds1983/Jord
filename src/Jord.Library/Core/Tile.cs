@@ -54,13 +54,15 @@ namespace Jord.Core
 		public bool IsInFov { get; set; }
 		public bool IsExplored { get; set; }
 
-		public bool Highlighted;
+		public bool Highlighted { get; set; }
 
-		public Exit Exit;
+		public Exit Exit { get; set; }
 
-		public string Sign;
+		public string Sign { get; set; }
 
 		public readonly Inventory Inventory = new Inventory();
+
+		public Appearance Appearance { get; set; }
 
 		public Tile()
 		{

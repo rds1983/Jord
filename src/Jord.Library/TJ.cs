@@ -11,7 +11,6 @@ namespace Jord
 	public static class TJ
 	{
 		private static Database _database;
-		private static Tileset _tileset;
 
 		public static Action<string> InfoLogHandler = Console.WriteLine;
 		public static Action<string> WarnLogHandler = Console.WriteLine;
@@ -26,19 +25,11 @@ namespace Jord
 			set
 			{
 				_database = value;
-				Tileset = _database.Settings.Tileset;
+				_database.Tileset = _database.Settings.Tileset;
 			}
 		}
 
-		public static Tileset Tileset
-		{
-			get => _tileset;
-			set
-			{
-				_tileset = value;
-				_database.UpdateAppearances(value);
-			}
-		}
+		public static Tileset Tileset => _database.Tileset;
 
 		public static StorageService StorageService { get; } = new StorageService();
 

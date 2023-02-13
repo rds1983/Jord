@@ -1,7 +1,9 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
+using Jord.Utils;
 using Microsoft.Xna.Framework;
+using Myra.Graphics2D.TextureAtlases;
 using System;
 using System.Collections.Generic;
 
@@ -43,7 +45,7 @@ namespace Jord.Core
 		}
 
 		public bool Explored { get; set; }
-		
+
 		public bool Light { get; set; }
 
 		public bool Local { get; set; }
@@ -153,6 +155,53 @@ namespace Jord.Core
 					}
 				}
 			}
+		}
+
+		public void UpdateTilesAppearances()
+		{
+			for (var mapX = 0; mapX < Width; ++mapX)
+			{
+				for (var mapY = 0; mapY < Height; ++mapY)
+				{
+					var tile = this[mapX, mapY];
+
+					TextureRegion appearance = null;
+					var tileAppearance = tile.Info.TileAppearance;
+					if (tileAppearance != null)
+					{
+						appearance = tileAppearance.Default;
+						if (mapX > 0 && mapY > 0 && mapX < Width - 1 && mapY < Height - 1)
+						{
+							foreach (var choice in tileAppearance.Choices)
+							{
+								var fits = true;
+								foreach (var condition in choice.Conditions)
+								{
+									var delta = condition.Direction.GetDelta();
+									var nx = mapX + delta.X;
+									var ny = mapY + delta.Y;
+
+									if ((condition.Is && this[nx, ny].Info.Id != condition.TileInfoId) ||
+										(!condition.Is && this[nx, ny].Info.Id == condition.TileInfoId))
+									{
+										fits = false;
+										break;
+									}
+								}
+
+								if (fits)
+								{
+									appearance = choice.Image;
+									break;
+								}
+							}
+						}
+					}
+
+					tile.Appearance = new Appearance(tile.Info.Image.Symbol, tile.Info.Image.Color, appearance);
+				}
+			}
+
 		}
 	}
 }

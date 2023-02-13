@@ -9,6 +9,8 @@ namespace Jord.Core
 {
 	public class Database
 	{
+		private Tileset _tileset;
+
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, TileObject> TileObjects { get; } = new Dictionary<string, TileObject>();
 		public Dictionary<string, Class> Classes { get; } = new Dictionary<string, Class>();
@@ -22,19 +24,30 @@ namespace Jord.Core
 		public Dictionary<string, Tileset> Tilesets { get; } = new Dictionary<string, Tileset>();
 		public Settings Settings { get; set; }
 
+		public Tileset Tileset
+		{
+			get => _tileset;
+			set
+			{
+				_tileset = value;
+				
+				foreach(var pair in TileInfos)
+				{
+					pair.Value.UpdateAppearance(value);
+				}
+
+				foreach(var pair in Maps)
+				{
+					pair.Value.UpdateTilesAppearances();
+				}
+			}
+		}
+
 		public int MaximumLevel
 		{
 			get
 			{
 				return (from v in LevelCosts.Values select v.Level).Max();
-			}
-		}
-
-		public void UpdateAppearances(Tileset tileset)
-		{
-			foreach (var pair in TileInfos)
-			{
-				pair.Value.UpdateAppearance(tileset);
 			}
 		}
 	}
