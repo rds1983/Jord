@@ -27,6 +27,7 @@ namespace Jord.Core
 				}
 
 				_info = value;
+				ResetAppearance();
 			}
 		}
 
@@ -115,12 +116,16 @@ namespace Jord.Core
 
 				return _appearance;
 			}
-
 		}
 
 		public Tile(Map map)
 		{
 			_map = map ?? throw new ArgumentNullException(nameof(map));
+		}
+
+		public void ResetAppearance()
+		{
+			_appearance = null;
 		}
 	}
 }

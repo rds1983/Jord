@@ -6,8 +6,7 @@ namespace Jord.Core
 	public enum CreatureType
 	{
 		Enemy,
-		Merchant,
-		Instructor
+		Merchant
 	}
 
 	public class LootInfo

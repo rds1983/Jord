@@ -74,8 +74,7 @@ namespace Jord.Loading
 			{
 				var levelCost = new LevelCost(
 					levelObject.EnsureInt("Level"),
-					levelObject.EnsureInt("Experience"),
-					levelObject.EnsureInt("Gold")
+					levelObject.EnsureInt("Experience")
 				);
 
 				_database.LevelCosts[levelCost.Level] = levelCost;

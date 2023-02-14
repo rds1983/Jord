@@ -160,52 +160,7 @@ namespace Jord.UI
 					var dialog = new TradeDialog(player, asNpc);
 					dialog.ShowModal(Desktop);
 					break;
-				case CreatureType.Instructor:
-					Dialog messageBox;
 
-					if (player.Level < TJ.Database.MaximumLevel)
-					{
-						var nextLevel = TJ.Database.LevelCosts[player.Level + 1];
-						if (nextLevel.Experience <= player.Experience && nextLevel.Gold <= player.Gold)
-						{
-							var str = Strings.BuildNextLevelOffer(player.Experience, player.Gold,
-								nextLevel.Experience, nextLevel.Gold);
-
-							messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, str);
-							messageBox.Closed += (s, a) =>
-							{
-								if (!messageBox.Result)
-								{
-									return;
-								}
-
-									// Level up
-									player.Experience -= nextLevel.Experience;
-								player.Gold -= nextLevel.Gold;
-								player.Level++;
-
-								TJ.GameLog(Strings.BuildNextLevel(player.Level, player.ClassPointsLeft));
-							};
-						}
-						else
-						{
-							var str = Strings.BuildNextLevelRequirements(player.Experience, player.Gold,
-								nextLevel.Experience, nextLevel.Gold);
-
-							messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, str);
-							messageBox.ButtonCancel.Visible = false;
-						}
-					}
-					else
-					{
-						messageBox = Dialog.CreateMessageBox(Strings.InstructorCaption, Strings.ReachedMaximumLevel);
-						messageBox.ButtonCancel.Visible = false;
-					}
-
-					messageBox.DragDirection = DragDirection.None;
-					messageBox.ShowModal(Desktop);
-
-					break;
 				default:
 					handled = false;
 					break;

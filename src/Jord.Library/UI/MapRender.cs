@@ -97,9 +97,6 @@ namespace Jord.UI
 					result = "$";
 					color = Color.Gold;
 					break;
-				case CreatureType.Instructor:
-					result = "^";
-					break;
 			}
 
 			return result;

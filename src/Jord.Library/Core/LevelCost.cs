@@ -4,13 +4,11 @@
 	{
 		public int Level { get; }
 		public int Experience { get; }
-		public int Gold { get; }
-
-		internal LevelCost(int level, int experience, int gold)
+		
+		internal LevelCost(int level, int experience)
 		{
 			Level = level;
 			Experience = experience;
-			Gold = gold;
 		}
 	}
 }

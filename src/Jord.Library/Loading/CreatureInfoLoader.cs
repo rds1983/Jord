@@ -25,10 +25,7 @@ namespace Jord.Loading
 				result.DungeonFilter = dungeonFilter;
 			}
 
-			if (result.CreatureType != CreatureType.Instructor)
-			{
-				result.Gold = data.OptionalInt("Gold");
-			}
+			result.Gold = data.OptionalInt("Gold");
 
 			if (result.CreatureType == CreatureType.Enemy)
 			{

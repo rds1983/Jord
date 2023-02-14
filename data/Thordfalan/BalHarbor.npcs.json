@@ -18,13 +18,6 @@
 			},
 			"Symbol": "p",
 			"Color": "Blue",
-		},
-		"BalHarborInstructor": {
-			"Name": "Instructor",
-			"Image": "CreatureInstructor",
-			"Type": "Instructor",
-			"Symbol": "p",
-			"Color": "Green",
 		}
 	}
 }

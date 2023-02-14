@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Jord.Utils;
 
 namespace Jord.Core
@@ -50,20 +51,21 @@ namespace Jord.Core
 			var oldPosition = Position.ToVector2();
 			var halfPosition = oldPosition + (target.DisplayPosition - oldPosition) * 0.5f;
 
-			TJ.ActivityService.AddOrderedActivity(part =>
+			void onUpdate(float part)
 			{
 				if (part < 0.5f)
 				{
 					// Movement towards target
 					DisplayPosition = oldPosition + (target.DisplayPosition - oldPosition) * part;
-				} else
+				}
+				else
 				{
 					// Movement back
 					DisplayPosition = halfPosition + (oldPosition - halfPosition) * part;
 				}
-			},
-			() => DisplayPosition = oldPosition,
-			AttackDurationInMs);
+			}
+
+			TJ.ActivityService.AddOrderedActivity(onUpdate, () => DisplayPosition = oldPosition, AttackDurationInMs);
 		}
 	}
 }

@@ -21,8 +21,6 @@ namespace Jord.UI
 				var nextLevel = TJ.Database.LevelCosts[player.Level + 1];
 				_labelExperience.Text = Experience(string.Format("{0}/{1}",
 					player.Experience.FormatNumber(), nextLevel.Experience.FormatNumber()));
-				_labelGold.Text = Gold(string.Format("{0}/{1}",
-					player.Gold.FormatNumber(), nextLevel.Gold.FormatNumber()));
 			}
 			else
 			{

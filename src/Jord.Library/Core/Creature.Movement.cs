@@ -21,12 +21,12 @@ namespace Jord.Core
 			var oldPosition = Position.ToVector2();
 			Position = position;
 
-			TJ.ActivityService.AddParallelActivity(part =>
+			void onUpdate(float part)
 			{
 				DisplayPosition = oldPosition + (Position.ToVector2() - oldPosition) * part;
-			},
-			() => DisplayPosition = Position.ToVector2(),
-			MovementDurationInMs);
+			}
+
+			TJ.ActivityService.AddParallelActivity(onUpdate, () => DisplayPosition = Position.ToVector2(), MovementDurationInMs);
 		}
 
 		public bool MoveTo(Point delta)

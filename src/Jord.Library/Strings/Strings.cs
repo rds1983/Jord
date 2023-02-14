@@ -18,22 +18,6 @@
 			return number.ToString();
 		}
 
-		public static string BuildNextLevelRequirements(int experience, int gold,
-			int nextLevelExperience, int nextLevelGold)
-		{
-			return string.Format("Your experience: {0}, your gold: {1}.\nYou need {2} experience and {3} gold for the next level.",
-				FormatNumber(experience), FormatNumber(gold),
-				FormatNumber(nextLevelExperience), FormatNumber(nextLevelGold));
-		}
-
-		public static string BuildNextLevelOffer(int experience, int gold,
-			int nextLevelExperience, int nextLevelGold)
-		{
-			return string.Format("Your experience: {0}, your gold: {1}.\nWould you like to gain next level for {2} experience and {3} gold?",
-				FormatNumber(experience), FormatNumber(gold),
-				FormatNumber(nextLevelExperience), FormatNumber(nextLevelGold));
-		}
-
 		public static string BuildNextLevel(int newLevel, int classPointsLeft)
 		{
 			return string.Format("Welcome to the level {0}! 1 class point had been awarded. Total class points: {1}.", newLevel, classPointsLeft);
