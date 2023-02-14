@@ -5,6 +5,8 @@ namespace Jord.Core
 {
 	partial class Creature
 	{
+		private const int AttackDurationInMs = 200;
+
 		protected virtual void OnKilledTarget(Creature target)
 		{
 		}
@@ -44,6 +46,24 @@ namespace Jord.Core
 					}
 				}
 			}
+
+			var oldPosition = Position.ToVector2();
+			var halfPosition = oldPosition + (target.DisplayPosition - oldPosition) * 0.5f;
+
+			TJ.ActivityService.AddOrderedActivity(part =>
+			{
+				if (part < 0.5f)
+				{
+					// Movement towards target
+					DisplayPosition = oldPosition + (target.DisplayPosition - oldPosition) * part;
+				} else
+				{
+					// Movement back
+					DisplayPosition = halfPosition + (oldPosition - halfPosition) * part;
+				}
+			},
+			() => DisplayPosition = oldPosition,
+			AttackDurationInMs);
 		}
 	}
 }

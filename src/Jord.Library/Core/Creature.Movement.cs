@@ -21,9 +21,8 @@ namespace Jord.Core
 			var oldPosition = Position.ToVector2();
 			Position = position;
 
-			TJ.ActivityService.AddActivity(passed =>
+			TJ.ActivityService.AddParallelActivity(part =>
 			{
-				var part = (float)passed / MovementDurationInMs;
 				DisplayPosition = oldPosition + (Position.ToVector2() - oldPosition) * part;
 			},
 			() => DisplayPosition = Position.ToVector2(),
