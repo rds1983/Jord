@@ -27,20 +27,26 @@
 		},
 	},
     "Perks": {
+		"Properties": {
+			"Category": "Melee"
+		},
         "BaseMelee": {
 			"Name": "Base Melee",
             "Description": "Basic knowledge of the melee fighting. Grants additional attack per turn and +2 to the attack roll.",
+			"Tier": 1,
             "AddsEffects": "PerkBaseMelee"
         },
         "OneHandedWeapons": {
 			"Name": "One-Handed Weapons",
             "Description": "Grants +2 to the attack roll when using a one-handed weapon.",
+			"Tier": 2,
             "AddsEffects": "PerkOneHandedWeapons",
 			"RequiresPerks": "BaseMelee"
         },
         "TwoHandedWeapons": {
 			"Name": "Two-Handed Weapons",
             "Description": "Grants +2 to the attack roll when using a two-handed weapon.",
+			"Tier": 2,
             "AddsEffects": "PerkTwoHandedWeapons",
 			"RequiresPerks": "BaseMelee"
         },

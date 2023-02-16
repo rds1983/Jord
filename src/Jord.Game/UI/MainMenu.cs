@@ -80,13 +80,14 @@ namespace Jord.UI
 					{
 						Name = dlg._textName.Text,
 						Level = 1,
-						ClassLevels = new Dictionary<string, int>
-						{
-							[cls.Id] = 1
-						},
 						ClassId = cls.Id,
 						Gold = cls.Gold
 					};
+
+					if (cls.Perks != null && cls.Perks.Length > 0)
+					{
+						data.Perks.AddRange(cls.Perks);
+					}
 
 					foreach(var pair in cls.Equipment.Items)
 					{

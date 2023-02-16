@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Jord.Core;
 using Jord.Core.Items;
+using Jord.Core.Abilities;
 
 namespace Jord.Storage
 {
@@ -12,7 +13,7 @@ namespace Jord.Storage
 		public string ClassId { get; set; }
 		public int Level { get; set; }
 
-		public Dictionary<string, int> ClassLevels { get; set; }
+		public List<Perk> Perks { get; set; }
 
 		public int Experience { get; set; }
 		public int Gold { get; set; }
@@ -28,12 +29,12 @@ namespace Jord.Storage
 		{
 		}
 
-		public PlayerData(Player player): this()
+		public PlayerData(Player player) : this()
 		{
 			Name = player.Name;
 			ClassId = player.Class.Id;
 			Level = player.Level;
-			ClassLevels = player.ClassLevels;
+			Perks = player.Perks;
 			Experience = player.Experience;
 			Gold = player.Gold;
 
@@ -67,12 +68,9 @@ namespace Jord.Storage
 				Gold = Gold
 			};
 
-			if (ClassLevels != null)
+			if (Perks != null)
 			{
-				foreach(var pair in ClassLevels)
-				{
-					result.ClassLevels[pair.Key] = pair.Value;
-				}
+				result.Perks.AddRange(Perks);
 			}
 
 			foreach (var pair in Inventory)
@@ -80,7 +78,7 @@ namespace Jord.Storage
 				result.Inventory.Add(new Item(TJ.Database.ItemInfos[pair.Key]), pair.Value);
 			}
 
-			foreach(var pair in Equipment)
+			foreach (var pair in Equipment)
 			{
 				result.Equipment.Equip(new Item(TJ.Database.ItemInfos[pair.Value]));
 			}

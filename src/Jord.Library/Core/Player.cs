@@ -36,7 +36,7 @@ namespace Jord.Core
 			}
 		}
 
-		public Dictionary<string, int> ClassLevels { get; } = new Dictionary<string, int>();
+		public List<Perk> Perks { get; } = new List<Perk>();
 
 		public int Experience { get; set; }
 
@@ -57,19 +57,11 @@ namespace Jord.Core
 			}
 		}
 
-		public int ClassPointsLeft
+		public int PerkPointsLeft
 		{
 			get
 			{
-				return Level - (from v in ClassLevels.Values select v).Sum();
-			}
-		}
-
-		public int PrimaryClassLevel
-		{
-			get
-			{
-				return GetClassLevel(Class.Id);
+				return Level - Perks.Count;
 			}
 		}
 
@@ -160,18 +152,6 @@ namespace Jord.Core
 		public void Invalidate()
 		{
 			_dirty = true;
-		}
-
-		public int GetClassLevel(string classId)
-		{
-			int result = 0;
-			ClassLevels.TryGetValue(classId, out result);
-			return result;
-		}
-
-		public void SetClassLevel(string classId, int level)
-		{
-			ClassLevels[classId] = level;
 		}
 
 		public AbilityInfo[] BuildFreeAbilities()

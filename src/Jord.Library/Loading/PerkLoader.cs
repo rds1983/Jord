@@ -15,8 +15,15 @@ namespace Jord.Loading
 			var result = new Perk
 			{
 				Name = data.EnsureString("Name"),
-				Description = data.EnsureString("Description")
+				Description = data.EnsureString("Description"),
+				Tier = data.EnsureInt("Tier")
 			};
+
+			string category;
+			if (properties != null && properties.TryGetValue("Category", out category))
+			{
+				result.Category = category;
+			}
 
 			var addsEffectsIds = new List<string>();
 			var addsEffectsObject = data.Optional("AddsEffects");
