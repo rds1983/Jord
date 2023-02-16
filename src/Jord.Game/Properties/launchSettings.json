@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Jord.Game.FNA.Core": {
+      "commandName": "Project",
+      "commandLineArgs": "/start:0"
+    }
+  }
+}

@@ -2,16 +2,11 @@
 
 namespace Jord.Core.Abilities
 {
-	public enum BonusType
+	public class Effect: BaseObject
 	{
-		Attacks,
-		HitRoll,
-		OneHandedHitRoll,
-		TwoHandedHitRoll
-	}
-
-	public class Bonus : AbilityEffect
-	{
+		public string Name { get; set; }
+		public AbilityType Type { get; set; }
+		public string Description { get; set; }
 		public Dictionary<BonusType, int> Bonuses { get; } = new Dictionary<BonusType, int>();
 	}
 }

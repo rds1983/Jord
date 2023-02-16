@@ -1,0 +1,48 @@
+﻿{
+	"Effects": {
+		"PerkBaseMelee": {
+			"Name": "Base Melee",
+			"Type": "Permanent",
+            "Description": "Grants additional attack per turn and +2 to the attack roll.",
+            "Bonuses": {
+                "Attacks": 1,
+				"HitRoll": 2
+            }
+		},
+		"PerkOneHandedWeapons": {
+			"Name": "One-Handed Weapons",
+			"Type": "Permanent",
+            "Description": "Grants +2 to the attack roll when using a one-handed weapon.",
+            "Bonuses": {
+				"OneHandedHitRoll": 2
+            }
+		},
+		"PerkTwoHandedWeapons": {
+			"Name": "Two-Handed Weapons",
+			"Type": "Permanent",
+            "Description": "Grants +2 to the attack roll when using a two-handed weapon.",
+            "Bonuses": {
+				"TwoHandedHitRoll": 2
+            }
+		},
+	},
+    "Perks": {
+        "BaseMelee": {
+			"Name": "Base Melee",
+            "Description": "Basic knowledge of the melee fighting. Grants additional attack per turn and +2 to the attack roll.",
+            "AddsEffects": "PerkBaseMelee"
+        },
+        "OneHandedWeapons": {
+			"Name": "One-Handed Weapons",
+            "Description": "Grants +2 to the attack roll when using a one-handed weapon.",
+            "AddsEffects": "PerkOneHandedWeapons",
+			"RequiresPerks": "BaseMelee"
+        },
+        "TwoHandedWeapons": {
+			"Name": "Two-Handed Weapons",
+            "Description": "Grants +2 to the attack roll when using a two-handed weapon.",
+            "AddsEffects": "PerkTwoHandedWeapons",
+			"RequiresPerks": "BaseMelee"
+        },
+    }
+}

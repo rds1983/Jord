@@ -137,6 +137,12 @@ namespace Jord.Loading
 						case "Dungeons":
 							FirstRunDictionary(s, (JObject)pair.Value, DungeonLoader.Instance, _database.Dungeons);
 							break;
+						case "Effects":
+							FirstRunDictionary(s, (JObject)pair.Value, EffectLoader.Instance, _database.Effects);
+							break;
+						case "Perks":
+							FirstRunDictionary(s, (JObject)pair.Value, PerkLoader.Instance, _database.Perks);
+							break;
 						case "Levels":
 							LoadLevels((JArray)pair.Value);
 							break;

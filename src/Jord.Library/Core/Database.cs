@@ -22,6 +22,8 @@ namespace Jord.Core
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
 		public Dictionary<string, Tileset> Tilesets { get; } = new Dictionary<string, Tileset>();
+		public Dictionary<string, Effect> Effects { get; } = new Dictionary<string, Effect>();
+		public Dictionary<string, Perk> Perks { get; } = new Dictionary<string, Perk>();
 		public Settings Settings { get; set; }
 
 		public Tileset Tileset
@@ -30,8 +32,8 @@ namespace Jord.Core
 			set
 			{
 				_tileset = value;
-				
-				foreach(var pair in TileInfos)
+
+				foreach (var pair in TileInfos)
 				{
 					pair.Value.UpdateAppearance(value);
 				}

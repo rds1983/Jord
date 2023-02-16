@@ -14,7 +14,8 @@
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",
 				"Shield": "Shield"
-			}
+			},
+			"Perks": "BaseMelee"
 		},
 		"Cleric": {
 			"Name": "Cleric",
