@@ -6,7 +6,7 @@ namespace Jord.Core
 {
 	partial class Creature
 	{
-		private const int AttackDurationInMs = 200;
+		private const int AttackDurationInMs = 100;
 
 		protected virtual void OnKilledTarget(Creature target)
 		{

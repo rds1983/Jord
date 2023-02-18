@@ -61,7 +61,7 @@ namespace Jord.Core
 		{
 			get
 			{
-				return Level - Perks.Count;
+				return 1 + Level - Perks.Count;
 			}
 		}
 

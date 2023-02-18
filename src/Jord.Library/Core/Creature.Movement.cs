@@ -5,7 +5,7 @@ namespace Jord.Core
 {
 	partial class Creature
 	{
-		private const int MovementDurationInMs = 100;
+		private const int MovementDurationInMs = 50;
 
 		public void SetPosition(Point position)
 		{

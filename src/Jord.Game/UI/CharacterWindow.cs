@@ -2,6 +2,7 @@ using Jord.Core.Abilities;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
+using Myra.Utility;
 using System.Collections.Generic;
 
 namespace Jord.UI
@@ -55,6 +56,8 @@ namespace Jord.UI
 			{
 				BuildCategoryTab(pair.Key, pair.Value);
 			}
+
+			UpdateLabelPerkPoints();
 		}
 
 		private void BuildCategoryTab(string category, List<Perk> perks)
@@ -129,6 +132,13 @@ namespace Jord.UI
 						Widget = buttonPerk,
 						Perk = perk
 					});
+
+					if (TJ.Player.Perks.Contains(perk))
+					{
+						buttonPerk.IsPressed = true;
+					}
+
+					buttonPerk.PressedChangingByUser += ButtonHandler;
 				}
 
 				topPanel.Widgets.Add(tierPanel);
@@ -142,6 +152,46 @@ namespace Jord.UI
 			};
 
 			_tabControlMain.Items.Add(tabItem);
+		}
+
+		private void ButtonHandler(object sender, ValueChangingEventArgs<bool> args)
+		{
+			var buttonPerk = (TextButton)sender;
+			if (buttonPerk.IsPressed)
+			{
+				// The perk was already taken
+				args.Cancel = true;
+				return;
+			}
+
+			if (TJ.Player.PerkPointsLeft == 0)
+			{
+				// No perk points left
+				var message = Dialog.CreateMessageBox("Take Perk", "No perk points left");
+				message.ShowModal(Desktop);
+
+				args.Cancel = true;
+				return;
+			}
+
+			var perk = (Perk)buttonPerk.Tag;
+
+			var confirmationDialog = Dialog.CreateMessageBox("Take Perk", $"Are you sure you want to spend a perk point for '{perk.Name}'?");
+			confirmationDialog.ShowModal(Desktop);
+
+			confirmationDialog.Closed += (s, a) =>
+			{
+				if (!confirmationDialog.Result)
+				{
+					return;
+				}
+
+				TJ.Player.Perks.Add(perk);
+				buttonPerk.IsPressed = true;
+				UpdateLabelPerkPoints();
+			};
+
+			args.Cancel = true;
 		}
 
 		public override void InternalRender(RenderContext context)
@@ -161,6 +211,11 @@ namespace Jord.UI
 
 				context.DrawLine(start, end, Color.Green, 2);
 			}
+		}
+
+		private void UpdateLabelPerkPoints()
+		{
+			_labelPerkPoints.Text = $"Perk Points Left: {TJ.Player.PerkPointsLeft}";
 		}
 	}
 }
