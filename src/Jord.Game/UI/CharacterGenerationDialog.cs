@@ -10,12 +10,12 @@ namespace Jord.UI
 		{
 			BuildUI();
 
-			_comboClass.Items.Clear();
+/*			_comboClass.Items.Clear();
 			foreach (var cls in TJ.Database.Classes)
 			{
 				_comboClass.Items.Add(new ListItem(cls.Value.Name, null, cls.Value));
 			}
-			_comboClass.SelectedIndex = 0;
+			_comboClass.SelectedIndex = 0;*/
 
 			_textName.TextChanged += _textName_TextChanged;
 

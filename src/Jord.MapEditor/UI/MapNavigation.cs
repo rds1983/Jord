@@ -29,16 +29,18 @@ namespace Jord.MapEditor.UI
 			}
 		}
 
-		public override void OnTouchDown()
+		public override bool OnTouchDown()
 		{
-			base.OnTouchDown();
+			var result = base.OnTouchDown();
 
 			if (Map == null)
 			{
-				return;
+				return result;
 			}
 
 			ProcessMouseDown();
+
+			return result;
 		}
 
 		private Vector2 FixPos(Vector2 pos)

@@ -75,7 +75,8 @@ namespace Jord.UI
 						return;
 					}
 
-					var cls = (Class) dlg._comboClass.SelectedItem.Tag; 
+					// var cls = (Class) dlg._comboClass.SelectedItem.Tag;
+					var cls = TJ.Database.Classes.First().Value;
 					var data = new PlayerData
 					{
 						Name = dlg._textName.Text,

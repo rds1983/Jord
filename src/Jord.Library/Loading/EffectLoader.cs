@@ -15,7 +15,6 @@ namespace Jord.Loading
 			var result = new Effect
 			{
 				Name = data.EnsureString("Name"),
-				Type = data.EnsureEnum<AbilityType>("Type"),
 				Description = data.EnsureString("Description")
 			};
 

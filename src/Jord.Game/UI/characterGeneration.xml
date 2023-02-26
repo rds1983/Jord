@@ -9,13 +9,13 @@
       </Grid.ColumnsProportions>
       <Label Text="Name:" />
       <TextBox GridColumn="1" Id="_textName" />
-      <Label Text="Class:" GridRow="2" />
+<!--      <Label Text="Class:" GridRow="2" />
       <ComboBox HorizontalAlignment="Stretch" GridColumn="1" GridRow="2" Id="_comboClass">
         <ListItem Text="Warrior" />
         <ListItem Text="Rogue" />
         <ListItem Text="Priest" />
         <ListItem Text="Mage" />
-      </ComboBox>
+      </ComboBox>-->
     </Grid>
   </Dialog>
 </Project>
