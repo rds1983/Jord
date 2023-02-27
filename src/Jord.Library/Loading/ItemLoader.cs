@@ -37,6 +37,7 @@ namespace Jord.Loading
 			{
 				var weapon = new WeaponInfo
 				{
+					SubType = data.EnsureEnum<WeaponType>("SubType"),
 					MinDamage = data.EnsureInt("MinDamage"),
 					MaxDamage = data.EnsureInt("MaxDamage"),
 					AttackType = data.EnsureEnum<AttackType>("AttackType")
@@ -46,11 +47,20 @@ namespace Jord.Loading
 			}
 			else if (type == "Armor")
 			{
-				var armor = new ArmorInfo
+				ArmorInfo armor;
+				if (data.EnsureString("SubType") == "Shield")
 				{
-					ArmorClass = data.EnsureInt("ArmorClass"),
-					SubType = data.EnsureEnum<EquipType>("SubType")
-				};
+					armor = new ShieldInfo();
+				}
+				else
+				{
+					armor = new BasicArmorInfo
+					{
+						SubType = data.EnsureEnum<EquipType>("SubType")
+					};
+				}
+
+				armor.ArmorClass = data.EnsureInt("ArmorClass");
 
 				result = armor;
 			}

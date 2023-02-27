@@ -3,6 +3,7 @@
 		"Sword": {
 			"Name": "Sword",
 			"Type": "Weapon",
+			"SubType": "OneHandedSword",
 			"Price": 50,
 			"MinDamage": 3,
 			"MaxDamage": 8,
@@ -13,6 +14,7 @@
 		"Mace": {
 			"Name": "Mace",
 			"Type": "Weapon",
+			"SubType": "OneHandedMace",
 			"Price": 30,
 			"MinDamage": 1,
 			"MaxDamage": 5,

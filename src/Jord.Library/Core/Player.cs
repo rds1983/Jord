@@ -85,7 +85,7 @@ namespace Jord.Core
 			_stats.Life.StaminaRegen = Class.StaminaRegenMultiplier * levelValue;
 
 			// Battle
-			var weapon = Equipment.GetItemByType(EquipType.Weapon);
+			var weapon = Equipment.GetItemByType(EquipType.RightHand);
 
 			AttackInfo attackInfo;
 			if (weapon == null)

@@ -10,10 +10,10 @@
 			"ManaRegenMultiplier": 0.5,
 			"StaminaRegenMultiplier": 0.25,
 			"Equipment": {
-				"Weapon": "Sword",
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",
-				"Shield": "Shield"
+				"RightHand": "Sword",
+				"LeftHand": "Shield"
 			},
 			"Perks": "BaseMelee"
 		},
@@ -27,10 +27,10 @@
 			"ManaRegenMultiplier": 0.75,
 			"StaminaRegenMultiplier": 0.25,
 			"Equipment": {
-				"Weapon": "Mace",
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",
-				"Shield": "Shield"
+				"RightHand": "Sword",
+				"LeftHand": "Shield"
 			}
 		}
   }

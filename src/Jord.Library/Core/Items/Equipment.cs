@@ -3,6 +3,33 @@ using System.Linq;
 
 namespace Jord.Core.Items
 {
+	public enum EquipType
+	{
+		Light,
+		Body,
+		Head,
+		Legs,
+		Feet,
+		Hands,
+		Arms,
+		Waist,
+		LeftHand,
+		RightHand,
+	}
+
+	public class ItemSlot
+	{
+		public EquipType Slot { get; private set; }
+
+		public Item Item { get; set; }
+
+		public ItemSlot(EquipType slot)
+		{
+			Slot = slot;
+		}
+	}
+
+
 	public class Equipment
 	{
 		private readonly ItemSlot[] _items = new[]
@@ -14,11 +41,9 @@ namespace Jord.Core.Items
 			new ItemSlot(EquipType.Feet),
 			new ItemSlot(EquipType.Hands),
 			new ItemSlot(EquipType.Arms),
-			new ItemSlot(EquipType.About),
 			new ItemSlot(EquipType.Waist),
-			new ItemSlot(EquipType.Shield),
-			new ItemSlot(EquipType.Held),
-			new ItemSlot(EquipType.Weapon)
+			new ItemSlot(EquipType.LeftHand),
+			new ItemSlot(EquipType.RightHand)
 		};
 
 		public ItemSlot[] Items
@@ -31,10 +56,7 @@ namespace Jord.Core.Items
 
 		public event EventHandler Changed;
 
-		public Item GetItemByType(EquipType type)
-		{
-			return (from i in _items where i.Slot == type select i.Item).FirstOrDefault();
-		}
+		public Item GetItemByType(EquipType type) => Items[(int)type].Item;
 
 		public void Equip(Item item)
 		{
@@ -44,33 +66,32 @@ namespace Jord.Core.Items
 				throw new Exception("Only equipment can be worn");
 			}
 
-			var slots = (from i in _items where i.Slot == asEquip.SubType select i).ToArray();
-			if (slots.Length == 0)
+			int? index = null;
+			var asBasicArmorInfo = asEquip as BasicArmorInfo;
+			if (asBasicArmorInfo != null)
 			{
-				throw new Exception(string.Format("Slot {0} doesnt exist in Equipment", asEquip.SubType.ToString()));
+				index = (int)asBasicArmorInfo.SubType;
 			}
 
-			int? index = null;
-
-			// Try to find empty slot
-			for (var i = 0; i < slots.Length; ++i)
+			var asShieldInfo = asEquip as ShieldInfo;
+			if (asShieldInfo != null)
 			{
-				if (slots[i].Item == null)
-				{
-					index = i;
-					break;
-				}
+				index = (int)EquipType.LeftHand;
+			}
+
+			var asWeaponInfo = asEquip as WeaponInfo;
+			if (asWeaponInfo != null)
+			{
+				index = (int)EquipType.RightHand;
 			}
 
 			if (index == null)
 			{
-				return;
+				throw new Exception($"Couldn't find suitable slot for item {asEquip}");
 			}
 
-			var slot = slots[index.Value];
-
-			var result = slot.Item;
-
+			Remove(index.Value);
+			var slot = Items[index.Value];
 			slot.Item = item;
 
 			Changed?.Invoke(this, EventArgs.Empty);
@@ -79,6 +100,11 @@ namespace Jord.Core.Items
 		public Item Remove(int slotIndex)
 		{
 			var slot = _items[slotIndex];
+			if (slot.Item == null)
+			{
+				return null;
+			}
+
 			var result = slot.Item;
 			slot.Item = null;
 

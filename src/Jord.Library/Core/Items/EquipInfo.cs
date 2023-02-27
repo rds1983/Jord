@@ -4,14 +4,46 @@ namespace Jord.Core.Items
 {
 	public abstract class EquipInfo : BaseItemInfo
 	{
-		public int ArmorClass
+		public int ArmorClass { get; set; }
+	}
+
+	public class ArmorInfo : EquipInfo
+	{
+		public override string BuildDescription()
 		{
-			get; set;
+			return base.BuildDescription() + ", armor class: " + ArmorClass;
+		}
+	}
+
+	public class BasicArmorInfo : ArmorInfo
+	{
+		public EquipType SubType { get; set; }
+	}
+
+	public class ShieldInfo : ArmorInfo
+	{
+	}
+
+	public enum WeaponType
+	{
+		OneHandedSword,
+		OneHandedMace
+	}
+
+	public class WeaponInfo : EquipInfo
+	{
+		public WeaponType SubType { get; set; }
+		public int MinDamage { get; set; }
+		public int MaxDamage { get; set; }
+		public AttackType AttackType { get; set; }
+
+		public WeaponInfo()
+		{
 		}
 
-		public EquipType SubType
+		public override string BuildDescription()
 		{
-			get; set;
+			return base.BuildDescription() + ", damage: " + MinDamage + "-" + MaxDamage;
 		}
 	}
 }
