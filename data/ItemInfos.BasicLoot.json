@@ -1,0 +1,19 @@
+﻿{
+	"ItemInfos": {
+		"SnakeSkin": {
+			"Name": "Snake Skin",
+			"Price": 15,
+			"Tanning": {
+				"Leather": 1
+			},
+			"Symbol": ",",
+			"Color": "Gray",
+		},
+		"RatTail": {
+			"Name": "Rat Tail",
+			"Price": 15,
+			"Symbol": ",",
+			"Color": "Gray",
+		},
+	}
+}

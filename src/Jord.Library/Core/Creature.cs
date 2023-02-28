@@ -71,13 +71,12 @@ namespace Jord.Core
 
 		public abstract Appearance Image { get; }
 		public abstract CreatureStats Stats { get; }
+		public abstract Inventory Inventory { get; }
 
 		public string Name { get; set; }
 		public int Gold { get; set; }
 
 		public float Opacity { get; set; } = 1.0f;
-
-		public Inventory Inventory { get; } = new Inventory();
 
 		public bool IsPlaceable(Map map, Point pos)
 		{

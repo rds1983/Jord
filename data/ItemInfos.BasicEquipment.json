@@ -22,15 +22,6 @@
 			"Symbol": "/",
 			"Color": "Gray"
 		},
-		"RatSkin": {
-			"Name": "Rat Skin",
-			"Price": 15,
-			"Tanning": {
-				"Leather": 1
-			},
-			"Symbol": ",",
-			"Color": "Gray",
-		},
 		"LeatherJacket": {
 			"Name": "Leather Jacket",
 			"Type": "Armor",

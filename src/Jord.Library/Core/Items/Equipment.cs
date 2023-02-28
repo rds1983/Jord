@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Jord.Core.Items
@@ -46,19 +47,13 @@ namespace Jord.Core.Items
 			new ItemSlot(EquipType.RightHand)
 		};
 
-		public ItemSlot[] Items
-		{
-			get
-			{
-				return _items;
-			}
-		}
+		public ItemSlot[] Items => _items;
 
 		public event EventHandler Changed;
 
 		public Item GetItemByType(EquipType type) => Items[(int)type].Item;
 
-		public void Equip(Item item)
+		public Item[] Equip(Item item)
 		{
 			var asEquip = item.Info as EquipInfo;
 			if (asEquip == null)
@@ -90,11 +85,19 @@ namespace Jord.Core.Items
 				throw new Exception($"Couldn't find suitable slot for item {asEquip}");
 			}
 
-			Remove(index.Value);
 			var slot = Items[index.Value];
+
+			var removedItems = new List<Item>();
+			if (slot.Item != null)
+			{
+				removedItems.Add(slot.Item);
+			}
+
 			slot.Item = item;
 
 			Changed?.Invoke(this, EventArgs.Empty);
+
+			return removedItems.ToArray();
 		}
 
 		public Item Remove(int slotIndex)

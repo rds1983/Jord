@@ -18,9 +18,9 @@
 			return number.ToString();
 		}
 
-		public static string BuildNextLevel(int newLevel, int classPointsLeft)
+		public static string BuildNextLevel(int newLevel, int perkPointsLeft)
 		{
-			return string.Format("Welcome to the level {0}! 1 class point had been awarded. Total class points: {1}.", newLevel, classPointsLeft);
+			return string.Format("Welcome to the level {0}! 1 perk point had been awarded. Total perk points: {1}.", newLevel, perkPointsLeft);
 		}
 
 		public static string BuildRushesToAttack(string name)

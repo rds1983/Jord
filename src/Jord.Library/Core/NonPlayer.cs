@@ -5,8 +5,8 @@ namespace Jord.Core
 {
 	public partial class NonPlayer : Creature
 	{
-		private bool _dirty = true;
-		private readonly CreatureStats _stats = new CreatureStats();
+		private CreatureStats _stats;
+		private Inventory _inventory;
 
 		public override Appearance Image => Info.Image;
 		public CreatureInfo Info { get; }
@@ -15,8 +15,39 @@ namespace Jord.Core
 		{
 			get
 			{
-				Update();
+				if (_stats == null)
+				{
+					_stats = new CreatureStats();
+					var lifeStats = _stats.Life;
+					lifeStats.MaximumHP = Info.MaxHp;
+					lifeStats.MaximumMana = Info.MaxMana;
+					lifeStats.MaximumStamina = Info.MaxStamina;
+					lifeStats.HpRegen = Info.HpRegen;
+
+					var battleStats = _stats.Battle;
+					battleStats.Attacks = Info.Attacks.ToArray();
+					battleStats.ArmorClass = Info.ArmorClass;
+					battleStats.HitRoll = Info.HitRoll;
+				}
+
 				return _stats;
+			}
+		}
+
+		public override Inventory Inventory
+		{
+			get
+			{
+				if (_inventory == null)
+				{
+					_inventory = new Inventory();
+					foreach (var itemPile in Info.Inventory.Items)
+					{
+						_inventory.Items.Add(itemPile.Clone());
+					}
+				}
+
+				return _inventory;
 			}
 		}
 
@@ -33,33 +64,7 @@ namespace Jord.Core
 			Name = Info.Name;
 			Gold = Info.Gold;
 
-			foreach (var itemPile in info.Inventory.Items)
-			{
-				Inventory.Items.Add(itemPile.Clone());
-			}
-
 			Stats.Life.Restore();
-		}
-
-		private void Update()
-		{
-			if (!_dirty)
-			{
-				return;
-			}
-
-			var lifeStats = _stats.Life;
-			lifeStats.MaximumHP = Info.MaxHp;
-			lifeStats.MaximumMana = Info.MaxMana;
-			lifeStats.MaximumStamina = Info.MaxStamina;
-			lifeStats.HpRegen = Info.HpRegen;
-
-			var battleStats = _stats.Battle;
-			battleStats.Attacks = Info.Attacks.ToArray();
-			battleStats.ArmorClass = Info.ArmorClass;
-			battleStats.HitRoll = Info.HitRoll;
-
-			_dirty = false;
 		}
 
 		public void Act()
@@ -72,7 +77,8 @@ namespace Jord.Core
 			if (AttackTarget == null)
 			{
 
-			} else
+			}
+			else
 			{
 				var attacked = false;
 

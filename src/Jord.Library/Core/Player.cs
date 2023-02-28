@@ -14,6 +14,7 @@ namespace Jord.Core
 		public const int PlayerRoundInMs = 6000;
 
 		private readonly CreatureStats _stats = new CreatureStats();
+		private readonly Inventory _inventory = new Inventory();
 
 		private bool _dirty = true;
 
@@ -57,6 +58,8 @@ namespace Jord.Core
 			}
 		}
 
+		public override Inventory Inventory { get => _inventory; }
+
 		public int PerkPointsLeft
 		{
 			get
@@ -68,6 +71,22 @@ namespace Jord.Core
 		public Player()
 		{
 			Equipment.Changed += (s, a) => Invalidate();
+		}
+
+		private int CalculateBonus(BonusType bonusType)
+		{
+			var result = 0;
+			foreach (var perk in Perks)
+			{
+				foreach (var effect in perk.AddsEffects)
+				{
+					var bonusValue = 0;
+					effect.Bonuses.TryGetValue(bonusType, out bonusValue);
+					result += bonusValue;
+				}
+			}
+
+			return result;
 		}
 
 		private void UpdateStats()
@@ -98,24 +117,14 @@ namespace Jord.Core
 				attackInfo = new AttackInfo(weaponInfo.AttackType, weaponInfo.MinDamage, weaponInfo.MaxDamage);
 			}
 
-			var attacksCount = 1;
-			foreach(var ability in Abilities)
-			{
-				foreach(var pair in ability.Bonuses)
-				{
-					switch (pair.Key)
-					{
-						case BonusType.Attacks:
-							attacksCount += pair.Value;
-							break;
-					}
-				}
-			}
+
+			var attacksCount = 1 + CalculateBonus(BonusType.Attacks);
+
 
 			var battleStats = _stats.Battle;
 			battleStats.Attacks = new AttackInfo[attacksCount];
 
-			for(var i = 0; i < attacksCount; ++i)
+			for (var i = 0; i < attacksCount; ++i)
 			{
 				battleStats.Attacks[i] = attackInfo;
 			}
@@ -134,7 +143,23 @@ namespace Jord.Core
 				battleStats.ArmorClass += info.ArmorClass;
 			}
 
-			battleStats.HitRoll = 1;
+			battleStats.HitRoll = CalculateBonus(BonusType.HitRoll);
+		}
+
+		private void UpdateLevel()
+		{
+			var nextLevel = TJ.Database.LevelCosts[Level + 1];
+
+			if (nextLevel.Experience > Experience)
+			{
+				return;
+			}
+
+			// Level up
+			Experience -= nextLevel.Experience;
+			Level++;
+
+			TJ.GameLog(Strings.BuildNextLevel(Level, PerkPointsLeft));
 		}
 
 		private void Update()
@@ -185,7 +210,7 @@ namespace Jord.Core
 			var loot = nonPlayer.Info.Loot;
 			if (loot != null && loot.Count > 0)
 			{
-				foreach(var lootEntry in loot)
+				foreach (var lootEntry in loot)
 				{
 					var success = MathUtils.RollPercentage(lootEntry.Rate);
 					if (success)
@@ -197,6 +222,8 @@ namespace Jord.Core
 			}
 
 			target.Remove();
+
+			UpdateLevel();
 		}
 
 		protected override void OnPositionChanged()
@@ -211,7 +238,8 @@ namespace Jord.Core
 			if (Tile.Inventory.Items.Count == 1)
 			{
 				TJ.GameLog(Strings.BuildItemLyingOnTheFloor(Tile.Inventory.Items[0].Item.Info.Name));
-			} else
+			}
+			else
 			{
 				TJ.GameLog(Strings.SomeItemsAreLying);
 			}

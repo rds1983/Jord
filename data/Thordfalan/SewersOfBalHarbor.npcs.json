@@ -21,8 +21,8 @@
 			"MinimumLevel": 1,
 			"Loot": [
 				{
-					"Id": "RatSkin",
-					"Rate": 30
+					"Id": "RatTail",
+					"Rate": 60
 				}
 			],
 			"Symbol": "r",
