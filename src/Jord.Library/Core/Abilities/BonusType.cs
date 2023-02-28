@@ -5,6 +5,8 @@
 		Attacks,
 		HitRoll,
 		OneHandedHitRoll,
-		TwoHandedHitRoll
+		TwoHandedHitRoll,
+		PurchasePercentage,
+		SellPercentage
 	}
 }

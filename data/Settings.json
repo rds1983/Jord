@@ -4,6 +4,8 @@
 		"PlayerSymbol": "@",
 		"PlayerColor": "White",
 		"Font": "Fonts/DroidSans.ttf",
-		"FontSize": 32
+		"FontSize": 32,
+		"BasePurchasePercentage": 200,
+		"BaseSellPercentage": 10
 	}
 }

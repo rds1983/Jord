@@ -31,7 +31,9 @@ namespace Jord.Loading
 			{
 				Id = data.EnsureId(),
 				PlayerAppearance = playerAppearance,
-				Font = font
+				Font = font,
+				BasePurchasePercentage = data.EnsureInt("BasePurchasePercentage"),
+				BaseSellPercentage = data.EnsureInt("BaseSellPercentage")
 			};
 
 			secondRunAction = db => SecondRun(result, data, db);

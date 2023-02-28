@@ -29,6 +29,8 @@ namespace Jord
 			}
 		}
 
+		public static Settings Settings => Database.Settings;
+
 		public static Tileset Tileset => _database != null ? _database.Tileset : null;
 
 		public static StorageService StorageService { get; } = new StorageService();

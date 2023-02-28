@@ -157,7 +157,7 @@ namespace Jord.UI
 			{
 				case CreatureType.Merchant:
 					// Initiate trade
-					var dialog = new TradeDialog(player, asNpc);
+					var dialog = new TradeDialog(asNpc);
 					dialog.ShowModal(Desktop);
 					break;
 

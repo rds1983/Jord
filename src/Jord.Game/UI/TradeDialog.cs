@@ -7,13 +7,12 @@ using System;
 using Jord.Core;
 using Jord.Core.Items;
 using Jord.Utils;
+using Jord.Core.Abilities;
 
 namespace Jord.UI
 {
 	public partial class TradeDialog: Dialog
 	{
-		private const float SellK = 0.5f;
-
 		private readonly Creature _left, _right;
 		private readonly Inventory _leftInventory = new Inventory();
 		private readonly Inventory _leftAddition = new Inventory();
@@ -21,21 +20,21 @@ namespace Jord.UI
 		private readonly Inventory _rightAddition = new Inventory();
 		private readonly Arrow _arrow = new Arrow();
 		private int _leftToRightGoldTransfer = 0;
+		private readonly int _playerPurchasePercentageBonus, _playerSellPercentageBonus;
 
-		public TradeDialog(Creature left, Creature right)
+
+		public TradeDialog(Creature merchant)
 		{
-			if (left == null)
+			if (merchant == null)
 			{
-				throw new ArgumentNullException(nameof(left));
+				throw new ArgumentNullException(nameof(merchant));
 			}
 
-			if (right == null)
-			{
-				throw new ArgumentNullException(nameof(right));
-			}
+			_left = TJ.Player;
+			_playerPurchasePercentageBonus = TJ.Player.CalculateBonus(BonusType.PurchasePercentage);
+			_playerSellPercentageBonus = TJ.Player.CalculateBonus(BonusType.SellPercentage);
 
-			_left = left;
-			_right = right;
+			_right = merchant;
 
 			BuildUI();
 
@@ -147,9 +146,19 @@ namespace Jord.UI
 			OnHoverIndexChanged(_gridLeft, _leftInventory, _leftAddition);
 		}
 
-		private int GetItemPrice(Item item, int quantity, float k = 1.0f)
+		private int GetItemPrice(Item item, int quantity, bool isPlayerItem)
 		{
 			var price = item.Info.Price;
+
+			float k = 1.0f;
+			if (isPlayerItem)
+			{
+				k = (TJ.Settings.BaseSellPercentage + _playerSellPercentageBonus) / 100.0f;
+			} else
+			{
+				k = (TJ.Settings.BasePurchasePercentage + _playerPurchasePercentageBonus) / 100.0f;
+			}
+
 			price = (int)(price * k);
 
 			if (price <= 0)
@@ -197,13 +206,13 @@ namespace Jord.UI
 
 			grid.Widgets.Add(textBlock);
 
-			var isSell = grid == _gridLeft;
+			var isPlayerItem = grid == _gridLeft;
 			if (isAddition)
 			{
-				isSell = !isSell;
+				isPlayerItem = !isPlayerItem;
 			}
 
-			var price = GetItemPrice(itemPile.Item, 1, isSell ? SellK : 1.0f);
+			var price = GetItemPrice(itemPile.Item, 1, isPlayerItem);
 
 			textBlock = new Label
 			{
@@ -241,12 +250,12 @@ namespace Jord.UI
 			_leftToRightGoldTransfer = 0;
 			foreach (var pos in _leftAddition.Items)
 			{
-				_leftToRightGoldTransfer += GetItemPrice(pos.Item, pos.Quantity);
+				_leftToRightGoldTransfer += GetItemPrice(pos.Item, pos.Quantity, false);
 			}
 
 			foreach (var pos in _rightAddition.Items)
 			{
-				_leftToRightGoldTransfer -= GetItemPrice(pos.Item, pos.Quantity, SellK);
+				_leftToRightGoldTransfer -= GetItemPrice(pos.Item, pos.Quantity, true);
 			}
 
 			if (_leftToRightGoldTransfer == 0)

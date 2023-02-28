@@ -11,8 +11,6 @@ namespace Jord.Core
 	{
 		private int _level;
 
-		public const int PlayerRoundInMs = 6000;
-
 		private readonly CreatureStats _stats = new CreatureStats();
 		private readonly Inventory _inventory = new Inventory();
 
@@ -73,7 +71,7 @@ namespace Jord.Core
 			Equipment.Changed += (s, a) => Invalidate();
 		}
 
-		private int CalculateBonus(BonusType bonusType)
+		public int CalculateBonus(BonusType bonusType)
 		{
 			var result = 0;
 			foreach (var perk in Perks)
