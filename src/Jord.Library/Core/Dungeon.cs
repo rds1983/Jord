@@ -51,7 +51,7 @@ namespace Jord.Core
 			};
 
 			// Back exits
-			var count = MathUtils.Random.Next(1, 10);
+			var count = MathUtils.Random.Next(1, 3);
 			for(var i = 0; i < count; ++i)
 			{
 				var index = MathUtils.Random.Next(0, freeTiles.Count);
@@ -62,6 +62,7 @@ namespace Jord.Core
 				exitTile.Exit = exit;
 			}
 
+			// Down exits
 			if (level <= Levels)
 			{
 				exit = new Exit
@@ -71,7 +72,7 @@ namespace Jord.Core
 					DungeonLevel = level + 1
 				};
 
-				count = MathUtils.Random.Next(2, 20);
+				count = MathUtils.Random.Next(2, 5);
 				for (var i = 0; i < count; ++i)
 				{
 					var index = MathUtils.Random.Next(0, freeTiles.Count);

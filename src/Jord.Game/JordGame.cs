@@ -18,6 +18,8 @@ namespace Jord
 
 		public Desktop Desktop { get; private set; }
 
+		public MapView MapView { get => ((GameView)Desktop.Root).MapView; }
+
 		public static JordGame Instance { get; private set; }
 
 		public int? StartGameIndex;
@@ -113,6 +115,10 @@ namespace Jord
 
 			TJ.Session.MapNavigationBase = gameView.MapNavigation;
 			TJ.Session.UpdateTilesVisibility();
+
+			// Prevents camera from moving during the attack
+			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;
+			TJ.Player.EndAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerDisplayPosition;
 
 			UpdateStats();
 

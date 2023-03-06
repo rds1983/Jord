@@ -8,6 +8,9 @@ namespace Jord.Core
 	{
 		private const int AttackDurationInMs = 100;
 
+		public event EventHandler StartAttack;
+		public event EventHandler EndAttack;
+
 		protected virtual void OnKilledTarget(Creature target)
 		{
 		}
@@ -65,7 +68,9 @@ namespace Jord.Core
 				}
 			}
 
-			TJ.ActivityService.AddOrderedActivity(onUpdate, () => DisplayPosition = oldPosition, AttackDurationInMs);
+			StartAttack.Invoke(this);
+
+			TJ.ActivityService.AddOrderedActivity(onUpdate, () => { DisplayPosition = oldPosition; EndAttack.Invoke(this); }, AttackDurationInMs);
 		}
 	}
 }

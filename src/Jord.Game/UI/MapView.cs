@@ -1,19 +1,34 @@
 ﻿using Microsoft.Xna.Framework;
 using Jord.Core;
 using Myra.Graphics2D;
+using Jord.Utils;
 
 namespace Jord.UI
 {
+	public enum MapViewCameraType
+	{
+		PlayerDisplayPosition,
+		PlayerPosition
+	}
+
 	public class MapView : MapRender
 	{
+		public MapViewCameraType CameraType { get; set; }
+
 		protected override void BeforeDraw(RenderContext context)
 		{
 			base.BeforeDraw(context);
 
 			Map = TJ.Session.Player.Map;
 
-			var tl = new Vector2(TJ.Session.Player.DisplayPosition.X - GridSize.X / 2,
-				TJ.Session.Player.DisplayPosition.Y - GridSize.Y / 2);
+			var pos = TJ.Session.Player.DisplayPosition;
+			if (CameraType == MapViewCameraType.PlayerPosition)
+			{
+				pos = TJ.Session.Player.Position.ToVector();
+			}
+
+
+			var tl = new Vector2(pos.X - GridSize.X / 2, pos.Y - GridSize.Y / 2);
 
 			if (tl.X < 0)
 			{
