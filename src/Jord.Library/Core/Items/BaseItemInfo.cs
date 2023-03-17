@@ -8,7 +8,8 @@ namespace Jord.Core.Items
 	{
 		Custom,
 		Equipment,
-		Component
+		Component,
+		Trash
 	}
 
 	public class BaseItemInfo : BaseMapObject

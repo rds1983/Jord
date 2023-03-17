@@ -1,8 +1,5 @@
 {
 	"CreatureInfos": {
-		"Properties": {
-			"DungeonFilter": "SewersOfBalHarbor"
-		},
 		"SewersRat": {
 			"Name": "a sewer rat",
 			"Image": "CreatureRat",

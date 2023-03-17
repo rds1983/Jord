@@ -1,8 +1,5 @@
 ﻿{
 	"ItemInfos": {
-		"Properties": {
-			"Type": "Component"
-		},
 		"Leather": {
 			"Name": "Leather",
 			"Price": 20,

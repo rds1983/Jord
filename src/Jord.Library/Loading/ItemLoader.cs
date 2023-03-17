@@ -74,7 +74,7 @@ namespace Jord.Loading
 			result.Price = data.EnsureInt("Price");
 
 			string typeName;
-			if (properties != null && properties.TryGetValue("Type", out typeName))
+			if (type == null && properties != null && properties.TryGetValue("Type", out typeName))
 			{
 				result.Type = typeName.ToEnum<ItemType>();
 			}

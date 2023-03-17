@@ -47,19 +47,12 @@ namespace Jord.Loading
 			return item;
 		}
 
-		private void FirstRunDictionary<T>(string source, JObject dataDict, BaseObjectLoader<T> loader, Dictionary<string, T> dbDict) where T : BaseObject
+		private void FirstRunDictionary<T>(string source, JObject dataDict, BaseObjectLoader<T> loader, Dictionary<string, T> dbDict, Dictionary<string, string> properties = null) where T : BaseObject
 		{
-			var properties = new Dictionary<string, string>();
 			foreach (var pair in dataDict)
 			{
 				var id = pair.Key;
 				var value = (JObject)pair.Value;
-
-				if (id == "Properties")
-				{
-					LoadProperties(value, properties);
-					continue;
-				}
 
 				var item = FirstRunLoadObject(source, value, properties, loader);
 
@@ -107,8 +100,11 @@ namespace Jord.Loading
 					RaiseError($"JSON parsing error. Source '{s}'. Error '{ex}'");
 				}
 
+				var fileName = Path.GetFileNameWithoutExtension(s);
+
 				foreach (var pair in json)
 				{
+
 					var key = pair.Key;
 
 					switch (key)
@@ -123,10 +119,28 @@ namespace Jord.Loading
 							FirstRunDictionary(s, (JObject)pair.Value, GeneratorLoader.Instance, _database.Generators);
 							break;
 						case "ItemInfos":
-							FirstRunDictionary(s, (JObject)pair.Value, ItemLoader.Instance, _database.ItemInfos);
+							{
+								var properties = new Dictionary<string, string>();
+								var parts = fileName.Split('.');
+								if (parts.Length > 1)
+								{
+									properties["Type"] = parts[1];
+								}
+
+								FirstRunDictionary(s, (JObject)pair.Value, ItemLoader.Instance, _database.ItemInfos, properties);
+							}
 							break;
 						case "CreatureInfos":
-							FirstRunDictionary(s, (JObject)pair.Value, CreatureInfoLoader.Instance, _database.CreatureInfos);
+							{
+								var properties = new Dictionary<string, string>();
+								var parts = fileName.Split('.');
+								if (parts.Length > 1 && parts[1].ToLower() == "npcs")
+								{
+									properties["DungeonFilter"] = parts[0];
+								}
+
+								FirstRunDictionary(s, (JObject)pair.Value, CreatureInfoLoader.Instance, _database.CreatureInfos, properties);
+							}
 							break;
 						case "TileInfos":
 							FirstRunDictionary(s, (JObject)pair.Value, TileInfoLoader.Instance, _database.TileInfos);
@@ -141,7 +155,17 @@ namespace Jord.Loading
 							FirstRunDictionary(s, (JObject)pair.Value, EffectLoader.Instance, _database.Effects);
 							break;
 						case "Perks":
-							FirstRunDictionary(s, (JObject)pair.Value, PerkLoader.Instance, _database.Perks);
+							{
+								var properties = new Dictionary<string, string>();
+								var parts = fileName.Split('.');
+								if (parts.Length > 1)
+								{
+									properties["Category"] = parts[1];
+								}
+
+
+								FirstRunDictionary(s, (JObject)pair.Value, PerkLoader.Instance, _database.Perks, properties);
+							}
 							break;
 						case "Levels":
 							LoadLevels((JArray)pair.Value);

@@ -18,9 +18,6 @@
 		},		
 	},
     "Perks": {
-		"Properties": {
-			"Category": "Speech"
-		},
         "BaseHaggling": {
 			"Name": "Base Haggling",
             "Description": "Basic knowledge of the haggling. Makes trade prices better.",

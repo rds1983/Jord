@@ -27,9 +27,6 @@
 		},
 	},
     "Perks": {
-		"Properties": {
-			"Category": "Melee"
-		},
         "BaseMelee": {
 			"Name": "Base Melee",
             "Description": "Basic knowledge of the melee fighting. Grants additional attack per turn and +2 to the attack roll.",
