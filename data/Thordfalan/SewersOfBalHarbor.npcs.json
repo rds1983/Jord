@@ -25,6 +25,49 @@
 			"Symbol": "r",
 			"Color": "Gray"
 		},
+		"SewersLeech": {
+			"Name": "a sewer leech",
+			"Image": "CreatureLeech",
+			"Type": "Enemy",
+			"Experience": 250,
+			"Attacks": [
+				{
+					"AttackType": "Bite",
+					"MinDamage": 4,
+					"MaxDamage": 8
+				}
+			],
+			"ArmorClass": 4,
+			"HitRoll": 1,
+			"MaxHp": 40,
+			"MinimumLevel": 1,
+			"Symbol": "l",
+			"Color": "Gray"
+		},
+		"SewersSnake": {
+			"Name": "a sewer snake",
+			"Image": "CreatureSnake",
+			"Type": "Enemy",
+			"Experience": 450,
+			"Attacks": [
+				{
+					"AttackType": "Bite",
+					"MinDamage": 4,
+					"MaxDamage": 8
+				},
+				{
+					"AttackType": "Bite",
+					"MinDamage": 4,
+					"MaxDamage": 8
+				}
+			],
+			"ArmorClass": 6,
+			"HitRoll": 2,
+			"MaxHp": 60,
+			"MinimumLevel": 2,
+			"Symbol": "s",
+			"Color": "Gray"
+		},
 		"HugeBlackDragon": {
 			"Name": "Ancient Black Dragon",
 			"Type": "Enemy",

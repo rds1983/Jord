@@ -4,8 +4,15 @@ using Jord.Utils;
 
 namespace Jord.Core
 {
-	public class Dungeon: BaseObject
+	public class Dungeon : BaseObject
 	{
+		private class CreatureRandom
+		{
+			public CreatureInfo Info;
+			public float Rate;
+			public float Threshold;
+		}
+
 		public string GeneratorId { get; set; }
 
 		public string Name { get; set; }
@@ -52,7 +59,7 @@ namespace Jord.Core
 
 			// Back exits
 			var count = MathUtils.Random.Next(1, 3);
-			for(var i = 0; i < count; ++i)
+			for (var i = 0; i < count; ++i)
 			{
 				var index = MathUtils.Random.Next(0, freeTiles.Count);
 				var exitTile = freeTiles[index];
@@ -85,15 +92,37 @@ namespace Jord.Core
 			}
 
 			// Add creatures
-			var creaturesAmount = map.Width * map.Height / 256;
+			var creaturesAmount = (int)Math.Sqrt(map.Width * map.Height) / 4;
 
-			var possibleCreatures = new List<CreatureInfo>();
-			foreach(var pair in TJ.Database.CreatureInfos)
+			var possibleCreatures = new List<CreatureRandom>();
+			var totalRate = 0.0f;
+			foreach (var pair in TJ.Database.CreatureInfos)
 			{
-				if (pair.Value.DungeonFilter == Id && pair.Value.MinimumLevel <= level)
+				var info = pair.Value;
+				if (info.DungeonFilter != Id || info.MinimumLevel > level)
 				{
-					possibleCreatures.Add(pair.Value);
+					continue;
 				}
+
+				var creatureRandom = new CreatureRandom
+				{
+					Info = info,
+					Rate = info.Occurence / (float)(level - info.MinimumLevel + 1)
+				};
+
+				totalRate += creatureRandom.Rate;
+
+				possibleCreatures.Add(creatureRandom);
+			}
+
+			// Normalize rates
+			var threshold = 0.0f;
+			foreach (var cr in possibleCreatures)
+			{
+				cr.Rate /= totalRate;
+
+				threshold += cr.Rate;
+				cr.Threshold = threshold;
 			}
 
 			if (possibleCreatures.Count > 0)
@@ -105,9 +134,20 @@ namespace Jord.Core
 						break;
 					}
 
-					var creatureInfo = possibleCreatures[MathUtils.Random.Next(0, possibleCreatures.Count)];
+					var rnd = (float)MathUtils.Random.NextDouble();
 
-					var npc = new NonPlayer(creatureInfo);
+					// Determine creature
+					CreatureRandom creatureRandom = possibleCreatures[0];
+					foreach(var cr in possibleCreatures)
+					{
+						if (rnd < cr.Threshold)
+						{
+							creatureRandom = cr;
+							break;
+						}
+					}
+
+					var npc = new NonPlayer(creatureRandom.Info);
 
 					var index = MathUtils.Random.Next(0, freeTiles.Count);
 					var tile = freeTiles[index];

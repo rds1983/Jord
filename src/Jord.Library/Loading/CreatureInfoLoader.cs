@@ -16,7 +16,8 @@ namespace Jord.Loading
 			{
 				Name = data.EnsureString("Name"),
 				CreatureType = data.EnsureEnum<CreatureType>("Type"),
-				MinimumLevel = data.OptionalNullableInt("MinimumLevel")
+				MinimumLevel = data.OptionalNullableInt("MinimumLevel"),
+				Occurence = data.OptionalInt("Occurence", 1)
 			};
 
 			string dungeonFilter;

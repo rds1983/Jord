@@ -23,6 +23,8 @@ namespace Jord.Core
 
 		public int? MinimumLevel { get; set; }
 
+		public int Occurence { get; set; } = 1;
+
 		public CreatureType CreatureType { get; set; }
 
 		public Inventory Inventory { get; set; }
