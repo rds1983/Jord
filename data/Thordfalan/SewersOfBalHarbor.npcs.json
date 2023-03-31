@@ -65,6 +65,12 @@
 			"HitRoll": 2,
 			"MaxHp": 60,
 			"MinimumLevel": 2,
+			"Loot": [
+				{
+					"Id": "SnakeSkin",
+					"Rate": 50
+				}
+			],			
 			"Symbol": "s",
 			"Color": "Gray"
 		},

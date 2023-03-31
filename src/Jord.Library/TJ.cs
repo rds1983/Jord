@@ -1,8 +1,12 @@
 using System;
+using System.Linq;
 using System.Reflection;
+using DefaultEcs;
+using Jord.Components;
 using Jord.Core;
 using Jord.Storage;
 using Jord.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Database = Jord.Core.Database;
 
@@ -38,6 +42,15 @@ namespace Jord
 
 		public static GameSession Session { get; set; }
 
+		public static World World { get; } = new World();
+
+		public static Entity PlayerEntity
+		{
+			get => World.GetEntities().With<PlayerMarker>().AsEnumerable().First();
+		}
+
+		public static Point PlayerPosition => PlayerEntity.Get<Location>().Position;
+
 		public static Player Player
 		{
 			get
@@ -50,6 +63,8 @@ namespace Jord
 				return Session.Player;
 			}
 		}
+
+		public static Map Map => Player.Map;
 
 		public static string Version
 		{

@@ -1,4 +1,5 @@
-﻿using Jord.Core.Abilities;
+﻿using Jord.Components;
+using Jord.Core.Abilities;
 using Jord.Storage;
 using Jord.UI;
 using Jord.Utils;
@@ -22,6 +23,8 @@ namespace Jord.Core
 			var map = TJ.Database.Maps[Slot.PlayerData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
+
+			Factory.CreatePlayer(map.SpawnSpot.Value);
 		}
 
 		private void WorldAct()
@@ -56,7 +59,7 @@ namespace Jord.Core
 
 		public bool MovePlayer(MovementDirection direction, bool isRunning)
 		{
-			var result = Player.MoveTo(direction.GetDelta());
+			var result = TJ.PlayerEntity.Move(direction.GetDelta());
 			if (result)
 			{
 				WorldAct();
@@ -107,7 +110,7 @@ namespace Jord.Core
 
 		public void UpdateTilesVisibility(bool refreshMap = false)
 		{
-			var map = Player.Map;
+			var map = TJ.Map;
 
 			// Reset IsInFov for the whole map
 			for(var x = 0; x < map.Width; ++x)
@@ -118,7 +121,7 @@ namespace Jord.Core
 				}
 			}
 
-			map.FieldOfView.Calculate(Player.Position.X, Player.Position.Y, 12);
+			map.FieldOfView.Calculate(TJ.PlayerPosition.X, TJ.PlayerPosition.Y, 12);
 
 			foreach(var coord in map.FieldOfView.CurrentFOV)
 			{

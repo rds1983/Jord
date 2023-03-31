@@ -1,4 +1,5 @@
 ﻿using FontStashSharp;
+using Jord.Components;
 using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
@@ -211,26 +212,6 @@ namespace Jord.UI
 
 					var appearance = tile.Appearance;
 
-					if (isInFov)
-					{
-						if (tile.Object != null)
-						{
-							appearance = tile.Object.Image;
-						}
-
-						if (tile.Inventory.Items.Count > 0)
-						{
-							appearance = tile.Inventory.Items[0].Item.Info.Image;
-						}
-
-						if (tile.Creature != null)
-						{
-							screen = GameToScreen(tile.Creature.DisplayPosition);
-							appearance = tile.Creature.Image;
-							opacity = tile.Creature.Opacity;
-						}
-					}
-
 					var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
 
 					if (appearance != null)
@@ -247,6 +228,31 @@ namespace Jord.UI
 					{
 						RenderCreatureDecorations(context, pos, tile.Creature);
 					}
+				}
+			}
+
+			// Draw renderables
+			foreach (var entity in TJ.World.GetEntities().With<Appearance>().With<Location>().AsEnumerable())
+			{
+				var appearance = entity.Get<Appearance>();
+				var location = entity.Get<Location>();
+
+				var tile = Map[location.Position];
+				var isInFov = IgnoreFov || tile.IsInFov;
+
+				if (!isInFov)
+				{
+					continue;
+				}
+
+				var screen = GameToScreen(location.DisplayPosition);
+
+				var rect = new Rectangle(screen.X, screen.Y, tileSize.X, tileSize.Y);
+				var opacity = 1.0f;
+
+				if (appearance != null)
+				{
+					appearance.Draw(context, rect, opacity);
 				}
 			}
 

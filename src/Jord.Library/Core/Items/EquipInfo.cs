@@ -5,6 +5,11 @@ namespace Jord.Core.Items
 	public abstract class EquipInfo : BaseItemInfo
 	{
 		public int ArmorClass { get; set; }
+
+		public EquipInfo()
+		{
+			Type = ItemType.Equipment;
+		}
 	}
 
 	public class ArmorInfo : EquipInfo

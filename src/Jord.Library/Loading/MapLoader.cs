@@ -119,7 +119,7 @@ namespace Jord.Loading
 			var dataObject = data.EnsureJArray(DataName);
 
 			var pos = Point.Zero;
-			var entities = new List<Tuple<object, Point>>();
+			var entities = new List<Tuple<TileObject, Point>>();
 			for (var i = 0; i < dataObject.Count; ++i)
 			{
 				var lineToken = dataObject[i];
@@ -219,15 +219,14 @@ namespace Jord.Loading
 					var asCreatureInfo = item as CreatureInfo;
 					if (asCreatureInfo != null)
 					{
-						var npc = new NonPlayer(asCreatureInfo);
-						entities.Add(new Tuple<object, Point>(npc, lastTile.Position));
+						Factory.CreateMob(asCreatureInfo, lastTile.Position);
 						continue;
 					}
 
 					var asObjectInfo = item as TileObject;
 					if (asObjectInfo != null)
 					{
-						entities.Add(new Tuple<object, Point>(asObjectInfo, lastTile.Position));
+						entities.Add(new Tuple<TileObject, Point>(asObjectInfo, lastTile.Position));
 						continue;
 					}
 
@@ -246,19 +245,7 @@ namespace Jord.Loading
 			// Place entities
 			foreach (var entity in entities)
 			{
-				var asObjectInfo = entity.Item1 as TileObject;
-				if (asObjectInfo != null)
-				{
-					result[entity.Item2].Object = asObjectInfo;
-					continue;
-				}
-
-				var asCreature = entity.Item1 as Creature;
-				if (asCreature != null)
-				{
-					asCreature.Place(result, entity.Item2);
-					continue;
-				}
+				result[entity.Item2].Object = entity.Item1;
 			}
 		}
 
