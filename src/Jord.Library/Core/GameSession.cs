@@ -21,7 +21,6 @@ namespace Jord.Core
 
 			// Spawn player
 			var map = TJ.Database.Maps[Slot.PlayerData.StartingMapId];
-			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
 
 			Factory.CreatePlayer(map.SpawnSpot.Value);
@@ -42,14 +41,11 @@ namespace Jord.Core
 				// Let npcs act
 				npc.Act();
 			}
-
-			UpdateTilesVisibility();
 		}
 
 		public void PlayerEnter()
 		{
 			Player.Enter();
-			TJ.Session.UpdateTilesVisibility(true);
 		}
 
 		public void WaitPlayer()
@@ -105,49 +101,6 @@ namespace Jord.Core
 			{
 				Player.Stats.Life.CurrentMana -= ability.Mana;
 				WorldAct();
-			}
-		}
-
-		public void UpdateTilesVisibility(bool refreshMap = false)
-		{
-			var map = TJ.Map;
-
-			// Reset IsInFov for the whole map
-			for(var x = 0; x < map.Width; ++x)
-			{
-				for(var y = 0; y < map.Height; ++y)
-				{
-					map[x, y].IsInFov = false;
-				}
-			}
-
-			map.FieldOfView.Calculate(TJ.PlayerPosition.X, TJ.PlayerPosition.Y, 12);
-
-			foreach(var coord in map.FieldOfView.CurrentFOV)
-			{
-				var tile = map[coord];
-
-				tile.IsInFov = true;
-				if (!tile.IsExplored)
-				{
-					refreshMap = true;
-					tile.IsExplored = true;
-				}
-
-				if (tile.Creature != null)
-				{
-					var asNpc = tile.Creature as NonPlayer;
-					if (asNpc != null && asNpc.Info.CreatureType == CreatureType.Enemy && asNpc.AttackTarget == null)
-					{
-						TJ.GameLog(Strings.BuildRushesToAttack(asNpc.Info.Name));
-						asNpc.AttackTarget = TJ.Player;
-					}
-				}
-			}
-
-			if (refreshMap)
-			{
-				MapNavigationBase.InvalidateImage();
 			}
 		}
 	}

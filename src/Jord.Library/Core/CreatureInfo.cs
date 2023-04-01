@@ -1,4 +1,7 @@
-﻿using Jord.Core.Items;
+﻿using DefaultEcs;
+using Jord.Components;
+using Jord.Core.Items;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace Jord.Core
@@ -15,7 +18,7 @@ namespace Jord.Core
 		public int Rate { get; set; }
 	}
 
-	public class CreatureInfo : BaseMapObject
+	public class CreatureInfo : BaseMapObject, ISpawnable
 	{
 		public string Name { get; set; }
 		public int Experience { get; set; }
@@ -50,6 +53,16 @@ namespace Jord.Core
 		public CreatureInfo()
 		{
 			Inventory = new Inventory();
+		}
+
+		public Entity Spawn(Point location)
+		{
+			var result = TJ.World.CreateEntity();
+
+			result.Set(new Location(location));
+			result.Set(Image);
+
+			return result;
 		}
 	}
 }

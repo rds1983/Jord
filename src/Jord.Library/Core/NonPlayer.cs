@@ -92,7 +92,7 @@ namespace Jord.Core
 							continue;
 						}
 
-						var player = Map[x, y].Creature as Player;
+/*						var player = Map[x, y].Creature as Player;
 						if (player == null)
 						{
 							continue;
@@ -100,7 +100,7 @@ namespace Jord.Core
 
 						Attack(player);
 						attacked = true;
-						goto finished;
+						goto finished;*/
 					}
 				}
 			finished:;
@@ -110,7 +110,7 @@ namespace Jord.Core
 					if (path.Length > 0)
 					{
 						var delta = path.GetStep(0).ToPoint() - Position;
-						MoveTo(delta);
+//						MoveTo(delta);
 					}
 				}
 			}

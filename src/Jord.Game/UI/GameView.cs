@@ -145,28 +145,30 @@ namespace Jord.UI
 
 		private bool ProcessMovementCreature(Point newPos)
 		{
-			var player = TJ.Player;
-			var asNpc = player.Map[newPos].Creature as NonPlayer;
-			if (asNpc == null)
-			{
-				return false;
-			}
+			/*			var player = TJ.Player;
+						var asNpc = player.Map[newPos].Creature as NonPlayer;
+						if (asNpc == null)
+						{
+							return false;
+						}
 
-			var handled = true;
-			switch (asNpc.Info.CreatureType)
-			{
-				case CreatureType.Merchant:
-					// Initiate trade
-					var dialog = new TradeDialog(asNpc);
-					dialog.ShowModal(Desktop);
-					break;
+						var handled = true;
+						switch (asNpc.Info.CreatureType)
+						{
+							case CreatureType.Merchant:
+								// Initiate trade
+								var dialog = new TradeDialog(asNpc);
+								dialog.ShowModal(Desktop);
+								break;
 
-				default:
-					handled = false;
-					break;
-			}
+							default:
+								handled = false;
+								break;
+						}
 
-			return handled;
+						return handled;*/
+
+			return false;
 		}
 
 		private bool ProcessMovement(Keys key)
@@ -232,7 +234,7 @@ namespace Jord.UI
 					if (!handled)
 					{
 						var isRunning = _downKeys.Contains(Keys.LeftShift) || _downKeys.Contains(Keys.RightShift);
-						result = TJ.Session.MovePlayer(direction.Value, isRunning);
+						PlayerService.MovePlayer(direction.Value, isRunning);
 					}
 				}
 			}

@@ -179,7 +179,7 @@ namespace Jord.Loading
 								RaiseError($"Map file can have only one map entry. Source: '{s}'");
 							}
 
-							var map = FirstRunLoadObject(s, (JObject)pair.Value, null, MapLoader.Instance);
+							var map = FirstRunLoadObject(s, (JObject)pair.Value, null, MapInfoLoader.Instance);
 							_database.Maps[map.Id] = map;
 							break;
 						case "Tileset":

@@ -114,7 +114,6 @@ namespace Jord
 			Desktop.FocusedKeyboardWidget = gameView;
 
 			TJ.Session.MapNavigationBase = gameView.MapNavigation;
-			TJ.Session.UpdateTilesVisibility();
 
 			// Prevents camera from moving during the attack
 			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;

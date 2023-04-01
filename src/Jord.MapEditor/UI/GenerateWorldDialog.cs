@@ -112,7 +112,7 @@ namespace Jord.MapEditor.UI
 				}
 
 				// Save the map
-				var mapData = MapLoader.SaveMapToString(map);
+				var mapData = MapInfoLoader.SaveMapToString(map);
 				var path = Path.Combine(Studio.Instance.ModulePath, "Maps/World.json");
 				File.WriteAllText(path, mapData);
 

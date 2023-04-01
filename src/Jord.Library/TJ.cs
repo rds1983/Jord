@@ -50,6 +50,7 @@ namespace Jord
 		}
 
 		public static Point PlayerPosition => PlayerEntity.Get<Location>().Position;
+		public static Vector2 PlayerDisplayPosition => PlayerEntity.Get<Location>().DisplayPosition;
 
 		public static Player Player
 		{

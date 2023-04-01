@@ -19,12 +19,12 @@ namespace Jord.UI
 		{
 			base.BeforeDraw(context);
 
-			Map = TJ.Session.Player.Map;
+			Map = TJ.Map;
 
-			var pos = TJ.Session.Player.DisplayPosition;
+			var pos = TJ.PlayerDisplayPosition;
 			if (CameraType == MapViewCameraType.PlayerPosition)
 			{
-				pos = TJ.Session.Player.Position.ToVector();
+				pos = TJ.PlayerPosition.ToVector();
 			}
 
 

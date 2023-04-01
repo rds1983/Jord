@@ -4,8 +4,8 @@ using System;
 using Jord.Storage;
 using Myra;
 using Myra.Graphics2D.UI;
-using Jord.Core;
 using System.Linq;
+using Jord.Components;
 
 namespace Jord.UI
 {
@@ -77,7 +77,7 @@ namespace Jord.UI
 
 					// var cls = (Class) dlg._comboClass.SelectedItem.Tag;
 					var cls = TJ.Database.Classes.First().Value;
-					var data = new PlayerData
+					var data = new PlayerInfo
 					{
 						Name = dlg._textName.Text,
 						Level = 1,

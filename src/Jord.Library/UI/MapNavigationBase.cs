@@ -71,10 +71,6 @@ namespace Jord.UI
 								var isInFov = IgnoreFov || tile.IsInFov;
 
 								var color = tile.Info.Image.Color;
-								if (isInFov && tile.Creature != null && !(tile.Creature is Player))
-								{
-									color = tile.Creature.Image.Color;
-								}
 
 								_colorBuffer[x, y] = color;
 							}

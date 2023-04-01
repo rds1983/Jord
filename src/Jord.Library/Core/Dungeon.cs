@@ -38,7 +38,7 @@ namespace Jord.Core
 				for (var y = 0; y < map.Height; ++y)
 				{
 					var tile = map[x, y];
-					if (tile.Info.Passable && tile.Object == null && tile.Creature == null)
+					if (tile.Info.Passable && tile.Object == null)
 					{
 						freeTiles.Add(tile);
 					}
@@ -147,13 +147,11 @@ namespace Jord.Core
 						}
 					}
 
-					var npc = new NonPlayer(creatureRandom.Info);
-
 					var index = MathUtils.Random.Next(0, freeTiles.Count);
 					var tile = freeTiles[index];
 					freeTiles.RemoveAt(index);
 
-					npc.Place(map, tile.Position);
+					Factory.CreateMob(creatureRandom.Info, tile.Position);
 				}
 			}
 

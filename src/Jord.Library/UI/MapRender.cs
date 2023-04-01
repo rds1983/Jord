@@ -224,10 +224,10 @@ namespace Jord.UI
 						_tilesWithSigns.Add(tile);
 					}
 
-					if (isInFov && tile.Creature != null)
+/*					if (isInFov && tile.Creature != null)
 					{
 						RenderCreatureDecorations(context, pos, tile.Creature);
-					}
+					}*/
 				}
 			}
 

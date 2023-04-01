@@ -1,15 +1,13 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
-using Jord.Utils;
 using Microsoft.Xna.Framework;
-using Myra.Graphics2D.TextureAtlases;
 using System;
 using System.Collections.Generic;
 
 namespace Jord.Core
 {
-	public class Map : BaseObject
+	public class Map
 	{
 		private class MapFOVView : IMapView<bool>
 		{
@@ -148,11 +146,11 @@ namespace Jord.Core
 					tile.X = x;
 					tile.Y = y;
 
-					if (tile.Creature != null)
+/*					if (tile.Creature != null)
 					{
 						tile.Creature.Position = new Point(x, y);
 						tile.Creature.DisplayPosition = new Vector2(x, y);
-					}
+					}*/
 				}
 			}
 		}

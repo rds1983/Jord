@@ -711,7 +711,7 @@ namespace Jord.MapEditor
 
 		private void ProcessSave(string filePath)
 		{
-			var result = MapLoader.SaveMapToString(UI._mapEditor.Map);
+			var result = MapInfoLoader.SaveMapToString(UI._mapEditor.Map);
 			File.WriteAllText(filePath, result);
 			Map.Source = filePath;
 			IsDirty = false;

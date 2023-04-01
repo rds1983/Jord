@@ -219,7 +219,7 @@ namespace Jord.Core
 				}
 			}
 
-			target.Remove();
+//			target.Remove();
 
 			UpdateLevel();
 		}
