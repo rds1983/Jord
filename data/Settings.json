@@ -3,6 +3,7 @@
 		"Id": "Main",
 		"PlayerSymbol": "@",
 		"PlayerColor": "White",
+		"StartingMapId": "BalHarbor",
 		"Font": "Fonts/DroidSans.ttf",
 		"FontSize": 32,
 		"BasePurchasePercentage": 200,

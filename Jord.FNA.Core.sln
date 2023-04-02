@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jord.Library.FNA.Core", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jord.Game.FNA.Core", "src\Jord.Game\Jord.Game.FNA.Core.csproj", "{46D4374A-6348-40A9-89E1-F9C4947F83C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jord.MapEditor.FNA.Core", "src\Jord.MapEditor\Jord.MapEditor.FNA.Core.csproj", "{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,18 +97,6 @@ Global
 		{46D4374A-6348-40A9-89E1-F9C4947F83C7}.Release|x64.Build.0 = Release|Any CPU
 		{46D4374A-6348-40A9-89E1-F9C4947F83C7}.Release|x86.ActiveCfg = Release|Any CPU
 		{46D4374A-6348-40A9-89E1-F9C4947F83C7}.Release|x86.Build.0 = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|x64.Build.0 = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Debug|x86.Build.0 = Debug|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|x64.ActiveCfg = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|x64.Build.0 = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|x86.ActiveCfg = Release|Any CPU
-		{3FBA4AB7-6734-4DD9-8EE9-2C1E06F5A0C1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

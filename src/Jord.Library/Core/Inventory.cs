@@ -6,6 +6,12 @@ namespace Jord.Core
 {
 	public class Inventory
 	{
+		/// <summary>
+		/// Gold
+		/// </summary>
+		public int Gold { get; set; }
+
+
 		public List<ItemPile> Items { get; } = new List<ItemPile>();
 
 		public int Count => Items.Count;

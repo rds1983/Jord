@@ -1,9 +1,8 @@
 ﻿using DefaultEcs;
-using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
 
-namespace Jord.Components
+namespace Jord.Core
 {
 	public static class EntityExtensions
 	{
@@ -19,7 +18,7 @@ namespace Jord.Components
 			var location = entity.Get<Location>();
 
 			var newPosition = location.Position + delta;
-			var map = TJ.Player.Map;
+			var map = TJ.Map;
 			if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X >= map.Width || newPosition.Y >= map.Height)
 			{
 				return false;

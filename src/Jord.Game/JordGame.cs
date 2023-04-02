@@ -99,12 +99,12 @@ namespace Jord
 
 		public void Play(int slotIndex)
 		{
-			if (TJ.Player != null)
+			if (TJ.Player.Stats != null)
 			{
 				TJ.Player.Stats.Life.Changed -= Life_Changed;
 			}
 
-			TJ.Session = new GameSession(slotIndex);
+			TJ.SlotIndex = slotIndex;
 
 			TJ.Player.Stats.Life.Changed += Life_Changed;
 
@@ -113,11 +113,9 @@ namespace Jord
 			var gameView = (GameView)Desktop.Root;
 			Desktop.FocusedKeyboardWidget = gameView;
 
-			TJ.Session.MapNavigationBase = gameView.MapNavigation;
-
 			// Prevents camera from moving during the attack
-			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;
-			TJ.Player.EndAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerDisplayPosition;
+/*			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;
+			TJ.Player.EndAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerDisplayPosition;*/
 
 			UpdateStats();
 
@@ -167,12 +165,7 @@ namespace Jord
 		{
 			base.EndRun();
 
-			// Save current game
-			if (TJ.Session != null)
-			{
-				TJ.Session.Slot.PlayerData = new PlayerData(TJ.Session.Player);
-				TJ.Session.Slot.Save();
-			}
+			TJ.SaveCurrentGame();
 		}
 	}
 }

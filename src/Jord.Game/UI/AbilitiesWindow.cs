@@ -20,7 +20,7 @@ namespace Jord.UI
 		private void _buttonUse_Click(object sender, EventArgs e)
 		{
 			var ability = (AbilityInfo)_listAbilities.SelectedItem.Tag;
-			TJ.Session.UseAbility(ability);
+			TJ.UseAbility(ability);
 			Close();
 		}
 

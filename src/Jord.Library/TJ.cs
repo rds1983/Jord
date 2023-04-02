@@ -2,8 +2,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using DefaultEcs;
-using Jord.Components;
+using DefaultEcs.System;
 using Jord.Core;
+using Jord.Services;
 using Jord.Storage;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
@@ -12,7 +13,7 @@ using Database = Jord.Core.Database;
 
 namespace Jord
 {
-	public static class TJ
+	public static partial class TJ
 	{
 		private static Database _database;
 
@@ -40,32 +41,22 @@ namespace Jord
 		public static StorageService StorageService { get; } = new StorageService();
 		public static ActivityService ActivityService { get; } = new ActivityService();
 
-		public static GameSession Session { get; set; }
+		public static int? SlotIndex { get; set; }
+
 
 		public static World World { get; } = new World();
 
 		public static Entity PlayerEntity
 		{
-			get => World.GetEntities().With<PlayerMarker>().AsEnumerable().First();
+			get => World.GetEntities().With<PlayerData>().AsEnumerable().First();
 		}
 
+		public static Player Player => PlayerEntity.Get<Player>();
 		public static Point PlayerPosition => PlayerEntity.Get<Location>().Position;
 		public static Vector2 PlayerDisplayPosition => PlayerEntity.Get<Location>().DisplayPosition;
+		public static Tile PlayerTile => Map[PlayerPosition];
 
-		public static Player Player
-		{
-			get
-			{
-				if (Session == null)
-				{
-					return null;
-				}
-
-				return Session.Player;
-			}
-		}
-
-		public static Map Map => Player.Map;
+		public static Map Map { get; set; }
 
 		public static string Version
 		{
@@ -76,6 +67,45 @@ namespace Jord
 
 				return name.Version.ToString();
 			}
+		}
+
+		private static SequentialSystem<float> _systems = new SequentialSystem<float>(
+			new MapUpdateSystem()
+		);
+
+		private static void WorldAct()
+		{
+			_systems.Update(0);
+
+			/*			var map = Player.Map;
+						foreach (var creature in map.Creatures)
+						{
+							creature.RegenTurn();
+							var npc = creature as NonPlayer;
+							if (npc == null)
+							{
+								continue;
+							}
+
+							// Let npcs act
+							npc.Act();
+						}*/
+		}
+
+		public static Entity? GetEntityByCoords(Point pos)
+		{
+			foreach (var entity in World.GetEntities().With<Location>().AsEnumerable())
+			{
+				var epos = entity.Get<Location>();
+
+				if (epos.Position == pos)
+				{
+					return entity;
+				}
+
+			}
+
+			return null;
 		}
 
 		public static void LogInfo(string message, params object[] args)

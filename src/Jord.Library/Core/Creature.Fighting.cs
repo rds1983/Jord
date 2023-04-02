@@ -43,11 +43,11 @@ namespace Jord.Core
 					var message = Strings.GetAttackMessage(damage, Name, target.Name, attack.AttackType);
 					TJ.GameLog(message);
 
-					if (target.Stats.Life.CurrentHP <= 0 && target != TJ.Player)
+/*					if (target.Stats.Life.CurrentHP <= 0 && target != TJ.Player)
 					{
 						OnKilledTarget(target);
 						break;
-					}
+					}*/
 				}
 			}
 

@@ -32,13 +32,14 @@ namespace Jord.UI
 
 			// Remove item
 			var itemPile = (ItemPile)_listBoxItems.SelectedItem.Tag;
-			var player = TJ.Player;
-			player.Inventory.Add(itemPile.Item, -1);
+
+			var inventory = TJ.Player.Inventory;
+			inventory.Add(itemPile.Item, -1);
 
 			// Add tanning result
 			foreach(var item in itemPile.Item.Info.Tanning.Items)
 			{
-				player.Inventory.Add(item.Item, item.Quantity);
+				inventory.Add(item.Item, item.Quantity);
 			}
 
 			Rebuild();

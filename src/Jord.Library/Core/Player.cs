@@ -7,7 +7,7 @@ using Jord.Utils;
 
 namespace Jord.Core
 {
-	public class Player : Creature
+	public class Player
 	{
 		private int _level;
 
@@ -15,6 +15,8 @@ namespace Jord.Core
 		private readonly Inventory _inventory = new Inventory();
 
 		private bool _dirty = true;
+
+		public string Name { get; set; }
 
 		public int Level
 		{
@@ -41,13 +43,11 @@ namespace Jord.Core
 
 		public Class Class { get; set; }
 
-		public override Appearance Image => TJ.Database.Settings.PlayerAppearance;
-
 		public Equipment Equipment { get; } = new Equipment();
 
 		public AbilityInfo[] Abilities { get; set; }
 
-		public override CreatureStats Stats
+		public CreatureStats Stats
 		{
 			get
 			{
@@ -56,7 +56,7 @@ namespace Jord.Core
 			}
 		}
 
-		public override Inventory Inventory { get => _inventory; }
+		public Inventory Inventory { get => _inventory; }
 
 		public int PerkPointsLeft
 		{
@@ -189,7 +189,7 @@ namespace Jord.Core
 			return new AbilityInfo[0];
 		}
 
-		protected override void OnKilledTarget(Creature target)
+/*		protected override void OnKilledTarget(Creature target)
 		{
 			base.OnKilledTarget(target);
 
@@ -262,6 +262,6 @@ namespace Jord.Core
 			base.OnItemTaken(item, count);
 
 			TJ.GameLog(Strings.BuildPickedUp(item.Info.Name, count));
-		}
+		}*/
 	}
 }

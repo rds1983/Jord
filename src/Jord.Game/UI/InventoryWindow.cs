@@ -9,16 +9,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Jord.UI
 {
-	public partial class InventoryWindow: Window
+	public partial class InventoryWindow : Window
 	{
-		public Player Player
-		{
-			get
-			{
-				return TJ.Session.Player;
-			}
-		}
-
 		private Item SelectedItem
 		{
 			get
@@ -26,11 +18,11 @@ namespace Jord.UI
 				Item item = null;
 				if (_gridEquipment.SelectedRowIndex != null)
 				{
-					item = Player.Equipment.Items[_gridEquipment.SelectedRowIndex.Value].Item;
+					item = TJ.Player.Equipment.Items[_gridEquipment.SelectedRowIndex.Value].Item;
 				}
 				else if (_gridInventory.SelectedRowIndex != null)
 				{
-					item = Player.Inventory.Items[_gridInventory.SelectedRowIndex.Value].Item;
+					item = TJ.Player.Inventory.Items[_gridInventory.SelectedRowIndex.Value].Item;
 				}
 
 				return item;
@@ -67,16 +59,16 @@ namespace Jord.UI
 			if (_gridEquipment.SelectedRowIndex != null)
 			{
 				// Remove from equipment
-				Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
+				TJ.Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
 			}
 			else if (_gridInventory.SelectedRowIndex != null)
 			{
 				// Remove from inventory
-				Player.Inventory.Add(item, -1);
+				TJ.Player.Inventory.Add(item, -1);
 			}
 
 			// Drop on tile
-			Player.Tile.Inventory.Add(item, 1);
+			TJ.PlayerTile.Inventory.Add(item, 1);
 
 			Rebuild();
 		}
@@ -88,18 +80,18 @@ namespace Jord.UI
 			if (_gridEquipment.SelectedRowIndex != null)
 			{
 				// Remove from equipment
-				Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
+				TJ.Player.Equipment.Remove(_gridEquipment.SelectedRowIndex.Value);
 
 				// Add to inventory
-				Player.Inventory.Add(item, 1);
+				TJ.Player.Inventory.Add(item, 1);
 			}
 			else if (_gridInventory.SelectedRowIndex != null)
 			{
 				// Wear
-				Player.Equipment.Equip(item);
+				TJ.Player.Equipment.Equip(item);
 
 				// Remove from inventory
-				Player.Inventory.Add(item, -1);
+				TJ.Player.Inventory.Add(item, -1);
 			}
 
 			Rebuild();
@@ -137,14 +129,14 @@ namespace Jord.UI
 
 		private void UpdateStats()
 		{
-			var battle = Player.Stats.Battle;
+			var battle = TJ.Player.Stats.Battle;
 			_textAc.Text = "AC: " + battle.ArmorClass.ToString();
 			_textHitRoll.Text = "Hit Roll: " + battle.HitRoll;
 
 			var sb = new StringBuilder();
 
 			sb.Append("Attacks: ");
-			for(var i = 0; i < battle.Attacks.Length; ++i)
+			for (var i = 0; i < battle.Attacks.Length; ++i)
 			{
 				var attack = battle.Attacks[i];
 
@@ -152,14 +144,14 @@ namespace Jord.UI
 				sb.Append('-');
 				sb.Append(attack.MaxDamage);
 
-				if (i < Player.Stats.Battle.Attacks.Length - 1)
+				if (i < TJ.Player.Stats.Battle.Attacks.Length - 1)
 				{
 					sb.Append('/');
 				}
 			}
 
 			_textAttacks.Text = sb.ToString();
-			_textGold.Text = "Gold: " + Player.Gold;
+			_textGold.Text = "Gold: " + TJ.Player.Inventory.Gold;
 		}
 
 		private void Rebuild()
@@ -167,7 +159,7 @@ namespace Jord.UI
 			_gridEquipment.Widgets.Clear();
 			_gridEquipment.RowsProportions.Clear();
 
-			foreach (var item in Player.Equipment.Items)
+			foreach (var item in TJ.Player.Equipment.Items)
 			{
 				var row = _gridEquipment.RowsProportions.Count;
 
@@ -196,7 +188,7 @@ namespace Jord.UI
 			_gridInventory.Widgets.Clear();
 			_gridInventory.RowsProportions.Clear();
 
-			foreach (var item in Player.Inventory.Items)
+			foreach (var item in TJ.Player.Inventory.Items)
 			{
 				var row = _gridInventory.RowsProportions.Count;
 
@@ -231,7 +223,7 @@ namespace Jord.UI
 				return;
 			}
 
-			var item = Player.Inventory.Items[_gridInventory.HoverRowIndex.Value].Item;
+			var item = TJ.Player.Inventory.Items[_gridInventory.HoverRowIndex.Value].Item;
 			_textDescription.Text = item.BuildDescription();
 		}
 
@@ -242,8 +234,8 @@ namespace Jord.UI
 				return;
 			}
 
-			var item = Player.Equipment.Items[_gridEquipment.HoverRowIndex.Value].Item;
-			_textDescription.Text = item != null?item.BuildDescription():string.Empty;
+			var item = TJ.Player.Equipment.Items[_gridEquipment.HoverRowIndex.Value].Item;
+			_textDescription.Text = item != null ? item.BuildDescription() : string.Empty;
 		}
 
 		private void OnInventorySelectedIndexChanged(object sender, EventArgs e)
@@ -274,7 +266,7 @@ namespace Jord.UI
 		{
 			base.OnKeyDown(k);
 
-			switch(k)
+			switch (k)
 			{
 				case Keys.E:
 					if (_buttonEquip.Enabled)

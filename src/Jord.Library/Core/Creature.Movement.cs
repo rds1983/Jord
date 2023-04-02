@@ -12,7 +12,7 @@ namespace Jord.Core
 
 		public bool Enter()
 		{
-			if (Tile == null || Tile.Exit == null)
+/*			if (Tile == null || Tile.Exit == null)
 			{
 				return false;
 			}
@@ -65,10 +65,10 @@ namespace Jord.Core
 				}
 			}
 
-/*			Remove();
-			Place(map, exitTile.Position);*/
+			Remove();
+			Place(map, exitTile.Position);
 
-			OnEntered();
+			OnEntered();*/
 
 			return true;
 		}

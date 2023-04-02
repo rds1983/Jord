@@ -1,5 +1,4 @@
 ﻿using DefaultEcs;
-using Jord.Components;
 using Jord.Core.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -61,6 +60,7 @@ namespace Jord.Core
 
 			result.Set(new Location(location));
 			result.Set(Image);
+			result.Set(this);
 
 			return result;
 		}

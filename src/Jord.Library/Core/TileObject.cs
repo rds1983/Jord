@@ -1,5 +1,4 @@
 ﻿using DefaultEcs;
-using Jord.Components;
 using Microsoft.Xna.Framework;
 
 namespace Jord.Core

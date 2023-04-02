@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using Jord.Core;
 using Jord.Core.Items;
-using Jord.Core.Abilities;
+using Jord.Core;
 
 namespace Jord.Storage
 {
@@ -17,7 +16,6 @@ namespace Jord.Storage
 
 		public int Experience { get; set; }
 		public int Gold { get; set; }
-		public string StartingMapId { get; set; } = "BalHarbor";
 
 		public Dictionary<string, int> Inventory { get; } = new Dictionary<string, int>();
 
@@ -36,7 +34,7 @@ namespace Jord.Storage
 			Level = player.Level;
 			Perks.AddRange(from p in player.Perks select p.Id);
 			Experience = player.Experience;
-			Gold = player.Gold;
+			Gold = player.Inventory.Gold;
 
 			foreach (var item in player.Inventory.Items)
 			{
@@ -65,12 +63,13 @@ namespace Jord.Storage
 				Name = Name,
 				Level = Level,
 				Experience = Experience,
-				Gold = Gold
 			};
+
+			result.Inventory.Gold = Gold;
 
 			if (Perks != null)
 			{
-				foreach(var perk in Perks)
+				foreach (var perk in Perks)
 				{
 					result.Perks.Add(TJ.Database.Perks.Ensure(perk));
 				}

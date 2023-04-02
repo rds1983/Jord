@@ -1,5 +1,4 @@
 ﻿using FontStashSharp;
-using Jord.Components;
 using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
@@ -224,10 +223,10 @@ namespace Jord.UI
 						_tilesWithSigns.Add(tile);
 					}
 
-/*					if (isInFov && tile.Creature != null)
-					{
-						RenderCreatureDecorations(context, pos, tile.Creature);
-					}*/
+					/*					if (isInFov && tile.Creature != null)
+										{
+											RenderCreatureDecorations(context, pos, tile.Creature);
+										}*/
 				}
 			}
 

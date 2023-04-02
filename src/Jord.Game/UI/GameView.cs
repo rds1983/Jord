@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework.Input;
 using Myra.Extended.Widgets;
-using Myra.Graphics2D.UI;
 using System;
 using System.Linq;
 using Jord.Core;
@@ -47,15 +46,16 @@ namespace Jord.UI
 
 		private void UpdateUseButton()
 		{
-			var player = TJ.Player;
 			var enabled = true;
 
+
+			var tile = TJ.PlayerTile;
 			string text;
-			if (player.Tile != null && player.Tile.Inventory.Items.Count > 0)
+			if (tile != null && tile.Inventory.Items.Count > 0)
 			{
 				text = @"/c[green]E/c[white]|Take";
 			}
-			else if (player.CanEnter())
+			else if (tile.Exit != null)
 			{
 				text = @"/c[green]E/c[white]|Enter";
 			}
@@ -72,14 +72,14 @@ namespace Jord.UI
 		private void _buttonUse_Click(object sender, EventArgs e)
 		{
 			var player = TJ.Player;
-
-			if (player.Tile != null && player.Tile.Inventory.Items.Count > 0)
+			var tile = TJ.PlayerTile;
+			if (tile != null && tile.Inventory.Items.Count > 0)
 			{
-				player.TakeLyingItem(0, 1);
+				TJ.TakeLyingItem(0, 1);
 			}
-			else if (player.CanEnter())
+			else if (tile.Exit != null)
 			{
-				TJ.Session.PlayerEnter();
+				TJ.PlayerEnter();
 			}
 		}
 
@@ -121,14 +121,14 @@ namespace Jord.UI
 
 		private bool ProcessMovementTileObject(Point newPos)
 		{
-			var player = TJ.Player;
+			var map = TJ.Map;
 
-			if (player.Map[newPos].Object == null)
+			if (map[newPos].Object == null)
 			{
 				return false;
 			}
 
-			switch (player.Map[newPos].Object.Type)
+			switch (map[newPos].Object.Type)
 			{
 				case TileObjectType.TanningBench:
 					var tanningWindow = new TanningWindow();
@@ -145,30 +145,35 @@ namespace Jord.UI
 
 		private bool ProcessMovementCreature(Point newPos)
 		{
-			/*			var player = TJ.Player;
-						var asNpc = player.Map[newPos].Creature as NonPlayer;
-						if (asNpc == null)
-						{
-							return false;
-						}
+			var entity = TJ.GetEntityByCoords(newPos);
+			if (entity == null)
+			{
+				return false;
+			}
 
-						var handled = true;
-						switch (asNpc.Info.CreatureType)
-						{
-							case CreatureType.Merchant:
-								// Initiate trade
-								var dialog = new TradeDialog(asNpc);
-								dialog.ShowModal(Desktop);
-								break;
 
-							default:
-								handled = false;
-								break;
-						}
+			var creatureInfo = entity.Value.Get<CreatureInfo>();
+			if (creatureInfo == null)
+			{
+				return false;
+			}
 
-						return handled;*/
+			var handled = true;
+			switch (creatureInfo.CreatureType)
+			{
+				case CreatureType.Merchant:
+					// Initiate trade
+					var inventory = entity.Value.Get<Inventory>();
+					var dialog = new TradeDialog(creatureInfo.Name, inventory);
+					dialog.ShowModal(Desktop);
+					break;
 
-			return false;
+				default:
+					handled = false;
+					break;
+			}
+
+			return handled;
 		}
 
 		private bool ProcessMovement(Keys key)
@@ -176,7 +181,7 @@ namespace Jord.UI
 			if (key == Keys.NumPad5)
 			{
 				// Wait
-				TJ.Session.WaitPlayer();
+				TJ.WaitPlayer();
 				return true;
 			}
 
@@ -219,10 +224,9 @@ namespace Jord.UI
 			if (direction != null)
 			{
 				var delta = direction.Value.GetDelta();
-				var player = TJ.Player;
-				var newPos = player.Position + delta;
-				if (newPos.X >= 0 && newPos.X < player.Map.Width &&
-					newPos.Y >= 0 && newPos.Y < player.Map.Height)
+				var newPos = TJ.PlayerPosition + delta;
+				if (newPos.X >= 0 && newPos.X < TJ.Map.Width &&
+					newPos.Y >= 0 && newPos.Y < TJ.Map.Height)
 				{
 					var handled = ProcessMovementTileObject(newPos);
 
@@ -234,7 +238,7 @@ namespace Jord.UI
 					if (!handled)
 					{
 						var isRunning = _downKeys.Contains(Keys.LeftShift) || _downKeys.Contains(Keys.RightShift);
-						PlayerService.MovePlayer(direction.Value, isRunning);
+						TJ.MovePlayer(direction.Value, isRunning);
 					}
 				}
 			}
@@ -264,7 +268,8 @@ namespace Jord.UI
 			else if (key == Keys.A)
 			{
 				ShowAbilities();
-			} else if (key == Keys.E && _buttonUse.Enabled)
+			}
+			else if (key == Keys.E && _buttonUse.Enabled)
 			{
 				_buttonUse.DoClick();
 			}
