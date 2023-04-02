@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultEcs;
 using Jord.Core.Abilities;
 using Jord.Core.Items;
 using Jord.Utils;
+using Microsoft.Xna.Framework;
 
 namespace Jord.Core
 {
-	public class Player
+	public class Player : ISpawnable
 	{
 		private int _level;
 
@@ -189,79 +191,90 @@ namespace Jord.Core
 			return new AbilityInfo[0];
 		}
 
-/*		protected override void OnKilledTarget(Creature target)
+		public Entity Spawn(Point position)
 		{
-			base.OnKilledTarget(target);
+			var result = TJ.World.CreateEntity();
 
-			// Death message
-			var nonPlayer = (NonPlayer)target;
+			result.Set(new Location(position));
+			result.Set(TJ.Settings.PlayerAppearance);
+			result.Set(this);
 
-			var message = Strings.GetNpcDeathMessage(target.Name);
-			TJ.GameLog(message);
+			return result;
+		}
 
-			// Experience award
-			Experience += nonPlayer.Info.Experience;
-			message = Strings.GetExpMessage(nonPlayer.Info.Experience);
-			TJ.GameLog(message);
-
-			// Generate loot
-			var loot = nonPlayer.Info.Loot;
-			if (loot != null && loot.Count > 0)
-			{
-				foreach (var lootEntry in loot)
+		/*		protected override void OnKilledTarget(Creature target)
 				{
-					var success = MathUtils.RollPercentage(lootEntry.Rate);
-					if (success)
+					base.OnKilledTarget(target);
+
+					// Death message
+					var nonPlayer = (NonPlayer)target;
+
+					var message = Strings.GetNpcDeathMessage(target.Name);
+					TJ.GameLog(message);
+
+					// Experience award
+					Experience += nonPlayer.Info.Experience;
+					message = Strings.GetExpMessage(nonPlayer.Info.Experience);
+					TJ.GameLog(message);
+
+					// Generate loot
+					var loot = nonPlayer.Info.Loot;
+					if (loot != null && loot.Count > 0)
 					{
-						var item = new Item(lootEntry.ItemInfo);
-						target.Tile.Inventory.Add(item, 1);
+						foreach (var lootEntry in loot)
+						{
+							var success = MathUtils.RollPercentage(lootEntry.Rate);
+							if (success)
+							{
+								var item = new Item(lootEntry.ItemInfo);
+								target.Tile.Inventory.Add(item, 1);
+							}
+						}
+					}
+
+		//			target.Remove();
+
+					UpdateLevel();
+				}
+
+				protected override void OnPositionChanged()
+				{
+					base.OnPositionChanged();
+
+					if (Tile == null || Tile.Inventory.Items.Count == 0)
+					{
+						return;
+					}
+
+					if (Tile.Inventory.Items.Count == 1)
+					{
+						TJ.GameLog(Strings.BuildItemLyingOnTheFloor(Tile.Inventory.Items[0].Item.Info.Name));
+					}
+					else
+					{
+						TJ.GameLog(Strings.SomeItemsAreLying);
 					}
 				}
-			}
 
-//			target.Remove();
+				protected override void OnEntered()
+				{
+					base.OnEntered();
 
-			UpdateLevel();
-		}
+					if (Map.DungeonLevel == null)
+					{
+						TJ.GameLog(Strings.BuildEnteredMap(Map.Name));
+					}
+					else
+					{
+						TJ.GameLog(Strings.BuildEnteredMap(Map.Name + ", " + Map.DungeonLevel.Value));
+					}
+				}
 
-		protected override void OnPositionChanged()
-		{
-			base.OnPositionChanged();
+				protected override void OnItemTaken(Item item, int count)
+				{
+					base.OnItemTaken(item, count);
 
-			if (Tile == null || Tile.Inventory.Items.Count == 0)
-			{
-				return;
-			}
-
-			if (Tile.Inventory.Items.Count == 1)
-			{
-				TJ.GameLog(Strings.BuildItemLyingOnTheFloor(Tile.Inventory.Items[0].Item.Info.Name));
-			}
-			else
-			{
-				TJ.GameLog(Strings.SomeItemsAreLying);
-			}
-		}
-
-		protected override void OnEntered()
-		{
-			base.OnEntered();
-
-			if (Map.DungeonLevel == null)
-			{
-				TJ.GameLog(Strings.BuildEnteredMap(Map.Name));
-			}
-			else
-			{
-				TJ.GameLog(Strings.BuildEnteredMap(Map.Name + ", " + Map.DungeonLevel.Value));
-			}
-		}
-
-		protected override void OnItemTaken(Item item, int count)
-		{
-			base.OnItemTaken(item, count);
-
-			TJ.GameLog(Strings.BuildPickedUp(item.Info.Name, count));
-		}*/
+					TJ.GameLog(Strings.BuildPickedUp(item.Info.Name, count));
+				}*/
 	}
 }

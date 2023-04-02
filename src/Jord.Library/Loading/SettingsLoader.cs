@@ -31,6 +31,7 @@ namespace Jord.Loading
 			{
 				Id = data.EnsureId(),
 				PlayerAppearance = playerAppearance,
+				StartingMapId = data.EnsureString("StartingMapId"),
 				Font = font,
 				BasePurchasePercentage = data.EnsureInt("BasePurchasePercentage"),
 				BaseSellPercentage = data.EnsureInt("BaseSellPercentage")

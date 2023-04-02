@@ -48,7 +48,7 @@ namespace Jord
 
 		public static Entity PlayerEntity
 		{
-			get => World.GetEntities().With<PlayerData>().AsEnumerable().First();
+			get => World.GetEntities().With<Player>().AsEnumerable().First();
 		}
 
 		public static Player Player => PlayerEntity.Get<Player>();

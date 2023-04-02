@@ -11,12 +11,8 @@ namespace Jord.Core
 
 		public SpawnableWithCoords(ISpawnable spawnable, Point position)
 		{
-			if (spawnable == null)
-			{
-				throw new ArgumentNullException(nameof(spawnable));
-			}
-
-
+			Spawnable = spawnable ?? throw new ArgumentNullException(nameof(spawnable));
+			Position = position;
 		}
 	}
 

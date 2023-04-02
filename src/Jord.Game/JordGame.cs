@@ -99,12 +99,22 @@ namespace Jord
 
 		public void Play(int slotIndex)
 		{
+			// Set map
+			var startingMap = TJ.Database.Maps[TJ.Settings.StartingMapId];
+			TJ.Map = startingMap.Map;
+
+			// Spawn creatures
+			startingMap.SpawnAll();
+
+			// Load and spawn player
+			TJ.SlotIndex = slotIndex;
+			var player = TJ.LoadCurrentGame();
+			player.Spawn(TJ.Map.SpawnSpot.Value);
+
 			if (TJ.Player.Stats != null)
 			{
 				TJ.Player.Stats.Life.Changed -= Life_Changed;
 			}
-
-			TJ.SlotIndex = slotIndex;
 
 			TJ.Player.Stats.Life.Changed += Life_Changed;
 
