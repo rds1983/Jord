@@ -7,7 +7,19 @@ using System.Collections.Generic;
 
 namespace Jord.Core
 {
-	public class Map
+	public class SpawnableWithCoords
+	{
+		public ISpawnable Spawnable { get; }
+		public Point Position { get; }
+
+		public SpawnableWithCoords(ISpawnable spawnable, Point position)
+		{
+			Spawnable = spawnable ?? throw new ArgumentNullException(nameof(spawnable));
+			Position = position;
+		}
+	}
+
+	public class Map : BaseObject
 	{
 		private class MapFOVView : IMapView<bool>
 		{
@@ -50,7 +62,8 @@ namespace Jord.Core
 
 		public int? DungeonLevel { get; set; }
 
-		public List<Creature> Creatures { get; } = new List<Creature>();
+		public List<SpawnableWithCoords> Spawns = new List<SpawnableWithCoords>();
+
 
 		public Tile this[int x, int y]
 		{
@@ -146,12 +159,20 @@ namespace Jord.Core
 					tile.X = x;
 					tile.Y = y;
 
-/*					if (tile.Creature != null)
-					{
-						tile.Creature.Position = new Point(x, y);
-						tile.Creature.DisplayPosition = new Vector2(x, y);
-					}*/
+					/*					if (tile.Creature != null)
+										{
+											tile.Creature.Position = new Point(x, y);
+											tile.Creature.DisplayPosition = new Vector2(x, y);
+										}*/
 				}
+			}
+		}
+
+		public void SpawnAll()
+		{
+			foreach (var spawn in Spawns)
+			{
+				spawn.Spawnable.Spawn(spawn.Position);
 			}
 		}
 	}

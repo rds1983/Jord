@@ -1,6 +1,4 @@
 ﻿using DefaultEcs.System;
-using Jord.Core;
-using Jord.UI;
 
 namespace Jord.Services
 {

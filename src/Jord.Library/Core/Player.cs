@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DefaultEcs;
 using Jord.Core.Abilities;
 using Jord.Core.Items;
-using Jord.Utils;
 using Microsoft.Xna.Framework;
 
 namespace Jord.Core
@@ -177,18 +175,6 @@ namespace Jord.Core
 		public void Invalidate()
 		{
 			_dirty = true;
-		}
-
-		public AbilityInfo[] BuildFreeAbilities()
-		{
-			// TODO:
-			return TJ.Database.Abilities.Values.ToArray();
-		}
-
-		public AbilityInfo[] BuildLearnedAbilities()
-		{
-			// TODO:
-			return new AbilityInfo[0];
 		}
 
 		public Entity Spawn(Point position)

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using Jord.Core;
+using DefaultEcs;
 
 namespace Jord
 {
@@ -99,17 +100,18 @@ namespace Jord
 
 		public void Play(int slotIndex)
 		{
+			TJ.World = new World();
+
 			// Set map
-			var startingMap = TJ.Database.Maps[TJ.Settings.StartingMapId];
-			TJ.Map = startingMap.Map;
+			TJ.Map = TJ.Database.Maps[TJ.Settings.StartingMapId];
 
 			// Spawn creatures
-			startingMap.SpawnAll();
+			TJ.Map.SpawnAll();
 
 			// Load and spawn player
 			TJ.SlotIndex = slotIndex;
-			var player = TJ.LoadCurrentGame();
-			player.Spawn(TJ.Map.SpawnSpot.Value);
+			TJ.Player = TJ.LoadCurrentGame();
+			TJ.Player.Spawn(TJ.Map.SpawnSpot.Value);
 
 			if (TJ.Player.Stats != null)
 			{
@@ -124,9 +126,10 @@ namespace Jord
 			Desktop.FocusedKeyboardWidget = gameView;
 
 			// Prevents camera from moving during the attack
-/*			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;
-			TJ.Player.EndAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerDisplayPosition;*/
+			/*			TJ.Player.StartAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerPosition;
+						TJ.Player.EndAttack += (s, a) => this.MapView.CameraType = MapViewCameraType.PlayerDisplayPosition;*/
 
+			TJ.MapUpdateSystem.Update(0);
 			UpdateStats();
 
 			TJ.GameLog("Welcome to 'Troubles of Jord' version {0}.", TJ.Version);

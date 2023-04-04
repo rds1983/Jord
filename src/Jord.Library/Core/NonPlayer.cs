@@ -69,7 +69,7 @@ namespace Jord.Core
 
 		public void Act()
 		{
-			if (Info.CreatureType != CreatureType.Enemy)
+/*			if (Info.CreatureType != CreatureType.Enemy)
 			{
 				return;
 			}
@@ -92,7 +92,7 @@ namespace Jord.Core
 							continue;
 						}
 
-/*						var player = Map[x, y].Creature as Player;
+						var player = Map[x, y].Creature as Player;
 						if (player == null)
 						{
 							continue;
@@ -100,7 +100,7 @@ namespace Jord.Core
 
 						Attack(player);
 						attacked = true;
-						goto finished;*/
+						goto finished;
 					}
 				}
 			finished:;
@@ -113,7 +113,7 @@ namespace Jord.Core
 //						MoveTo(delta);
 					}
 				}
-			}
+			}*/
 		}
 	}
 }

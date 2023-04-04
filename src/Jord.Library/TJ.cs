@@ -44,19 +44,19 @@ namespace Jord
 		public static int? SlotIndex { get; set; }
 
 
-		public static World World { get; } = new World();
+		public static World World { get; set; }
 
 		public static Entity PlayerEntity
 		{
 			get => World.GetEntities().With<Player>().AsEnumerable().First();
 		}
 
-		public static Player Player => PlayerEntity.Get<Player>();
 		public static Point PlayerPosition => PlayerEntity.Get<Location>().Position;
 		public static Vector2 PlayerDisplayPosition => PlayerEntity.Get<Location>().DisplayPosition;
 		public static Tile PlayerTile => Map[PlayerPosition];
 
 		public static Map Map { get; set; }
+		public static Player Player { get; set; }
 
 		public static string Version
 		{
@@ -69,8 +69,10 @@ namespace Jord
 			}
 		}
 
+		public static MapUpdateSystem MapUpdateSystem { get; } = new MapUpdateSystem();
+
 		private static SequentialSystem<float> _systems = new SequentialSystem<float>(
-			new MapUpdateSystem()
+			MapUpdateSystem
 		);
 
 		private static void WorldAct()

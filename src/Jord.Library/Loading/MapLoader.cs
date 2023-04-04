@@ -7,9 +7,9 @@ using Jord.Core;
 
 namespace Jord.Loading
 {
-	public class MapInfoLoader: BaseObjectLoader<MapInfo>
+	public class MapLoader : BaseObjectLoader<Map>
 	{
-		public static readonly MapInfoLoader Instance = new MapInfoLoader();
+		public static readonly MapLoader Instance = new MapLoader();
 
 		private class SpawnSpot
 		{
@@ -22,36 +22,31 @@ namespace Jord.Loading
 		private const string DataName = "Data";
 		private const string ForbiddenLegendItems = "{}[]";
 
-		protected override MapInfo CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
+		protected override Map CreateObject(string source, JObject data, Dictionary<string, string> properties, out Action<Database> secondRunAction)
 		{
 			var map = new Map(data.EnsurePoint("Size"))
 			{
-				Local = data.EnsureBool("Local")
+				Id = data.EnsureId(),
+				Local = data.EnsureBool("Local"),
+				Name = data.EnsureString("Name"),
+				Explored = data.OptionalBool("Explored", false),
+				Light = data.OptionalBool("Light", false)
 			};
-
-			map.Name = data.EnsureString("Name");
-			map.Explored = data.OptionalBool("Explored", false);
-			map.Light = data.OptionalBool("Light", false);
 
 			if (map.Explored)
 			{
-				foreach(var tile in map.GetAllCells())
+				foreach (var tile in map.GetAllCells())
 				{
 					tile.IsExplored = true;
 				}
 			}
 
-			var result = new MapInfo(map)
-			{
-				Id = data.EnsureId()
-			};
+			secondRunAction = db => SecondRun(map, data, db);
 
-			secondRunAction = db => SecondRun(result, data, db);
-
-			return result;
+			return map;
 		}
 
-		private void SecondRun(MapInfo result, JObject data, Database database)
+		private void SecondRun(Map result, JObject data, Database database)
 		{
 			if (database.Dungeons.ContainsKey(result.Id))
 			{
@@ -134,7 +129,7 @@ namespace Jord.Loading
 					Tile lastTile = null;
 					if (pos.X > 0)
 					{
-						lastTile = result.Map[pos.X - 1, pos.Y];
+						lastTile = result[pos.X - 1, pos.Y];
 					}
 
 					var symbol = line[j];
@@ -215,7 +210,7 @@ namespace Jord.Loading
 
 					if (item is SpawnSpot)
 					{
-						result.Map.SpawnSpot = lastTile.Position;
+						result.SpawnSpot = lastTile.Position;
 						continue;
 					}
 
@@ -236,7 +231,7 @@ namespace Jord.Loading
 					var asTileInfo = item as TileInfo;
 					if (asTileInfo != null)
 					{
-						result.Map[pos].Info = asTileInfo;
+						result[pos].Info = asTileInfo;
 					}
 
 					++pos.X;
@@ -290,14 +285,14 @@ namespace Jord.Loading
 						}
 					}
 
-/*					if (tile.Creature != null)
-					{
-						var npc = (NonPlayer)tile.Creature;
-						if (!creatureInfos.ContainsKey(npc.Info.Id))
-						{
-							creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Symbol, npc.Info, legend);
-						}
-					}*/
+					/*					if (tile.Creature != null)
+										{
+											var npc = (NonPlayer)tile.Creature;
+											if (!creatureInfos.ContainsKey(npc.Info.Id))
+											{
+												creatureInfos[npc.Info.Id] = AddToLegend(npc.Info.Symbol, npc.Info, legend);
+											}
+										}*/
 				}
 			}
 
@@ -313,10 +308,10 @@ namespace Jord.Loading
 
 			var mapObject = new JObject
 			{
-//				["Id"] = map.Id,
+				//				["Id"] = map.Id,
 				["Name"] = map.Name,
 				["Size"] = new JObject
-				{ 
+				{
 					["X"] = map.Width,
 					["Y"] = map.Height,
 				},
@@ -393,11 +388,11 @@ namespace Jord.Loading
 						sb.Append(tileObjects[tile.Object.Id]);
 					}
 
-/*					if (tile.Creature != null)
-					{
-						var npc = (NonPlayer)tile.Creature;
-						sb.Append(creatureInfos[npc.Info.Id]);
-					}*/
+					/*					if (tile.Creature != null)
+										{
+											var npc = (NonPlayer)tile.Creature;
+											sb.Append(creatureInfos[npc.Info.Id]);
+										}*/
 
 					if (map.SpawnSpot == new Point(x, y))
 					{

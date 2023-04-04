@@ -58,10 +58,10 @@ namespace Jord.Core
 
 		public bool Contains(Inventory other)
 		{
-			foreach(var otherItem in other.Items)
+			foreach (var otherItem in other.Items)
 			{
 				var found = false;
-				foreach(var item in Items)
+				foreach (var item in Items)
 				{
 					if (otherItem.Item == item.Item && otherItem.Quantity <= item.Quantity)
 					{
@@ -77,6 +77,17 @@ namespace Jord.Core
 			}
 
 			return true;
+		}
+
+		public Inventory Clone()
+		{
+			var _inventory = new Inventory();
+			foreach (var itemPile in Items)
+			{
+				_inventory.Items.Add(itemPile.Clone());
+			}
+
+			return _inventory;
 		}
 
 		public override string ToString()

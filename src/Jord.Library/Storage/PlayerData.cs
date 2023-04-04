@@ -21,8 +21,6 @@ namespace Jord.Storage
 
 		public Dictionary<EquipType, string> Equipment { get; } = new Dictionary<EquipType, string>();
 
-		public string[] LearnedAbilities;
-
 		public PlayerData()
 		{
 		}
@@ -50,9 +48,6 @@ namespace Jord.Storage
 
 				Equipment[item.Slot] = item.Item.Info.Id;
 			}
-
-			var abilities = player.BuildLearnedAbilities();
-			LearnedAbilities = (from a in abilities select a.Name).ToArray();
 		}
 
 		public Player CreateCharacter()
@@ -84,8 +79,6 @@ namespace Jord.Storage
 			{
 				result.Equipment.Equip(new Item(TJ.Database.ItemInfos[pair.Value]));
 			}
-
-			result.Abilities = result.BuildFreeAbilities();
 
 			return result;
 		}

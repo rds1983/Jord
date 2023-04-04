@@ -11,34 +11,6 @@ namespace Jord.Core
 		private Map _map;
 		private Point _position;
 
-		public Map Map
-		{
-			get
-			{
-				return _map;
-			}
-
-			set
-			{
-				if (_map == value)
-				{
-					return;
-				}
-
-				if (_map != null)
-				{
-					_map.Creatures.Remove(this);
-				}
-
-				_map = value;
-
-				if (_map != null)
-				{
-					_map.Creatures.Add(this);
-				}
-			}
-		}
-
 		public Point Position
 		{
 			get => _position;
@@ -56,18 +28,6 @@ namespace Jord.Core
 
 		public Vector2 DisplayPosition { get; set; }
 
-		public Tile Tile
-		{
-			get
-			{
-				if (Map == null)
-				{
-					return null;
-				}
-
-				return Map[Position];
-			}
-		}
 
 		public abstract Appearance Image { get; }
 		public abstract CreatureStats Stats { get; }
@@ -116,16 +76,6 @@ namespace Jord.Core
 				Stats.Life.CurrentStamina += staminaRegen;
 				Debug.WriteLine("{0} regenerated {1} stamina.", Name, staminaRegen);
 			}
-		}
-
-		public void TakeLyingItem(int index, int count)
-		{
-			var item = Tile.Inventory.Items[index];
-
-			Inventory.Add(item.Item, count);
-			Tile.Inventory.Add(item.Item, -count);
-
-			OnItemTaken(item.Item, count);
 		}
 
 		protected virtual void OnItemTaken(Item item, int count)

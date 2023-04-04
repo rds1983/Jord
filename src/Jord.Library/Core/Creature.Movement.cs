@@ -1,15 +1,7 @@
-﻿using Jord.Utils;
-using Microsoft.Xna.Framework;
-
-namespace Jord.Core
+﻿namespace Jord.Core
 {
 	partial class Creature
 	{
-		public bool CanEnter()
-		{
-			return Tile != null && Tile.Exit != null;
-		}
-
 		public bool Enter()
 		{
 /*			if (Tile == null || Tile.Exit == null)

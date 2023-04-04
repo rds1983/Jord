@@ -1,4 +1,5 @@
-﻿using Jord.Core;
+﻿using DefaultEcs;
+using Jord.Core;
 using Jord.Core.Abilities;
 using Jord.Utils;
 
@@ -17,17 +18,86 @@ namespace Jord
 			return result;
 		}
 
-		public static void PlayerEnter()
+		public static bool PlayerCanEnter()
 		{
-			//			Player.Enter();
+			return PlayerTile != null && PlayerTile.Exit != null;
+		}
+
+		public static bool PlayerEnter()
+		{
+			var playerTile = PlayerTile;
+			if (playerTile == null || playerTile.Exit == null)
+			{
+				return false;
+			}
+
+			Tile exitTile = null;
+
+			var previousMap = Map;
+
+			Map map;
+
+			if (TJ.Database.Dungeons.ContainsKey(playerTile.Exit.MapId))
+			{
+				var dungeon = TJ.Database.Dungeons.Ensure(playerTile.Exit.MapId);
+
+				var dungeonLevel = PlayerTile.Exit.DungeonLevel == null ? 1 : PlayerTile.Exit.DungeonLevel.Value;
+				map = dungeon.Generate(dungeonLevel);
+				for (var x = 0; x < map.Width; ++x)
+				{
+					for (var y = 0; y < map.Height; ++y)
+					{
+						var tile = map[x, y];
+						if (tile.Exit == null)
+						{
+							continue;
+						}
+
+						if (tile.Exit.MapId == previousMap.Id && tile.Exit.DungeonLevel == previousMap.DungeonLevel)
+						{
+							// Found backwards exit
+							exitTile = tile;
+							goto found;
+						}
+					}
+				}
+			found:;
+			}
+			else
+			{
+				map = TJ.Database.Maps.Ensure(playerTile.Exit.MapId);
+
+				if (playerTile.Exit.Position != null)
+				{
+					exitTile = map[playerTile.Exit.Position.Value];
+				}
+				else
+				{
+					// If position isnt set explicitly
+					// Then we search for a tile that has exit to the current creature map
+					exitTile = map.EnsureExitTileById(previousMap.Id);
+				}
+			}
+
+			// Recreate the world
+			TJ.World.Dispose();
+			TJ.World = new World();
+
+			TJ.Map = map;
+
+			// Spawn player
+			TJ.Player.Spawn(exitTile.Position);
+
+			// Everything else
+			map.SpawnAll();
+
+			return true;
 		}
 
 		public static void WaitPlayer()
 		{
 			WorldAct();
 		}
-
-		public static bool PlayerCanEnter() => PlayerTile.Exit != null;
 
 		public static void UseAbility(AbilityInfo ability)
 		{

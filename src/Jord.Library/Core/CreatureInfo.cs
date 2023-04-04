@@ -40,7 +40,7 @@ namespace Jord.Core
 		public int MaxHp { get; set; }
 
 		public int MaxMana { get; set; }
-		
+
 		public int MaxStamina { get; set; }
 
 		public int HpRegen { get; set; }
@@ -61,6 +61,7 @@ namespace Jord.Core
 			result.Set(new Location(location));
 			result.Set(Image);
 			result.Set(this);
+			result.Set(Inventory.Clone());
 
 			return result;
 		}

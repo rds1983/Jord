@@ -23,17 +23,12 @@ namespace Jord.Core
 
 		public string ExitDownTileInfoId { get; set; }
 
-		public MapInfo Generate(int level)
+		public Map Generate(int level)
 		{
 			var generator = TJ.Database.Generators.Ensure(GeneratorId);
 
 			var map = generator.Generate();
-
-			var result = new MapInfo(map)
-			{
-				Id = Id,
-			};
-
+			map.Id = Id;
 			map.Name = Name;
 			map.DungeonLevel = level;
 
@@ -156,11 +151,11 @@ namespace Jord.Core
 					var tile = freeTiles[index];
 					freeTiles.RemoveAt(index);
 
-					result.Spawns.Add(new SpawnableWithCoords(creatureRandom.Info, tile.Position));
+					map.Spawns.Add(new SpawnableWithCoords(creatureRandom.Info, tile.Position));
 				}
 			}
 
-			return result;
+			return map;
 		}
 	}
 }
