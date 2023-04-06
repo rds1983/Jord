@@ -1,0 +1,20 @@
+﻿{
+	"Effects": {
+		"PerkBaseSmithing": {
+			"Name": "Base Smithing",
+            "Description": "Teaches you to work with leather and iron.",
+            "Bonuses": {
+                "WorkWithLeather": 1,
+				"WorkWithIron": 1
+            }
+		}
+	},
+    "Perks": {
+        "BaseSmithing": {
+			"Name": "Base Smithing",
+            "Description": "Basic knowledge of the smithing. Teaches you to work with leather and iron.",
+			"Tier": 1,
+            "AddsEffects": "PerkBaseSmithing"
+        }
+    }
+}

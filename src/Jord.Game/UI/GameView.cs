@@ -7,6 +7,7 @@ using Jord.Core;
 using Jord.Utils;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
+using Jord.Core.Abilities;
 
 namespace Jord.UI
 {
@@ -131,12 +132,35 @@ namespace Jord.UI
 			switch (player.Map[newPos].Object.Type)
 			{
 				case TileObjectType.TanningBench:
-					var tanningWindow = new TanningWindow();
-					tanningWindow.ShowModal(Desktop);
+					{
+						Window window;
+						if (player.CalculateBonus(BonusType.WorkWithLeather) == 0)
+						{
+							window = Dialog.CreateMessageBox(Strings.Error, CantWorkWithLeather);
+						}
+						else
+						{
+							window = new TanningWindow();
+						}
+
+						window.ShowModal(Desktop);
+					}
 					break;
 				case TileObjectType.CraftingBench:
-					var craftingWindow = new CraftingWindow();
-					craftingWindow.ShowModal(Desktop);
+					{
+						Window window;
+						if (player.CalculateBonus(BonusType.WorkWithLeather) == 0)
+						{
+							window = Dialog.CreateMessageBox(Strings.Error, CantForgeThings);
+						}
+						else
+						{
+							window = new CraftingWindow();
+						}
+
+						window.ShowModal(Desktop);
+					}
+					
 					break;
 			}
 

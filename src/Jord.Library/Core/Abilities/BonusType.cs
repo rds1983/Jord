@@ -7,6 +7,8 @@
 		OneHandedHitRoll,
 		TwoHandedHitRoll,
 		PurchasePercentage,
-		SellPercentage
+		SellPercentage,
+		WorkWithLeather,
+		WorkWithIron
 	}
 }
