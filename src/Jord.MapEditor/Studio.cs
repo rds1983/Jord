@@ -191,10 +191,10 @@ namespace Jord.MapEditor
 			UI = new StudioWidget();
 
 			UI._openModuleMenuItem.Selected += OpenProjectItemOnClicked;
-			UI._generateWorldMenuItem.Selected += OnGenerateWorldMenuItemSelected;
 
 			UI._switchMapMenuItem.Selected += OnSwitchMapMenuItemSelected;
 			UI._newMapMenuItem.Selected += OnNewMapSelected;
+			UI._generateMapMenuItem.Selected += OnNewGeneratedMap;
 			UI._resizeMapMenuItem.Selected += OnResizeMapSelected;
 			UI._saveMapMenuItem.Selected += SaveMapSelected;
 			UI._saveMapAsMenuItem.Selected += SaveMapAsSelected;
@@ -257,23 +257,15 @@ namespace Jord.MapEditor
 			UpdateMenuFile();
 		}
 
-		private void OnGenerateWorldMenuItemSelected(object sender, EventArgs e)
-		{
-			var dialog = new GenerateWorldDialog();
-
-			dialog.GenerationSettings = _generationSettings;
-			dialog.ShowModal(_desktop);
-		}
-
 		private void SetNewMap(Map map)
 		{
 			Map = map;
 			IsDirty = false;
 		}
 
-		private void OnNewGeneratedMap()
+		private void OnNewGeneratedMap(object sender, EventArgs args)
 		{
-			var dlg = new NewGeneratedMapDialog();
+			var dlg = new GenerateMapDialog();
 
 			dlg.Closed += (s, a) =>
 			{
@@ -284,7 +276,6 @@ namespace Jord.MapEditor
 
 				try
 				{
-					var id = dlg._textId.Text;
 					var generator = (BaseGenerator)dlg._comboGenerator.SelectedItem.Tag;
 
 					var newMap = generator.Generate();
@@ -303,16 +294,6 @@ namespace Jord.MapEditor
 		{
 			var dlg = new NewMapDialog();
 
-			switch (_state.LastNewMapType)
-			{
-				case 0:
-					dlg._radioSingleTileMap.IsPressed = true;
-					break;
-				case 1:
-					dlg._radioGeneratedMap.IsPressed = true;
-					break;
-			}
-
 			dlg.Closed += (s, a) =>
 			{
 				if (!dlg.Result)
@@ -323,16 +304,7 @@ namespace Jord.MapEditor
 				try
 				{
 
-					if (dlg._radioSingleTileMap.IsPressed)
-					{
-						throw new NotImplementedException();
-						_state.LastNewMapType = 0;
-					}
-					else
-					{
-						OnNewGeneratedMap();
-						_state.LastNewMapType = 1;
-					}
+					throw new NotImplementedException();
 				}
 				catch (Exception ex)
 				{
@@ -890,7 +862,7 @@ namespace Jord.MapEditor
 
 			UI._newMapMenuItem.Enabled = moduleLoaded;
 			UI._switchMapMenuItem.Enabled = moduleLoaded;
-			UI._generateWorldMenuItem.Enabled = moduleLoaded;
+			UI._generateMapMenuItem.Enabled = moduleLoaded;
 			UI._saveMapMenuItem.Enabled = moduleLoaded && Map != null;
 			UI._saveMapAsMenuItem.Enabled = moduleLoaded && Map != null;
 			UI._resizeMapMenuItem.Enabled = moduleLoaded && Map != null;

@@ -48,8 +48,6 @@ namespace Jord.Core
 
 		public bool Light { get; set; }
 
-		public bool Local { get; set; }
-
 		public int? DungeonLevel { get; set; }
 
 		public List<Creature> Creatures { get; } = new List<Creature>();
@@ -103,7 +101,6 @@ namespace Jord.Core
 			var mapView = new MapFOVView(this);
 			FieldOfView = new FOV(mapView);
 			PathFinder = new AStar(mapView, Distance.EUCLIDEAN);
-			Local = true;
 		}
 
 		public Map(Point size) : this(size.X, size.Y)

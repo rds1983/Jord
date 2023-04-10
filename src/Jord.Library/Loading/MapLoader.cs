@@ -26,13 +26,11 @@ namespace Jord.Loading
 		{
 			var map = new Map(data.EnsurePoint("Size"))
 			{
-				Local = data.EnsureBool("Local")
+				Id = data.EnsureId(),
+				Name = data.EnsureString("Name"),
+				Explored = data.OptionalBool("Explored", false),
+				Light = data.OptionalBool("Light", false)
 			};
-
-			map.Id = data.EnsureId();
-			map.Name = data.EnsureString("Name");
-			map.Explored = data.OptionalBool("Explored", false);
-			map.Light = data.OptionalBool("Light", false);
 
 			if (map.Explored)
 			{
@@ -338,7 +336,6 @@ namespace Jord.Loading
 				},
 				["Explored"] = map.Explored,
 				["Light"] = map.Light,
-				["Local"] = map.Local
 			};
 
 			root["Map"] = mapObject;

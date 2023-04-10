@@ -1,0 +1,16 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="GenerateMapDialog" OutputPath="D:\Projects\Jord\src\Jord.MapEditor\UI" />
+  <Dialog Title="Generate Map" Left="553" Top="71" Height="600">
+    <VerticalStackPanel Spacing="8" Width="800">
+      <VerticalStackPanel.Proportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </VerticalStackPanel.Proportions>
+      <HorizontalStackPanel Spacing="8">
+        <ComboBox HorizontalAlignment="Stretch" Id="_comboGenerator" />
+        <TextButton Text="Generate..." Id="_buttonGenerate" />
+      </HorizontalStackPanel>
+      <Panel Id="_panelResult" />
+    </VerticalStackPanel>
+  </Dialog>
+</Project>

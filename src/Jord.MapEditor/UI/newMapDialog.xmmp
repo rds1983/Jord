@@ -1,0 +1,20 @@
+<Project>
+  <Project.ExportOptions Namespace="Jord.MapEditor.UI" Class="NewMapDialog" OutputPath="D:\Projects\Jord\src\Jord.MapEditor\UI" />
+  <Dialog Title="New Map" Left="439" Top="187" Width="300" >
+    <Grid ColumnSpacing="8" RowSpacing="8">
+      <Grid.DefaultRowProportion Type="Auto" />
+      <Grid.ColumnsProportions>
+        <Proportion Type="Auto" />
+        <Proportion Type="Fill" />
+      </Grid.ColumnsProportions>
+      <Label Text="Id:" />
+      <TextBox Text="" Id="_textId" GridColumn="1" />
+      <Label Text="Width:" GridRow="1" />
+      <SpinButton HorizontalAlignment="Stretch" Value="32" GridColumn="1" GridRow="1" Id="_spinButtonWidth" />
+      <Label Text="Height:" GridRow="2" />
+      <SpinButton HorizontalAlignment="Stretch" Value="32" GridColumn="1" GridRow="2" Id="_spinButtonHeight" />
+      <Label Text="Tile:" GridRow="3" />
+      <ComboBox Id="_comboTile" HorizontalAlignment="Stretch" GridColumn="1" GridRow="3" />
+    </Grid>
+  </Dialog>
+</Project>
