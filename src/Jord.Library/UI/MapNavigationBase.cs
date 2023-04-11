@@ -1,22 +1,21 @@
-using System.Collections.Generic;
 using Jord.Core;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Myra;
-using System;
-using Jord.Utils;
 using Myra.Graphics2D;
+using Microsoft.Xna.Framework.Graphics;
+using FontStashSharp;
+using Jord.Utils;
 
 namespace Jord.UI
 {
 	public class MapNavigationBase : Widget
 	{
-		public static readonly Point TileSize = new Point(2, 2);
-		private static readonly HashSet<string> _secondLayerTiles = new HashSet<string>() { "Wall", "Ground" };
-
-		private ColorBuffer _colorBuffer;
 		private TextureRegion _image;
+		private readonly SpriteBatch _spriteBatch;
+		private RenderTarget2D _renderTarget;
+		private Vector2 _tileSize;
 		private bool _dirty = true;
 
 		public MapRender MapEditor { get; set; }
@@ -25,13 +24,6 @@ namespace Jord.UI
 		public Vector2 TopLeft => MapEditor.TopLeft;
 		public Point GridSize => MapEditor.GridSize;
 
-		public float MapSizeRatio
-		{
-			get
-			{
-				return (float)Map.Width / Map.Height;
-			}
-		}
 
 		public bool IgnoreFov;
 
@@ -39,74 +31,89 @@ namespace Jord.UI
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Stretch;
+
+			_spriteBatch = new SpriteBatch(MyraEnvironment.GraphicsDevice);
 		}
 
-		private void UpdateLayer(Func<Tile, bool> checker)
+		public void UpdateImage()
 		{
-			// Bottom layer
-			for (var mapY = 0; mapY < Map.Height; ++mapY)
-			{
-				for (var mapX = 0; mapX < Map.Width; ++mapX)
-				{
-					var tile = Map[mapX, mapY];
-					var rect = new Rectangle(mapX, mapY, TileSize.X, TileSize.Y);
-
-					if (checker(tile))
-					{
-						for (var y = rect.Top; y < rect.Bottom; ++y)
-						{
-							for (var x = rect.Left; x < rect.Right; ++x)
-							{
-								if (x >= Map.Width ||
-									y >= Map.Height)
-								{
-									continue;
-								}
-
-								if (!IgnoreFov && !tile.IsExplored)
-								{
-									continue;
-								}
-
-								var isInFov = IgnoreFov || tile.IsInFov;
-
-								var color = tile.Info.Image.Color;
-								if (isInFov && tile.Creature != null && !(tile.Creature is Player))
-								{
-									color = tile.Creature.Image.Color;
-								}
-
-								_colorBuffer[x, y] = color;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		private void UpdateImage()
-		{
-			if (!_dirty)
+			if (_dirty == false)
 			{
 				return;
 			}
 
-			if (_colorBuffer == null ||
-				_colorBuffer.Width != Map.Width ||
-				_colorBuffer.Height != Map.Height)
+			if (Map == null)
 			{
-				_colorBuffer = new ColorBuffer(Map.Width, Map.Height);
+				_image = null;
+				_dirty = false;
+				return;
 			}
 
-			// Bottom layer
-			UpdateLayer(tile => !_secondLayerTiles.Contains(tile.Info.Id));
+			var bounds = GetMapBounds();
 
-			// Top layer
-			UpdateLayer(tile => _secondLayerTiles.Contains(tile.Info.Id));
+			if (_renderTarget == null ||
+				_renderTarget.Width != bounds.Width ||
+				_renderTarget.Height != bounds.Height)
+			{
+				_renderTarget = new RenderTarget2D(MyraEnvironment.GraphicsDevice, bounds.Width, bounds.Height, false, SurfaceFormat.Color, DepthFormat.None);
+			}
 
-			var texture = _colorBuffer.CreateTexture2D(MyraEnvironment.GraphicsDevice);
-			_image = new TextureRegion(texture);
+			try
+			{
+				MyraEnvironment.GraphicsDevice.SetRenderTarget(_renderTarget);
+				MyraEnvironment.GraphicsDevice.Clear(Color.Black);
 
+				_spriteBatch.Begin();
+
+				_tileSize = new Vector2((float)bounds.Width / Map.Width, (float)bounds.Height / Map.Height);
+
+				var font = TJ.Database.Settings.FontSystem.GetFont(_tileSize.Y);
+				for (var mapY = 0; mapY < Map.Height; ++mapY)
+				{
+					for (var mapX = 0; mapX < Map.Width; ++mapX)
+					{
+						var tile = Map[mapX, mapY];
+
+						var pos = new Vector2(mapX, mapY);
+						var screen = pos * _tileSize;
+						var opacity = 1.0f;
+						var appearance = tile.Appearance;
+
+						if (tile.Object != null)
+						{
+							appearance = tile.Object.Image;
+						}
+
+						if (tile.Inventory.Items.Count > 0)
+						{
+							appearance = tile.Inventory.Items[0].Item.Info.Image;
+						}
+
+						if (tile.Creature != null)
+						{
+							screen = tile.Creature.DisplayPosition * _tileSize;
+							appearance = tile.Creature.Image;
+							opacity = tile.Creature.Opacity;
+						}
+
+						if (appearance != null)
+						{
+							var sz = font.MeasureString(appearance.Symbol);
+							var screen2 = new Vector2((int)(screen.X + sz.X / 2),
+								(int)(screen.Y + sz.Y / 2));
+
+							_spriteBatch.DrawString(font, appearance.Symbol, screen2, appearance.Color * opacity);
+						}
+					}
+				}
+			}
+			finally
+			{
+				_spriteBatch.End();
+				MyraEnvironment.GraphicsDevice.SetRenderTarget(null);
+			}
+
+			_image = new TextureRegion(_renderTarget);
 			_dirty = false;
 		}
 
@@ -114,19 +121,19 @@ namespace Jord.UI
 		{
 			base.InternalRender(context);
 
-			if (Map == null)
+			UpdateImage();
+
+			if (_image == null)
 			{
 				return;
 			}
-
-			UpdateImage();
 
 			var bounds = GetMapBounds();
 			_image.Draw(context, bounds);
 
 			var topLeft = GameToScreen(TopLeft);
 			var size = GameToScreen(TopLeft + GridSize.ToVector2()) - topLeft;
-			context.DrawRectangle(new Rectangle(topLeft.X, topLeft.Y, size.X, size.Y), Color.White);
+			context.DrawRectangle(new Rectangle((int)topLeft.X, (int)topLeft.Y, (int)size.X, (int)size.Y), Color.White);
 		}
 
 		public void DrawAppearance(RenderContext context, Color color, Rectangle rect)
@@ -157,12 +164,10 @@ namespace Jord.UI
 			return bounds;
 		}
 
-		public Point GameToScreen(Vector2 gamePosition)
+		public Vector2 GameToScreen(Vector2 pos)
 		{
 			var bounds = GetMapBounds();
-
-			return new Point(bounds.X + (int)(gamePosition.X * bounds.Width / Map.Width),
-				bounds.Y + (int)(gamePosition.Y * bounds.Height / Map.Height));
+			return new Vector2(bounds.Left + pos.X * _tileSize.X, bounds.Top + pos.Y * _tileSize.Y);
 		}
 
 		public Vector2 ScreenToGame(Point position)
@@ -198,6 +203,12 @@ namespace Jord.UI
 			}
 
 			return tilePosition;
+		}
+
+		public override void InternalArrange()
+		{
+			base.InternalArrange();
+			InvalidateImage();
 		}
 
 		public void InvalidateImage()

@@ -54,6 +54,8 @@ namespace Jord
 		{
 			base.LoadContent();
 
+			GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+
 			MyraEnvironment.Game = this;
 			TJ.GraphicsDevice = GraphicsDevice;
 			Desktop = new Desktop();

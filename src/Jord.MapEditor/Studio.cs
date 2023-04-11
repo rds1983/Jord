@@ -10,6 +10,7 @@ using Jord.Utils;
 using System.IO;
 using Microsoft.Xna.Framework.Input;
 using Jord.Generation;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Jord.MapEditor
 {
@@ -133,6 +134,8 @@ namespace Jord.MapEditor
 		protected override void LoadContent()
 		{
 			base.LoadContent();
+
+			GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
 
 			MyraEnvironment.Game = this;
 			TJ.GraphicsDevice = GraphicsDevice;

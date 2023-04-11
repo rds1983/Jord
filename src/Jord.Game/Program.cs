@@ -5,7 +5,7 @@ namespace Jord
 {
 	internal class Program
 	{
-		private static readonly Regex ArgumentRegex = new Regex(@"/(\w+):(\w+)");
+		private static readonly Regex ArgumentRegex = new(@"/(\w+):(\w+)");
 
 		public static void Main(string[] args)
 		{
