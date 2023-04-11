@@ -14,5 +14,10 @@
       "FillerTileId": "Wall",
       "SpaceTileId": "Ground"
     },
+	"BalHarbor": {
+      "Width": 64,
+      "Height": 64,
+      "Type": "City",
+	}
   }
 }

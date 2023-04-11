@@ -15,18 +15,22 @@ namespace Jord.Loading
 			BaseGenerator generator = null;
 
 			var type = data.EnsureString("Type");
-			if (type == "Rooms")
+			switch(type)
 			{
-				generator = new RoomsGenerator(
-					data.EnsureInt("Width"),
-					data.EnsureInt("Height"),
-					data.EnsureInt("MaximumRoomsCount"),
-					data.EnsureInt("MinimumRoomWidth"),
-					data.EnsureInt("MaximumRoomWidth"));
-			}
-			else
-			{
-				RaiseError($"Could not resolve type {type}.");
+				case "Rooms":
+					generator = new RoomsGenerator(
+						data.EnsureInt("Width"),
+						data.EnsureInt("Height"),
+						data.EnsureInt("MaximumRoomsCount"),
+						data.EnsureInt("MinimumRoomWidth"),
+						data.EnsureInt("MaximumRoomWidth"));
+					break;
+				case "City":
+					generator = new CityGenerator(data.EnsureInt("Width"), data.EnsureInt("Height"));
+					break;
+				default:
+					RaiseError($"Could not resolve type {type}.");
+					break;
 			}
 
 			secondRunAction = db => SecondRun(generator, data, db);

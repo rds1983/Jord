@@ -14,5 +14,9 @@ namespace Jord.Generation
 		}
 
 		public abstract Map Generate();
+
+		public void Step()
+		{
+		}
 	}
 }

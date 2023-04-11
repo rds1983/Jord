@@ -12,11 +12,6 @@ namespace Jord.Utils
 
 		public static Random Random { get; } = new Random();
 
-		public static int RollD20()
-		{
-			return Random.Next(1, 21);
-		}
-
 		public static bool RollPercentage(int percentage)
 		{
 			if (percentage < 1)
