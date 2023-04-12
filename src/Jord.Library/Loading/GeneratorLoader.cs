@@ -15,7 +15,7 @@ namespace Jord.Loading
 			BaseGenerator generator = null;
 
 			var type = data.EnsureString("Type");
-			switch(type)
+			switch (type)
 			{
 				case "Rooms":
 					generator = new RoomsGenerator(
@@ -26,7 +26,7 @@ namespace Jord.Loading
 						data.EnsureInt("MaximumRoomWidth"));
 					break;
 				case "City":
-					generator = new CityGenerator(data.EnsureInt("Width"), data.EnsureInt("Height"));
+					generator = new CityGenerator(data.EnsureInt("Width"), data.EnsureInt("Height"), data.EnsureInt("BuildingsCount"));
 					break;
 				default:
 					RaiseError($"Could not resolve type {type}.");

@@ -4,9 +4,7 @@
 	{
 		public bool Passable { get; set; }
 
-		public bool IsTransparent => Passable;
-
-		public bool IsWalkable => Passable;
+		public bool Transparent { get; set; }
 
 		public TilesetTileInfo TileAppearance { get; set; }
 

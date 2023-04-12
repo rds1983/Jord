@@ -16,6 +16,8 @@ namespace Jord.Loading
 				Passable = data.EnsureBool("Passable")
 			};
 
+			result.Transparent = data.OptionalBool("Transparent", result.Passable);
+
 			secondRunAction = null;
 
 			return result;

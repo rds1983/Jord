@@ -15,6 +15,11 @@
 			"Symbol": ".",
 			"Color": "Brown"
 		},
+		"WoodFloor": {
+			"Passable": "True",
+			"Symbol": ".",
+			"Color": "Yellow"
+		},		
 		"OpenDoor": {
 			"Passable": "True",
 			"Symbol": "`",
@@ -42,8 +47,9 @@
 		},
 		"Water": {
 			"Passable": "False",
+			"Transparent": "True",
 			"Symbol": "~",
-			"Color": "Blue"
+			"Color": "Blue",
 		},
 		"Road": {
 			"Passable": "True",

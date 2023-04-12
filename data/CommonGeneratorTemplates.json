@@ -17,6 +17,7 @@
 	"BalHarbor": {
       "Width": 64,
       "Height": 64,
+	  "BuildingsCount": 8,
       "Type": "City",
 	}
   }

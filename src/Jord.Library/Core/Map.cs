@@ -15,11 +15,11 @@ namespace Jord.Core
 		{
 			private readonly Map _map;
 
-			public bool this[Coord pos] => _map[pos].Info.IsTransparent;
+			public bool this[Coord pos] => _map[pos].Info.Transparent;
 
-			public bool this[int index1D] => _map[index1D].Info.IsTransparent;
+			public bool this[int index1D] => _map[index1D].Info.Transparent;
 
-			public bool this[int x, int y] => _map[x, y].Info.IsTransparent;
+			public bool this[int x, int y] => _map[x, y].Info.Transparent;
 
 			public int Height => _map.Height;
 
