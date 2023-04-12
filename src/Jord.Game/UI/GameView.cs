@@ -257,6 +257,7 @@ namespace Jord.UI
 					{
 						var isRunning = _downKeys.Contains(Keys.LeftShift) || _downKeys.Contains(Keys.RightShift);
 						result = TJ.Session.MovePlayer(direction.Value, isRunning);
+						MapNavigation.InvalidateImage(true);
 					}
 				}
 			}

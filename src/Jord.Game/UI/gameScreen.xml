@@ -1,51 +1,56 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="GameView" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
-  <HorizontalStackPanel>
-    <HorizontalStackPanel.Proportions>
-      <Proportion Type="Part" Value="2" />
-      <Proportion Type="Auto" />
-      <Proportion Type="Part" />
-    </HorizontalStackPanel.Proportions>
-    <VerticalStackPanel>
-      <VerticalStackPanel.Proportions>
-        <Proportion Type="Fill" />
-      </VerticalStackPanel.Proportions>
-      <Panel Id="_mapViewContainer" />
-      <HorizontalSeparator />
-      <HorizontalStackPanel Spacing="8">
-        <TextButton Text="/c[green]E/c[white]|Use" Width="100" Id="_buttonUse" />
-        <TextButton Text="/c[green]C/c[white]haracter" Width="100" Id="_buttonCharacter" />
-        <TextButton Text="/c[green]I/c[white]nventory" Width="100" Id="_buttonInventory" />
-        <TextButton Text="/c[green]A/c[white]bilities" Width="100" Id="_buttonAbilities" />
-      </HorizontalStackPanel>
-    </VerticalStackPanel>
-    <VerticalSeparator />
-    <VerticalStackPanel>
-      <VerticalStackPanel.Proportions>
+  <Panel>
+    <HorizontalStackPanel>
+      <HorizontalStackPanel.Proportions>
+        <Proportion Type="Part" Value="2" />
         <Proportion Type="Auto" />
-        <Proportion Type="Auto" />
-        <Proportion Type="Auto" />
-        <Proportion Type="Auto" />
-        <Proportion Type="Fill" />
-      </VerticalStackPanel.Proportions>
-      <HorizontalStackPanel>
-        <HorizontalStackPanel.Proportions>
-          <Proportion Type="Part" />
+        <Proportion Type="Part" />
+      </HorizontalStackPanel.Proportions>
+      <VerticalStackPanel>
+        <VerticalStackPanel.Proportions>
+          <Proportion Type="Fill" />
+        </VerticalStackPanel.Proportions>
+        <Panel Id="_mapViewContainer" />
+        <HorizontalSeparator />
+        <HorizontalStackPanel Spacing="8">
+          <TextButton Text="/c[green]E/c[white]|Use" Width="100" Id="_buttonUse" />
+          <TextButton Text="/c[green]C/c[white]haracter" Width="100" Id="_buttonCharacter" />
+          <TextButton Text="/c[green]I/c[white]nventory" Width="100" Id="_buttonInventory" />
+          <TextButton Text="/c[green]A/c[white]bilities" Width="100" Id="_buttonAbilities" />
+        </HorizontalStackPanel>
+      </VerticalStackPanel>
+      <VerticalSeparator />
+      <VerticalStackPanel>
+        <VerticalStackPanel.Proportions>
           <Proportion Type="Auto" />
-          <Proportion Type="Part" />
           <Proportion Type="Auto" />
-          <Proportion Type="Part" />
-        </HorizontalStackPanel.Proportions>
-        <Label Text="HP: 50/100" HorizontalAlignment="Center" Id="_labelHp" />
-        <VerticalSeparator />
-        <Label Text="MA: 50/100" HorizontalAlignment="Center" Id="_labelMana" />
-        <VerticalSeparator />
-        <Label Text="ST: 50/100" HorizontalAlignment="Center" Id="_labelStamina" />
-      </HorizontalStackPanel>
-      <HorizontalSeparator />
-      <Panel Height="247" Id="_mapContainer" />
-      <HorizontalSeparator />
-      <Panel Id="_logContainer" />
-    </VerticalStackPanel>
-  </HorizontalStackPanel>
+          <Proportion Type="Auto" />
+          <Proportion Type="Auto" />
+          <Proportion Type="Fill" />
+        </VerticalStackPanel.Proportions>
+        <HorizontalStackPanel>
+          <HorizontalStackPanel.Proportions>
+            <Proportion Type="Part" />
+            <Proportion Type="Auto" />
+            <Proportion Type="Part" />
+            <Proportion Type="Auto" />
+            <Proportion Type="Part" />
+          </HorizontalStackPanel.Proportions>
+          <Label Text="HP: 50/100" HorizontalAlignment="Center" Id="_labelHp" />
+          <VerticalSeparator />
+          <Label Text="MA: 50/100" HorizontalAlignment="Center" Id="_labelMana" />
+          <VerticalSeparator />
+          <Label Text="ST: 50/100" HorizontalAlignment="Center" Id="_labelStamina" />
+        </HorizontalStackPanel>
+        <HorizontalSeparator />
+        <Panel Height="247" Id="_mapContainer" />
+        <HorizontalSeparator />
+        <Panel Id="_logContainer" />
+      </VerticalStackPanel>
+    </HorizontalStackPanel>
+    <Panel Id="_panelDebug">
+      <Label Text="59.99" Id="_labelFps" />
+    </Panel>
+  </Panel>
 </Project>

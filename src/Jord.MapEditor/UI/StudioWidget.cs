@@ -13,7 +13,11 @@ namespace Jord.MapEditor.UI
 			BuildUI();
 
 			_mapEditor = new MapEditor();
-			_mapNavigation = new MapNavigation();
+
+			_mapNavigation = new MapNavigation
+			{
+				IgnoreFov = true
+			};
 
 			_leftContainer.Widgets.Add(_mapEditor);
 			_mapViewerContainer.Widgets.Add(_mapNavigation);

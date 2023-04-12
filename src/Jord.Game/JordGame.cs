@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using Jord.Core;
+using FontStashSharp;
+using System.Linq;
 
 namespace Jord
 {
@@ -15,6 +17,7 @@ namespace Jord
 	{
 		private const string DataPath = "data";
 		private readonly GraphicsDeviceManager _graphics;
+		private readonly FpsCounter _fpsCounter = new FpsCounter();
 
 		public Desktop Desktop { get; private set; }
 
@@ -37,6 +40,7 @@ namespace Jord
 			IsMouseVisible = true;
 			Window.AllowUserResizing = true;
 			Window.Title = "Troubles of Jord";
+			IsFixedTimeStep = false;
 
 			TJ.GameLogHandler = message =>
 			{
@@ -57,12 +61,13 @@ namespace Jord
 			GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
 
 			MyraEnvironment.Game = this;
+
 			TJ.GraphicsDevice = GraphicsDevice;
 			Desktop = new Desktop();
 
-/*			MyraEnvironment.DisableClipping = true;
-			MyraEnvironment.DrawFocusedWidgetFrame = true;
-			MyraEnvironment.DrawWidgetsFrames = true;*/
+			/*			MyraEnvironment.DisableClipping = true;
+						MyraEnvironment.DrawFocusedWidgetFrame = true;
+						MyraEnvironment.DrawWidgetsFrames = true;*/
 
 			LoadSettings.Verbose = true;
 
@@ -72,7 +77,8 @@ namespace Jord
 			if (StartGameIndex == null)
 			{
 				SwitchToMainMenu();
-			} else
+			}
+			else
 			{
 				if (!Slot.Exists(StartGameIndex.Value))
 				{
@@ -147,6 +153,8 @@ namespace Jord
 			base.Update(gameTime);
 
 			TJ.ActivityService.Update();
+
+			_fpsCounter.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -163,7 +171,16 @@ namespace Jord
 
 			GraphicsDevice.Clear(Color.Black);
 
+			var asGameView = Desktop.Widgets[0] as GameView;
+			if (asGameView != null)
+			{
+				asGameView._labelFps.Text = _fpsCounter.FramesPerSecond.ToString();
+			}
+
+
 			Desktop.Render();
+
+			_fpsCounter.Draw(gameTime);
 		}
 
 		protected override void EndRun()
