@@ -160,7 +160,6 @@ namespace Jord.UI
 
 							if (tile.Creature != null)
 							{
-								screen = tile.Creature.DisplayPosition * _tileSize;
 								appearance = tile.Creature.Image;
 								opacity = tile.Creature.Opacity;
 							}

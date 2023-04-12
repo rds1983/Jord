@@ -145,6 +145,9 @@ namespace Jord.Core
 			if (refreshMap)
 			{
 				MapNavigationBase.InvalidateImage();
+			} else
+			{
+				MapNavigationBase.InvalidateImage(true);
 			}
 		}
 	}
