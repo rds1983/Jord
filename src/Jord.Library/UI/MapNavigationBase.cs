@@ -113,8 +113,8 @@ namespace Jord.UI
 							if (appearance != null)
 							{
 								var sz = font.MeasureString(appearance.Symbol);
-								var screen2 = new Vector2((int)(screen.X + sz.X / 2),
-									(int)(screen.Y + sz.Y / 2));
+								var screen2 = new Vector2((int)(screen.X + (_tileSize.X - sz.X) / 2),
+									(int)(screen.Y + (_tileSize.Y - sz.Y) / 2));
 
 								_spriteBatch.DrawString(font, appearance.Symbol, screen2, appearance.Color * opacity);
 							}
@@ -166,9 +166,13 @@ namespace Jord.UI
 
 							if (appearance != null)
 							{
+								// Erase tile beneath
+								_spriteBatch.Draw(DefaultAssets.WhiteTexture, new Rectangle((int)screen.X, (int)screen.Y, (int)_tileSize.X, (int)_tileSize.Y), null, Color.Black);
+
+								// Draw the object
 								var sz = font.MeasureString(appearance.Symbol);
-								var screen2 = new Vector2((int)(screen.X + sz.X / 2),
-									(int)(screen.Y + sz.Y / 2));
+								var screen2 = new Vector2((int)(screen.X + (_tileSize.X - sz.X) / 2),
+									(int)(screen.Y + (_tileSize.Y - sz.Y) / 2));
 
 								_spriteBatch.DrawString(font, appearance.Symbol, screen2, appearance.Color * opacity);
 							}
