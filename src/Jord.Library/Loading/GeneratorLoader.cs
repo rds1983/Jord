@@ -17,16 +17,19 @@ namespace Jord.Loading
 			var type = data.EnsureString("Type");
 			switch (type)
 			{
-				case "Rooms":
-					generator = new RoomsGenerator(
-						data.EnsureInt("Width"),
-						data.EnsureInt("Height"),
-						data.EnsureInt("MaximumRoomsCount"),
-						data.EnsureInt("MinimumRoomWidth"),
-						data.EnsureInt("MaximumRoomWidth"));
-					break;
 				case "City":
 					generator = new CityGenerator(data.EnsureInt("Width"), data.EnsureInt("Height"), data.EnsureInt("BuildingsCount"));
+					break;
+				case "Dungeon":
+					generator = new DungeonGenerator(
+						data.EnsureInt("Width"),
+						data.EnsureInt("Height"),
+						data.EnsureInt("MinimumRoomsCount"),
+						data.EnsureInt("MaximumRoomsCount"),
+						data.EnsureInt("MinimumRoomWidth"),
+						data.EnsureInt("MaximumRoomWidth"),
+						data.EnsureInt("MinimumRoomHeight"),
+						data.EnsureInt("MaximumRoomHeight"));
 					break;
 				default:
 					RaiseError($"Could not resolve type {type}.");
@@ -40,11 +43,11 @@ namespace Jord.Loading
 
 		private void SecondRun(BaseGenerator result, JObject data, Database database)
 		{
-			var asRoomsGenerator = result as RoomsGenerator;
-			if (asRoomsGenerator != null)
+			var asDungeonGenerator = result as DungeonGenerator;
+			if (asDungeonGenerator != null)
 			{
-				asRoomsGenerator.Space = database.TileInfos.Ensure(data.EnsureString("SpaceTileId"));
-				asRoomsGenerator.Wall = database.TileInfos.Ensure(data.EnsureString("FillerTileId"));
+				asDungeonGenerator.Space = database.TileInfos.Ensure(data.EnsureString("SpaceTileId"));
+				asDungeonGenerator.Wall = database.TileInfos.Ensure(data.EnsureString("FillerTileId"));
 			}
 		}
 	}

@@ -2,8 +2,8 @@
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Jord.Utils;
 using Microsoft.Xna.Framework;
-using Myra.Utility;
 
 namespace Jord.MapEditor
 {

@@ -61,6 +61,7 @@ namespace Jord
 			GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
 
 			MyraEnvironment.Game = this;
+			MyraEnvironment.EnableModalDarkening = true;
 
 			TJ.GraphicsDevice = GraphicsDevice;
 			Desktop = new Desktop();

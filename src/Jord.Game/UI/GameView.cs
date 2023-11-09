@@ -266,11 +266,6 @@ namespace Jord.UI
 
 		private void KeyDownHandler(Keys key)
 		{
-			if (!Active)
-			{
-				return;
-			}
-
 			var acted = ProcessMovement(key);
 			if (acted)
 			{

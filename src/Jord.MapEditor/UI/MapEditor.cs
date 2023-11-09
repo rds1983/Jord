@@ -116,12 +116,10 @@ namespace Jord.MapEditor.UI
 			MarkPosition = null;
 		}
 
-		public override bool OnTouchDown()
+		public override void OnTouchDown()
 		{
-			var result = base.OnTouchDown();
+			base.OnTouchDown();
 			ProcessMouseDown();
-
-			return result;
 		}
 
 		private void ProcessMouseDown()

@@ -283,7 +283,7 @@ namespace Jord.UI
 			return tilePosition;
 		}
 
-		public override void InternalArrange()
+		protected override void InternalArrange()
 		{
 			base.InternalArrange();
 			InvalidateImage();

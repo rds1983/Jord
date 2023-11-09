@@ -1,24 +1,24 @@
 ﻿{
-  "GeneratorConfigs": {
-    "CommonRooms64x64": {
-      "Width": 64,
-      "Height": 64,
-      "Type": "Rooms",
-      "MinimumRoomsCount": 15,
-      "MaximumRoomsCount": 20,
-      "MinimumRoomWidth": 5,
-      "MaximumRoomWidth": 8,
-      "MinimumRoomHeight": 5,
-      "MaximumRoomHeight": 8,
-      "RoomBorderSize": 4,
-      "FillerTileId": "Wall",
-      "SpaceTileId": "Ground"
-    },
-	"BalHarbor": {
-      "Width": 64,
-      "Height": 64,
-	  "BuildingsCount": 8,
-      "Type": "City",
+	"GeneratorConfigs": {
+		"Dungeon128x128": {
+			"Width": 128,
+			"Height": 128,
+			"Type": "Dungeon",
+			"MinimumRoomsCount": 30,
+			"MaximumRoomsCount": 40,
+			"MinimumRoomWidth": 5,
+			"MaximumRoomWidth": 16,
+			"MinimumRoomHeight": 5,
+			"MaximumRoomHeight": 16,
+			"RoomBorderSize": 4,
+			"FillerTileId": "Wall",
+			"SpaceTileId": "Ground"
+		},
+		"BalHarbor": {
+			"Width": 64,
+			"Height": 64,
+			"BuildingsCount": 8,
+			"Type": "City"
+		}
 	}
-  }
 }

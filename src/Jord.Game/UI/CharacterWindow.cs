@@ -1,8 +1,8 @@
 using Jord.Core.Abilities;
 using Microsoft.Xna.Framework;
+using Myra.Events;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
-using Myra.Utility;
 using System.Collections.Generic;
 
 namespace Jord.UI
