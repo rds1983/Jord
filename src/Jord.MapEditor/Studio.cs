@@ -693,11 +693,6 @@ namespace Jord.MapEditor
 				UI._mapEditor.Map.Id = name;
 			}
 
-			if (string.IsNullOrEmpty(UI._mapEditor.Map.Name))
-			{
-				UI._mapEditor.Map.Name = name;
-			}
-
 			var result = MapLoader.SaveMapToString(UI._mapEditor.Map);
 			File.WriteAllText(filePath, result);
 			Map.Source = filePath;

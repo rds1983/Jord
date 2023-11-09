@@ -28,9 +28,14 @@
 			return string.Format("{0} sees you and rushes to attack!", name);
 		}
 
-		public static string BuildEnteredMap(string name)
+		public static string BuildEnteredMap(int level)
 		{
-			return string.Format("You've entered '{0}'.", name);
+			if (level == 0)
+			{
+				return "You've entered the city.";
+			}
+
+			return string.Format("You've entered the dungeon at level '{0}'.", level);
 		}
 
 		public static string BuildItemLyingOnTheFloor(string name)

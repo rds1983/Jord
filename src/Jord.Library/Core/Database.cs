@@ -18,9 +18,9 @@ namespace Jord.Core
 		public Dictionary<string, BaseItemInfo> ItemInfos { get; } = new Dictionary<string, BaseItemInfo>();
 		public Dictionary<string, BaseGenerator> Generators { get; } = new Dictionary<string, BaseGenerator>();
 		public Dictionary<string, Map> Maps { get; } = new Dictionary<string, Map>();
-		public Dictionary<string, Dungeon> Dungeons { get; } = new Dictionary<string, Dungeon>();
 		public Dictionary<string, AbilityInfo> Abilities { get; } = new Dictionary<string, AbilityInfo>();
 		public Dictionary<int, LevelCost> LevelCosts { get; } = new Dictionary<int, LevelCost>();
+		public List<DungeonRecord> DungeonInfo { get; } = new List<DungeonRecord>();
 		public Dictionary<string, Tileset> Tilesets { get; } = new Dictionary<string, Tileset>();
 		public Dictionary<string, Effect> Effects { get; } = new Dictionary<string, Effect>();
 		public Dictionary<string, Perk> Perks { get; } = new Dictionary<string, Perk>();

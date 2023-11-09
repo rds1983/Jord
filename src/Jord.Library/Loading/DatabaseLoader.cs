@@ -74,6 +74,23 @@ namespace Jord.Loading
 			}
 		}
 
+		private void LoadDungeonInfo(JArray arr)
+		{
+			var dungeonInfo = new List<Tuple<int, string>>();
+			foreach (JObject levelObject in arr)
+			{
+				dungeonInfo.Add(new Tuple<int, string>(levelObject.EnsureInt("MinimumLevel"), levelObject.EnsureString("Generator")));
+			}
+
+			_secondRunActions.Add(db =>
+			{
+				foreach (var tuple in dungeonInfo)
+				{
+					db.DungeonInfo.Add(new DungeonRecord(tuple.Item1, db.Generators.Ensure(tuple.Item2)));
+				}
+			});
+		}
+
 		private void FirstRun(IEnumerable<string> sources)
 		{
 			if (LoadSettings.Verbose)
@@ -148,8 +165,8 @@ namespace Jord.Loading
 						case "TileObjects":
 							FirstRunDictionary(s, (JObject)pair.Value, TileObjectLoader.Instance, _database.TileObjects);
 							break;
-						case "Dungeons":
-							FirstRunDictionary(s, (JObject)pair.Value, DungeonLoader.Instance, _database.Dungeons);
+						case "DungeonInfo":
+							LoadDungeonInfo((JArray)pair.Value);
 							break;
 						case "Effects":
 							FirstRunDictionary(s, (JObject)pair.Value, EffectLoader.Instance, _database.Effects);

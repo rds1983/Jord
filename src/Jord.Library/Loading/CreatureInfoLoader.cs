@@ -20,12 +20,6 @@ namespace Jord.Loading
 				Occurence = data.OptionalInt("Occurence", 1)
 			};
 
-			string dungeonFilter;
-			if (properties != null && properties.TryGetValue("DungeonFilter", out dungeonFilter))
-			{
-				result.DungeonFilter = dungeonFilter;
-			}
-
 			result.Gold = data.OptionalInt("Gold");
 
 			if (result.CreatureType == CreatureType.Enemy)

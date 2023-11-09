@@ -1,6 +1,6 @@
 {
 	"CreatureInfos": {
-		"BalHarborWeaponMerchant": {
+		"WeaponMerchant": {
 			"Name": "Weapon Merchant",
 			"Image": "CreatureWeaponMerchant",
 			"Type": "Merchant",

@@ -1,4 +1,5 @@
 ﻿using Jord.Core.Abilities;
+using Jord.Generation;
 using Jord.Storage;
 using Jord.UI;
 using Jord.Utils;
@@ -18,8 +19,10 @@ namespace Jord.Core
 
 			Player = Slot.PlayerData.CreateCharacter();
 
+			// Generate city map
+			var map = MapGeneration.Generate(0);
+
 			// Spawn player
-			var map = TJ.Database.Maps[Slot.PlayerData.StartingMapId];
 			Player.Place(map, map.SpawnSpot.Value);
 			Player.Stats.Life.Restore();
 		}

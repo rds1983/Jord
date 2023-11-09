@@ -72,7 +72,7 @@ namespace Jord.MapEditor.UI
 		{
 			base.BeforeDrawTile(context, tile);
 
-			if (tile.Exit == null)
+			if (!tile.IsExit)
 			{
 				return;
 			}

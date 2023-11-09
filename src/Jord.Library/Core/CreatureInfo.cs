@@ -45,8 +45,6 @@ namespace Jord.Core
 
 		public List<LootInfo> Loot { get; } = new List<LootInfo>();
 
-		public string DungeonFilter { get; set; }
-
 		public CreatureInfo()
 		{
 			Inventory = new Inventory();

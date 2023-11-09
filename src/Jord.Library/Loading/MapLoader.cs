@@ -27,7 +27,6 @@ namespace Jord.Loading
 			var map = new Map(data.EnsurePoint("Size"))
 			{
 				Id = data.EnsureId(),
-				Name = data.EnsureString("Name"),
 				Explored = data.OptionalBool("Explored", false),
 				Light = data.OptionalBool("Light", false)
 			};
@@ -47,11 +46,6 @@ namespace Jord.Loading
 
 		private void SecondRun(Map result, JObject data, Database database)
 		{
-			if (database.Dungeons.ContainsKey(result.Id))
-			{
-				RaiseError($"There's already MapTemplate with id '{result.Id}'");
-			}
-
 			var legend = new Dictionary<char, object>();
 			var legendObject = data.EnsureJObject(LegendName);
 			foreach (var pair in legendObject)
@@ -134,40 +128,6 @@ namespace Jord.Loading
 
 					var symbol = line[j];
 					object item;
-
-					if (symbol == '{')
-					{
-						// Exit
-						var sb = new StringBuilder();
-						++j;
-
-						var hasEnd = false;
-						for (; j < line.Length; ++j)
-						{
-							symbol = line[j];
-							if (symbol == '}')
-							{
-								hasEnd = true;
-								break;
-							}
-
-							sb.Append(symbol);
-						}
-
-						if (!hasEnd)
-						{
-							RaiseError("Exit sequence lacks closing curly bracket.");
-						}
-
-						if (lastTile == null)
-						{
-							RaiseError("Last tile is null.");
-						}
-
-						lastTile.Exit = Exit.FromString(sb.ToString());
-
-						continue;
-					}
 
 					if (symbol == '[')
 					{
@@ -328,7 +288,6 @@ namespace Jord.Loading
 			var mapObject = new JObject
 			{
 				["Id"] = map.Id,
-				["Name"] = map.Name,
 				["Size"] = new JObject
 				{ 
 					["X"] = map.Width,
@@ -393,13 +352,6 @@ namespace Jord.Loading
 				{
 					var tile = map[x, y];
 					sb.Append(tileInfos[tile.Info.Id]);
-
-					if (tile.Exit != null)
-					{
-						sb.Append('{');
-						sb.Append(tile.Exit.ToString());
-						sb.Append('}');
-					}
 
 					if (tile.Object != null)
 					{

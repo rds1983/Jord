@@ -31,6 +31,10 @@ namespace Jord.Core
 			}
 		}
 
+		public bool IsExitUp => Info.Id == "ExitUp";
+		public bool IsExitDown => Info.Id == "ExitDown";
+		public bool IsExit => IsExitUp || IsExitDown;
+
 		public TileObject Object { get; set; }
 
 
@@ -61,8 +65,6 @@ namespace Jord.Core
 		public bool IsExplored { get; set; }
 
 		public bool Highlighted { get; set; }
-
-		public Exit Exit { get; set; }
 
 		public string Sign { get; set; }
 

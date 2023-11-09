@@ -37,8 +37,6 @@ namespace Jord.Core
 
 		public AStar PathFinder { get; }
 
-		public string Name { get; set; }
-
 		public Point? SpawnSpot
 		{
 			get; set;
@@ -48,7 +46,7 @@ namespace Jord.Core
 
 		public bool Light { get; set; }
 
-		public int? DungeonLevel { get; set; }
+		public int DungeonLevel { get; set; }
 
 		public List<Creature> Creatures { get; } = new List<Creature>();
 
@@ -105,23 +103,6 @@ namespace Jord.Core
 
 		public Map(Point size) : this(size.X, size.Y)
 		{
-		}
-
-		public Tile EnsureExitTileById(string id)
-		{
-			for (var x = 0; x < Width; ++x)
-			{
-				for (var y = 0; y < Height; ++y)
-				{
-					var tile = this[x, y];
-					if (tile.Exit != null && tile.Exit.MapId == id)
-					{
-						return tile;
-					}
-				}
-			}
-
-			throw new Exception(string.Format("Could not find exit with id '{0}'.", id));
 		}
 
 		public IEnumerable<Tile> GetAllCells()

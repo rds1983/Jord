@@ -1,0 +1,12 @@
+{
+	"DungeonInfo": [
+		{
+			"MinimumLevel": 0,
+			"Generator": "BalHarbor"
+		},
+		{
+			"MinimumLevel": 1,
+			"Generator": "Dungeon128x128"
+		}
+	]
+}

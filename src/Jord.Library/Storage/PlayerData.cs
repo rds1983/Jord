@@ -17,8 +17,7 @@ namespace Jord.Storage
 
 		public int Experience { get; set; }
 		public int Gold { get; set; }
-		public string StartingMapId { get; set; } = "BalHarbor";
-
+		
 		public Dictionary<string, int> Inventory { get; } = new Dictionary<string, int>();
 
 		public Dictionary<EquipType, string> Equipment { get; } = new Dictionary<EquipType, string>();
