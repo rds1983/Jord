@@ -1,13 +1,40 @@
 ﻿{
-  "Levels": [
-	{ "Level": 2, "Experience": 2000 },
-	{ "Level": 3, "Experience": 4000 },
-	{ "Level": 4, "Experience": 9000 },
-	{ "Level": 5, "Experience": 15000 },
-	{ "Level": 6, "Experience": 20000 },
-	{ "Level": 7, "Experience": 30000 },
-	{ "Level": 8, "Experience": 40000 },
-	{ "Level": 9, "Experience": 80000 },
-	{ "Level": 10, "Experience": 120000 },
-  ]
+	"Levels": [
+		{
+			"Level": 2,
+			"Experience": 2000
+		},
+		{
+			"Level": 3,
+			"Experience": 4000
+		},
+		{
+			"Level": 4,
+			"Experience": 9000
+		},
+		{
+			"Level": 5,
+			"Experience": 15000
+		},
+		{
+			"Level": 6,
+			"Experience": 20000
+		},
+		{
+			"Level": 7,
+			"Experience": 30000
+		},
+		{
+			"Level": 8,
+			"Experience": 40000
+		},
+		{
+			"Level": 9,
+			"Experience": 80000
+		},
+		{
+			"Level": 10,
+			"Experience": 120000
+		},
+	]
 }

@@ -19,7 +19,7 @@
 			"Passable": "True",
 			"Symbol": ".",
 			"Color": "Yellow"
-		},		
+		},
 		"OpenDoor": {
 			"Passable": "True",
 			"Symbol": "`",

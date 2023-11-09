@@ -1,5 +1,5 @@
 ﻿{
-  "Classes": {
+	"Classes": {
 		"Warrior": {
 			"Name": "Warrior",
 			"Gold": 100,
@@ -33,5 +33,5 @@
 				"LeftHand": "Shield"
 			}
 		}
-  }
+	}
 }
