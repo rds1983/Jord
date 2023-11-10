@@ -46,7 +46,7 @@ namespace Jord.Core
 
 		public bool Light { get; set; }
 
-		public int DungeonLevel { get; set; }
+		public int Level { get; set; }
 
 		public List<Creature> Creatures { get; } = new List<Creature>();
 
@@ -133,6 +133,29 @@ namespace Jord.Core
 					}
 				}
 			}
+		}
+
+		public Tile Find(Func<Tile, bool> predicate)
+		{
+			for (var x = 0; x < Width; ++x)
+			{
+				for (var y = 0; y < Height; ++y)
+				{
+					var tile = this[x, y];
+
+					if (predicate(tile))
+					{
+						return tile;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		public Tile FindByTileInfoId(string id)
+		{
+			return Find(tile => tile.Info.Id == id);
 		}
 	}
 }

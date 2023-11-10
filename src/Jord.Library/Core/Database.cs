@@ -9,7 +9,11 @@ namespace Jord.Core
 {
 	public class Database
 	{
+		private const string ExitUpId = "ExitUp";
+		private const string ExitDownId = "ExitDown";
+
 		private Tileset _tileset;
+		private TileInfo _exitUp, _exitDown;
 
 		public Dictionary<string, TileInfo> TileInfos { get; } = new Dictionary<string, TileInfo>();
 		public Dictionary<string, TileObject> TileObjects { get; } = new Dictionary<string, TileObject>();
@@ -25,6 +29,32 @@ namespace Jord.Core
 		public Dictionary<string, Effect> Effects { get; } = new Dictionary<string, Effect>();
 		public Dictionary<string, Perk> Perks { get; } = new Dictionary<string, Perk>();
 		public Settings Settings { get; set; }
+		
+		public TileInfo ExitUp
+		{
+			get
+			{
+				if (_exitUp == null)
+				{
+					_exitUp = TileInfos.Ensure(ExitUpId);
+				}
+
+				return _exitUp;
+			}
+		}
+
+		public TileInfo ExitDown
+		{
+			get
+			{
+				if (_exitDown == null)
+				{
+					_exitDown = TileInfos.Ensure(ExitDownId);
+				}
+
+				return _exitDown;
+			}
+		}
 
 		public Tileset Tileset
 		{

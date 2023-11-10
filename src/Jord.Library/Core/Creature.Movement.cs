@@ -85,10 +85,12 @@ namespace Jord.Core
 
 			if (Tile.IsExitUp)
 			{
-				map = MapGeneration.Generate(Map.DungeonLevel - 1);
+				map = MapGeneration.Generate(Map.Level - 1);
+				exitTile = map.FindByTileInfoId(TJ.Database.ExitDown.Id);
 			} else
 			{
-				map = MapGeneration.Generate(Map.DungeonLevel + 1);
+				map = MapGeneration.Generate(Map.Level + 1);
+				exitTile = map.FindByTileInfoId(TJ.Database.ExitUp.Id);
 			}
 
 			Remove();

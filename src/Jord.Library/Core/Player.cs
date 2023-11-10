@@ -247,7 +247,7 @@ namespace Jord.Core
 		{
 			base.OnEntered();
 
-			TJ.GameLog(Strings.BuildEnteredMap(Map.DungeonLevel));
+			TJ.GameLog(Strings.BuildEnteredMap(Map.Level));
 		}
 
 		protected override void OnItemTaken(Item item, int count)

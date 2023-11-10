@@ -279,10 +279,7 @@ namespace Jord.MapEditor
 
 				try
 				{
-					var generator = (BaseGenerator)dlg._comboGenerator.SelectedItem.Tag;
-
-					var newMap = generator.Generate();
-					SetNewMap(newMap);
+					SetNewMap(dlg.Map);
 				}
 				catch (Exception ex)
 				{

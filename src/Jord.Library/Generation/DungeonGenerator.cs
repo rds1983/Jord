@@ -68,7 +68,7 @@ namespace Jord.Generation
 			}
 		}
 
-		public const int RoomPadding = 2;
+		public const int RoomPadding = 5;
 
 		public TileInfo Space { get; set; }
 		public TileInfo Wall { get; set; }
@@ -126,7 +126,15 @@ namespace Jord.Generation
 				// We may accidentially hit another room
 				for (var j = 0; j < context.RoomsRects.Count; ++j)
 				{
-					if (context.RoomsRects[j].Contains(step.ToPoint()) && !context.ConnectedRooms.Contains(j))
+					if (context.ConnectedRooms.Contains(j))
+					{
+						continue;
+					}
+
+					var r = context.RoomsRects[j];
+					var horizontalRect = new Rectangle(r.X - 1, r.Y, r.Width + 2, r.Height);
+					var verticalRect = new Rectangle(r.X, r.Y - 1, r.Width, r.Height + 2);
+					if (horizontalRect.Contains(step.ToPoint()) || verticalRect.Contains(step.ToPoint()))
 					{
 						AddRectangle(context.ConnectedPoints, context.RoomsRects[j]);
 						context.ConnectedRooms.Add(j);

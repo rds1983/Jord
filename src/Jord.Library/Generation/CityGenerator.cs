@@ -106,7 +106,6 @@ namespace Jord.Generation
 				}
 			}
 
-
 			Step();
 
 			// Walls
@@ -149,6 +148,11 @@ namespace Jord.Generation
 			}
 
 			Step();
+
+			// Exit down
+			result[Width / 2 - 1, topWaterPost / 2].Info = TJ.Database.TileInfos["ExitDown"];
+			Step();
+
 
 			// Buildings
 			var openDoor = TJ.Database.TileInfos["OpenDoor"];
