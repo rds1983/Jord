@@ -8,20 +8,22 @@ namespace Jord.Generation
 {
 	public class CityGenerator : BaseGenerator
 	{
+		private Map _result;
 		private const int PiersCount = 4;
 		private const int PiersWidth = 2;
 		private const int RoadHeight = 3;
 
 		public int BuildingsCount { get; }
+		public override Map CurrentResult => _result;
 
 		public CityGenerator(int width, int height, int buildingsCount) : base(width, height)
 		{
 			BuildingsCount = buildingsCount;
 		}
 
-		public override Map Generate()
+		protected override Map InternalGenerate()
 		{
-			var result = new Map(Width, Height);
+			_result = new Map(Width, Height);
 
 
 			// Fill with grass
@@ -30,7 +32,7 @@ namespace Jord.Generation
 			{
 				for (var y = 0; y < Height; ++y)
 				{
-					result[x, y].Info = grass;
+					_result[x, y].Info = grass;
 				}
 			}
 
@@ -46,7 +48,7 @@ namespace Jord.Generation
 				for (var y = 0; y < nw; ++y)
 				{
 					var y2 = Height - y - 1;
-					result[x, y2].Info = water;
+					_result[x, y2].Info = water;
 
 					if (y2 < topWaterPost)
 					{
@@ -75,7 +77,7 @@ namespace Jord.Generation
 					var nonWaterCount = 0;
 					for (var x = startX; x < startX + PiersWidth; ++x)
 					{
-						var tile = result[x, y];
+						var tile = _result[x, y];
 						if (tile.Info != water)
 						{
 							++nonWaterCount;
@@ -102,7 +104,7 @@ namespace Jord.Generation
 			{
 				for (var y = 0; y < topWaterPost; ++y)
 				{
-					result[x, y].Info = floor;
+					_result[x, y].Info = floor;
 				}
 			}
 
@@ -112,14 +114,14 @@ namespace Jord.Generation
 			var wall = TJ.Database.TileInfos["Wall"];
 			for (var x = 0; x < Width; ++x)
 			{
-				result[x, 0].Info = wall;
-				result[x, topWaterPost - 1].Info = wall;
+				_result[x, 0].Info = wall;
+				_result[x, topWaterPost - 1].Info = wall;
 			}
 
 			for (var y = 0; y < topWaterPost; ++y)
 			{
-				result[0, y].Info = wall;
-				result[Width - 1, y].Info = wall;
+				_result[0, y].Info = wall;
+				_result[Width - 1, y].Info = wall;
 			}
 
 			Step();
@@ -132,7 +134,7 @@ namespace Jord.Generation
 				var startY = (topWaterPost - RoadHeight) / 2;
 				for (var y = startY; y < startY + RoadHeight; ++y)
 				{
-					result[x, y].Info = road;
+					_result[x, y].Info = road;
 					roadTiles.Add(new Point(x, y));
 				}
 			}
@@ -142,7 +144,7 @@ namespace Jord.Generation
 				startX = (Width - RoadHeight) / 2;
 				for (var x = startX; x < startX + RoadHeight; ++x)
 				{
-					result[x, y].Info = road;
+					_result[x, y].Info = road;
 					roadTiles.Add(new Point(x, y));
 				}
 			}
@@ -150,7 +152,7 @@ namespace Jord.Generation
 			Step();
 
 			// Exit down
-			result[Width / 2 - 1, topWaterPost / 2].Info = TJ.Database.TileInfos["ExitDown"];
+			_result[Width / 2 - 1, topWaterPost / 2].Info = TJ.Database.TileInfos["ExitDown"];
 			Step();
 
 
@@ -195,7 +197,7 @@ namespace Jord.Generation
 								continue;
 							}
 
-							if (result[xx, yy].Info != floor)
+							if (_result[xx, yy].Info != floor)
 							{
 								found = false;
 								goto finish;
@@ -216,14 +218,14 @@ namespace Jord.Generation
 
 				for (var xx = x; xx < x + w; ++xx)
 				{
-					result[xx, y].Info = wall;
-					result[xx, y + h - 1].Info = wall;
+					_result[xx, y].Info = wall;
+					_result[xx, y + h - 1].Info = wall;
 				}
 
 				for (var yy = y; yy < y + h; ++yy)
 				{
-					result[x, yy].Info = wall;
-					result[x + w - 1, yy].Info = wall;
+					_result[x, yy].Info = wall;
+					_result[x + w - 1, yy].Info = wall;
 				}
 
 				var possibleExits = new List<Point>
@@ -253,11 +255,11 @@ namespace Jord.Generation
 					}
 				}
 
-				result[exit].Info = openDoor;
-				var path = result.PathFinder.ShortestPath(exit.ToCoord(), roadConnection.ToCoord());
+				_result[exit].Info = openDoor;
+				var path = _result.PathFinder.ShortestPath(exit.ToCoord(), roadConnection.ToCoord());
 				foreach(var step in path.Steps)
 				{
-					result[step.X, step.Y].Info = road;
+					_result[step.X, step.Y].Info = road;
 				}
 
 			}
@@ -265,9 +267,9 @@ namespace Jord.Generation
 			Step();
 
 			// Set spawn point at center
-			result.SpawnSpot = new Point(Width / 2 - 1, topWaterPost / 2);
+			_result.SpawnSpot = new Point(Width / 2 - 1, topWaterPost / 2);
 
-			return result;
+			return _result;
 		}
 	}
 }

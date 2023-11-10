@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using System.Diagnostics;
 
 namespace Jord.Generation
 {
@@ -68,6 +69,7 @@ namespace Jord.Generation
 			}
 		}
 
+		private GenerationContext _context;
 		public const int RoomPadding = 5;
 
 		public TileInfo Space { get; set; }
@@ -79,6 +81,8 @@ namespace Jord.Generation
 		public int MaximumRoomWidth { get; }
 		public int MinimumRoomHeight { get; }
 		public int MaximumRoomHeight { get; }
+
+		public override Map CurrentResult => _context.Result;
 
 		public DungeonGenerator(int width, int height,
 				int minimumRoomsCount, int maximumRoomsCount,
@@ -104,14 +108,14 @@ namespace Jord.Generation
 			}
 		}
 
-		private bool Connect(GenerationContext context, Point source, Point target)
+		private bool Connect(Point source, Point target, int targetRoomIndex)
 		{
 			if (source == target)
 			{
 				return true;
 			}
 
-			var path = context.PathFinder.ShortestPath(source.ToCoord(), target.ToCoord());
+			var path = _context.PathFinder.ShortestPath(source.ToCoord(), target.ToCoord());
 			if (path == null)
 			{
 				return false;
@@ -119,37 +123,44 @@ namespace Jord.Generation
 
 			foreach (var step in path.Steps)
 			{
-				context.Result[step.X, step.Y].Info = Space;
+				_context.Result[step.X, step.Y].Info = Space;
 
-				context.ConnectedPoints[step.X, step.Y] = true;
+				_context.ConnectedPoints[step.X, step.Y] = true;
 
 				// We may accidentially hit another room
-				for (var j = 0; j < context.RoomsRects.Count; ++j)
+				for (var j = 0; j < _context.RoomsRects.Count; ++j)
 				{
-					if (context.ConnectedRooms.Contains(j))
+					if (_context.ConnectedRooms.Contains(j))
 					{
 						continue;
 					}
 
-					var r = context.RoomsRects[j];
+					var r = _context.RoomsRects[j];
 					var horizontalRect = new Rectangle(r.X - 1, r.Y, r.Width + 2, r.Height);
 					var verticalRect = new Rectangle(r.X, r.Y - 1, r.Width, r.Height + 2);
 					if (horizontalRect.Contains(step.ToPoint()) || verticalRect.Contains(step.ToPoint()))
 					{
-						AddRectangle(context.ConnectedPoints, context.RoomsRects[j]);
-						context.ConnectedRooms.Add(j);
+						AddRectangle(_context.ConnectedPoints, _context.RoomsRects[j]);
+						_context.ConnectedRooms.Add(j);
+
+						if (j == targetRoomIndex)
+						{
+							// Reached the target room
+							return true;
+						}
 					}
+
 				}
 			}
 
 			return true;
 		}
 
-		public override Map Generate()
+		protected override Map InternalGenerate()
 		{
 			var roomsCount = MathUtils.Random.Next(MinimumRoomsCount, MaximumRoomsCount + 1);
 
-			var context = new GenerationContext(Width, Height);
+			_context = new GenerationContext(Width, Height);
 			var paddedRoomsRects = new List<Rectangle>();
 
 			// Fill with walls
@@ -157,7 +168,7 @@ namespace Jord.Generation
 			{
 				for (var y = 0; y < Height; ++y)
 				{
-					context.Result[x, y].Info = Wall;
+					_context.Result[x, y].Info = Wall;
 				}
 			}
 
@@ -205,12 +216,12 @@ namespace Jord.Generation
 				{
 					for (var y = roomY; y < roomY + roomHeight; ++y)
 					{
-						context.Result[x, y].Info = Space;
+						_context.Result[x, y].Info = Space;
 					}
 				}
 
 
-				context.RoomsRects.Add(new Rectangle(roomX, roomY, roomWidth, roomHeight));
+				_context.RoomsRects.Add(new Rectangle(roomX, roomY, roomWidth, roomHeight));
 				paddedRoomsRects.Add(new Rectangle(
 					roomX - RoomPadding,
 					roomY - RoomPadding,
@@ -221,59 +232,93 @@ namespace Jord.Generation
 			Step();
 
 			// Add first room to connected rooms/points
-			context.ConnectRoom(0);
+			_context.ConnectRoom(0);
 
-			for (var i = 0; i < paddedRoomsRects.Count - 1; ++i)
+			var sourceRoomIndex = 0;
+			while(true)
 			{
-				if (context.ConnectedRooms.Contains(i + 1))
+				// Check if all rooms are connected
+				if (_context.ConnectedRooms.Count == _context.RoomsRects.Count)
 				{
-					// Already connected
-					continue;
+					break;
 				}
 
-				var roomCenter2 = paddedRoomsRects[i + 1].Center;
-
-				// First of all find the connected point that is closest to the target center
-				var source = Point.Zero;
+				var source = _context.RoomsRects[sourceRoomIndex].Center;
+				// Find closest room to the source
+				int? targetRoomIndex = null;
 				float dist = float.MaxValue;
+				for(var i = 0; i < _context.RoomsRects.Count; ++i)
+				{
+					if (i == sourceRoomIndex || _context.ConnectedRooms.Contains(i))
+					{
+						continue;
+					}
+
+					var d = Vector2.DistanceSquared(source.ToVector2(), _context.RoomsRects[i].Center.ToVector2());
+					if (targetRoomIndex == null ||
+						d < dist)
+					{
+						targetRoomIndex = i;
+						dist = d;
+					}
+				}
+
+				if (targetRoomIndex == null)
+				{
+					// Should never happen
+					Debug.Assert(false);
+					break;
+				}
+
+				// Now find the closest starting point
+				dist = float.MaxValue;
+				var roomCenter2 = _context.RoomsRects[targetRoomIndex.Value].Center;
 				for (var x = 0; x < Width; ++x)
 				{
 					for (var y = 0; y < Height; ++y)
 					{
-						if (context.ConnectedPoints[x, y])
+						if (!_context.ConnectedPoints[x, y])
 						{
-							var d = Vector2.DistanceSquared(new Vector2(x, y), roomCenter2.ToVector2());
-							if (d < dist)
-							{
-								dist = d;
-								source = new Point(x, y);
-							}
+							continue;
+						}
+
+						var d = Vector2.DistanceSquared(new Vector2(x, y),
+							roomCenter2.ToVector2());
+
+						if (d < dist)
+						{
+							source = new Point(x, y);
+							dist = d;
 						}
 					}
-				}
-
-				if (source == Point.Zero)
-				{
-					// That should never happen actually
-					continue;
 				}
 
 				// We reach the target in two searches: vertical and horizontal
 
 				// Vertical search
 				var target = new Point(source.X, roomCenter2.Y);
-				if (!Connect(context, source, target))
+				if (!Connect(source, target, targetRoomIndex.Value))
 				{
 					continue;
 				}
 
-				// Horizontal Search
-				source = target;
-				target = roomCenter2;
-				Connect(context, source, target);
+				Step();
+
+				if (!_context.ConnectedRooms.Contains(targetRoomIndex.Value))
+				{
+
+					// Horizontal Search
+					source = target;
+					target = roomCenter2;
+					Connect(source, target, targetRoomIndex.Value);
+
+					Step();
+				}
+
+				sourceRoomIndex = targetRoomIndex.Value;
 			}
 
-			return context.Result;
+			return _context.Result;
 		}
 	}
 }

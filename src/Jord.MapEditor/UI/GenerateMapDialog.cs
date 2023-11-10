@@ -9,7 +9,7 @@ namespace Jord.MapEditor.UI
 	{
 		private ScaledMapRender _mapRender;
 
-		public Map Map => _mapRender.Map;
+		public Map Map { get; private set; }
 
 		public GenerateMapDialog()
 		{
@@ -31,6 +31,18 @@ namespace Jord.MapEditor.UI
 
 			_buttonGenerate.Click += _buttonGenerate_Click;
 			ButtonOk.Enabled = false;
+
+			_spinButtonStep.ValueChanged += _spinButtonStep_ValueChanged;
+			_buttonZeroStep.Click += (s, a) =>
+			{
+				_spinButtonStep.Value = 0;
+			};
+		}
+
+		private void _spinButtonStep_ValueChanged(object sender, Myra.Events.ValueChangedEventArgs<float?> e)
+		{
+			var generator = (BaseGenerator)_comboGenerator.SelectedItem.Tag;
+			_mapRender.Map = generator.Steps[(int)e.NewValue.Value];
 		}
 
 		private void _buttonGenerate_Click(object sender, System.EventArgs e)
@@ -38,7 +50,10 @@ namespace Jord.MapEditor.UI
 			var generator = (BaseGenerator)_comboGenerator.SelectedItem.Tag;
 
 			var newMap = generator.Generate();
+			_spinButtonStep.Maximum = generator.Steps.Length - 1;
+			_spinButtonStep.Value = generator.Steps.Length - 1;
 			_mapRender.Map = newMap;
+			Map = newMap;
 			ButtonOk.Enabled = true;
 		}
 	}
