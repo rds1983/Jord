@@ -66,7 +66,8 @@ namespace Jord.UI
 				enabled = false;
 			}
 
-			_buttonUse.Text = text;
+			var label = (Label)_buttonUse.Content;
+			label.Text = text;
 			_buttonUse.Enabled = enabled;
 		}
 

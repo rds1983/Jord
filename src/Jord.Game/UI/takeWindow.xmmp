@@ -1,6 +1,6 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="TakeWindow" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Take" Left="380" Top="271" Width="300">
+  <Window Title="Take" Left="808" Top="410" Width="300">
     <VerticalStackPanel>
       <Grid ColumnSpacing="8" SelectionBackground="#0379FFFF" SelectionHoverBackground="#666666FF" GridSelectionMode="Row" Id="_gridItems">
         <Grid.DefaultRowProportion Type="Auto" />
@@ -9,11 +9,11 @@
           <Proportion Type="Auto" />
         </Grid.ColumnsProportions>
         <Label Text="Iron Ration" />
-        <Label Text="10" GridColumn="1" />
-        <Label Text="Sword" GridRow="1" />
-        <Label Text="1" GridColumn="1" GridRow="1" />
-        <Label Text="Rhodochosite" GridRow="2" />
-        <Label Text="5" GridColumn="1" GridRow="2" />
+        <Label Text="10" Grid.Column="1" />
+        <Label Text="Sword" Grid.Row="1" />
+        <Label Text="1" Grid.Column="1" Grid.Row="1" />
+        <Label Text="Rhodochosite" Grid.Row="2" />
+        <Label Text="5" Grid.Column="1" Grid.Row="2" />
       </Grid>
       <HorizontalSeparator />
       <HorizontalStackPanel HorizontalAlignment="Right">

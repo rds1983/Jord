@@ -1,65 +1,57 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="InventoryWindow" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Items" Left="30" Top="35">
+  <Window Title="Items" Left="453" Top="174">
     <VerticalStackPanel Width="1000" Padding="0, 16">
-      <VerticalStackPanel.Proportions>
-        <Proportion Type="Fill" />
-      </VerticalStackPanel.Proportions>
-      <HorizontalStackPanel>
+      <HorizontalStackPanel StackPanel.ProportionType="Fill">
         <HorizontalStackPanel.DefaultProportion Type="Part" />
-        <HorizontalStackPanel.Proportions>
-          <Proportion Type="Part" />
-          <Proportion Type="Auto" />
-          <Proportion Type="Part" />
-        </HorizontalStackPanel.Proportions>
-        <VerticalStackPanel>
+        <VerticalStackPanel StackPanel.ProportionType="Part">
           <Label Text="Equipment" />
           <HorizontalSeparator />
           <ScrollViewer>
-            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" GridRow="1" Id="_gridEquipment">
+            <Grid ColumnSpacing="8" RowSpacing="4" GridSelectionMode="Row" Id="_gridEquipment">
               <Grid.DefaultColumnProportion Type="Auto" />
               <Grid.DefaultRowProportion Type="Auto" />
               <Label Text="&lt;light&gt;" />
-              <Label Text="eye of the deep" GridColumn="1" />
-              <Label Text="&lt;left finger&gt;" GridRow="1" />
-              <Label Text="a carved wooden ring" GridColumn="1" GridRow="1" />
-              <Label Text="&lt;right finger&gt;" GridRow="2" />
-              <Label Text="a carved wooden ring" GridColumn="1" GridRow="2" />
-              <Label Text="&lt;neck 1&gt;" GridRow="3" />
-              <Label Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="3" />
-              <Label Text="&lt;neck 2&gt;" GridRow="4" />
-              <Label Text="the amulet of the sanguineous magi" GridColumn="1" GridRow="4" />
-              <Label Text="&lt;body&gt;" GridRow="5" />
-              <Label Text="a gilded corset of crimson and gold" GridColumn="1" GridRow="5" />
-              <Label Text="&lt;head&gt;" GridRow="6" />
-              <Label Text="The Crown of Thorns" GridColumn="1" GridRow="6" />
-              <Label Text="&lt;legs&gt;" GridRow="7" />
-              <Label Text="Ogre Hide Leggings" GridColumn="1" GridRow="7" />
-              <Label Text="&lt;feet&gt;" GridRow="8" />
-              <Label Text="a pair of dolphin skin boots" GridColumn="1" GridRow="8" />
-              <Label Text="&lt;hands&gt;" GridRow="9" />
-              <Label Text="gloves of the yellow rose" GridColumn="1" GridRow="9" />
-              <Label Text="&lt;arms&gt;" GridRow="10" />
-              <Label Text="a set of tidal sleeves" GridColumn="1" GridRow="10" />
-              <Label Text="&lt;shield&gt;" GridRow="11" />
-              <Label Text="an intricately decorated shield" GridColumn="1" GridRow="11" />
-              <Label Text="&lt;about body&gt;" GridRow="12" />
-              <Label Text="a dragonwing tunic" GridColumn="1" GridRow="12" />
-              <Label Text="&lt;waist&gt;" GridRow="13" />
-              <Label Text="a golden belt" GridColumn="1" GridRow="13" />
-              <Label Text="&lt;left wrist&gt;" GridRow="14" />
-              <Label Text="tanzanite bracelet" GridColumn="1" GridRow="14" />
-              <Label Text="&lt;right wrist&gt;" GridRow="15" />
-              <Label Text="tanzanite bracelet" GridColumn="1" GridRow="15" />
-              <Label Text="&lt;wielded&gt;" GridRow="16" />
-              <Label Text="a secari dagger" GridColumn="1" GridRow="16" />
-              <Label Text="&lt;held&gt;" GridRow="17" />
-              <Label Text="a moss-covered pebble" GridColumn="1" GridRow="17" />
+              <Label Text="eye of the deep" Grid.Column="1" />
+              <Label Text="&lt;left finger&gt;" Grid.Row="1" />
+              <Label Text="a carved wooden ring" Grid.Column="1" Grid.Row="1" />
+              <Label Text="&lt;right finger&gt;" Grid.Row="2" />
+              <Label Text="a carved wooden ring" Grid.Column="1" Grid.Row="2" />
+              <Label Text="&lt;neck 1&gt;" Grid.Row="3" />
+              <Label Text="the amulet of the sanguineous magi" Grid.Column="1" Grid.Row="3" />
+              <Label Text="&lt;neck 2&gt;" Grid.Row="4" />
+              <Label Text="the amulet of the sanguineous magi" Grid.Column="1" Grid.Row="4" />
+              <Label Text="&lt;body&gt;" Grid.Row="5" />
+              <Label Text="a gilded corset of crimson and gold" Grid.Column="1" Grid.Row="5" />
+              <Label Text="&lt;head&gt;" Grid.Row="6" />
+              <Label Text="The Crown of Thorns" Grid.Column="1" Grid.Row="6" />
+              <Label Text="&lt;legs&gt;" Grid.Row="7" />
+              <Label Text="Ogre Hide Leggings" Grid.Column="1" Grid.Row="7" />
+              <Label Text="&lt;feet&gt;" Grid.Row="8" />
+              <Label Text="a pair of dolphin skin boots" Grid.Column="1" Grid.Row="8" />
+              <Label Text="&lt;hands&gt;" Grid.Row="9" />
+              <Label Text="gloves of the yellow rose" Grid.Column="1" Grid.Row="9" />
+              <Label Text="&lt;arms&gt;" Grid.Row="10" />
+              <Label Text="a set of tidal sleeves" Grid.Column="1" Grid.Row="10" />
+              <Label Text="&lt;shield&gt;" Grid.Row="11" />
+              <Label Text="an intricately decorated shield" Grid.Column="1" Grid.Row="11" />
+              <Label Text="&lt;about body&gt;" Grid.Row="12" />
+              <Label Text="a dragonwing tunic" Grid.Column="1" Grid.Row="12" />
+              <Label Text="&lt;waist&gt;" Grid.Row="13" />
+              <Label Text="a golden belt" Grid.Column="1" Grid.Row="13" />
+              <Label Text="&lt;left wrist&gt;" Grid.Row="14" />
+              <Label Text="tanzanite bracelet" Grid.Column="1" Grid.Row="14" />
+              <Label Text="&lt;right wrist&gt;" Grid.Row="15" />
+              <Label Text="tanzanite bracelet" Grid.Column="1" Grid.Row="15" />
+              <Label Text="&lt;wielded&gt;" Grid.Row="16" />
+              <Label Text="a secari dagger" Grid.Column="1" Grid.Row="16" />
+              <Label Text="&lt;held&gt;" Grid.Row="17" />
+              <Label Text="a moss-covered pebble" Grid.Column="1" Grid.Row="17" />
             </Grid>
           </ScrollViewer>
         </VerticalStackPanel>
         <VerticalSeparator />
-        <VerticalStackPanel>
+        <VerticalStackPanel StackPanel.ProportionType="Part">
           <Panel>
             <Label Text="Inventory" />
             <Label Text="Gold: 50000" HorizontalAlignment="Right" Id="_textGold" />
@@ -72,12 +64,12 @@
                 <Proportion Type="Fill" />
               </Grid.ColumnsProportions>
               <Label Text="iron rations(100)" />
-              <Label Text="canteen" GridRow="1" />
-              <Label Text="barrel" GridRow="2" />
-              <Label Text="short sword" GridRow="3" />
-              <Label Text="leather armor" GridRow="4" />
-              <Label Text="leather leggings" GridRow="5" />
-              <Label Text="small shield" GridRow="6" />
+              <Label Text="canteen" Grid.Row="1" />
+              <Label Text="barrel" Grid.Row="2" />
+              <Label Text="short sword" Grid.Row="3" />
+              <Label Text="leather armor" Grid.Row="4" />
+              <Label Text="leather leggings" Grid.Row="5" />
+              <Label Text="small shield" Grid.Row="6" />
             </Grid>
           </ScrollViewer>
         </VerticalStackPanel>
@@ -98,8 +90,8 @@
           <Proportion Type="Part" />
         </Grid.ColumnsProportions>
         <Label Text="AC: 100" Id="_textAc" />
-        <Label Text="Hit Roll: 20" GridColumn="1" Id="_textHitRoll" />
-        <Label Text="Attacks: 4-8/6-10" GridColumn="2" Id="_textAttacks" />
+        <Label Text="Hit Roll: 20" Id="_textHitRoll" Grid.Column="1" />
+        <Label Text="Attacks: 4-8/6-10" Id="_textAttacks" Grid.Column="2" />
       </Grid>
     </VerticalStackPanel>
   </Window>

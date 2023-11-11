@@ -1,17 +1,9 @@
 <Project>
-  <Project.ExportOptions Namespace="Jord.UI" Class="TradeDialog" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
-  <Dialog Title="Trade" IsDraggable="False" Left="190">
+  <Project.ExportOptions Namespace="Jord.UI" Class="TradeDialog" OutputPath="D:\Projects\Jord\src\Jord.Game\UI" />
+  <Dialog Title="Trade" Left="553" Top="238">
     <VerticalStackPanel Width="800" Height="400" Padding="0, 16">
-      <VerticalStackPanel.Proportions>
-        <Proportion Type="Fill" />
-      </VerticalStackPanel.Proportions>
-      <HorizontalStackPanel Spacing="8">
-        <HorizontalStackPanel.Proportions>
-          <Proportion Type="Part" />
-          <Proportion Type="Pixels" Value="100" />
-          <Proportion Type="Part" />
-        </HorizontalStackPanel.Proportions>
-        <VerticalStackPanel>
+      <HorizontalStackPanel Spacing="8" StackPanel.ProportionType="Fill">
+        <VerticalStackPanel StackPanel.ProportionType="Part">
           <Panel>
             <Label Text="player" Id="_textNameLeft" />
             <Label Text="Gold: 1000" HorizontalAlignment="Right" Id="_textGoldLeft" />
@@ -25,18 +17,18 @@
                 <Proportion Type="Fill" />
                 <Proportion Type="Auto" />
               </Grid.ColumnsProportions>
-              <Label Text="iron rations(5)" GridColumn="1" />
-              <Label Text="5" HorizontalAlignment="Right" GridColumn="2" />
-              <Label Text="canteen" GridColumn="1" GridRow="1" />
-              <Label Text="7" GridColumn="2" GridRow="1" />
+              <Label Text="iron rations(5)" Grid.Column="1" />
+              <Label Text="5" HorizontalAlignment="Right" Grid.Column="2" />
+              <Label Text="canteen" Grid.Column="1" Grid.Row="1" />
+              <Label Text="7" Grid.Column="2" Grid.Row="1" />
             </Grid>
           </ScrollViewer>
         </VerticalStackPanel>
-        <VerticalStackPanel VerticalAlignment="Center" Id="_gridGoldTransfer">
+        <VerticalStackPanel VerticalAlignment="Center" Id="_gridGoldTransfer" StackPanel.ProportionType="Pixels" StackPanel.ProportionValue="100">
           <Label Text="500" HorizontalAlignment="Center" Id="_textGoldTransfer" />
           <Panel Height="20" Id="_panelArrow" />
         </VerticalStackPanel>
-        <VerticalStackPanel>
+        <VerticalStackPanel StackPanel.ProportionType="Part">
           <Panel>
             <Label Text="merchant" Id="_textNameRight" />
             <Label Text="Gold: 50000" HorizontalAlignment="Right" Id="_textGoldRight" />
@@ -50,20 +42,20 @@
                 <Proportion Type="Fill" />
                 <Proportion Type="Auto" />
               </Grid.ColumnsProportions>
-              <Label Text="iron rations(100)" GridColumn="1" />
-              <Label Text="10" HorizontalAlignment="Right" GridColumn="2" />
-              <Label Text="canteen" GridColumn="1" GridRow="1" />
-              <Label Text="15" GridColumn="2" GridRow="1" />
-              <Label Text="barrel" GridColumn="1" GridRow="2" />
-              <Label Text="25" GridColumn="2" GridRow="2" />
-              <Label Text="short sword" GridColumn="1" GridRow="3" />
-              <Label Text="50" GridColumn="2" GridRow="3" />
-              <Label Text="leather armor" GridColumn="1" GridRow="4" />
-              <Label Text="40" GridColumn="2" GridRow="4" />
-              <Label Text="leather leggings" GridColumn="1" GridRow="5" />
-              <Label Text="30" GridColumn="2" GridRow="5" />
-              <Label Text="small shield" GridColumn="1" GridRow="6" />
-              <Label Text="25" GridColumn="2" GridRow="6" />
+              <Label Text="iron rations(100)" Grid.Column="1" />
+              <Label Text="10" HorizontalAlignment="Right" Grid.Column="2" />
+              <Label Text="canteen" Grid.Column="1" Grid.Row="1" />
+              <Label Text="15" Grid.Column="2" Grid.Row="1" />
+              <Label Text="barrel" Grid.Column="1" Grid.Row="2" />
+              <Label Text="25" Grid.Column="2" Grid.Row="2" />
+              <Label Text="short sword" Grid.Column="1" Grid.Row="3" />
+              <Label Text="50" Grid.Column="2" Grid.Row="3" />
+              <Label Text="leather armor" Grid.Column="1" Grid.Row="4" />
+              <Label Text="40" Grid.Column="2" Grid.Row="4" />
+              <Label Text="leather leggings" Grid.Column="1" Grid.Row="5" />
+              <Label Text="30" Grid.Column="2" Grid.Row="5" />
+              <Label Text="small shield" Grid.Column="1" Grid.Row="6" />
+              <Label Text="25" Grid.Column="2" Grid.Row="6" />
             </Grid>
           </ScrollViewer>
         </VerticalStackPanel>

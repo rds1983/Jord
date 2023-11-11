@@ -77,8 +77,16 @@ namespace Jord.UI
 						Text = perk.Name,
 					},
 					HorizontalAlignment = HorizontalAlignment.Center,
-					Tag = perk
+					Tag = perk,
+					Tooltip = perk.Description
 				};
+
+				buttonPerk.PressedChangingByUser += ButtonHandler;
+
+				if (TJ.Player.Perks.Contains(perk))
+				{
+					buttonPerk.IsPressed = true;
+				}
 
 				Grid.SetColumn(buttonPerk, perk.Position.X);
 				Grid.SetRow(buttonPerk, perk.Position.Y);
@@ -105,68 +113,6 @@ namespace Jord.UI
 				}
 			}
 
-/*			var widgetPerks = new List<WidgetPerk>();
-						foreach (var pair in orderedPerks)
-			{
-				if (topPanel.Widgets.Count > 0)
-				{
-					// Add spacing
-					var spacePanel = new Panel
-					{
-						Height = 24
-					};
-
-					topPanel.Widgets.Add(spacePanel);
-				}
-
-				var tierPanel = new HorizontalStackPanel
-				{
-					Spacing = 8,
-					HorizontalAlignment = HorizontalAlignment.Center
-				};
-
-
-				foreach (var perk in pair.Value)
-				{
-					var buttonPerk = new ToggleButton
-					{
-						Text = perk.Name,
-						Toggleable = true,
-						Tag = perk
-					};
-
-					tierPanel.Widgets.Add(buttonPerk);
-
-					if (perk.RequiresPerks != null && perk.RequiresPerks.Length > 0)
-					{
-						var parentPerk = perk.RequiresPerks[0];
-
-						foreach (var widgetPerk in widgetPerks)
-						{
-							if (parentPerk == widgetPerk.Perk)
-							{
-								connections.Add(new Connection(widgetPerk.Widget, buttonPerk));
-							}
-						}
-					}
-
-					widgetPerks.Add(new WidgetPerk
-					{
-						Widget = buttonPerk,
-						Perk = perk
-					});
-
-					if (TJ.Player.Perks.Contains(perk))
-					{
-						buttonPerk.IsPressed = true;
-					}
-
-					buttonPerk.PressedChangingByUser += ButtonHandler;
-				}
-
-				topPanel.Widgets.Add(tierPanel);
-			}*/
-
 			var tabItem = new TabItem
 			{
 				Text = category,
@@ -179,7 +125,7 @@ namespace Jord.UI
 
 		private void ButtonHandler(object sender, ValueChangingEventArgs<bool> args)
 		{
-			var buttonPerk = (Button)sender;
+			var buttonPerk = (ToggleButton)sender;
 			if (buttonPerk.IsPressed)
 			{
 				// The perk was already taken

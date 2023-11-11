@@ -1,6 +1,6 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="AbilitiesWindow" OutputPath="C:\Projects\Jord\src\Jord.Game\UI" />
-  <Window Title="Abilities" IsDraggable="False" Left="422" Top="108" Width="500">
+  <Window Title="Abilities" Left="708" Top="306" Width="500">
     <VerticalStackPanel>
       <HorizontalSeparator />
       <HorizontalStackPanel>
