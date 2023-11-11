@@ -29,23 +29,110 @@
 	"Perks": {
 		"BaseMelee": {
 			"Name": "Base Melee",
-			"Description": "Basic knowledge of the melee fighting. Grants additional attack per turn and +2 to the attack roll.",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
 			"Tier": 1,
-			"AddsEffects": "PerkBaseMelee"
+			"AddsEffects": "PerkBaseMelee",
+			"Position": [ 2, 0 ]
+		},
+		"BasicBlocking": {
+			"Name": "Basic Blocking",
+			"Description": "Raises blocking_rating by 15.",
+			"Tier": 1,
+			"RequiresPerks": "BaseMelee",
+			"Position": [ 3, 0 ]
+		},
+		"AdvancedMelee": {
+			"Name": "Advanced Melee",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 2,
+			"RequiresPerks": "BaseMelee",
+			"Position": [ 2, 1 ]
+		},
+		"ImprovedBlocking": {
+			"Name": "Improved Blocking",
+			"Description": "Raises blocking_rating by 15.",
+			"Tier": 2,
+			"RequiresPerks": "BasicBlocking",
+			"Position": [ 3, 1 ]
 		},
 		"OneHandedWeapons": {
 			"Name": "One-Handed Weapons",
-			"Description": "Grants +2 to the attack roll when using a one-handed weapon.",
+			"Description": "Raises melee_mastery by 30 when using a one-handed weapon.",
 			"Tier": 2,
 			"AddsEffects": "PerkOneHandedWeapons",
-			"RequiresPerks": "BaseMelee"
+			"RequiresPerks": "AdvancedMelee",
+			"Position": [ 1, 2 ]
 		},
 		"TwoHandedWeapons": {
 			"Name": "Two-Handed Weapons",
-			"Description": "Grants +2 to the attack roll when using a two-handed weapon.",
+			"Description": "Raises melee_mastery by 30 when using a two-handed weapon.",
 			"Tier": 2,
 			"AddsEffects": "PerkTwoHandedWeapons",
-			"RequiresPerks": "BaseMelee"
+			"RequiresPerks": "AdvancedMelee",
+			"Position": [ 3, 2 ]
 		},
+		"ExpertMelee": {
+			"Name": "Expert Melee",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "AdvancedMelee",
+			"Position": [ 2, 2 ]
+		},
+		"SpecializationSword": {
+			"Name": "Specialization: Sword",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "ExpertMelee",
+			"Position": [ 0, 3 ]
+		},
+		"SpecializationMace": {
+			"Name": "Specialization: Mace/WarHammer",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "ExpertMelee",
+			"Position": [ 1, 3 ]
+		},
+		"SpecializationAxe": {
+			"Name": "Specialization: Axe",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "ExpertMelee",
+			"Position": [ 3, 3 ]
+		},
+		"SpecializationSpear": {
+			"Name": "Specialization: Spear",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "ExpertMelee",
+			"Position": [ 4, 3 ]
+		},
+		"SpecializationDagger": {
+			"Name": "Specialization: Dagger",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 3,
+			"RequiresPerks": "ExpertMelee",
+			"Position": [ 5, 3 ]
+		},
+		"MasterMelee": {
+			"Name": "Master Melee",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 4,
+			"RequiresPerks": "AdvancedMelee",
+			"Position": [ 2, 3 ]
+		},
+		"Parry": {
+			"Name": "Parry",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 4,
+			"RequiresPerks": "MasterMelee",
+			"Position": [ 1, 4 ]
+		},
+		"Riposte": {
+			"Name": "Riposte",
+			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Tier": 4,
+			"RequiresPerks": "Parry",
+			"Position": [ 2, 4 ]
+		}
 	}
 }

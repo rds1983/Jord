@@ -22,14 +22,16 @@
 			"Name": "Base Haggling",
 			"Description": "Basic knowledge of the haggling. Makes trade prices better.",
 			"Tier": 1,
-			"AddsEffects": "PerkBaseHaggling"
+			"AddsEffects": "PerkBaseHaggling",
+			"Position": [ 2, 0 ]
 		},
 		"ImprovedHaggling": {
 			"Name": "Improved Haggling",
 			"Description": "Basic knowledge of the haggling. Makes trade prices better.",
 			"Tier": 2,
 			"AddsEffects": "PerkImprovedHaggling",
-			"RequiresPerks": "BaseHaggling"
+			"RequiresPerks": "BaseHaggling",
+			"Position": [ 2, 1 ]
 		},
 	}
 }

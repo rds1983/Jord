@@ -1,26 +1,23 @@
 using Jord.Core.Abilities;
+using Jord.Utils;
 using Microsoft.Xna.Framework;
 using Myra.Events;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Jord.UI
 {
 	public partial class CharacterWindow
 	{
-		private class WidgetPerk
-		{
-			public TextButton Widget;
-			public Perk Perk;
-		}
-
 		private class Connection
 		{
-			public TextButton Widget { get; }
-			public TextButton Widget2 { get; }
+			public ToggleButton Widget { get; }
+			public ToggleButton Widget2 { get; }
 
-			public Connection(TextButton widget, TextButton widget2)
+			public Connection(ToggleButton widget, ToggleButton widget2)
 			{
 				Widget = widget;
 				Widget2 = widget2;
@@ -62,28 +59,54 @@ namespace Jord.UI
 
 		private void BuildCategoryTab(string category, List<Perk> perks)
 		{
-			var orderedPerks = new Dictionary<int, List<Perk>>();
-			foreach (var perk in perks)
+			var topPanel = new Grid
 			{
-				List<Perk> tierPerks;
-				if (!orderedPerks.TryGetValue(perk.Tier, out tierPerks))
-				{
-					tierPerks = new List<Perk>();
-					orderedPerks[perk.Tier] = tierPerks;
-				}
-
-				tierPerks.Add(perk);
-			}
-
-			var topPanel = new VerticalStackPanel
-			{
-				Spacing = 8,
-				HorizontalAlignment = HorizontalAlignment.Center
+				ColumnSpacing = 8,
+				RowSpacing = 8,
+				DefaultColumnProportion = Proportion.Auto,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				BeforeRender = RenderConnections
 			};
 
-			var widgetPerks = new List<WidgetPerk>();
+			foreach (var perk in perks)
+			{
+				var buttonPerk = new ToggleButton
+				{
+					Content = new Label
+					{
+						Text = perk.Name,
+					},
+					HorizontalAlignment = HorizontalAlignment.Center,
+					Tag = perk
+				};
+
+				Grid.SetColumn(buttonPerk, perk.Position.X);
+				Grid.SetRow(buttonPerk, perk.Position.Y);
+
+				topPanel.Widgets.Add(buttonPerk);
+			}
+
+			// Second run: set connections
 			var connections = new List<Connection>();
-			foreach (var pair in orderedPerks)
+			foreach (ToggleButton widget in topPanel.Widgets)
+			{
+				var perk = (Perk)widget.Tag;
+				if (perk.RequiresPerks == null || perk.RequiresPerks.Length == 0)
+				{
+					continue;
+				}
+
+				var parentPerk = perk.RequiresPerks[0];
+
+				var widget2 = (from ToggleButton w in topPanel.Widgets where (Perk)w.Tag == parentPerk select w).FirstOrDefault();
+				if (widget2 != null)
+				{
+					connections.Add(new Connection(widget2, widget));
+				}
+			}
+
+/*			var widgetPerks = new List<WidgetPerk>();
+						foreach (var pair in orderedPerks)
 			{
 				if (topPanel.Widgets.Count > 0)
 				{
@@ -105,7 +128,7 @@ namespace Jord.UI
 
 				foreach (var perk in pair.Value)
 				{
-					var buttonPerk = new TextButton
+					var buttonPerk = new ToggleButton
 					{
 						Text = perk.Name,
 						Toggleable = true,
@@ -142,7 +165,7 @@ namespace Jord.UI
 				}
 
 				topPanel.Widgets.Add(tierPanel);
-			}
+			}*/
 
 			var tabItem = new TabItem
 			{
@@ -156,7 +179,7 @@ namespace Jord.UI
 
 		private void ButtonHandler(object sender, ValueChangingEventArgs<bool> args)
 		{
-			var buttonPerk = (TextButton)sender;
+			var buttonPerk = (Button)sender;
 			if (buttonPerk.IsPressed)
 			{
 				// The perk was already taken
@@ -194,20 +217,29 @@ namespace Jord.UI
 			args.Cancel = true;
 		}
 
-		public override void InternalRender(RenderContext context)
+		private void RenderConnections(RenderContext context)
 		{
-			base.InternalRender(context);
-
 			var tabItem = _tabControlMain.SelectedItem;
+			var panel = (Grid)tabItem.Content;
 
 			var connections = (Connection[])tabItem.Tag;
 			foreach (var connection in connections)
 			{
-				var start = new Vector2(connection.Widget.Bounds.X + connection.Widget.Bounds.Width / 2, connection.Widget.Bounds.Y + connection.Widget.Bounds.Height);
-				start = ToLocal(connection.Widget.ToGlobal(start));
+				var start = panel.ToLocal(connection.Widget.ToGlobal(connection.Widget.Bounds.Center.ToVector2()));
+				var end = panel.ToLocal(connection.Widget2.ToGlobal(connection.Widget2.Bounds.Center.ToVector2()));
 
-				var end = new Vector2(connection.Widget2.Bounds.X + connection.Widget2.Bounds.Width / 2, connection.Widget2.Bounds.Y);
-				end = ToLocal(connection.Widget2.ToGlobal(end));
+				var delta = end - start;
+
+				// Forbid minor rotates
+				if (Math.Abs(delta.X) < 5)
+				{
+					end.X = start.X;
+				}
+
+				if (Math.Abs(delta.Y) < 5)
+				{
+					end.Y = start.Y;
+				}
 
 				context.DrawLine(start, end, Color.Green, 2);
 			}

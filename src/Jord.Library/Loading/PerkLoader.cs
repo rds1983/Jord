@@ -16,7 +16,8 @@ namespace Jord.Loading
 			{
 				Name = data.EnsureString("Name"),
 				Description = data.EnsureString("Description"),
-				Tier = data.EnsureInt("Tier")
+				Tier = data.EnsureInt("Tier"),
+				Position = data.EnsurePoint("Position")
 			};
 
 			string category;

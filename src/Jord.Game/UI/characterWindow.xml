@@ -1,27 +1,20 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="CharacterWindow" OutputPath="D:/Projects/Jord/src/Jord.Game/UI" />
-  <Window Title="rds, Warrior, 11, 100k/150k" Left="608" Top="181" Width="700" Height="300">
+  <Window Title="rds, Warrior, 11, 100k/150k" Left="608" Top="181" Width="1200" Height="800">
     <VerticalStackPanel Spacing="4">
-      <VerticalStackPanel.Proportions>
-        <Proportion Type="Fill" />
-        <Proportion Type="Auto" />
-      </VerticalStackPanel.Proportions>
-      <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Id="_tabControlMain">
-        <TabItem Text="Melee" ContentVerticalAlignment="Stretch" Id="_tabItemMelee">
+      <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Id="_tabControlMain" StackPanel.ProportionType="Fill">
+        <TabItem Text="Melee" Id="_tabItemMelee">
           <VerticalStackPanel Spacing="8" HorizontalAlignment="Center">
             <HorizontalStackPanel HorizontalAlignment="Center">
-              <TextButton Text="Base Melee" Toggleable="True" />
+              <ToggleButton>
+                <Label Text="Base Melee" />
+              </ToggleButton>
             </HorizontalStackPanel>
             <Panel Height="24" />
-            <HorizontalStackPanel Spacing="8" HorizontalAlignment="Center">
-              <TextButton Text="One-Handed Weapons" Toggleable="True" />
-              <TextButton Text="Two-Handed Weapons" Toggleable="True" />
-              <TextButton Text="Dual Wielding" Toggleable="True" />
-              <TextButton Text="Storm of Steel" Toggleable="True" />
-            </HorizontalStackPanel>
+            <HorizontalStackPanel HorizontalAlignment="Center" />
           </VerticalStackPanel>
         </TabItem>
-        <TabItem Text="Restoration" ContentVerticalAlignment="Stretch" Id="_tabItemRestoration" />
+        <TabItem Text="Restoration" Id="_tabItemRestoration" />
       </TabControl>
       <Label Text="Perk Points Left: 2" Id="_labelPerkPoints" />
     </VerticalStackPanel>
