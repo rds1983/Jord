@@ -141,7 +141,7 @@ namespace Jord.Core
 				battleStats.ArmorClass += info.ArmorClass;
 			}
 
-			battleStats.HitRoll = CalculateBonus(BonusType.HitRoll);
+			battleStats.HitRoll = CalculateBonus(BonusType.MeleeMastery);
 		}
 
 		private void UpdateLevel()

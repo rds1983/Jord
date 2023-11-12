@@ -2,7 +2,7 @@
   <Project.ExportOptions Namespace="Jord.UI" Class="CharacterWindow" OutputPath="D:/Projects/Jord/src/Jord.Game/UI" />
   <Window Title="rds, Warrior, 11, 100k/150k" Left="608" Top="181" Width="1200" Height="800">
     <VerticalStackPanel Spacing="4">
-      <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Id="_tabControlMain" StackPanel.ProportionType="Fill">
+      <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabSelectorPosition="Left" ClipToBounds="True" Id="_tabControlMain" StackPanel.ProportionType="Fill" >
         <TabItem Text="Melee" Id="_tabItemMelee">
           <VerticalStackPanel Spacing="8" HorizontalAlignment="Center">
             <HorizontalStackPanel HorizontalAlignment="Center">

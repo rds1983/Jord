@@ -12,5 +12,15 @@ namespace Jord.Core.Abilities
 
 		public Effect[] AddsEffects { get; set; }
 		public Perk[] RequiresPerks { get; set; }
+
+		public static int GetMinimumLevelForTier(int tier)
+		{
+			if (tier <= 1)
+			{
+				return 1;
+			}
+
+			return (tier - 1) * 10;
+		}
 	}
 }

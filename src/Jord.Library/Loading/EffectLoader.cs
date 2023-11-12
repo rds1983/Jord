@@ -18,6 +18,25 @@ namespace Jord.Loading
 				Description = data.EnsureString("Description")
 			};
 
+			var conditionsObject = data.OptionalJArray("Conditions");
+			if (conditionsObject != null)
+			{
+				foreach(JArray conditionObject in conditionsObject)
+				{
+					if (conditionObject.Count < 3)
+					{
+						LoaderExtensions.RaiseError($"Conditions record has less than 3 values.");
+					}
+
+					var variable = conditionObject[0].ToString().ToEnum<EffectConditionVariable>();
+					var op = conditionObject[1].ToString().ToEnum<EffectConditionOperator>();
+					var value = bool.Parse(conditionObject[2].ToString());
+
+					var condition = new EffectCondition(variable, op, value);
+					result.Conditions.Add(condition);
+				}
+			}
+
 			var bonusesObject = data.OptionalJObject("Bonuses");
 			if (bonusesObject != null)
 			{

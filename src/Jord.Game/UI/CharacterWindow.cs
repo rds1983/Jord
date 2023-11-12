@@ -54,6 +54,8 @@ namespace Jord.UI
 				BuildCategoryTab(pair.Key, pair.Value);
 			}
 
+			UpdateButtons();
+
 			UpdateLabelPerkPoints();
 		}
 
@@ -75,10 +77,11 @@ namespace Jord.UI
 					Content = new Label
 					{
 						Text = perk.Name,
+						HorizontalAlignment= HorizontalAlignment.Center,
+						Padding = new Thickness(8, 0, 8, 0)
 					},
 					HorizontalAlignment = HorizontalAlignment.Center,
-					Tag = perk,
-					Tooltip = perk.Description
+					Tag = perk
 				};
 
 				buttonPerk.PressedChangingByUser += ButtonHandler;
@@ -123,6 +126,71 @@ namespace Jord.UI
 			_tabControlMain.Items.Add(tabItem);
 		}
 
+		private void UpdateButtons()
+		{
+			foreach(var tabItem in _tabControlMain.Items)
+			{
+				var grid = (Grid)tabItem.Content;
+
+				foreach(ToggleButton button in grid.Widgets)
+				{
+					var perk = (Perk)button.Tag;
+
+					var requiresList = new List<string>();
+					if (TJ.Player.Level < Perk.GetMinimumLevelForTier(perk.Tier))
+					{
+						requiresList.Add($"Level {Perk.GetMinimumLevelForTier(perk.Tier)}");
+					}
+
+					if (perk.RequiresPerks != null && perk.RequiresPerks.Length > 0)
+					{
+						for (var i = 0; i < perk.RequiresPerks.Length; ++i)
+						{
+							if (!TJ.Player.Perks.Contains(perk.RequiresPerks[i]))
+							{
+								requiresList.Add($"\"{perk.RequiresPerks[i].Name}\"");
+							}
+						}
+					}
+
+					var tooltipText = string.Empty;
+
+					if (requiresList.Count > 0)
+					{
+						tooltipText = $"/c[red]Requires: {string.Join(", ", requiresList)}./cd\n";
+					}
+
+					tooltipText += perk.Description;
+					button.Tooltip = tooltipText;
+
+					var enabled = false;
+					if (TJ.Player.Level < Perk.GetMinimumLevelForTier(perk.Tier))
+					{
+					} else if (TJ.Player.Perks.Contains(perk))
+					{
+						enabled = true;
+					} else if (perk.RequiresPerks == null || perk.RequiresPerks.Length == 0)
+					{
+						enabled = true;
+					} else
+					{
+						enabled = true;
+
+						for(var i = 0; i < perk.RequiresPerks.Length; i++)
+						{
+							if (!TJ.Player.Perks.Contains(perk.RequiresPerks[i]))
+							{
+								enabled = false;
+								break;
+							}
+						}
+					}
+
+					button.Enabled = enabled;
+				}
+			}
+		}
+
 		private void ButtonHandler(object sender, ValueChangingEventArgs<bool> args)
 		{
 			var buttonPerk = (ToggleButton)sender;
@@ -157,6 +225,7 @@ namespace Jord.UI
 
 				TJ.Player.Perks.Add(perk);
 				buttonPerk.IsPressed = true;
+				UpdateButtons();
 				UpdateLabelPerkPoints();
 			};
 
