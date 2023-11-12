@@ -292,13 +292,21 @@ namespace Jord.UI
 
 		private void ShowInventory()
 		{
-			var inventoryWindow = new InventoryWindow();
-			inventoryWindow.ShowModal(Desktop);
+			var characterWindow = new CharacterWindow
+			{
+				CurrentTab = CharacterWindowTab.Inventory
+			};
+
+			characterWindow.ShowModal(Desktop);
 		}
 
 		private void ShowCharacter()
 		{
-			var characterWindow = new CharacterWindow();
+			var characterWindow = new CharacterWindow
+			{
+				CurrentTab = CharacterWindowTab.Perks
+			};
+
 			characterWindow.ShowModal(Desktop);
 		}
 

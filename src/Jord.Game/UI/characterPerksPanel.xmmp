@@ -1,7 +1,7 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="CharacterPerksPanel" OutputPath="D:/Projects/Jord/src/Jord.Game/UI" />
   <VerticalStackPanel Spacing="4">
-    <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabSelectorPosition="Left" ClipToBounds="True" Id="_tabControlMain" StackPanel.ProportionType="Fill">
+    <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabSelectorPosition="Left" ClipToBounds="True" Id="_tabControlPerks" StackPanel.ProportionType="Fill">
       <TabItem Text="Melee" Id="_tabItemMelee">
         <VerticalStackPanel Spacing="8" HorizontalAlignment="Center">
           <HorizontalStackPanel HorizontalAlignment="Center">
@@ -15,6 +15,6 @@
       </TabItem>
       <TabItem Text="Restoration" Id="_tabItemRestoration" />
     </TabControl>
-    <Label Text="Perk Points Left: 2" Id="_labelPerkPoints" />
+    <Label Text="Perk Points Left: 2" HorizontalAlignment="Right" Id="_labelPerkPoints" />
   </VerticalStackPanel>
 </Project>

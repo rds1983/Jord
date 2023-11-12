@@ -42,7 +42,7 @@
 	"Perks": {
 		"BaseMelee": {
 			"Name": "Base Melee",
-			"Description": "Raises melee_mastery by 15 and grants an additional attack per round.",
+			"Description": "Grants an additional attack.",
 			"Tier": 1,
 			"AddsEffects": "PerkBaseMelee",
 			"Position": [ 2, 0 ]

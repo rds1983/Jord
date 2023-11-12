@@ -1,22 +1,10 @@
 <Project>
   <Project.ExportOptions Namespace="Jord.UI" Class="CharacterWindow" OutputPath="D:/Projects/Jord/src/Jord.Game/UI" />
-  <Window Title="rds, Warrior, 11, 100k/150k" Left="608" Top="181" Width="1200" Height="800">
-    <VerticalStackPanel Spacing="4">
-      <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabSelectorPosition="Left" ClipToBounds="True" Id="_tabControlMain" StackPanel.ProportionType="Fill" >
-        <TabItem Text="Melee" Id="_tabItemMelee">
-          <VerticalStackPanel Spacing="8" HorizontalAlignment="Center">
-            <HorizontalStackPanel HorizontalAlignment="Center">
-              <ToggleButton>
-                <Label Text="Base Melee" />
-              </ToggleButton>
-            </HorizontalStackPanel>
-            <Panel Height="24" />
-            <HorizontalStackPanel HorizontalAlignment="Center" />
-          </VerticalStackPanel>
-        </TabItem>
-        <TabItem Text="Restoration" Id="_tabItemRestoration" />
-      </TabControl>
-      <Label Text="Perk Points Left: 2" Id="_labelPerkPoints" />
-    </VerticalStackPanel>
+  <Window Title="rds, Warrior, 11, 100k/150k" Left="358" Top="71" Width="1200" Height="800">
+    <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Id="_tabControlMain">
+      <TabItem Text="Stats" Id="_tabItemStats" />
+      <TabItem Text="Perks" Id="_tabItemPerks" />
+      <TabItem Text="Inventory" Id="_tabItemInventory" />
+    </TabControl>
   </Window>
 </Project>
