@@ -25,28 +25,58 @@ namespace Jord.Core
 				return;
 			}
 
+			var targetBattleStats = target.Stats.Battle;
+			var evasionRating = targetBattleStats.EvasionRating;
 			foreach (var attack in attacks)
 			{
-				var armorClass = target.Stats.Battle.ArmorClass;
-				var attackRoll = 50 + battleStats.HitRoll * 8 - armorClass;
-				Debug.WriteLine("{0} against {1}'s attack roll is {2}", Name, target.Name, attackRoll);
-				var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
-				if (!MathUtils.RollPercentage(attackRoll) || damage <= 0)
+				var armorClass = targetBattleStats.ArmorClass;
+
+				// Hit roll
+				var meleeMastery = 100 + battleStats.MeleeMastery;
+				var hitRoll = meleeMastery - targetBattleStats.EvasionRating;
+				Debug.WriteLine($"{Name} against {target.Name}'s hitRoll roll is {hitRoll}");
+				if (!MathUtils.RollPercentage(hitRoll))
 				{
-					// Miss
-					var message = Strings.GetMissMessage(Name, target.Name, attack.AttackType);
-					TJ.GameLog(message);
-				}
-				else
-				{
-					target.Stats.Life.CurrentHP -= damage;
-					var message = Strings.GetAttackMessage(damage, Name, target.Name, attack.AttackType);
+					var message = Strings.GetEvadeMessage(Name, target.Name, attack.AttackType);
 					TJ.GameLog(message);
 
-					if (target.Stats.Life.CurrentHP <= 0 && target != TJ.Player)
+					evasionRating = Math.Max(0, evasionRating - 15);
+				} else
+				{
+					// Block roll
+					var blockRoll = targetBattleStats.BlockingRating;
+					Debug.WriteLine($"{Name} against {target.Name}'s blockRoll roll is {blockRoll}");
+					var blocked = MathUtils.RollPercentage(blockRoll);
+
+					var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
+					Debug.WriteLine($"{Name} against {target.Name}'s initial damage is {damage}");
+
+					var damageRoll = meleeMastery - targetBattleStats.ArmorClass;
+					Debug.WriteLine($"{Name} against {target.Name}'s damageRoll roll is {damageRoll}");
+
+					damage = (damage * damageRoll / 100);
+
+					if (blocked)
 					{
-						OnKilledTarget(target);
-						break;
+						damage /= 2;
+					}
+					Debug.WriteLine($"{Name} against {target.Name}'s actual damage is {damage}");
+
+					if (damage == 0)
+					{
+						var message = Strings.GetArmorMessage(Name, target.Name, attack.AttackType, blocked);
+						TJ.GameLog(message);
+					} else
+					{
+						target.Stats.Life.CurrentHP -= damage;
+						var message = Strings.GetAttackMessage(damage, Name, target.Name, attack.AttackType, blocked);
+						TJ.GameLog(message);
+
+						if (target.Stats.Life.CurrentHP <= 0 && target != TJ.Player)
+						{
+							OnKilledTarget(target);
+							break;
+						}
 					}
 				}
 			}

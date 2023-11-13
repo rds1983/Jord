@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Jord.Core;
 
 namespace Jord
@@ -39,52 +40,65 @@ namespace Jord
 			return _attackNames[(int)attackType].Verb;
 		}
 
-		public static string GetMissMessage(string attackerName, string targetName, AttackType attackType)
+		public static string GetEvadeMessage(string attackerName, string targetName, AttackType attackType)
 		{
-			return string.Format("{0} misses {1} with {2}.",
-				attackerName, targetName, GetAttackNoun(attackType));
+			return $"{targetName} evades {GetAttackNoun(attackType)} of {attackerName}.";
 		}
 
-		public static string GetAttackMessage(int damage, string attackerName, string targetName, AttackType attackType)
+		public static string GetArmorMessage(string attackerName, string targetName, AttackType attackType, bool blocked)
 		{
+			var sb = new StringBuilder();
+			if (blocked)
+			{
+				sb.Append("Blocked. ");
+			}
+
+			sb.Append($"{attackerName} couldn't pierce through the armor of {targetName} with {GetAttackNoun(attackType)}.");
+			
+			return sb.ToString();
+		}
+
+		public static string GetAttackMessage(int damage, string attackerName, string targetName, AttackType attackType, bool blocked)
+		{
+			var sb = new StringBuilder();
+			if (blocked)
+			{
+				sb.Append("Blocked. ");
+			}
 			if (damage < 5)
 			{
-				return string.Format("{0} barely {1} {2} ({3}).",
-					attackerName, GetAttackVerb(attackType), targetName, damage);
+				sb.Append($"{attackerName} barely {GetAttackVerb(attackType)} {targetName} ({damage}).");
 			}
 			else if (damage < 10)
 			{
-				return string.Format("{0} {1} {2} ({3}).",
-					attackerName, GetAttackVerb(attackType), targetName, damage);
+				sb.Append($"{attackerName} {GetAttackVerb(attackType)} {targetName} ({damage}).");
 			}
 			else if (damage < 15)
 			{
-				return string.Format("{0} {1} {2} hard ({3}).",
-					attackerName, GetAttackVerb(attackType), targetName, damage);
+				sb.Append($"{attackerName} {GetAttackVerb(attackType)} {targetName} hard ({damage}).");
 			}
 			else if (damage < 20)
 			{
-				return string.Format("{0} {1} {2} very hard ({3}).",
-					attackerName, GetAttackVerb(attackType), targetName, damage);
+				sb.Append($"{attackerName} {GetAttackVerb(attackType)} {targetName} very hard ({damage}).");
 			}
 			else if (damage < 25)
 			{
-				return string.Format("{0} {1} {2} extremelly hard ({3}).",
-					attackerName, GetAttackVerb(attackType), targetName, damage);
+				sb.Append($"{attackerName} {GetAttackVerb(attackType)} {targetName} extremelly hard ({damage}).");
 			}
 			else if (damage < 30)
 			{
-				return string.Format("{0} massacres {1} to small fragments with {2} ({3}).",
-					attackerName, targetName, GetAttackNoun(attackType), damage);
+				sb.Append($"{attackerName} massacres {targetName} to small fragments with {GetAttackNoun(attackType)} ({damage}).");
 			}
 			else if (damage < 50)
 			{
-				return string.Format("{0} brutally massacres {1} to small fragments with {2} ({3}).",
-					attackerName, targetName, GetAttackNoun(attackType), damage);
+				sb.Append($"{attackerName} brutally massacres {targetName} to small fragments with {GetAttackNoun(attackType)} ({damage}).");
+			}
+			else
+			{
+				sb.Append($"{attackerName} viciously massacres {targetName} to small fragments with {GetAttackNoun(attackType)} ({damage}).");
 			}
 
-			return string.Format("{0} viciously massacres {1} to small fragments with {2} ({3}).",
-				attackerName, targetName, GetAttackNoun(attackType), damage);
+			return sb.ToString();
 		}
 
 		public static string GetNpcDeathMessage(string name)

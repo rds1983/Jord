@@ -132,7 +132,7 @@ namespace Jord.UI
 
 			switch (player.Map[newPos].Object.Type)
 			{
-				case TileObjectType.TanningBench:
+/*				case TileObjectType.TanningBench:
 					{
 						Window window;
 						if (player.CalculateBonus(BonusType.WorkWithLeather) == 0)
@@ -162,7 +162,7 @@ namespace Jord.UI
 						window.ShowModal(Desktop);
 					}
 					
-					break;
+					break;*/
 			}
 
 			return true;

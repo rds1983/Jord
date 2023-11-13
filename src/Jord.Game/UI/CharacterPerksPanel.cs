@@ -28,8 +28,6 @@ namespace Jord.UI
 		{
 			BuildUI();
 
-			var player = TJ.Player;
-
 			_tabControlPerks.Items.Clear();
 
 			var perksOrderedByCategory = new Dictionary<string, List<Perk>>();
@@ -51,7 +49,6 @@ namespace Jord.UI
 			}
 
 			UpdateButtons();
-
 			UpdateLabelPerkPoints();
 		}
 
@@ -223,6 +220,7 @@ namespace Jord.UI
 				}
 
 				TJ.Player.Perks.Add(perk);
+				TJ.Player.Invalidate();
 				buttonPerk.IsPressed = true;
 				UpdateButtons();
 				UpdateLabelPerkPoints();

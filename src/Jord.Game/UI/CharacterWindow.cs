@@ -25,6 +25,9 @@ namespace Jord.UI
 			var title = $"{player.Name}, {player.Class}, {player.Level}, {player.Experience.FormatNumber()}/{nextLevel.Experience.FormatNumber()}";
 			Title = title;
 
+			var characterStatsPanel = new CharacterStatsPanel();
+			_tabItemStats.Content = characterStatsPanel;
+
 			var characterPerksPanel = new CharacterPerksPanel();
 			_tabItemPerks.Content = characterPerksPanel;
 

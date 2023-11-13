@@ -13,6 +13,10 @@ namespace Jord.Core
 		public int Gold { get; set; }
 
 		public readonly Equipment Equipment = new Equipment();
+		public int MeleeMastery { get; set; }
+		public int ArmorClass { get; set; }
+		public int EvasionRating { get; set; }
+		public int BlockingRating { get; set; }
 
 		public int HpMultiplier { get; set; }
 		public int ManaMultiplier { get; set; }

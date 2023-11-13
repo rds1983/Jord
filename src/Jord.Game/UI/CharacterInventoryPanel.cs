@@ -138,7 +138,7 @@ namespace Jord.UI
 		{
 			var battle = Player.Stats.Battle;
 			_textAc.Text = "AC: " + battle.ArmorClass.ToString();
-			_textHitRoll.Text = "Hit Roll: " + battle.HitRoll;
+			// _textHitRoll.Text = "Hit Roll: " + battle.HitRoll;
 
 			var sb = new StringBuilder();
 

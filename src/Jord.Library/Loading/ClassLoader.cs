@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Jord.Loading
 {
-	class ClassLoader: BaseObjectLoader<Class>
+	class ClassLoader : BaseObjectLoader<Class>
 	{
 		public static readonly ClassLoader Instance = new ClassLoader();
 
@@ -23,6 +23,10 @@ namespace Jord.Loading
 				HpRegenMultiplier = data.EnsureFloat("HpRegenMultiplier"),
 				ManaRegenMultiplier = data.EnsureFloat("ManaRegenMultiplier"),
 				StaminaRegenMultiplier = data.EnsureFloat("StaminaRegenMultiplier"),
+				MeleeMastery = data.OptionalInt("MeleeMastery"),
+				ArmorClass = data.OptionalInt("ArmorClass"),
+				EvasionRating = data.OptionalInt("EvasionRating"),
+				BlockingRating = data.OptionalInt("BlockingRating")
 			};
 
 			secondRunAction = db => SecondRun(result, data, db);

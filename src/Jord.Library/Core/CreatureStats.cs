@@ -194,8 +194,10 @@ namespace Jord.Core
 
 		public class BattleStats
 		{
+			public int MeleeMastery { get; set; }
 			public int ArmorClass { get; set; }
-			public int HitRoll { get; set; }
+			public int EvasionRating { get; set; }
+			public int BlockingRating { get; set; }
 			public AttackInfo[] Attacks { get; set; }
 		}
 

@@ -76,6 +76,11 @@ namespace Jord.Core
 			var result = 0;
 			foreach (var perk in Perks)
 			{
+				if (perk.AddsEffects == null || perk.AddsEffects.Length == 0)
+				{
+					continue;
+				}
+
 				foreach (var effect in perk.AddsEffects)
 				{
 					var bonusValue = 0;
@@ -102,6 +107,12 @@ namespace Jord.Core
 			_stats.Life.StaminaRegen = Class.StaminaRegenMultiplier * levelValue;
 
 			// Battle
+			var battleStats = _stats.Battle;
+			battleStats.MeleeMastery = Class.MeleeMastery + CalculateBonus(BonusType.MeleeMastery);
+			battleStats.ArmorClass = Class.ArmorClass + CalculateBonus(BonusType.ArmorClass);
+			battleStats.EvasionRating = Class.EvasionRating + CalculateBonus(BonusType.EvasionRating);
+			battleStats.BlockingRating = Class.BlockingRating + CalculateBonus(BonusType.BlockingRating);
+
 			var weapon = Equipment.GetItemByType(EquipType.RightHand);
 
 			AttackInfo attackInfo;
@@ -116,18 +127,16 @@ namespace Jord.Core
 			}
 
 
-			var attacksCount = 1 + CalculateBonus(BonusType.Attacks);
+			var additionalAttacks = CalculateBonus(BonusType.Attacks);
+			var attacksCount = 1 + additionalAttacks;
 
 
-			var battleStats = _stats.Battle;
 			battleStats.Attacks = new AttackInfo[attacksCount];
 
 			for (var i = 0; i < attacksCount; ++i)
 			{
 				battleStats.Attacks[i] = attackInfo;
 			}
-
-			battleStats.ArmorClass = 0;
 
 			foreach (var slot in Equipment.Items)
 			{
@@ -140,8 +149,6 @@ namespace Jord.Core
 
 				battleStats.ArmorClass += info.ArmorClass;
 			}
-
-			battleStats.HitRoll = CalculateBonus(BonusType.MeleeMastery);
 		}
 
 		private void UpdateLevel()
