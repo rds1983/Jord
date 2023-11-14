@@ -17,10 +17,11 @@ namespace Jord.UI
 			}
 
 			var stats = TJ.Player.Stats.Battle;
-			_labelMeleeMastery.Text = stats.MeleeMastery.ToString();
-			_labelArmorRating.Text = stats.ArmorRating.ToString();
-			_labelEvasionRating.Text = stats.EvasionRating.ToString();
-			_labelBlockingRating.Text = stats.BlockingRating.ToString();
+			_labelMelee.Text = stats.Melee.ToString();
+			_labelArmor.Text = stats.Armor.ToString();
+			_labelEvasion.Text = stats.Evasion.ToString();
+			_labelBlocking.Text = stats.Blocking.ToString();
+			_labelAttacks.Text = stats.Attacks.Length.ToString();
 		}
 	}
 }

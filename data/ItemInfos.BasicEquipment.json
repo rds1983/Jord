@@ -9,7 +9,10 @@
 			"MaxDamage": 8,
 			"AttackType": "Slash",
 			"Symbol": "|",
-			"Color": "Gray"
+			"Color": "Gray",
+			"Bonuses": {
+				"Melee": 10
+			}
 		},
 		"Mace": {
 			"Name": "Mace",
@@ -27,7 +30,6 @@
 			"Type": "Armor",
 			"SubType": "Body",
 			"Price": 40,
-			"ArmorRating": 6,
 			"Tanning": {
 				"Leather": 2
 			},
@@ -35,14 +37,16 @@
 				"Leather": 4
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 2
+			}
 		},
 		"LeatherPants": {
 			"Name": "Leather Pants",
 			"Type": "Armor",
 			"SubType": "Legs",
 			"Price": 30,
-			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 2
 			},
@@ -50,14 +54,16 @@
 				"Leather": 4
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 2
+			}
 		},
 		"LeatherSleeves": {
 			"Name": "Leather Sleeves",
 			"Type": "Armor",
 			"SubType": "Arms",
 			"Price": 20,
-			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -65,14 +71,16 @@
 				"Leather": 2
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 1
+			}
 		},
 		"LeatherCap": {
 			"Name": "Leather Cap",
 			"Type": "Armor",
 			"SubType": "Head",
 			"Price": 20,
-			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -80,14 +88,16 @@
 				"Leather": 2
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 1
+			}
 		},
 		"LeatherGloves": {
 			"Name": "Leather Gloves",
 			"Type": "Armor",
 			"SubType": "Hands",
 			"Price": 15,
-			"ArmorRating": 2,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -95,14 +105,16 @@
 				"Leather": 2
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 1
+			}
 		},
 		"LeatherBoots": {
 			"Name": "Leather Boots",
 			"Type": "Armor",
 			"SubType": "Feet",
 			"Price": 25,
-			"ArmorRating": 2,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -110,16 +122,22 @@
 				"Leather": 2
 			},
 			"Symbol": "(",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 1
+			}
 		},
 		"Shield": {
 			"Name": "Shield",
 			"Type": "Armor",
 			"SubType": "Shield",
 			"Price": 25,
-			"ArmorRating": 5,
 			"Symbol": ")",
-			"Color": "Brown"
+			"Color": "Brown",
+			"Bonuses": {
+				"Armor": 1,
+				"Blocking": 10
+			}
 		}
 	}
 }

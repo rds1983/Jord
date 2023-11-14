@@ -29,10 +29,10 @@ namespace Jord.Loading
 
 			if (result.CreatureType == CreatureType.Enemy)
 			{
-				result.MeleeMastery = data.OptionalInt("MeleeMastery");
-				result.ArmorRating = data.OptionalInt("ArmorRating");
-				result.EvasionRating = data.OptionalInt("EvasionRating");
-				result.BlockingRating = data.OptionalInt("BlockingRating");
+				result.Melee = data.OptionalInt("Melee");
+				result.Armor = data.OptionalInt("Armor");
+				result.Evasion = data.OptionalInt("Evasion");
+				result.Blocking = data.OptionalInt("Blocking");
 				result.MaxHp = data.EnsureInt("MaxHp");
 				result.HpRegen = data.OptionalInt("HpRegen", Constants.DefaultHpRegen);
 				result.MaxMana = data.OptionalInt("MaxMana");

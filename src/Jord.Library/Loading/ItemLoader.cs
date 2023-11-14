@@ -1,4 +1,5 @@
 ﻿using Jord.Core;
+using Jord.Core.Abilities;
 using Jord.Core.Items;
 using Newtonsoft.Json.Linq;
 using System;
@@ -60,8 +61,6 @@ namespace Jord.Loading
 					};
 				}
 
-				armor.ArmorRating = data.EnsureInt("ArmorRating");
-
 				result = armor;
 			}
 			else
@@ -77,6 +76,17 @@ namespace Jord.Loading
 			if (type == null && properties != null && properties.TryGetValue("Type", out typeName))
 			{
 				result.Type = typeName.ToEnum<ItemType>();
+			}
+
+			var bonusesObj = data.OptionalJObject("Bonuses");
+			if (bonusesObj != null)
+			{
+				foreach (var pair in bonusesObj)
+				{
+					var bonusType = pair.Key.ToEnum<BonusType>();
+
+					result.Bonuses[bonusType] = pair.Value.ToInt();
+				}
 			}
 
 			secondRunAction = db => SecondRun(result, data, db);

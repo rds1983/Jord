@@ -26,10 +26,10 @@ namespace Jord.Core
 
 					var battleStats = _stats.Battle;
 					battleStats.Attacks = Info.Attacks.ToArray();
-					battleStats.MeleeMastery = Info.MeleeMastery;
-					battleStats.ArmorRating = Info.ArmorRating;
-					battleStats.EvasionRating = Info.EvasionRating;
-					battleStats.BlockingRating = Info.BlockingRating;
+					battleStats.Melee = Info.Melee;
+					battleStats.Armor = Info.Armor;
+					battleStats.Evasion = Info.Evasion;
+					battleStats.Blocking = Info.Blocking;
 				}
 
 				return _stats;

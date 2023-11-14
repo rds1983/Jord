@@ -4,15 +4,10 @@ namespace Jord.Core.Items
 {
 	public abstract class EquipInfo : BaseItemInfo
 	{
-		public int ArmorRating { get; set; }
 	}
 
 	public class ArmorInfo : EquipInfo
 	{
-		public override string BuildDescription()
-		{
-			return base.BuildDescription() + ", armor rating: " + ArmorRating;
-		}
 	}
 
 	public class BasicArmorInfo : ArmorInfo

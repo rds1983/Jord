@@ -3,10 +3,10 @@
 	public enum BonusType
 	{
 		Attacks,
-		MeleeMastery,
-		EvasionRating,
-		ArmorRating,
-		BlockingRating,
+		Melee,
+		Evasion,
+		Armor,
+		Blocking,
 		PurchasePercentage,
 		SellPercentage,
 		WorkWithLeather,

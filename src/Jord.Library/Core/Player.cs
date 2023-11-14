@@ -4,6 +4,7 @@ using System.Linq;
 using Jord.Core.Abilities;
 using Jord.Core.Items;
 using Jord.Utils;
+using static Jord.Core.CreatureStats;
 
 namespace Jord.Core
 {
@@ -64,20 +65,23 @@ namespace Jord.Core
 		public int CalculateBonus(BonusType bonusType)
 		{
 			var result = 0;
-/*			foreach (var perk in Perks)
-			{
-				if (perk.AddsEffects == null || perk.AddsEffects.Length == 0)
-				{
-					continue;
-				}
+			/*			foreach (var perk in Perks)
+						{
+							if (perk.AddsEffects == null || perk.AddsEffects.Length == 0)
+							{
+								continue;
+							}
 
-				foreach (var effect in perk.AddsEffects)
-				{
-					var bonusValue = 0;
-					effect.Bonuses.TryGetValue(bonusType, out bonusValue);
-					result += bonusValue;
-				}
-			}*/
+							foreach (var effect in perk.AddsEffects)
+							{
+								var bonusValue = 0;
+								effect.Bonuses.TryGetValue(bonusType, out bonusValue);
+								result += bonusValue;
+							}
+						}*/
+
+			// Apply items
+			result += Equipment.CalculateBonus(bonusType);
 
 			return result;
 		}
@@ -98,10 +102,10 @@ namespace Jord.Core
 
 			// Battle
 			var battleStats = _stats.Battle;
-			battleStats.MeleeMastery = Class.MeleeMastery + (int)(Class.MeleeMasteryPerLevel * Level) + CalculateBonus(BonusType.MeleeMastery);
-			battleStats.ArmorRating = Class.ArmorRating + CalculateBonus(BonusType.ArmorRating);
-			battleStats.EvasionRating = Class.EvasionRating + (int)(Class.EvasionRatingPerLevel * Level) + CalculateBonus(BonusType.EvasionRating);
-			battleStats.BlockingRating = Class.BlockingRating + (int)(Class.BlockingRatingPerLevel * Level) + CalculateBonus(BonusType.BlockingRating);
+			battleStats.Melee = Class.Melee + (int)(Class.MeleePerLevel * Level) + CalculateBonus(BonusType.Melee);
+			battleStats.Armor = Class.Armor + CalculateBonus(BonusType.Armor);
+			battleStats.Evasion = Class.Evasion + (int)(Class.EvasionPerLevel * Level) + CalculateBonus(BonusType.Evasion);
+			battleStats.Blocking = Class.Blocking + (int)(Class.BlockingPerLevel * Level) + CalculateBonus(BonusType.Blocking);
 
 			var weapon = Equipment.GetItemByType(EquipType.RightHand);
 
@@ -126,18 +130,6 @@ namespace Jord.Core
 			for (var i = 0; i < attacksCount; ++i)
 			{
 				battleStats.Attacks[i] = attackInfo;
-			}
-
-			foreach (var slot in Equipment.Items)
-			{
-				if (slot == null || slot.Item == null)
-				{
-					continue;
-				}
-
-				var info = (EquipInfo)slot.Item.Info;
-
-				battleStats.ArmorRating += info.ArmorRating;
 			}
 		}
 

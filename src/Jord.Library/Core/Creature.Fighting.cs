@@ -26,12 +26,12 @@ namespace Jord.Core
 			}
 
 			var targetBattleStats = target.Stats.Battle;
-			var evasionRating = targetBattleStats.EvasionRating;
+			var evasionRating = targetBattleStats.Evasion;
 			foreach (var attack in attacks)
 			{
 				// Hit roll
-				var meleeMastery = 50 + battleStats.MeleeMastery;
-				var hitRoll = meleeMastery - targetBattleStats.EvasionRating;
+				var Melee = 50 + battleStats.Melee;
+				var hitRoll = Melee - targetBattleStats.Evasion;
 				Debug.WriteLine($"{Name} against {target.Name}'s hitRoll roll is {hitRoll}");
 				if (!MathUtils.RollPercentage(hitRoll))
 				{
@@ -42,15 +42,15 @@ namespace Jord.Core
 				} else
 				{
 					// Block roll
-					var blockRoll = targetBattleStats.BlockingRating;
+					var blockRoll = targetBattleStats.Blocking;
 					Debug.WriteLine($"{Name} against {target.Name}'s blockRoll roll is {blockRoll}");
 					var blocked = MathUtils.RollPercentage(blockRoll);
 
 					var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
 					Debug.WriteLine($"{Name} against {target.Name}'s initial damage is {damage}");
 
-					meleeMastery = 100 + battleStats.MeleeMastery;
-					var damageRoll = meleeMastery - targetBattleStats.ArmorRating;
+					Melee = 100 + battleStats.Melee;
+					var damageRoll = Melee - targetBattleStats.Armor;
 					Debug.WriteLine($"{Name} against {target.Name}'s damageRoll roll is {damageRoll}");
 
 					damage = (damage * damageRoll / 100);

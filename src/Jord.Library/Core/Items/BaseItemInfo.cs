@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jord.Core.Abilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,6 +27,8 @@ namespace Jord.Core.Items
 
 		public ItemType Type { get; set; }
 
+		public Dictionary<BonusType, int> Bonuses { get; } = new Dictionary<BonusType, int>();
+
 		public string TypeDisplayName
 		{
 			get
@@ -36,7 +39,15 @@ namespace Jord.Core.Items
 
 		public virtual string BuildDescription()
 		{
-			return TypeDisplayName;
+			var sb = new StringBuilder();
+			sb.Append(TypeDisplayName);
+
+			foreach (var pair in Bonuses)
+			{
+				sb.Append($", {pair.Key} = {pair.Value}");
+			}
+
+			return sb.ToString();
 		}
 
 		private static string GetTypeDisplayName(Type type)

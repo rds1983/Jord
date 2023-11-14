@@ -30,12 +30,12 @@ namespace Jord.Core
 		public Inventory Inventory { get; set; }
 
 		public List<AttackInfo> Attacks { get; } = new List<AttackInfo>();
-		public int MeleeMastery { get; set; }
+		public int Melee { get; set; }
 
-		public int ArmorRating { get; set; }
+		public int Armor { get; set; }
 
-		public int EvasionRating { get; set; }
-		public int BlockingRating { get; set; }
+		public int Evasion { get; set; }
+		public int Blocking { get; set; }
 
 		public int MaxHp { get; set; }
 

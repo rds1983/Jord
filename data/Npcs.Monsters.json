@@ -12,7 +12,7 @@
 					"MaxDamage": 10
 				}
 			],
-			"EvasionRating": 15,
+			"Evasion": 15,
 			"MaxHp": 50,
 			"MinimumLevel": 1,
 			"Loot": [
@@ -36,7 +36,7 @@
 					"MaxDamage": 8
 				}
 			],
-			"EvasionRating": 15,
+			"Evasion": 15,
 			"MaxHp": 40,
 			"MinimumLevel": 1,
 			"Symbol": "l",
@@ -59,7 +59,7 @@
 					"MaxDamage": 8
 				}
 			],
-			"EvasionRating": 20,
+			"Evasion": 20,
 			"MaxHp": 60,
 			"MinimumLevel": 2,
 			"Symbol": "s",
@@ -92,10 +92,10 @@
 					"MaxDamage": 140
 				}
 			],
-			"MeleeMastery": 100,
-			"ArmorRating": 100,
-			"EvasionRating": 0,
-			"BlockingRating": 50,
+			"Melee": 100,
+			"Armor": 100,
+			"Evasion": 0,
+			"Blocking": 50,
 			"MaxHp": 20000,
 			"MinimumLevel": 15,
 			"Symbol": "D",

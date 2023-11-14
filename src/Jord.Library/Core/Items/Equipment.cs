@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Jord.Core.Abilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Jord.Core.CreatureStats;
 
 namespace Jord.Core.Items
 {
@@ -52,6 +54,32 @@ namespace Jord.Core.Items
 		public event EventHandler Changed;
 
 		public Item GetItemByType(EquipType type) => Items[(int)type].Item;
+
+		public int CalculateBonus(BonusType bonusType)
+		{
+			var result = 0;
+
+			// Apply items
+			foreach (var slot in Items)
+			{
+				if (slot == null || slot.Item == null)
+				{
+					continue;
+				}
+
+				var info = (EquipInfo)slot.Item.Info;
+
+				int bonusValue;
+				if (!info.Bonuses.TryGetValue(bonusType, out bonusValue))
+				{
+					continue;
+				}
+
+				result += bonusValue;
+			}
+
+			return result;
+		}
 
 		public Item[] Equip(Item item)
 		{

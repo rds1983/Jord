@@ -22,13 +22,13 @@ namespace Jord.Loading
 				HpRegenMultiplier = data.EnsureFloat("HpRegenMultiplier"),
 				ManaRegenMultiplier = data.EnsureFloat("ManaRegenMultiplier"),
 				StaminaRegenMultiplier = data.EnsureFloat("StaminaRegenMultiplier"),
-				MeleeMastery = data.OptionalInt("MeleeMastery"),
-				ArmorRating = data.OptionalInt("ArmorRating"),
-				EvasionRating = data.OptionalInt("EvasionRating"),
-				BlockingRating = data.OptionalInt("BlockingRating"),
-				MeleeMasteryPerLevel = data.EnsureFloat("MeleeMasteryPerLevel"),
-				EvasionRatingPerLevel = data.EnsureFloat("EvasionRatingPerLevel"),
-				BlockingRatingPerLevel = data.EnsureFloat("BlockingRatingPerLevel")
+				Melee = data.OptionalInt("Melee"),
+				Armor = data.OptionalInt("Armor"),
+				Evasion = data.OptionalInt("Evasion"),
+				Blocking = data.OptionalInt("Blocking"),
+				MeleePerLevel = data.EnsureFloat("MeleePerLevel"),
+				EvasionPerLevel = data.EnsureFloat("EvasionPerLevel"),
+				BlockingPerLevel = data.EnsureFloat("BlockingPerLevel")
 			};
 
 			secondRunAction = db => SecondRun(result, data, db);
