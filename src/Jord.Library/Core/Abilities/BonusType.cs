@@ -5,7 +5,7 @@
 		Attacks,
 		MeleeMastery,
 		EvasionRating,
-		ArmorClass,
+		ArmorRating,
 		BlockingRating,
 		PurchasePercentage,
 		SellPercentage,

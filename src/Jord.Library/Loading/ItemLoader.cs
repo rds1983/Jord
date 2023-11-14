@@ -60,7 +60,7 @@ namespace Jord.Loading
 					};
 				}
 
-				armor.ArmorClass = data.EnsureInt("ArmorClass");
+				armor.ArmorRating = data.EnsureInt("ArmorRating");
 
 				result = armor;
 			}

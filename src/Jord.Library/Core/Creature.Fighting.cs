@@ -29,8 +29,6 @@ namespace Jord.Core
 			var evasionRating = targetBattleStats.EvasionRating;
 			foreach (var attack in attacks)
 			{
-				var armorClass = targetBattleStats.ArmorClass;
-
 				// Hit roll
 				var meleeMastery = 50 + battleStats.MeleeMastery;
 				var hitRoll = meleeMastery - targetBattleStats.EvasionRating;
@@ -52,7 +50,7 @@ namespace Jord.Core
 					Debug.WriteLine($"{Name} against {target.Name}'s initial damage is {damage}");
 
 					meleeMastery = 100 + battleStats.MeleeMastery;
-					var damageRoll = meleeMastery - targetBattleStats.ArmorClass;
+					var damageRoll = meleeMastery - targetBattleStats.ArmorRating;
 					Debug.WriteLine($"{Name} against {target.Name}'s damageRoll roll is {damageRoll}");
 
 					damage = (damage * damageRoll / 100);

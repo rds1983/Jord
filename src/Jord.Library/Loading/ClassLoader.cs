@@ -23,7 +23,7 @@ namespace Jord.Loading
 				ManaRegenMultiplier = data.EnsureFloat("ManaRegenMultiplier"),
 				StaminaRegenMultiplier = data.EnsureFloat("StaminaRegenMultiplier"),
 				MeleeMastery = data.OptionalInt("MeleeMastery"),
-				ArmorClass = data.OptionalInt("ArmorClass"),
+				ArmorRating = data.OptionalInt("ArmorRating"),
 				EvasionRating = data.OptionalInt("EvasionRating"),
 				BlockingRating = data.OptionalInt("BlockingRating")
 			};

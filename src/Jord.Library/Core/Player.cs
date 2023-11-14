@@ -99,7 +99,7 @@ namespace Jord.Core
 			// Battle
 			var battleStats = _stats.Battle;
 			battleStats.MeleeMastery = Class.MeleeMastery + CalculateBonus(BonusType.MeleeMastery);
-			battleStats.ArmorClass = Class.ArmorClass + CalculateBonus(BonusType.ArmorClass);
+			battleStats.ArmorRating = Class.ArmorRating + CalculateBonus(BonusType.ArmorRating);
 			battleStats.EvasionRating = Class.EvasionRating + CalculateBonus(BonusType.EvasionRating);
 			battleStats.BlockingRating = Class.BlockingRating + CalculateBonus(BonusType.BlockingRating);
 
@@ -137,7 +137,7 @@ namespace Jord.Core
 
 				var info = (EquipInfo)slot.Item.Info;
 
-				battleStats.ArmorClass += info.ArmorClass;
+				battleStats.ArmorRating += info.ArmorRating;
 			}
 		}
 

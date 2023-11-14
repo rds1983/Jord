@@ -93,7 +93,7 @@
 				}
 			],
 			"MeleeMastery": 100,
-			"ArmorClass": 100,
+			"ArmorRating": 100,
 			"EvasionRating": 0,
 			"BlockingRating": 50,
 			"MaxHp": 20000,

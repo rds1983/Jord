@@ -27,7 +27,7 @@
 			"Type": "Armor",
 			"SubType": "Body",
 			"Price": 40,
-			"ArmorClass": 6,
+			"ArmorRating": 6,
 			"Tanning": {
 				"Leather": 2
 			},
@@ -42,7 +42,7 @@
 			"Type": "Armor",
 			"SubType": "Legs",
 			"Price": 30,
-			"ArmorClass": 4,
+			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 2
 			},
@@ -57,7 +57,7 @@
 			"Type": "Armor",
 			"SubType": "Arms",
 			"Price": 20,
-			"ArmorClass": 4,
+			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -72,7 +72,7 @@
 			"Type": "Armor",
 			"SubType": "Head",
 			"Price": 20,
-			"ArmorClass": 4,
+			"ArmorRating": 4,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -87,7 +87,7 @@
 			"Type": "Armor",
 			"SubType": "Hands",
 			"Price": 15,
-			"ArmorClass": 2,
+			"ArmorRating": 2,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -102,7 +102,7 @@
 			"Type": "Armor",
 			"SubType": "Feet",
 			"Price": 25,
-			"ArmorClass": 2,
+			"ArmorRating": 2,
 			"Tanning": {
 				"Leather": 1
 			},
@@ -117,7 +117,7 @@
 			"Type": "Armor",
 			"SubType": "Shield",
 			"Price": 25,
-			"ArmorClass": 5,
+			"ArmorRating": 5,
 			"Symbol": ")",
 			"Color": "Brown"
 		}

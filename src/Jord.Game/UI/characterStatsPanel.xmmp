@@ -6,7 +6,7 @@
     <Label Text="Melee Mastery:" />
     <Label Text="30" Id="_labelMeleeMastery" Grid.Column="1" />
     <Label Text="Armor Class:" Grid.Row="1" />
-    <Label Text="30" Id="_labelArmorClass" Grid.Column="1" Grid.Row="1" />
+    <Label Text="30" Id="_labelArmorRating" Grid.Column="1" Grid.Row="1" />
     <Label Text="Evasion Rating:" Grid.Row="2" />
     <Label Text="30" Id="_labelEvasionRating" Grid.Column="1" Grid.Row="2" />
     <Label Text="Blocking Rating:" Grid.Row="3" />

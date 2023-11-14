@@ -14,7 +14,7 @@ namespace Jord.Core
 
 		public readonly Equipment Equipment = new Equipment();
 		public int MeleeMastery { get; set; }
-		public int ArmorClass { get; set; }
+		public int ArmorRating { get; set; }
 		public int EvasionRating { get; set; }
 		public int BlockingRating { get; set; }
 

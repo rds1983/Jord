@@ -38,11 +38,11 @@ namespace Jord.UI
 			label2.Text = "Armor Class:";
 			Grid.SetRow(label2, 1);
 
-			_labelArmorClass = new Label();
-			_labelArmorClass.Text = "30";
-			_labelArmorClass.Id = "_labelArmorClass";
-			Grid.SetColumn(_labelArmorClass, 1);
-			Grid.SetRow(_labelArmorClass, 1);
+			_labelArmorRating = new Label();
+			_labelArmorRating.Text = "30";
+			_labelArmorRating.Id = "_labelArmorRating";
+			Grid.SetColumn(_labelArmorRating, 1);
+			Grid.SetRow(_labelArmorRating, 1);
 
 			var label3 = new Label();
 			label3.Text = "Evasion Rating:";
@@ -78,7 +78,7 @@ namespace Jord.UI
 			Widgets.Add(label1);
 			Widgets.Add(_labelMeleeMastery);
 			Widgets.Add(label2);
-			Widgets.Add(_labelArmorClass);
+			Widgets.Add(_labelArmorRating);
 			Widgets.Add(label3);
 			Widgets.Add(_labelEvasionRating);
 			Widgets.Add(label4);
@@ -87,7 +87,7 @@ namespace Jord.UI
 
 		
 		public Label _labelMeleeMastery;
-		public Label _labelArmorClass;
+		public Label _labelArmorRating;
 		public Label _labelEvasionRating;
 		public Label _labelBlockingRating;
 	}

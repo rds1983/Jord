@@ -10,7 +10,7 @@
 			"ManaRegenMultiplier": 0.5,
 			"StaminaRegenMultiplier": 0.25,
 			"MeleeMastery": 15,
-			"ArmorClass": 10,
+			"ArmorRating": 10,
 			"BlockingRating": 20,
 			"Equipment": {
 				"Body": "LeatherJacket",
