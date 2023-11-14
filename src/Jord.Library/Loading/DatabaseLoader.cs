@@ -26,14 +26,6 @@ namespace Jord.Loading
 
 		protected static void RaiseError(string message) => LoaderExtensions.RaiseError(message);
 
-		private static void LoadProperties(JObject propertiesDict, Dictionary<string, string> properties)
-		{
-			foreach (var pair in propertiesDict)
-			{
-				properties[pair.Key] = pair.Value.ToString();
-			}
-		}
-
 		private T FirstRunLoadObject<T>(string source, JObject value, Dictionary<string, string> properties, BaseObjectLoader<T> loader) where T : BaseObject
 		{
 			Action<Database> secondRunAction;
@@ -170,19 +162,6 @@ namespace Jord.Loading
 							break;
 						case "Effects":
 							FirstRunDictionary(s, (JObject)pair.Value, EffectLoader.Instance, _database.Effects);
-							break;
-						case "Perks":
-							{
-								var properties = new Dictionary<string, string>();
-								var parts = fileName.Split('.');
-								if (parts.Length > 1)
-								{
-									properties["Category"] = parts[1];
-								}
-
-
-								FirstRunDictionary(s, (JObject)pair.Value, PerkLoader.Instance, _database.Perks, properties);
-							}
 							break;
 						case "Levels":
 							LoadLevels((JArray)pair.Value);

@@ -24,6 +24,5 @@ namespace Jord.Core
 		public float HpRegenMultiplier { get; set; }
 		public float ManaRegenMultiplier { get; set; }
 		public float StaminaRegenMultiplier { get; set; }
-		public Perk[] Perks { get; set; }
 	}
 }

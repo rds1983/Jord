@@ -304,7 +304,7 @@ namespace Jord.UI
 		{
 			var characterWindow = new CharacterWindow
 			{
-				CurrentTab = CharacterWindowTab.Perks
+				CurrentTab = CharacterWindowTab.Stats
 			};
 
 			characterWindow.ShowModal(Desktop);

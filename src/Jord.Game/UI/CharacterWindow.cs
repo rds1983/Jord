@@ -3,7 +3,6 @@ namespace Jord.UI
 	public enum CharacterWindowTab
 	{
 		Stats,
-		Perks,
 		Inventory
 	}
 
@@ -27,9 +26,6 @@ namespace Jord.UI
 
 			var characterStatsPanel = new CharacterStatsPanel();
 			_tabItemStats.Content = characterStatsPanel;
-
-			var characterPerksPanel = new CharacterPerksPanel();
-			_tabItemPerks.Content = characterPerksPanel;
 
 			var characterInventoryPanel = new CharacterInventoryPanel();
 			_tabItemInventory.Content = characterInventoryPanel;

@@ -85,11 +85,6 @@ namespace Jord.UI
 						Gold = cls.Gold
 					};
 
-					if (cls.Perks != null && cls.Perks.Length > 0)
-					{
-						data.Perks.AddRange(from p in cls.Perks select p.Id);
-					}
-
 					foreach(var pair in cls.Equipment.Items)
 					{
 						if (pair.Item != null)

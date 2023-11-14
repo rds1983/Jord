@@ -17,8 +17,7 @@
 				"Legs": "LeatherPants",
 				"RightHand": "Sword",
 				"LeftHand": "Shield"
-			},
-			"Perks": "BaseMelee"
+			}
 		}
 	}
 }

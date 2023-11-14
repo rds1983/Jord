@@ -27,7 +27,6 @@ namespace Jord.Core
 		public List<DungeonRecord> DungeonInfo { get; } = new List<DungeonRecord>();
 		public Dictionary<string, Tileset> Tilesets { get; } = new Dictionary<string, Tileset>();
 		public Dictionary<string, Effect> Effects { get; } = new Dictionary<string, Effect>();
-		public Dictionary<string, Perk> Perks { get; } = new Dictionary<string, Perk>();
 		public Settings Settings { get; set; }
 		
 		public TileInfo ExitUp

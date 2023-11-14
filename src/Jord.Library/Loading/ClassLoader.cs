@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Jord.Core;
-using Jord.Core.Abilities;
 using Jord.Core.Items;
 using Newtonsoft.Json.Linq;
 
@@ -46,15 +45,6 @@ namespace Jord.Loading
 
 				result.Equipment.Equip(item);
 			}
-
-			var perks = new List<Perk>();
-			var perksToken = data.Optional("Perks");
-			if (perksToken != null)
-			{
-				perks.Add(database.Perks.Ensure(perksToken.ToString()));
-			}
-
-			result.Perks = perks.ToArray();
 		}
 	}
 }

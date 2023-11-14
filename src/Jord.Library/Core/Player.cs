@@ -35,8 +35,6 @@ namespace Jord.Core
 			}
 		}
 
-		public List<Perk> Perks { get; } = new List<Perk>();
-
 		public int Experience { get; set; }
 
 		public Class Class { get; set; }
@@ -58,14 +56,6 @@ namespace Jord.Core
 
 		public override Inventory Inventory { get => _inventory; }
 
-		public int PerkPointsLeft
-		{
-			get
-			{
-				return 1 + Level - Perks.Count;
-			}
-		}
-
 		public Player()
 		{
 			Equipment.Changed += (s, a) => Invalidate();
@@ -74,7 +64,7 @@ namespace Jord.Core
 		public int CalculateBonus(BonusType bonusType)
 		{
 			var result = 0;
-			foreach (var perk in Perks)
+/*			foreach (var perk in Perks)
 			{
 				if (perk.AddsEffects == null || perk.AddsEffects.Length == 0)
 				{
@@ -87,7 +77,7 @@ namespace Jord.Core
 					effect.Bonuses.TryGetValue(bonusType, out bonusValue);
 					result += bonusValue;
 				}
-			}
+			}*/
 
 			return result;
 		}
@@ -164,7 +154,7 @@ namespace Jord.Core
 			Experience -= nextLevel.Experience;
 			Level++;
 
-			TJ.GameLog(Strings.BuildNextLevel(Level, PerkPointsLeft));
+			TJ.GameLog(Strings.BuildNextLevel(Level));
 		}
 
 		private void Update()

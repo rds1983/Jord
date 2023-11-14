@@ -13,8 +13,6 @@ namespace Jord.Storage
 		public string ClassId { get; set; }
 		public int Level { get; set; }
 
-		public List<string> Perks { get; } = new List<string>();
-
 		public int Experience { get; set; }
 		public int Gold { get; set; }
 		
@@ -33,7 +31,6 @@ namespace Jord.Storage
 			Name = player.Name;
 			ClassId = player.Class.Id;
 			Level = player.Level;
-			Perks.AddRange(from p in player.Perks select p.Id);
 			Experience = player.Experience;
 			Gold = player.Gold;
 
@@ -66,14 +63,6 @@ namespace Jord.Storage
 				Experience = Experience,
 				Gold = Gold
 			};
-
-			if (Perks != null)
-			{
-				foreach(var perk in Perks)
-				{
-					result.Perks.Add(TJ.Database.Perks.Ensure(perk));
-				}
-			}
 
 			foreach (var pair in Inventory)
 			{

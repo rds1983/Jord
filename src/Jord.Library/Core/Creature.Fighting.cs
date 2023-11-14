@@ -32,7 +32,7 @@ namespace Jord.Core
 				var armorClass = targetBattleStats.ArmorClass;
 
 				// Hit roll
-				var meleeMastery = 100 + battleStats.MeleeMastery;
+				var meleeMastery = 50 + battleStats.MeleeMastery;
 				var hitRoll = meleeMastery - targetBattleStats.EvasionRating;
 				Debug.WriteLine($"{Name} against {target.Name}'s hitRoll roll is {hitRoll}");
 				if (!MathUtils.RollPercentage(hitRoll))
@@ -51,6 +51,7 @@ namespace Jord.Core
 					var damage = MathUtils.Random.Next(attack.MinDamage, attack.MaxDamage + 1);
 					Debug.WriteLine($"{Name} against {target.Name}'s initial damage is {damage}");
 
+					meleeMastery = 100 + battleStats.MeleeMastery;
 					var damageRoll = meleeMastery - targetBattleStats.ArmorClass;
 					Debug.WriteLine($"{Name} against {target.Name}'s damageRoll roll is {damageRoll}");
 
