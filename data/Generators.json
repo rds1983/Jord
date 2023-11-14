@@ -14,6 +14,20 @@
 			"FillerTileId": "Wall",
 			"SpaceTileId": "Ground"
 		},
+		"Dungeon64x64": {
+			"Width": 64,
+			"Height": 64,
+			"Type": "Dungeon",
+			"MinimumRoomsCount": 10,
+			"MaximumRoomsCount": 15,
+			"MinimumRoomWidth": 5,
+			"MaximumRoomWidth": 16,
+			"MinimumRoomHeight": 5,
+			"MaximumRoomHeight": 16,
+			"RoomBorderSize": 4,
+			"FillerTileId": "Wall",
+			"SpaceTileId": "Ground"
+		},
 		"BalHarbor": {
 			"Width": 64,
 			"Height": 64,

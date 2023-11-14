@@ -6,7 +6,7 @@
 		},
 		{
 			"MinimumLevel": 1,
-			"Generator": "Dungeon128x128"
+			"Generator": "Dungeon64x64"
 		}
 	]
 }
