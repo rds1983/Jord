@@ -98,10 +98,10 @@ namespace Jord.Core
 
 			// Battle
 			var battleStats = _stats.Battle;
-			battleStats.MeleeMastery = Class.MeleeMastery + CalculateBonus(BonusType.MeleeMastery);
+			battleStats.MeleeMastery = Class.MeleeMastery + (int)(Class.MeleeMasteryPerLevel * Level) + CalculateBonus(BonusType.MeleeMastery);
 			battleStats.ArmorRating = Class.ArmorRating + CalculateBonus(BonusType.ArmorRating);
-			battleStats.EvasionRating = Class.EvasionRating + CalculateBonus(BonusType.EvasionRating);
-			battleStats.BlockingRating = Class.BlockingRating + CalculateBonus(BonusType.BlockingRating);
+			battleStats.EvasionRating = Class.EvasionRating + (int)(Class.EvasionRatingPerLevel * Level) + CalculateBonus(BonusType.EvasionRating);
+			battleStats.BlockingRating = Class.BlockingRating + (int)(Class.BlockingRatingPerLevel * Level) + CalculateBonus(BonusType.BlockingRating);
 
 			var weapon = Equipment.GetItemByType(EquipType.RightHand);
 

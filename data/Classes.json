@@ -9,9 +9,12 @@
 			"HpRegenMultiplier": 0.5,
 			"ManaRegenMultiplier": 0.5,
 			"StaminaRegenMultiplier": 0.25,
-			"MeleeMastery": 15,
+			"MeleeMastery": 20,
 			"ArmorRating": 10,
 			"BlockingRating": 20,
+			"MeleeMasteryPerLevel": 2,
+			"EvasionRatingPerLevel": 1.5,
+			"BlockingRatingPerLevel":  0.5,
 			"Equipment": {
 				"Body": "LeatherJacket",
 				"Legs": "LeatherPants",

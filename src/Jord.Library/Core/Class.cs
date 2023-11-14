@@ -17,6 +17,9 @@ namespace Jord.Core
 		public int ArmorRating { get; set; }
 		public int EvasionRating { get; set; }
 		public int BlockingRating { get; set; }
+		public float MeleeMasteryPerLevel { get; set; }
+		public float EvasionRatingPerLevel { get; set; }
+		public float BlockingRatingPerLevel { get; set; }
 
 		public int HpMultiplier { get; set; }
 		public int ManaMultiplier { get; set; }

@@ -25,7 +25,10 @@ namespace Jord.Loading
 				MeleeMastery = data.OptionalInt("MeleeMastery"),
 				ArmorRating = data.OptionalInt("ArmorRating"),
 				EvasionRating = data.OptionalInt("EvasionRating"),
-				BlockingRating = data.OptionalInt("BlockingRating")
+				BlockingRating = data.OptionalInt("BlockingRating"),
+				MeleeMasteryPerLevel = data.EnsureFloat("MeleeMasteryPerLevel"),
+				EvasionRatingPerLevel = data.EnsureFloat("EvasionRatingPerLevel"),
+				BlockingRatingPerLevel = data.EnsureFloat("BlockingRatingPerLevel")
 			};
 
 			secondRunAction = db => SecondRun(result, data, db);
